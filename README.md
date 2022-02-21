@@ -4,7 +4,7 @@ The newest release is Alpha 0.3.0, released at 5:50 PM GMT on January 6
 
 Releases can be found here: https://github.com/Flaxbeard/Thaumic_Exploration/releases
 
-Thaumic Exploration is a WIP add-on for Thaumcraft 4 that adds a variety of new content. Currently, Thaumic Exploration is in early alpha. 
+Thaumic Exploration is a WIP add-on for Thaumcraft 4 that adds a variety of new content. Currently, Thaumic Exploration is in early alpha.
 
 Current content includes:
 
@@ -20,8 +20,6 @@ Current content includes:
 ## Fork
 This mod was forked by the GTNH Team to continue the development of the 1.7.10 Branch.
 The up-to-date Master branch can be found on our [Jenkins](http://jenkins.usrv.de)
-
-As of version 1.1.81-GTNH you need a deobfuscated witchery jar in dev env.
 
 ## License
 
