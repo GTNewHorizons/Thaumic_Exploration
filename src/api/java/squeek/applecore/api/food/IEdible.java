@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
  * <br>
  * Intended for use by classes that don't extend ItemFood.<br>
  * <br>
- * When extending ItemFood, 
+ * When extending ItemFood,
  * {@link ItemFood#func_150905_g} (for hunger values) and
  * {@link ItemFood#func_150906_h} (for saturation modifiers)
  * should be used instead.<br>
@@ -16,7 +16,6 @@ import net.minecraft.item.ItemStack;
  * Note: {@link IEdible#getFoodValues} will take precedence over the
  * {@link ItemFood} methods when getting an item's food values
  */
-public interface IEdible
-{
-	public FoodValues getFoodValues(ItemStack itemStack);
+public interface IEdible {
+    public FoodValues getFoodValues(ItemStack itemStack);
 }

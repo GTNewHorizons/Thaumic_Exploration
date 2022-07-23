@@ -1,25 +1,25 @@
-//package flaxbeard.thaumicexploration.block;
+// package flaxbeard.thaumicexploration.block;
 //
-//import static net.minecraftforge.common.EnumPlantType.Cave;
-//import static net.minecraftforge.common.EnumPlantType.Crop;
-//import static net.minecraftforge.common.EnumPlantType.Desert;
-//import static net.minecraftforge.common.EnumPlantType.Nether;
-//import static net.minecraftforge.common.EnumPlantType.Plains;
-//import static net.minecraftforge.common.EnumPlantType.Water;
+// import static net.minecraftforge.common.EnumPlantType.Cave;
+// import static net.minecraftforge.common.EnumPlantType.Crop;
+// import static net.minecraftforge.common.EnumPlantType.Desert;
+// import static net.minecraftforge.common.EnumPlantType.Nether;
+// import static net.minecraftforge.common.EnumPlantType.Plains;
+// import static net.minecraftforge.common.EnumPlantType.Water;
 //
-//import java.util.Random;
+// import java.util.Random;
 //
-//import net.minecraft.block.Block;
-//import net.minecraft.block.material.Material;
-//import net.minecraft.creativetab.CreativeTabs;
-//import net.minecraft.util.AxisAlignedBB;
-//import net.minecraft.world.World;
-//import net.minecraftforge.common.EnumPlantType;
-//import net.minecraftforge.common.ForgeDirection;
-//import net.minecraftforge.common.IPlantable;
+// import net.minecraft.block.Block;
+// import net.minecraft.block.material.Material;
+// import net.minecraft.creativetab.CreativeTabs;
+// import net.minecraft.util.AxisAlignedBB;
+// import net.minecraft.world.World;
+// import net.minecraftforge.common.EnumPlantType;
+// import net.minecraftforge.common.ForgeDirection;
+// import net.minecraftforge.common.IPlantable;
 //
-//public class BlockTaintlessFlower extends Block implements IPlantable
-//{
+// public class BlockTaintlessFlower extends Block implements IPlantable
+// {
 //    protected BlockTaintlessFlower(int par1, Material par2Material)
 //    {
 //        super(par1, par2Material);
@@ -52,7 +52,8 @@
 //    }
 //
 //    /**
-//     * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
+//     * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed
+// are
 //     * their own) Args: x, y, z, neighbor blockID
 //     */
 //    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
@@ -84,7 +85,8 @@
 //    public boolean canBlockStay(World par1World, int par2, int par3, int par4)
 //    {
 //        Block soil = blocksList[par1World.getBlockId(par2, par3 - 1, par4)];
-//        return (par1World.getFullBlockLightValue(par2, par3, par4) >= 8 || par1World.canBlockSeeTheSky(par2, par3, par4)) && 
+//        return (par1World.getFullBlockLightValue(par2, par3, par4) >= 8 || par1World.canBlockSeeTheSky(par2, par3,
+// par4)) &&
 //                (soil != null && soil.canSustainPlant(par1World, par2, par3 - 1, par4, ForgeDirection.UP, this));
 //    }
 //
@@ -98,7 +100,8 @@
 //    }
 //
 //    /**
-//     * Is this block (a) opaque and (b) a full 1m cube?  This determines whether or not to render the shared face of two
+//     * Is this block (a) opaque and (b) a full 1m cube?  This determines whether or not to render the shared face of
+// two
 //     * adjacent blocks and also whether the player can attach torches, redstone wire, etc to this block.
 //     */
 //    public boolean isOpaqueCube()
@@ -149,4 +152,4 @@
 //    {
 //        return world.getBlockMetadata(x, y, z);
 //    }
-//}
+// }

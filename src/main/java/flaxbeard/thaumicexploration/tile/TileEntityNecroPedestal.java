@@ -1,49 +1,49 @@
-//package flaxbeard.thaumicexploration.tile;
+// package flaxbeard.thaumicexploration.tile;
 //
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.List;
+// import java.util.ArrayList;
+// import java.util.Arrays;
+// import java.util.List;
 //
-//import net.minecraft.block.Block;
-//import net.minecraft.client.Minecraft;
-//import net.minecraft.entity.Entity;
-//import net.minecraft.entity.EntityLivingBase;
-//import net.minecraft.entity.item.EntityItem;
-//import net.minecraft.entity.monster.EntityPigZombie;
-//import net.minecraft.entity.monster.EntitySkeleton;
-//import net.minecraft.entity.monster.EntityZombie;
-//import net.minecraft.entity.player.EntityPlayer;
-//import net.minecraft.inventory.ISidedInventory;
-//import net.minecraft.item.ItemStack;
-//import net.minecraft.nbt.NBTTagCompound;
-//import net.minecraft.nbt.NBTTagList;
-//import net.minecraft.network.INetworkManager;
-//import net.minecraft.network.packet.Packet;
-//import net.minecraft.network.packet.Packet132TileEntityData;
-//import net.minecraft.tileentity.TileEntity;
-//import net.minecraft.tileentity.TileEntitySkull;
-//import net.minecraft.util.AxisAlignedBB;
-//import net.minecraft.util.ChunkCoordinates;
-//import net.minecraft.util.DamageSource;
-//import net.minecraft.util.MathHelper;
-//import net.minecraft.world.World;
+// import net.minecraft.block.Block;
+// import net.minecraft.client.Minecraft;
+// import net.minecraft.entity.Entity;
+// import net.minecraft.entity.EntityLivingBase;
+// import net.minecraft.entity.item.EntityItem;
+// import net.minecraft.entity.monster.EntityPigZombie;
+// import net.minecraft.entity.monster.EntitySkeleton;
+// import net.minecraft.entity.monster.EntityZombie;
+// import net.minecraft.entity.player.EntityPlayer;
+// import net.minecraft.inventory.ISidedInventory;
+// import net.minecraft.item.ItemStack;
+// import net.minecraft.nbt.NBTTagCompound;
+// import net.minecraft.nbt.NBTTagList;
+// import net.minecraft.network.INetworkManager;
+// import net.minecraft.network.packet.Packet;
+// import net.minecraft.network.packet.Packet132TileEntityData;
+// import net.minecraft.tileentity.TileEntity;
+// import net.minecraft.tileentity.TileEntitySkull;
+// import net.minecraft.util.AxisAlignedBB;
+// import net.minecraft.util.ChunkCoordinates;
+// import net.minecraft.util.DamageSource;
+// import net.minecraft.util.MathHelper;
+// import net.minecraft.world.World;
 //
-//import org.apache.commons.lang3.tuple.MutablePair;
+// import org.apache.commons.lang3.tuple.MutablePair;
 //
-//import thaumcraft.api.aspects.Aspect;
-//import thaumcraft.api.aspects.AspectList;
-//import thaumcraft.api.aspects.IAspectContainer;
-//import thaumcraft.api.wands.IWandable;
-//import thaumcraft.common.Thaumcraft;
-//import thaumcraft.common.config.ConfigBlocks;
-//import thaumcraft.common.lib.InventoryHelper;
-//import flaxbeard.thaumicexploration.ThaumicExploration;
-//import flaxbeard.thaumicexploration.api.NecromanticAltarAPI;
-//import flaxbeard.thaumicexploration.api.NecromanticRecipe;
-//import flaxbeard.thaumicexploration.entity.EntityInfusionItem;
-//import flaxbeard.thaumicexploration.packet.TXPacketHandler;
+// import thaumcraft.api.aspects.Aspect;
+// import thaumcraft.api.aspects.AspectList;
+// import thaumcraft.api.aspects.IAspectContainer;
+// import thaumcraft.api.wands.IWandable;
+// import thaumcraft.common.Thaumcraft;
+// import thaumcraft.common.config.ConfigBlocks;
+// import thaumcraft.common.lib.InventoryHelper;
+// import flaxbeard.thaumicexploration.ThaumicExploration;
+// import flaxbeard.thaumicexploration.api.NecromanticAltarAPI;
+// import flaxbeard.thaumicexploration.api.NecromanticRecipe;
+// import flaxbeard.thaumicexploration.entity.EntityInfusionItem;
+// import flaxbeard.thaumicexploration.packet.TXPacketHandler;
 //
-//public class TileEntityNecroPedestal extends TileEntity implements ISidedInventory,IAspectContainer,IWandable {
+// public class TileEntityNecroPedestal extends TileEntity implements ISidedInventory,IAspectContainer,IWandable {
 //	public AspectList infusionRequirements = new AspectList();
 //	  public static final int[] slots = {0,1,2,3,4,5};
 //	public boolean active;
@@ -86,23 +86,26 @@
 //			if (this.worldObj.getBlockId(xCoord,yCoord+1,zCoord) == ThaumicExploration.necroFire.blockID) {
 //				this.worldObj.setBlockToAir(xCoord, yCoord+1, zCoord);
 //			}
-//			
+//	
 //		}
 //		if (this.crafting && this.recipeInput == null) {
 //			this.crafting = false;
 //		}
 //		if (this.crafting) {
-//			if (!this.worldObj.isRemote && this.recipeInstability > 0 && this.worldObj.rand.nextInt(500) <= (this.recipeInstability/10)) {
+//			if (!this.worldObj.isRemote && this.recipeInstability > 0 && this.worldObj.rand.nextInt(500) <=
+// (this.recipeInstability/10)) {
 //				int rand = this.worldObj.rand.nextInt(5);
 //
 //				switch (rand) {
 //				case 1:
 //					int ir = worldObj.rand.nextInt(5);
-//					
+//	
 //					EntityZombie zombie = new EntityZombie(worldObj);
-//					zombie.setPosition(this.myCandleLocations[ir].posX+0.5F, this.myCandleLocations[ir].posY+0.5F, this.myCandleLocations[ir].posZ+0.5F);
+//					zombie.setPosition(this.myCandleLocations[ir].posX+0.5F, this.myCandleLocations[ir].posY+0.5F,
+// this.myCandleLocations[ir].posZ+0.5F);
 //					worldObj.spawnEntityInWorld(zombie);
-//					zombie.setPosition(this.myCandleLocations[ir].posX+0.5F, this.myCandleLocations[ir].posY+0.5F, this.myCandleLocations[ir].posZ+0.5F);
+//					zombie.setPosition(this.myCandleLocations[ir].posX+0.5F, this.myCandleLocations[ir].posY+0.5F,
+// this.myCandleLocations[ir].posZ+0.5F);
 //					break;
 //				case 2:
 //				case 3:
@@ -113,7 +116,7 @@
 //		if (this.crafting && this.recipeInput.size() > 0 && this.recipeEnergy == 0) {
 //			this.craftTicks++;
 //			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-//			
+//	
 //			if (craftTicks > 100) {
 //				int highestFilledSlot = -1;
 //				for (int i : slots) {
@@ -123,9 +126,10 @@
 //				}
 //				if (highestFilledSlot != -1) {
 //					for (int a = 0; a < this.recipeInput.size(); a++) {
-//						if ((InventoryHelper.areItemStacksEqual(getStackInSlot(highestFilledSlot), (ItemStack)this.recipeInput.get(a), true, false))) {
+//						if ((InventoryHelper.areItemStacksEqual(getStackInSlot(highestFilledSlot), (ItemStack)this.recipeInput.get(a),
+// true, false))) {
 //							this.recipeInput.remove(a);
-//							
+//	
 //							this.setInventorySlotContents(highestFilledSlot, null);
 //						}
 //					}
@@ -162,7 +166,9 @@
 //	
 //	            k1 = this.getStackInSlot(i).stackSize;
 //	
-//	            entityitem = new EntityInfusionItem(worldObj, (double)((float)xCoord + f), (double)((float)yCoord + f1), (double)((float)zCoord + f2), new ItemStack(this.getStackInSlot(i).itemID, k1, this.getStackInSlot(i).getItemDamage()));
+//	            entityitem = new EntityInfusionItem(worldObj, (double)((float)xCoord + f), (double)((float)yCoord + f1),
+// (double)((float)zCoord + f2), new ItemStack(this.getStackInSlot(i).itemID, k1,
+// this.getStackInSlot(i).getItemDamage()));
 //	            float f3 = 0.05F;
 //	            entityitem.motionX = (double)((float)worldObj.rand.nextGaussian() * f3);
 //	            entityitem.motionY = (double)((float)worldObj.rand.nextGaussian() * f3 + 0.2F);
@@ -170,7 +176,8 @@
 //	
 //	            if (this.getStackInSlot(i).hasTagCompound())
 //	            {
-//	                entityitem.getEntityItem().setTagCompound((NBTTagCompound)this.getStackInSlot(i).getTagCompound().copy());
+//
+// entityitem.getEntityItem().setTagCompound((NBTTagCompound)this.getStackInSlot(i).getTagCompound().copy());
 //	            }
 //	            ItemStack template = getStackInSlot(i).copy();
 //		    	if (template.stackSize > 1) {
@@ -186,14 +193,14 @@
 //	            worldObj.spawnEntityInWorld(entityitem);
 //			}
 //		}
-//		
+//	
 //		if (this.active && this.worldObj.isRemote) {
 //			for (int f = 0; f<4; f++) {
 //				double ticks = (Minecraft.getMinecraft().thePlayer.ticksExisted + (12.5*f)) % 50;
 //				for (int i = 0; i<5; i++) {
 //					if (myCandleLocations[i] != null) {
 //					int i1 = (i+1)%5;
-//					
+//	
 //					double xDiff = (myCandleLocations[i].posX-myCandleLocations[i1].posX);
 //					if (myCandleLocations[i].posX > myCandleLocations[i1].posX && xDiff < 0) {
 //						xDiff *= -1;
@@ -211,19 +218,20 @@
 //					float xPos = myCandleLocations[i].posX - (float)(ticks*xDiff/50);
 //					float zPos = myCandleLocations[i].posZ - (float)(ticks*zDiff/50);
 ////					if (i==3 && !this.worldObj.isRemote)
-////						System.out.println(myCandleLocations[i].posX + " " + myCandleLocations[i1].posX + " SS " + zDiff + " " + (myCandleLocations[i].posZ-myCandleLocations[i1].posZ));
+////						System.out.println(myCandleLocations[i].posX + " " + myCandleLocations[i1].posX + " SS " + zDiff + " " +
+// (myCandleLocations[i].posZ-myCandleLocations[i1].posZ));
 //					Thaumcraft.proxy.sparkle(xPos+0.5F, yCoord+0.75F, zPos+0.5F, 1.0F, 0x7F0000, 0.0F);
 //				}
 //				}
 //			}
-//		
-//		
+//	
+//	
 //			for (int f = 0; f<4; f++) {
 //				double ticks = (Minecraft.getMinecraft().thePlayer.ticksExisted + (12.5*f)) % 50;
 //				for (int i = 0; i<5; i++) {
 //					if (myCandleLocations[i] != null) {
 //					int i1 = (i+2)%5;
-//					
+//	
 //					double xDiff = (myCandleLocations[i].posX-myCandleLocations[i1].posX);
 //					if (myCandleLocations[i].posX > myCandleLocations[i1].posX && xDiff < 0) {
 //						xDiff *= -1;
@@ -241,7 +249,8 @@
 //					float xPos = myCandleLocations[i].posX - (float)(ticks*xDiff/50);
 //					float zPos = myCandleLocations[i].posZ - (float)(ticks*zDiff/50);
 ////					if (i==3 && !this.worldObj.isRemote)
-////						System.out.println(myCandleLocations[i].posX + " " + myCandleLocations[i1].posX + " SS " + zDiff + " " + (myCandleLocations[i].posZ-myCandleLocations[i1].posZ));
+////						System.out.println(myCandleLocations[i].posX + " " + myCandleLocations[i1].posX + " SS " + zDiff + " " +
+// (myCandleLocations[i].posZ-myCandleLocations[i1].posZ));
 //					Thaumcraft.proxy.sparkle(xPos+0.5F, yCoord+0.75F, zPos+0.5F, 1.0F, 0x7F0000, 0.0F);
 //				}
 //				}
@@ -256,32 +265,47 @@
 //				if(crafting) {
 //					if (soundTicks == 0) {
 //						soundTicks = 100;
-//						worldObj.playSound(xCoord + 0.5F, yCoord + 0.5F, zCoord + 0.5F, "thaumicexploration:necroInfusion"+this.getLetterFromNumber(soundOn), 1.0F, 1.0F, false);
+//						worldObj.playSound(xCoord + 0.5F, yCoord + 0.5F, zCoord + 0.5F,
+// "thaumicexploration:necroInfusion"+this.getLetterFromNumber(soundOn), 1.0F, 1.0F, false);
 //						soundOn = (soundOn+1)%8;
 //						//Minecraft.getMinecraft().gets
 //					}
 //					this.soundTicks--;
-//					
+//	
 //				}
 //				for (int i=0;i<6;i++) {
 //					if (this.getStackInSlot(i) != null) {
 //				         float ticks = Minecraft.getMinecraft().renderViewEntity.ticksExisted;
 //				         float tickOffset = ticks/360;
-//				         float xChange = -MathHelper.cos((float) (Math.toRadians(ticks*10.0F+(360.0F/highestFilledSlot)*i)+Math.PI));
-//				         float zChange = MathHelper.sin((float) (Math.toRadians(ticks*10.0F+(360.0F/highestFilledSlot)*i)+Math.PI));
-//				         float yChange = MathHelper.sin((float) (Math.toRadians(ticks*10.0F+tickOffset*1000.0F+(360.0F/highestFilledSlot)*i)))/5.0F;
-//				         Thaumcraft.proxy.sparkle((float)xCoord+0.5F+xChange, (float)yCoord+2.15F+yChange, (float)zCoord+0.5F+zChange, 0x7F0000);
+//				         float xChange = -MathHelper.cos((float)
+// (Math.toRadians(ticks*10.0F+(360.0F/highestFilledSlot)*i)+Math.PI));
+//				         float zChange = MathHelper.sin((float)
+// (Math.toRadians(ticks*10.0F+(360.0F/highestFilledSlot)*i)+Math.PI));
+//				         float yChange = MathHelper.sin((float)
+// (Math.toRadians(ticks*10.0F+tickOffset*1000.0F+(360.0F/highestFilledSlot)*i)))/5.0F;
+//				         Thaumcraft.proxy.sparkle((float)xCoord+0.5F+xChange, (float)yCoord+2.15F+yChange,
+// (float)zCoord+0.5F+zChange, 0x7F0000);
 //				         if (crafting && this.recipeInput.size() > 0 && this.recipeEnergy == 0 && (highestFilledSlot-1==i)) {
 //				        	 int randomCandle = worldObj.rand.nextInt(5);
 //				        	 if(worldObj.rand.nextInt(3) == 0) {
-//				        		 ThaumicExploration.proxy.spawnLightningBolt(worldObj, myCandleLocations[randomCandle].posX+0.5F, myCandleLocations[randomCandle].posY+0.75F, myCandleLocations[randomCandle].posZ+0.5F, (float)xCoord+0.5F+xChange, (float)yCoord+2.15F+yChange, (float)zCoord+0.5F+zChange);
-//				        		 worldObj.playSound((float)xCoord+0.5F+xChange, (float)yCoord+2.15F+yChange, (float)zCoord+0.5F+zChange, "thaumcraft:shock", 0.1F, 1.0F, false);
-//					             //worldObj.playSound((float)xCoord+0.5F+xChange, (float)yCoord+2.15F+yChange, (float)zCoord+0.5F+zChange, "random.explode", 4.0F, (1.0F + (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F) * 0.7F,false);
+//				        		 ThaumicExploration.proxy.spawnLightningBolt(worldObj, myCandleLocations[randomCandle].posX+0.5F,
+// myCandleLocations[randomCandle].posY+0.75F, myCandleLocations[randomCandle].posZ+0.5F, (float)xCoord+0.5F+xChange,
+// (float)yCoord+2.15F+yChange, (float)zCoord+0.5F+zChange);
+//				        		 worldObj.playSound((float)xCoord+0.5F+xChange, (float)yCoord+2.15F+yChange, (float)zCoord+0.5F+zChange,
+// "thaumcraft:shock", 0.1F, 1.0F, false);
+//					             //worldObj.playSound((float)xCoord+0.5F+xChange, (float)yCoord+2.15F+yChange,
+// (float)zCoord+0.5F+zChange, "random.explode", 4.0F, (1.0F + (this.worldObj.rand.nextFloat() -
+// this.worldObj.rand.nextFloat()) * 0.2F) * 0.7F,false);
 //				        	 }
 //					         if (this.craftTicks == 100) {
-//					        	 Thaumcraft.proxy.burst(worldObj, (float)xCoord+0.5F+xChange, (float)yCoord+2.15F+yChange, (float)zCoord+0.5F+zChange, 0.5F);
-//					             worldObj.playSound((float)xCoord+0.5F+xChange, (float)yCoord+2.15F+yChange, (float)zCoord+0.5F+zChange, "random.explode", 4.0F, (1.0F + (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F) * 0.7F,false);
-//					        	 //ThaumicExploration.proxy.spawnLightningBolt(worldObj, (float)xCoord+0.5F+xChange, (float)yCoord+2.15F+yChange, (float)zCoord+0.5F+zChange, (float)xCoord+xChange+Math.random(), (float)yCoord+1.65F+yChange+Math.random(), (float)zCoord+Math.random()+zChange);
+//					        	 Thaumcraft.proxy.burst(worldObj, (float)xCoord+0.5F+xChange, (float)yCoord+2.15F+yChange,
+// (float)zCoord+0.5F+zChange, 0.5F);
+//					             worldObj.playSound((float)xCoord+0.5F+xChange, (float)yCoord+2.15F+yChange,
+// (float)zCoord+0.5F+zChange, "random.explode", 4.0F, (1.0F + (this.worldObj.rand.nextFloat() -
+// this.worldObj.rand.nextFloat()) * 0.2F) * 0.7F,false);
+//					        	 //ThaumicExploration.proxy.spawnLightningBolt(worldObj, (float)xCoord+0.5F+xChange,
+// (float)yCoord+2.15F+yChange, (float)zCoord+0.5F+zChange, (float)xCoord+xChange+Math.random(),
+// (float)yCoord+1.65F+yChange+Math.random(), (float)zCoord+Math.random()+zChange);
 //					         }
 //				         }
 //					}
@@ -294,15 +318,19 @@
 //	
 //	  private void inEvZap(boolean all)
 //	  {
-//	    List<Entity> targets = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getAABBPool().getAABB(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(10.0D, 10.0D, 10.0D));
+//	    List<Entity> targets = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class,
+// AxisAlignedBB.getAABBPool().getAABB(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1,
+// this.zCoord + 1).expand(10.0D, 10.0D, 10.0D));
 //	    if ((targets != null) && (targets.size() > 0)) {
 //	      for (Entity target : targets)
 //	      {
-//	    	if (!(target instanceof EntityZombie) && !(target instanceof EntitySkeleton) && !(target instanceof EntityPigZombie)) {
-//	        TXPacketHandler.sendNecroZapPacket(this.xCoord + 0.5F, this.yCoord + 0.5F, this.zCoord + 0.5F, (float)target.posX, (float)target.posY + target.height / 2.0F, (float)target.posZ, this);
-//	        
+//	    	if (!(target instanceof EntityZombie) && !(target instanceof EntitySkeleton) && !(target instanceof
+// EntityPigZombie)) {
+//	        TXPacketHandler.sendNecroZapPacket(this.xCoord + 0.5F, this.yCoord + 0.5F, this.zCoord + 0.5F,
+// (float)target.posX, (float)target.posY + target.height / 2.0F, (float)target.posZ, this);
+//
 //	        target.attackEntityFrom(DamageSource.magic, 4 + this.worldObj.rand.nextInt(4));
-//	        
+//
 //	        if (!all) {
 //	          break;
 //	        }
@@ -318,8 +346,10 @@
 //			if (NecromanticAltarAPI.necroEnergyItems.get(MutablePair.of(entity.getEntityItem().itemID, -1)) != null) {
 //				itemEnergy = NecromanticAltarAPI.necroEnergyItems.get(MutablePair.of(entity.getEntityItem().itemID, -1));
 //			}
-//			if (NecromanticAltarAPI.necroEnergyItems.get(MutablePair.of(entity.getEntityItem().itemID, entity.getEntityItem().getItemDamage())) != null) {
-//				itemEnergy = NecromanticAltarAPI.necroEnergyItems.get(MutablePair.of(entity.getEntityItem().itemID, entity.getEntityItem().getItemDamage()));
+//			if (NecromanticAltarAPI.necroEnergyItems.get(MutablePair.of(entity.getEntityItem().itemID,
+// entity.getEntityItem().getItemDamage())) != null) {
+//				itemEnergy = NecromanticAltarAPI.necroEnergyItems.get(MutablePair.of(entity.getEntityItem().itemID,
+// entity.getEntityItem().getItemDamage()));
 //			}
 //			this.recipeEnergy = Math.max(this.recipeEnergy - (itemEnergy*multiplier), 0);
 //			entity.attackEntityFrom(DamageSource.lava, 100);
@@ -339,7 +369,7 @@
 //	@Override
 //	public void setAspects(AspectList aspects) {
 //		// TODO Auto-generated method stub
-//		
+//	
 //	}
 //
 //	@Override
@@ -386,23 +416,27 @@
 //	
 //	public boolean checkForSkulls() {
 //		boolean hasSkulls = true;
-//		if (!(worldObj.getBlockId(xCoord+1, yCoord, zCoord) == Block.skull.blockID && ((TileEntitySkull)worldObj.getBlockTileEntity(xCoord+1, yCoord, zCoord)).getSkullType() < 4)) {
+//		if (!(worldObj.getBlockId(xCoord+1, yCoord, zCoord) == Block.skull.blockID &&
+// ((TileEntitySkull)worldObj.getBlockTileEntity(xCoord+1, yCoord, zCoord)).getSkullType() < 4)) {
 //			hasSkulls = false;
 //			System.out.println(worldObj.getBlockId(xCoord+1, yCoord, zCoord) == Block.skull.blockID);
 //			System.out.println( worldObj.getBlockMetadata(xCoord+1, yCoord, zCoord) < 4);
 //		}
-//		if (!(worldObj.getBlockId(xCoord-1, yCoord, zCoord) == Block.skull.blockID  && ((TileEntitySkull)worldObj.getBlockTileEntity(xCoord-1, yCoord, zCoord)).getSkullType() < 4)) {
+//		if (!(worldObj.getBlockId(xCoord-1, yCoord, zCoord) == Block.skull.blockID  &&
+// ((TileEntitySkull)worldObj.getBlockTileEntity(xCoord-1, yCoord, zCoord)).getSkullType() < 4)) {
 //			hasSkulls = false;
 //		}
-//		if (!(worldObj.getBlockId(xCoord, yCoord, zCoord+1) == Block.skull.blockID  && ((TileEntitySkull)worldObj.getBlockTileEntity(xCoord, yCoord, zCoord+1)).getSkullType() < 4)) {
+//		if (!(worldObj.getBlockId(xCoord, yCoord, zCoord+1) == Block.skull.blockID  &&
+// ((TileEntitySkull)worldObj.getBlockTileEntity(xCoord, yCoord, zCoord+1)).getSkullType() < 4)) {
 //			hasSkulls = false;
 //		}
-//		if (!(worldObj.getBlockId(xCoord, yCoord, zCoord-1) == Block.skull.blockID  && ((TileEntitySkull)worldObj.getBlockTileEntity(xCoord, yCoord, zCoord-1)).getSkullType() < 4)) {
+//		if (!(worldObj.getBlockId(xCoord, yCoord, zCoord-1) == Block.skull.blockID  &&
+// ((TileEntitySkull)worldObj.getBlockTileEntity(xCoord, yCoord, zCoord-1)).getSkullType() < 4)) {
 //			hasSkulls = false;
 //		}
 //
 //		return hasSkulls;
-//		
+//	
 //	}
 //
 //	@Override
@@ -411,7 +445,8 @@
 //		// TODO Auto-generated method stub
 //		return 0;
 //	}
-//	private ChunkCoordinates[] candleLocations = {new ChunkCoordinates(-2,0,-2),new ChunkCoordinates(2,0,-2),new ChunkCoordinates(3,0,1),new ChunkCoordinates(0,0,3),new ChunkCoordinates(-3,0,1)};
+//	private ChunkCoordinates[] candleLocations = {new ChunkCoordinates(-2,0,-2),new ChunkCoordinates(2,0,-2),new
+// ChunkCoordinates(3,0,1),new ChunkCoordinates(0,0,3),new ChunkCoordinates(-3,0,1)};
 //	@Override
 //	public ItemStack onWandRightClick(World world, ItemStack wandstack,
 //			EntityPlayer player) {
@@ -440,9 +475,9 @@
 //	
 //					if (world.getBlockId(x + xOffset, y, z + zOffset) == ConfigBlocks.blockCandle.blockID) {
 //						possibleCandleLocations.add(new ChunkCoordinates(x + xOffset, y, z + zOffset));
-//						
+//	
 //						if (k == 4 && checkForSkulls()) {
-//							
+//	
 //							active = true;
 //							this.myCandleLocations = (ChunkCoordinates[]) possibleCandleLocations.toArray(new ChunkCoordinates[0]);
 //							break outerLoop;
@@ -467,9 +502,9 @@
 //			if (NecromanticAltarAPI.findMatchingNecromanticInfusionRecipe(items, player) != null) {
 //				NecromanticRecipe recipe = NecromanticAltarAPI.findMatchingNecromanticInfusionRecipe(items, player);
 //				this.crafting = true;
-//				
+//	
 //					this.worldObj.playSound(this.xCoord, this.yCoord, this.zCoord, "thaumcraft:infuserstart", 0.5F, 1.0F, false);
-//				
+//	
 //				this.recipeEnergy = recipe.energyRequired;
 //				this.recipeOutput = recipe.recipeOutput;
 //				this.recipeInstability = recipe.energyRequired;
@@ -486,14 +521,14 @@
 //	public void onUsingWandTick(ItemStack wandstack, EntityPlayer player,
 //			int count) {
 //		// TODO Auto-generated method stub
-//		
+//	
 //	}
 //
 //	@Override
 //	public void onWandStoppedUsing(ItemStack wandstack, World world,
 //			EntityPlayer player, int count) {
 //		// TODO Auto-generated method stub
-//		
+//	
 //	}
 //
 //	
@@ -525,13 +560,13 @@
 //	@Override
 //	public void openChest() {
 //		// TODO Auto-generated method stub
-//		
+//	
 //	}
 //
 //	@Override
 //	public void closeChest() {
 //		// TODO Auto-generated method stub
-//		
+//	
 //	}
 //
 //	@Override
@@ -573,9 +608,9 @@
 //			this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
 //	      	if (this.inventory[i].stackSize <= j)
 //	      	{
-//	      		
+//	
 //	      		ItemStack itemstack = this.inventory[i];
-//	      		
+//	
 //	      		this.inventory[i] = template;
 //	        	return itemstack;
 //	      	}
@@ -641,8 +676,10 @@
 //		for (int i = 0; i < nbttaglist2.tagCount(); i++)
 //		{
 //			NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist2.tagAt(i);
-//			//System.out.println(i + " and " + nbttagcompound1.getInteger("x")+nbttagcompound1.getInteger("y")+nbttagcompound1.getInteger("z"));
-//			this.myCandleLocations[i] = new ChunkCoordinates(nbttagcompound1.getInteger("x"),nbttagcompound1.getInteger("y"),nbttagcompound1.getInteger("z"));
+//			//System.out.println(i + " and " +
+// nbttagcompound1.getInteger("x")+nbttagcompound1.getInteger("y")+nbttagcompound1.getInteger("z"));
+//			this.myCandleLocations[i] = new
+// ChunkCoordinates(nbttagcompound1.getInteger("x"),nbttagcompound1.getInteger("y"),nbttagcompound1.getInteger("z"));
 //		}
 //		if (crafting) {
 //			NBTTagList nbttaglistIn = nbttagcompound.getTagList("recipein");
@@ -660,7 +697,7 @@
 //			this.craftTicks =  nbttagcompound.getInteger("Recipe Tick");
 //		}
 //	}
-//	  
+//
 //	public void writeInventoryNBT(NBTTagCompound nbttagcompound)
 //	{
 //		nbttagcompound.setBoolean("crafting", crafting);
@@ -682,10 +719,10 @@
 //		      }
 //		      nbttagcompound.setTag("recipein", nbttaglist);
 //		    }
-//		
-//		
+//	
+//	
 //			NBTTagCompound recipeOutputs = new NBTTagCompound();
-//		
+//	
 //			recipeOutput.writeToNBT(recipeOutputs);
 //			nbttagcompound.setTag("Recipe Output", recipeOutputs);
 //	
@@ -693,7 +730,7 @@
 //		nbttagcompound.setInteger("Recipe Energy", this.recipeEnergy);
 //		nbttagcompound.setInteger("Recipe Instability", this.recipeInstability);
 //		nbttagcompound.setInteger("Recipe Tick", this.craftTicks);
-//		
+//	
 //		NBTTagList nbttaglist2 = new NBTTagList();
 //		nbttagcompound.setTag("Candles", nbttaglist2);
 //		if (active) {
@@ -727,10 +764,10 @@
 //    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
 //    {
 //    	super.writeToNBT(par1NBTTagCompound);
-//		
+//	
 //    	this.writeInventoryNBT(par1NBTTagCompound);
 //    }
-//    
+//
 //	
 //    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
 //    {
@@ -747,4 +784,4 @@
 //	}
 //	
 //
-//}
+// }

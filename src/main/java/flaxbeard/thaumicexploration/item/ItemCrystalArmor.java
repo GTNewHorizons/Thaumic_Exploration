@@ -1,22 +1,22 @@
-//package flaxbeard.thaumicexploration.item;
+// package flaxbeard.thaumicexploration.item;
 //
-//import java.util.List;
+// import java.util.List;
 //
-//import net.minecraft.client.model.ModelBiped;
-//import net.minecraft.entity.EntityLivingBase;
-//import net.minecraft.entity.player.EntityPlayer;
-//import net.minecraft.item.EnumArmorMaterial;
-//import net.minecraft.item.EnumRarity;
-//import net.minecraft.item.ItemArmor;
-//import net.minecraft.item.ItemStack;
-//import net.minecraft.util.StatCollector;
-//import thaumcraft.api.IRepairable;
-//import thaumcraft.api.IVisDiscounter;
-//import thaumcraft.common.config.ConfigItems;
-//import cpw.mods.fml.relauncher.Side;
-//import cpw.mods.fml.relauncher.SideOnly;
+// import net.minecraft.client.model.ModelBiped;
+// import net.minecraft.entity.EntityLivingBase;
+// import net.minecraft.entity.player.EntityPlayer;
+// import net.minecraft.item.EnumArmorMaterial;
+// import net.minecraft.item.EnumRarity;
+// import net.minecraft.item.ItemArmor;
+// import net.minecraft.item.ItemStack;
+// import net.minecraft.util.StatCollector;
+// import thaumcraft.api.IRepairable;
+// import thaumcraft.api.IVisDiscounter;
+// import thaumcraft.common.config.ConfigItems;
+// import cpw.mods.fml.relauncher.Side;
+// import cpw.mods.fml.relauncher.SideOnly;
 //
-//public class ItemCrystalArmor extends ItemArmor implements IRepairable, IVisDiscounter{
+// public class ItemCrystalArmor extends ItemArmor implements IRepairable, IVisDiscounter{
 //
 //	public ItemCrystalArmor(int par1, EnumArmorMaterial par2EnumArmorMaterial,
 //			int par3, int par4) {
@@ -42,7 +42,8 @@
 //
 //	@Override
 //	public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
-//		return par2ItemStack.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 2)) ? true : super.getIsRepairable(par1ItemStack, par2ItemStack);
+//		return par2ItemStack.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 2)) ? true :
+// super.getIsRepairable(par1ItemStack, par2ItemStack);
 //	}
 //
 //	@Override
@@ -56,4 +57,4 @@
 //		list.add(StatCollector.translateToLocal("tc.visdiscount") + ": " + getVisDiscount() + "%");
 //	}
 //
-//}
+// }

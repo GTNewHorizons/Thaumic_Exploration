@@ -4,8 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.monster.EntityCreeper;
 
-public class EntityAICreeperDummy extends EntityAIBase
-{
+public class EntityAICreeperDummy extends EntityAIBase {
     /** The creeper that is swelling. */
     EntityCreeper swellingCreeper;
 
@@ -14,8 +13,7 @@ public class EntityAICreeperDummy extends EntityAIBase
      */
     EntityLivingBase creeperAttackTarget;
 
-    public EntityAICreeperDummy(EntityCreeper par1EntityCreeper)
-    {
+    public EntityAICreeperDummy(EntityCreeper par1EntityCreeper) {
         this.swellingCreeper = par1EntityCreeper;
         this.setMutexBits(1);
     }
@@ -23,17 +21,16 @@ public class EntityAICreeperDummy extends EntityAIBase
     /**
      * Returns whether the EntityAIBase should begin execution.
      */
-    public boolean shouldExecute()
-    {
+    public boolean shouldExecute() {
         EntityLivingBase entitylivingbase = this.swellingCreeper.getAttackTarget();
-        return this.swellingCreeper.getCreeperState() > 0 || entitylivingbase != null && this.swellingCreeper.getDistanceSqToEntity(entitylivingbase) < 9.0D;
+        return this.swellingCreeper.getCreeperState() > 0
+                || entitylivingbase != null && this.swellingCreeper.getDistanceSqToEntity(entitylivingbase) < 9.0D;
     }
 
     /**
      * Execute a one shot task or start executing a continuous task
      */
-    public void startExecuting()
-    {
+    public void startExecuting() {
         this.swellingCreeper.getNavigator().clearPathEntity();
         this.creeperAttackTarget = this.swellingCreeper.getAttackTarget();
     }
@@ -41,17 +38,14 @@ public class EntityAICreeperDummy extends EntityAIBase
     /**
      * Resets the task
      */
-    public void resetTask()
-    {
+    public void resetTask() {
         this.creeperAttackTarget = null;
     }
 
     /**
      * Updates the task
      */
-    public void updateTask()
-    {
-            this.swellingCreeper.setCreeperState(-1);
-        
+    public void updateTask() {
+        this.swellingCreeper.setCreeperState(-1);
     }
 }

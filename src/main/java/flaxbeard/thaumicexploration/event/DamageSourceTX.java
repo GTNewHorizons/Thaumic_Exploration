@@ -5,16 +5,16 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 
 public class DamageSourceTX extends DamageSource {
-	
-	public static DamageSource soulCrucible = (new DamageSourceTX("soulCrucible")).setDamageBypassesArmor();
-	public static DamageSource noTaint = new DamageSourceTX("noTaint").setDamageBypassesArmor().setMagicDamage();
-	
-	public DamageSourceTX(String par1Str) {
-		super(par1Str);
-	}
-	
-	public static DamageSource witherPlayerDamage(EntityLivingBase par0EntityLiving) {
-	  return new EntityDamageSource("witherMask", par0EntityLiving);
-	}
 
+    public static DamageSource soulCrucible = (new DamageSourceTX("soulCrucible")).setDamageBypassesArmor();
+    public static DamageSource noTaint =
+            new DamageSourceTX("noTaint").setDamageBypassesArmor().setMagicDamage();
+
+    public DamageSourceTX(String par1Str) {
+        super(par1Str);
+    }
+
+    public static DamageSource witherPlayerDamage(EntityLivingBase par0EntityLiving) {
+        return new EntityDamageSource("witherMask", par0EntityLiving);
+    }
 }

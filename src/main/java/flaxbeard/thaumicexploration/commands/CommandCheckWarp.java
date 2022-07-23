@@ -1,14 +1,11 @@
 package flaxbeard.thaumicexploration.commands;
 
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
-import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.common.Thaumcraft;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Created by Katrina on 04/11/2014.
@@ -26,14 +23,15 @@ public class CommandCheckWarp implements ICommand {
 
     @Override
     public List getCommandAliases() {
-        ArrayList<String> arr=new ArrayList<String>();
+        ArrayList<String> arr = new ArrayList<String>();
         arr.add("checkwarp");
         return arr;
     }
 
     @Override
     public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_) {
-        p_71515_1_.addChatMessage(new ChatComponentText("Permanent Warp: "+ Thaumcraft.proxy.playerKnowledge.getWarpPerm(p_71515_1_.getCommandSenderName())));
+        p_71515_1_.addChatMessage(new ChatComponentText(
+                "Permanent Warp: " + Thaumcraft.proxy.playerKnowledge.getWarpPerm(p_71515_1_.getCommandSenderName())));
     }
 
     @Override

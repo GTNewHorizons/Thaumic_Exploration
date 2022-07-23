@@ -1,27 +1,27 @@
-//package flaxbeard.thaumicexploration.block;
+// package flaxbeard.thaumicexploration.block;
 //
-//import java.util.ArrayList;
-//import java.util.Random;
+// import java.util.ArrayList;
+// import java.util.Random;
 //
-//import net.minecraft.block.Block;
-//import net.minecraft.block.BlockFlower;
-//import net.minecraft.block.material.Material;
-//import net.minecraft.client.renderer.texture.IconRegister;
-//import net.minecraft.creativetab.CreativeTabs;
-//import net.minecraft.item.ItemStack;
-//import net.minecraft.util.Icon;
-//import net.minecraft.util.MathHelper;
-//import net.minecraft.world.World;
-//import net.minecraftforge.common.ForgeDirection;
-//import thaumcraft.common.config.Config;
-//import thaumcraft.common.config.ConfigBlocks;
-//import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
-//import cpw.mods.fml.relauncher.Side;
-//import cpw.mods.fml.relauncher.SideOnly;
-//import flaxbeard.thaumicexploration.ThaumicExploration;
+// import net.minecraft.block.Block;
+// import net.minecraft.block.BlockFlower;
+// import net.minecraft.block.material.Material;
+// import net.minecraft.client.renderer.texture.IconRegister;
+// import net.minecraft.creativetab.CreativeTabs;
+// import net.minecraft.item.ItemStack;
+// import net.minecraft.util.Icon;
+// import net.minecraft.util.MathHelper;
+// import net.minecraft.world.World;
+// import net.minecraftforge.common.ForgeDirection;
+// import thaumcraft.common.config.Config;
+// import thaumcraft.common.config.ConfigBlocks;
+// import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
+// import cpw.mods.fml.relauncher.Side;
+// import cpw.mods.fml.relauncher.SideOnly;
+// import flaxbeard.thaumicexploration.ThaumicExploration;
 //
-//public class BlockTaintBerries extends BlockTaintlessFlower
-//{
+// public class BlockTaintBerries extends BlockTaintlessFlower
+// {
 //    @SideOnly(Side.CLIENT)
 //    private Icon[] iconArray;
 //
@@ -45,11 +45,14 @@
 //    public boolean canBlockStay(World par3World, int par2, int par3, int par4)
 //    {
 //        Block soil = blocksList[par3World.getBlockId(par2, par3 - 1, par4)];
-//       
-//        return (par3World.getFullBlockLightValue(par2, par3, par4) >= 8 || par3World.canBlockSeeTheSky(par2, par3, par4)) && 
-//                (soil != null && ((soil.blockID == Block.grass.blockID && par3World.getBiomeGenForCoords(par2, par4) == ThaumcraftWorldGenerator.biomeTaint) || (soil.blockID == ConfigBlocks.blockTaint.blockID && par3World.getBlockMetadata(par2, par3-1, par4) == 1)));
+//
+//        return (par3World.getFullBlockLightValue(par2, par3, par4) >= 8 || par3World.canBlockSeeTheSky(par2, par3,
+// par4)) &&
+//                (soil != null && ((soil.blockID == Block.grass.blockID && par3World.getBiomeGenForCoords(par2, par4)
+// == ThaumcraftWorldGenerator.biomeTaint) || (soil.blockID == ConfigBlocks.blockTaint.blockID &&
+// par3World.getBlockMetadata(par2, par3-1, par4) == 1)));
 //    }
-//    
+//
 //    @Override
 //    protected boolean canThisPlantGrowOnThisBlockID(int par1)
 //    {
@@ -85,7 +88,8 @@
 //     */
 //    public void fertilize(World par1World, int par2, int par3, int par4)
 //    {
-//        int l = par1World.getBlockMetadata(par2, par3, par4) + MathHelper.getRandomIntegerInRange(par1World.rand, 2, 5);
+//        int l = par1World.getBlockMetadata(par2, par3, par4) + MathHelper.getRandomIntegerInRange(par1World.rand, 2,
+// 5);
 //
 //        if (l > 7)
 //        {
@@ -96,7 +100,8 @@
 //    }
 //
 //    /**
-//     * Gets the growth rate for the crop. Setup to encourage rows by halving growth rate if there is diagonals, crops on
+//     * Gets the growth rate for the crop. Setup to encourage rows by halving growth rate if there is diagonals, crops
+// on
 //     * different sides that aren't opposing, and by adding growth for every crop next to this one (and for crop below
 //     * this one). Args: x, y, z
 //     */
@@ -194,12 +199,13 @@
 //    /**
 //     * Drops the block items with a specified chance of dropping the specified items
 //     */
-//    public void dropBlockAsItemWithChance(World par1World, int par2, int par3, int par4, int par5, float par6, int par7)
+//    public void dropBlockAsItemWithChance(World par1World, int par2, int par3, int par4, int par5, float par6, int
+// par7)
 //    {
 //        super.dropBlockAsItemWithChance(par1World, par2, par3, par4, par5, par6, 0);
 //    }
 //
-//    @Override 
+//    @Override
 //    public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune)
 //    {
 //        ArrayList<ItemStack> ret = super.getBlockDropped(world, x, y, z, metadata, fortune);
@@ -260,7 +266,7 @@
 //            this.iconArray[i] = par1IconRegister.registerIcon(this.getTextureName() + "_" + i);
 //        }
 //    }
-//}
+// }
 //
 //
 //

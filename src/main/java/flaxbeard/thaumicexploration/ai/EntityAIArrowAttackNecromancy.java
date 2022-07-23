@@ -1,20 +1,20 @@
-//package flaxbeard.thaumicexploration.ai;
+// package flaxbeard.thaumicexploration.ai;
 //
-//import flaxbeard.thaumicexploration.data.NecromancyMobProperties;
-//import net.minecraft.enchantment.Enchantment;
-//import net.minecraft.enchantment.EnchantmentHelper;
-//import net.minecraft.entity.EntityLiving;
-//import net.minecraft.entity.EntityLivingBase;
-//import net.minecraft.entity.IRangedAttackMob;
-//import net.minecraft.entity.ai.EntityAIArrowAttack;
-//import net.minecraft.entity.ai.EntityAIBase;
-//import net.minecraft.entity.monster.EntitySkeleton;
-//import net.minecraft.entity.projectile.EntityArrow;
-//import net.minecraft.util.MathHelper;
+// import flaxbeard.thaumicexploration.data.NecromancyMobProperties;
+// import net.minecraft.enchantment.Enchantment;
+// import net.minecraft.enchantment.EnchantmentHelper;
+// import net.minecraft.entity.EntityLiving;
+// import net.minecraft.entity.EntityLivingBase;
+// import net.minecraft.entity.IRangedAttackMob;
+// import net.minecraft.entity.ai.EntityAIArrowAttack;
+// import net.minecraft.entity.ai.EntityAIBase;
+// import net.minecraft.entity.monster.EntitySkeleton;
+// import net.minecraft.entity.projectile.EntityArrow;
+// import net.minecraft.util.MathHelper;
 //
-//public class EntityAIArrowAttackNecromancy extends EntityAIBase
+// public class EntityAIArrowAttackNecromancy extends EntityAIBase
 //
-//{
+// {
 //    /** The entity the AI instance has been applied to */
 //    private final EntityLiving entityHost;
 //
@@ -45,7 +45,8 @@
 //        this(par1IRangedAttackMob, par2, par4, par4, par5);
 //    }
 //
-//    public EntityAIArrowAttackNecromancy(EntityLiving par1IRangedAttackMob, double par2, int par4, int par5, float par6)
+//    public EntityAIArrowAttackNecromancy(EntityLiving par1IRangedAttackMob, double par2, int par4, int par5, float
+// par6)
 //    {
 //
 //        this.rangedAttackTime = -1;
@@ -110,7 +111,8 @@
 //     */
 //    public void updateTask()
 //    {
-//        double d0 = this.entityHost.getDistanceSq(this.attackTarget.posX, this.attackTarget.boundingBox.minY, this.attackTarget.posZ);
+//        double d0 = this.entityHost.getDistanceSq(this.attackTarget.posX, this.attackTarget.boundingBox.minY,
+// this.attackTarget.posZ);
 //        boolean flag = this.entityHost.getEntitySenses().canSee(this.attackTarget);
 //
 //        if (flag)
@@ -162,21 +164,27 @@
 //            {
 //            	this.attackEntityWithRangedAttack(entitylivingbase, f1);
 //            }
-//            this.rangedAttackTime = MathHelper.floor_float(f * (float)(this.maxRangedAttackTime - this.field_96561_g) + (float)this.field_96561_g);
+//            this.rangedAttackTime = MathHelper.floor_float(f * (float)(this.maxRangedAttackTime - this.field_96561_g)
+// + (float)this.field_96561_g);
 //        }
 //        else if (this.rangedAttackTime < 0)
 //        {
 //            f = MathHelper.sqrt_double(d0) / this.field_96562_i;
-//            this.rangedAttackTime = MathHelper.floor_float(f * (float)(this.maxRangedAttackTime - this.field_96561_g) + (float)this.field_96561_g);
+//            this.rangedAttackTime = MathHelper.floor_float(f * (float)(this.maxRangedAttackTime - this.field_96561_g)
+// + (float)this.field_96561_g);
 //        }
 //    }
-//    
+//
 //    public void attackEntityWithRangedAttack(EntityLivingBase par1EntityLivingBase, float par2)
 //    {
-//        EntityArrow entityarrow = new EntityArrow(this.rangedAttackEntityHost.worldObj, this.rangedAttackEntityHost, par1EntityLivingBase, 1.6F, (float)(14 - this.rangedAttackEntityHost.worldObj.difficultySetting * 4));
-//        int i = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, this.rangedAttackEntityHost.getHeldItem());
-//        int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, this.rangedAttackEntityHost.getHeldItem());
-//        entityarrow.setDamage((double)(par2 * 2.0F) + this.rangedAttackEntityHost.getRNG().nextGaussian() * 0.25D + (double)((float)this.rangedAttackEntityHost.worldObj.difficultySetting * 0.11F));
+//        EntityArrow entityarrow = new EntityArrow(this.rangedAttackEntityHost.worldObj, this.rangedAttackEntityHost,
+// par1EntityLivingBase, 1.6F, (float)(14 - this.rangedAttackEntityHost.worldObj.difficultySetting * 4));
+//        int i = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId,
+// this.rangedAttackEntityHost.getHeldItem());
+//        int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId,
+// this.rangedAttackEntityHost.getHeldItem());
+//        entityarrow.setDamage((double)(par2 * 2.0F) + this.rangedAttackEntityHost.getRNG().nextGaussian() * 0.25D +
+// (double)((float)this.rangedAttackEntityHost.worldObj.difficultySetting * 0.11F));
 //
 //        if (i > 0)
 //        {
@@ -188,12 +196,15 @@
 //            entityarrow.setKnockbackStrength(j);
 //        }
 //
-//        if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, this.rangedAttackEntityHost.getHeldItem()) > 0 || (this.rangedAttackEntityHost instanceof EntitySkeleton && ((EntitySkeleton)this.rangedAttackEntityHost).getSkeletonType() == 1))
+//        if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId,
+// this.rangedAttackEntityHost.getHeldItem()) > 0 || (this.rangedAttackEntityHost instanceof EntitySkeleton &&
+// ((EntitySkeleton)this.rangedAttackEntityHost).getSkeletonType() == 1))
 //        {
 //            entityarrow.setFire(100);
 //        }
 //
-//        this.rangedAttackEntityHost.playSound("random.bow", 1.0F, 1.0F / (this.rangedAttackEntityHost.getRNG().nextFloat() * 0.4F + 0.8F));
+//        this.rangedAttackEntityHost.playSound("random.bow", 1.0F, 1.0F /
+// (this.rangedAttackEntityHost.getRNG().nextFloat() * 0.4F + 0.8F));
 //        this.rangedAttackEntityHost.worldObj.spawnEntityInWorld(entityarrow);
 //    }
-//}
+// }

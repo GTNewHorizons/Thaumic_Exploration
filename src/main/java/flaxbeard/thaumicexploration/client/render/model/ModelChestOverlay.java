@@ -1,13 +1,12 @@
 package flaxbeard.thaumicexploration.client.render.model;
 
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelRenderer;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
 
 @SideOnly(Side.CLIENT)
-public class ModelChestOverlay extends ModelBase
-{
+public class ModelChestOverlay extends ModelBase {
     /** The chest lid in the chest's model. */
     public ModelRenderer chestLid = (new ModelRenderer(this, 0, 0)).setTextureSize(64, 64);
 
@@ -17,8 +16,7 @@ public class ModelChestOverlay extends ModelBase
     /** The chest's knob in the chest model. */
     public ModelRenderer chestKnob;
 
-    public ModelChestOverlay()
-    {
+    public ModelChestOverlay() {
         this.chestLid.addBox(0.0F, -5.1F, -14.0F, 14, 5, 14, 0.0F);
         this.chestLid.rotationPointX = 1.0F;
         this.chestLid.rotationPointY = 7.0F;
@@ -33,10 +31,9 @@ public class ModelChestOverlay extends ModelBase
     /**
      * This method renders out all parts of the chest model.
      */
-    public void renderAll()
-    {
+    public void renderAll() {
         this.chestLid.render(0.0625F);
-       
+
         this.chestBelow.render(0.0625F);
     }
 }

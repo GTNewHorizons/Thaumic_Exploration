@@ -1,7 +1,9 @@
 package flaxbeard.thaumicexploration.block;
 
-import javax.swing.Icon;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import flaxbeard.thaumicexploration.ThaumicExploration;
+import flaxbeard.thaumicexploration.tile.TileEntityReplicator;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -15,169 +17,173 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
-
 import org.apache.commons.lang3.tuple.MutablePair;
-
 import thaumcraft.common.items.wands.ItemWandCasting;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import flaxbeard.thaumicexploration.ThaumicExploration;
-import flaxbeard.thaumicexploration.tile.TileEntityReplicator;
 import thaumcraft.common.lib.utils.InventoryUtils;
 
 public class BlockReplicator extends BlockContainer {
-	
-	//public static ArrayList<Integer> allowedItems = new ArrayList<Integer>();
-	
-	
-	public IIcon[] icon = new IIcon[3];
 
-	public BlockReplicator() {
-		super(Material.iron);
-	}
-	
-	@Override
-	public void breakBlock(World par1World, int par2, int par3, int par4, Block par5, int par6) {
-		super.breakBlock(par1World, par2, par3, par4, par5, par6);
-	    TileEntity tileEntity = par1World.getTileEntity(par2, par3, par4);
-	    if (tileEntity != null && tileEntity instanceof TileEntityReplicator) {
-	    	if (((TileEntityReplicator)tileEntity).getStackInSlot(0) != null && ((TileEntityReplicator)tileEntity).getStackInSlot(0).stackSize > 0) {
-	    		InventoryUtils.dropItems(par1World, par2, par3, par4);
-	    	}
-	    }
-	}
-	
-	@Override
-	public boolean isOpaqueCube()
-    {
+    // public static ArrayList<Integer> allowedItems = new ArrayList<Integer>();
+
+    public IIcon[] icon = new IIcon[3];
+
+    public BlockReplicator() {
+        super(Material.iron);
+    }
+
+    @Override
+    public void breakBlock(World par1World, int par2, int par3, int par4, Block par5, int par6) {
+        super.breakBlock(par1World, par2, par3, par4, par5, par6);
+        TileEntity tileEntity = par1World.getTileEntity(par2, par3, par4);
+        if (tileEntity != null && tileEntity instanceof TileEntityReplicator) {
+            if (((TileEntityReplicator) tileEntity).getStackInSlot(0) != null
+                    && ((TileEntityReplicator) tileEntity).getStackInSlot(0).stackSize > 0) {
+                InventoryUtils.dropItems(par1World, par2, par3, par4);
+            }
+        }
+    }
+
+    @Override
+    public boolean isOpaqueCube() {
         return false;
     }
 
     @Override
-    public void onNeighborBlockChange(World world, int x, int y, int z, Block par5)
-    {
+    public void onNeighborBlockChange(World world, int x, int y, int z, Block par5) {
         boolean flag = world.isBlockIndirectlyGettingPowered(x, y, z);
 
         TileEntity tileEntity = world.getTileEntity(x, y, z);
-	    if ((tileEntity != null && tileEntity instanceof TileEntityReplicator))
-	    {
-	    	TileEntityReplicator ped = (TileEntityReplicator)tileEntity;
-	    	ped.updateRedstoneState(flag);
-	    }
+        if ((tileEntity != null && tileEntity instanceof TileEntityReplicator)) {
+            TileEntityReplicator ped = (TileEntityReplicator) tileEntity;
+            ped.updateRedstoneState(flag);
+        }
     }
 
-	
-	  public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float par7, float par8, float par9)
-	  {
-	    if (world.isRemote) {
-	      return true;
-	    }
-	    int metadata = world.getBlockMetadata(x, y, z);
-	    TileEntity tileEntity = world.getTileEntity(x, y, z);
-	    if ((tileEntity instanceof TileEntityReplicator))
-	    {
-	      TileEntityReplicator ped = (TileEntityReplicator)tileEntity;
-	      if (ped.crafting && (player.getCurrentEquippedItem() == null || !(player.getCurrentEquippedItem().getItem() instanceof ItemWandCasting))) {
-	    	  ped.cancelCrafting();
-	      }
+    public boolean onBlockActivated(
+            World world, int x, int y, int z, EntityPlayer player, int side, float par7, float par8, float par9) {
+        if (world.isRemote) {
+            return true;
+        }
+        int metadata = world.getBlockMetadata(x, y, z);
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        if ((tileEntity instanceof TileEntityReplicator)) {
+            TileEntityReplicator ped = (TileEntityReplicator) tileEntity;
+            if (ped.crafting
+                    && (player.getCurrentEquippedItem() == null
+                            || !(player.getCurrentEquippedItem().getItem() instanceof ItemWandCasting))) {
+                ped.cancelCrafting();
+            }
 
-		      if (ped.getStackInSlot(0) != null  && (player.getCurrentEquippedItem() == null || !(player.getCurrentEquippedItem().getItem() instanceof ItemWandCasting)))
-		      {
-		    	ItemStack itemstack = ped.getStackInSlot(0);
-	
-		    	if (itemstack.stackSize > 0) {
-		    		float f = world.rand.nextFloat() * 0.8F + 0.1F;
-	                float f1 = world.rand.nextFloat() * 0.8F + 0.1F;
-	                float f2 = world.rand.nextFloat();
-	                EntityItem entityitem;
-			    	int k1 = world.rand.nextInt(21) + 10;
-		
-		            k1 = itemstack.stackSize;
-		
-		            entityitem = new EntityItem(world, (double)((float)x + f), (double)((float)y + f1), (double)((float)z + f2), new ItemStack(itemstack.getItem(), k1, itemstack.getItemDamage()));
-		            float f3 = 0.05F;
-		            entityitem.motionX = (double)((float)world.rand.nextGaussian() * f3);
-		            entityitem.motionY = (double)((float)world.rand.nextGaussian() * f3 + 0.2F);
-		            entityitem.motionZ = (double)((float)world.rand.nextGaussian() * f3);
-		
-		            if (itemstack.hasTagCompound())
-		            {
-		                entityitem.getEntityItem().setTagCompound((NBTTagCompound)itemstack.getTagCompound().copy());
-		            }
-		            world.spawnEntityInWorld(entityitem);
-		    	}
-		    	TileEntity te = world.getTileEntity(x, y, z);
-		    	ItemStack template = ((TileEntityReplicator) te).getStackInSlot(0).copy();
-		    	if (template.stackSize > 0) {
-			    	template.stackSize = template.stackSize -=1;
-	
-			    	((TileEntityReplicator) te).setInventorySlotContents(0, template);
-		    	}
-		    	else
-		    	{
-		    	((TileEntityReplicator) te).setInventorySlotContents(0, null);
-		    	}
-		        world.markBlockForUpdate(x, y, z);
-		        world.playSoundEffect(x, y, z, "random.pop", 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 1.5F);
-		        
-	
-		        return true;
-		        
-		      }
-		      if (player.getCurrentEquippedItem() != null && (ThaumicExploration.allowedItems.contains(MutablePair.of(player.getCurrentEquippedItem().getItem(),player.getCurrentEquippedItem().getItemDamage())) || ThaumicExploration.allowedItems.contains(MutablePair.of(player.getCurrentEquippedItem().getItem(),OreDictionary.WILDCARD_VALUE))))
-		      {
-		    	//IN
-		        ItemStack i = player.getCurrentEquippedItem().copy();
-		        i.stackSize = 0;
-		        ped.setInventorySlotContents(0, i);
-		        //player.getCurrentEquippedItem().stackSize -= 1;
-		        if (player.getCurrentEquippedItem().stackSize == 0) {
-		          player.setCurrentItemOrArmor(0, null);
-		        }
-//		        player.inventory.onInventoryChanged();
-		        world.markBlockForUpdate(x, y, z);
-		        world.playSoundEffect(x, y, z, "random.pop", 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 1.6F);
-		        
-		        return true;
-		      
-		    }
-	    }
-	   
-	    return true;
-	  }
+            if (ped.getStackInSlot(0) != null
+                    && (player.getCurrentEquippedItem() == null
+                            || !(player.getCurrentEquippedItem().getItem() instanceof ItemWandCasting))) {
+                ItemStack itemstack = ped.getStackInSlot(0);
 
-    public boolean renderAsNormalBlock()
-    {
+                if (itemstack.stackSize > 0) {
+                    float f = world.rand.nextFloat() * 0.8F + 0.1F;
+                    float f1 = world.rand.nextFloat() * 0.8F + 0.1F;
+                    float f2 = world.rand.nextFloat();
+                    EntityItem entityitem;
+                    int k1 = world.rand.nextInt(21) + 10;
+
+                    k1 = itemstack.stackSize;
+
+                    entityitem = new EntityItem(
+                            world,
+                            (double) ((float) x + f),
+                            (double) ((float) y + f1),
+                            (double) ((float) z + f2),
+                            new ItemStack(itemstack.getItem(), k1, itemstack.getItemDamage()));
+                    float f3 = 0.05F;
+                    entityitem.motionX = (double) ((float) world.rand.nextGaussian() * f3);
+                    entityitem.motionY = (double) ((float) world.rand.nextGaussian() * f3 + 0.2F);
+                    entityitem.motionZ = (double) ((float) world.rand.nextGaussian() * f3);
+
+                    if (itemstack.hasTagCompound()) {
+                        entityitem.getEntityItem().setTagCompound((NBTTagCompound)
+                                itemstack.getTagCompound().copy());
+                    }
+                    world.spawnEntityInWorld(entityitem);
+                }
+                TileEntity te = world.getTileEntity(x, y, z);
+                ItemStack template =
+                        ((TileEntityReplicator) te).getStackInSlot(0).copy();
+                if (template.stackSize > 0) {
+                    template.stackSize = template.stackSize -= 1;
+
+                    ((TileEntityReplicator) te).setInventorySlotContents(0, template);
+                } else {
+                    ((TileEntityReplicator) te).setInventorySlotContents(0, null);
+                }
+                world.markBlockForUpdate(x, y, z);
+                world.playSoundEffect(
+                        x,
+                        y,
+                        z,
+                        "random.pop",
+                        0.2F,
+                        ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 1.5F);
+
+                return true;
+            }
+            if (player.getCurrentEquippedItem() != null
+                    && (ThaumicExploration.allowedItems.contains(MutablePair.of(
+                                    player.getCurrentEquippedItem().getItem(),
+                                    player.getCurrentEquippedItem().getItemDamage()))
+                            || ThaumicExploration.allowedItems.contains(MutablePair.of(
+                                    player.getCurrentEquippedItem().getItem(), OreDictionary.WILDCARD_VALUE)))) {
+                // IN
+                ItemStack i = player.getCurrentEquippedItem().copy();
+                i.stackSize = 0;
+                ped.setInventorySlotContents(0, i);
+                // player.getCurrentEquippedItem().stackSize -= 1;
+                if (player.getCurrentEquippedItem().stackSize == 0) {
+                    player.setCurrentItemOrArmor(0, null);
+                }
+                //		        player.inventory.onInventoryChanged();
+                world.markBlockForUpdate(x, y, z);
+                world.playSoundEffect(
+                        x,
+                        y,
+                        z,
+                        "random.pop",
+                        0.2F,
+                        ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 1.6F);
+
+                return true;
+            }
+        }
+
+        return true;
+    }
+
+    public boolean renderAsNormalBlock() {
         return false;
     }
-    
-    public int getRenderType()
-    {
+
+    public int getRenderType() {
         return ThaumicExploration.replicatorRenderID;
     }
-	
-	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister ir)
-	{
-		super.registerBlockIcons(ir);
-		this.icon[0] = ir.registerIcon("thaumicexploration:replicatorBottom");
-		this.icon[1] = ir.registerIcon("thaumicexploration:replicator");
-		this.icon[2] = ir.registerIcon("thaumicexploration:replicatorTop");
-	}
-	
-	@Override
-	public IIcon getIcon(IBlockAccess iblockaccess, int i, int j, int k, int side)
-	{
-		if (side == 0 || side == 1) {
-			return this.icon[0];
-		}
-		return this.icon[1];
-	}
 
-	@Override
-	public TileEntity createNewTileEntity(World var1, int var2) {
-		// TODO Auto-generated method stub
-		return new TileEntityReplicator();
-	}
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister ir) {
+        super.registerBlockIcons(ir);
+        this.icon[0] = ir.registerIcon("thaumicexploration:replicatorBottom");
+        this.icon[1] = ir.registerIcon("thaumicexploration:replicator");
+        this.icon[2] = ir.registerIcon("thaumicexploration:replicatorTop");
+    }
 
+    @Override
+    public IIcon getIcon(IBlockAccess iblockaccess, int i, int j, int k, int side) {
+        if (side == 0 || side == 1) {
+            return this.icon[0];
+        }
+        return this.icon[1];
+    }
+
+    @Override
+    public TileEntity createNewTileEntity(World var1, int var2) {
+        // TODO Auto-generated method stub
+        return new TileEntityReplicator();
+    }
 }

@@ -11,18 +11,18 @@ public class TileEntityEverburnUrn extends TileEntity implements IFluidTank, IFl
 
     private int ticks = 0;
     public float ignisVis;
-    public static int CONVERSION_FACTOR=250;
+    public static int CONVERSION_FACTOR = 250;
 
     @Override
     public void readFromNBT(NBTTagCompound nbttagcompound) {
         super.readFromNBT(nbttagcompound);
-        ignisVis=nbttagcompound.getFloat("ignisVis");
+        ignisVis = nbttagcompound.getFloat("ignisVis");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound nbttagcompound) {
         super.writeToNBT(nbttagcompound);
-        nbttagcompound.setFloat("ignisVis",ignisVis);
+        nbttagcompound.setFloat("ignisVis", ignisVis);
     }
 
     @Override
@@ -32,12 +32,12 @@ public class TileEntityEverburnUrn extends TileEntity implements IFluidTank, IFl
 
     @Override
     public int getFluidAmount() {
-        return (int)Math.floor(ignisVis*CONVERSION_FACTOR);
+        return (int) Math.floor(ignisVis * CONVERSION_FACTOR);
     }
 
     @Override
     public int getCapacity() {
-        return 4*CONVERSION_FACTOR;
+        return 4 * CONVERSION_FACTOR;
     }
 
     @Override
@@ -53,11 +53,11 @@ public class TileEntityEverburnUrn extends TileEntity implements IFluidTank, IFl
     @Override
     public FluidStack drain(int maxDrain, boolean doDrain) {
         float drained = Math.min(maxDrain, getFluidAmount());
-        if(doDrain) {
+        if (doDrain) {
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-            ignisVis=ignisVis-(drained/250);
+            ignisVis = ignisVis - (drained / 250);
         }
-        return new FluidStack(FluidRegistry.LAVA, (int)drained);
+        return new FluidStack(FluidRegistry.LAVA, (int) drained);
     }
 
     @Override
@@ -66,8 +66,7 @@ public class TileEntityEverburnUrn extends TileEntity implements IFluidTank, IFl
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, FluidStack resource,
-                            boolean doDrain) {
+    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
         if (!resource.isFluidEqual(new FluidStack(FluidRegistry.LAVA, 1)) || !(from == ForgeDirection.UP)) {
             return null;
         }
@@ -95,19 +94,20 @@ public class TileEntityEverburnUrn extends TileEntity implements IFluidTank, IFl
 
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-        return new FluidTankInfo[]{this.getInfo()};
+        return new FluidTankInfo[] {this.getInfo()};
     }
 
     @Override
     public void updateEntity() {
         super.updateEntity();
         this.ticks++;
-        if(this.ticks==10) {
-            if(this.ignisVis<16){
-                ignisVis += VisNetHandler.drainVis(this.worldObj, this.xCoord, this.yCoord, this.zCoord, Aspect.FIRE, 1);
-                worldObj.markBlockForUpdate(xCoord,yCoord,zCoord);
+        if (this.ticks == 10) {
+            if (this.ignisVis < 16) {
+                ignisVis +=
+                        VisNetHandler.drainVis(this.worldObj, this.xCoord, this.yCoord, this.zCoord, Aspect.FIRE, 1);
+                worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             }
-            ticks=0;
+            ticks = 0;
         }
     }
 }

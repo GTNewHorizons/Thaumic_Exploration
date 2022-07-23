@@ -5,142 +5,131 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 public class TempInventory implements IInventory {
-	
-	private ItemStack[] inventory;
-	public int type = 1;
-	
-	public TempInventory(int i) {
-		inventory = new ItemStack[i];
-	}
-	
-	public boolean equals(Object obj) {
-		///System.out.println("ttt");
-		if (!(obj instanceof TempInventory)) {
-			return false;
-		}
-		if (inventory.length != ((TempInventory)obj).inventory.length) {
-			return false;
-		}
-		for (int z = 0; z<inventory.length; z++) {
-			if (inventory[z] == null && ((TempInventory)obj).inventory[z] == null) {
-				
-			}
-			else
-			{
-				if (inventory[z] == null && ((TempInventory)obj).inventory[z] != null) {
-					return false;
-				}
-				if (inventory[z] != null && ((TempInventory)obj).inventory[z] == null) {
-					return false;
-				}
-				if (!inventory[z].equals(((TempInventory)obj).inventory[z])) {
-					return false;
-				}
-			}
-		}
-		return true;
-		
-	}
 
-	@Override
-	public int getSizeInventory() {
-		
-		return inventory.length;
-	}
+    private ItemStack[] inventory;
+    public int type = 1;
 
-	@Override
-	public ItemStack getStackInSlot(int i) {
-		
-		return inventory[i];
-	}
+    public TempInventory(int i) {
+        inventory = new ItemStack[i];
+    }
 
-	@Override
-	public ItemStack decrStackSize(int i, int j) {
-		if (this.inventory[i] != null)
-        {
+    public boolean equals(Object obj) {
+        /// System.out.println("ttt");
+        if (!(obj instanceof TempInventory)) {
+            return false;
+        }
+        if (inventory.length != ((TempInventory) obj).inventory.length) {
+            return false;
+        }
+        for (int z = 0; z < inventory.length; z++) {
+            if (inventory[z] == null && ((TempInventory) obj).inventory[z] == null) {
+
+            } else {
+                if (inventory[z] == null && ((TempInventory) obj).inventory[z] != null) {
+                    return false;
+                }
+                if (inventory[z] != null && ((TempInventory) obj).inventory[z] == null) {
+                    return false;
+                }
+                if (!inventory[z].equals(((TempInventory) obj).inventory[z])) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int getSizeInventory() {
+
+        return inventory.length;
+    }
+
+    @Override
+    public ItemStack getStackInSlot(int i) {
+
+        return inventory[i];
+    }
+
+    @Override
+    public ItemStack decrStackSize(int i, int j) {
+        if (this.inventory[i] != null) {
             ItemStack itemstack;
 
-            if (this.inventory[i].stackSize <= j)
-            {
+            if (this.inventory[i].stackSize <= j) {
                 itemstack = this.inventory[i];
                 this.inventory[i] = null;
                 return itemstack;
-            }
-            else
-            {
+            } else {
                 itemstack = this.inventory[i].splitStack(j);
 
-                if (this.inventory[i].stackSize == 0)
-                {
+                if (this.inventory[i].stackSize == 0) {
                     this.inventory[i] = null;
                 }
 
                 return itemstack;
             }
-        }
-        else
-        {
+        } else {
             return null;
         }
-	}
+    }
 
-	@Override
-	public ItemStack getStackInSlotOnClosing(int i) {
-		
-		return inventory[i];
-	}
+    @Override
+    public ItemStack getStackInSlotOnClosing(int i) {
 
-	@Override
-	public void setInventorySlotContents(int i, ItemStack itemstack) {
-		inventory[i] = itemstack;
-		
-	}
-	@Override
-	public int getInventoryStackLimit() {
-		
-		return 64;
-	}
+        return inventory[i];
+    }
 
-	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
-		
-		return false;
-	}
+    @Override
+    public void setInventorySlotContents(int i, ItemStack itemstack) {
+        inventory[i] = itemstack;
+    }
 
-	@Override
-	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-		
-		return true;
-	}
+    @Override
+    public int getInventoryStackLimit() {
 
-	@Override
-	public String getInventoryName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        return 64;
+    }
 
-	@Override
-	public boolean hasCustomInventoryName() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean isUseableByPlayer(EntityPlayer entityplayer) {
 
-	@Override
-	public void markDirty() {
-		// TODO Auto-generated method stub
-		
-	}
+        return false;
+    }
 
-	@Override
-	public void openInventory() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 
-	@Override
-	public void closeInventory() {
-		// TODO Auto-generated method stub
-		
-	}
-	
+        return true;
+    }
+
+    @Override
+    public String getInventoryName() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public boolean hasCustomInventoryName() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void markDirty() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void openInventory() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void closeInventory() {
+        // TODO Auto-generated method stub
+
+    }
 }

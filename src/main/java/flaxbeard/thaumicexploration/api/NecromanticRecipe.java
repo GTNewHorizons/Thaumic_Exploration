@@ -1,14 +1,14 @@
-//package flaxbeard.thaumicexploration.api;
+// package flaxbeard.thaumicexploration.api;
 //
-//import java.util.ArrayList;
+// import java.util.ArrayList;
 //
-//import net.minecraft.entity.player.EntityPlayer;
-//import net.minecraft.item.ItemStack;
-//import net.minecraft.world.World;
-//import net.minecraftforge.oredict.OreDictionary;
-//import thaumcraft.api.ThaumcraftApiHelper;
+// import net.minecraft.entity.player.EntityPlayer;
+// import net.minecraft.item.ItemStack;
+// import net.minecraft.world.World;
+// import net.minecraftforge.oredict.OreDictionary;
+// import thaumcraft.api.ThaumcraftApiHelper;
 //
-//public class NecromanticRecipe {
+// public class NecromanticRecipe {
 //	public String researchRequired;
 //	public ItemStack recipeOutput;
 //	public ItemStack[] recipeInput;
@@ -25,7 +25,8 @@
 //	}
 //	public boolean matches(ArrayList<ItemStack> input, World world, EntityPlayer player)
 //	  {
-//	    if ((this.researchRequired.length() > 0) && (!ThaumcraftApiHelper.isResearchComplete(player.username, this.researchRequired))) {
+//	    if ((this.researchRequired.length() > 0) && (!ThaumcraftApiHelper.isResearchComplete(player.username,
+// this.researchRequired))) {
 //	      return false;
 //	    }
 //
@@ -84,6 +85,7 @@
 //	    {
 //	      t1 = ItemStack.areItemStackTagsEqual(stack0, stack1);
 //	    }
-//	    return stack0.stackSize > stack0.getMaxStackSize() ? false : stack0.getItemDamage() != stack1.getItemDamage() ? false : stack0.itemID != stack1.itemID ? false : t1;
+//	    return stack0.stackSize > stack0.getMaxStackSize() ? false : stack0.getItemDamage() != stack1.getItemDamage() ?
+// false : stack0.itemID != stack1.itemID ? false : t1;
 //	  }
-//}
+// }

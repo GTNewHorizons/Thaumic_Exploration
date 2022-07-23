@@ -1,37 +1,37 @@
-//package flaxbeard.thaumicexploration.item.focus;
+// package flaxbeard.thaumicexploration.item.focus;
 //
-//import java.util.ArrayList;
-//import java.util.List;
+// import java.util.ArrayList;
+// import java.util.List;
 //
-//import net.minecraft.client.renderer.texture.IconRegister;
-//import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-//import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-//import net.minecraft.entity.ai.EntityAITaskEntry;
-//import net.minecraft.entity.item.EntityItem;
-//import net.minecraft.entity.monster.EntityEnderman;
-//import net.minecraft.entity.monster.EntityZombie;
-//import net.minecraft.entity.player.EntityPlayer;
-//import net.minecraft.item.Item;
-//import net.minecraft.item.ItemStack;
-//import net.minecraft.nbt.NBTTagCompound;
-//import net.minecraft.util.AxisAlignedBB;
-//import net.minecraft.util.Icon;
-//import net.minecraft.util.MovingObjectPosition;
-//import net.minecraft.world.World;
-//import thaumcraft.api.aspects.Aspect;
-//import thaumcraft.api.aspects.AspectList;
-//import thaumcraft.api.wands.IWandFocus;
-//import thaumcraft.client.codechicken.core.vec.Vector3;
-//import thaumcraft.common.items.wands.ItemWandCasting;
-//import cpw.mods.fml.relauncher.Side;
-//import cpw.mods.fml.relauncher.SideOnly;
-//import flaxbeard.thaumicexploration.ThaumicExploration;
-//import flaxbeard.thaumicexploration.ai.EntityAIArrowAttackNecromancy;
-//import flaxbeard.thaumicexploration.ai.EntityAIAttackOnCollideReplacement;
-//import flaxbeard.thaumicexploration.ai.EntityAINearestAttackableTargetNecromancy;
-//import flaxbeard.thaumicexploration.data.NecromancyMobProperties;
+// import net.minecraft.client.renderer.texture.IconRegister;
+// import net.minecraft.entity.ai.EntityAIAttackOnCollide;
+// import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+// import net.minecraft.entity.ai.EntityAITaskEntry;
+// import net.minecraft.entity.item.EntityItem;
+// import net.minecraft.entity.monster.EntityEnderman;
+// import net.minecraft.entity.monster.EntityZombie;
+// import net.minecraft.entity.player.EntityPlayer;
+// import net.minecraft.item.Item;
+// import net.minecraft.item.ItemStack;
+// import net.minecraft.nbt.NBTTagCompound;
+// import net.minecraft.util.AxisAlignedBB;
+// import net.minecraft.util.Icon;
+// import net.minecraft.util.MovingObjectPosition;
+// import net.minecraft.world.World;
+// import thaumcraft.api.aspects.Aspect;
+// import thaumcraft.api.aspects.AspectList;
+// import thaumcraft.api.wands.IWandFocus;
+// import thaumcraft.client.codechicken.core.vec.Vector3;
+// import thaumcraft.common.items.wands.ItemWandCasting;
+// import cpw.mods.fml.relauncher.Side;
+// import cpw.mods.fml.relauncher.SideOnly;
+// import flaxbeard.thaumicexploration.ThaumicExploration;
+// import flaxbeard.thaumicexploration.ai.EntityAIArrowAttackNecromancy;
+// import flaxbeard.thaumicexploration.ai.EntityAIAttackOnCollideReplacement;
+// import flaxbeard.thaumicexploration.ai.EntityAINearestAttackableTargetNecromancy;
+// import flaxbeard.thaumicexploration.data.NecromancyMobProperties;
 //
-//public class ItemFocusNecromancy extends Item implements IWandFocus {
+// public class ItemFocusNecromancy extends Item implements IWandFocus {
 //
 //	private static final AspectList visUsage = new AspectList().add(Aspect.AIR, 1);
 //	private static Icon orn;
@@ -55,10 +55,10 @@
 //			stack.stackTagCompound.setInteger("progress",0);
 //			stack.stackTagCompound.setInteger("lastItem",0);
 //		}
-//		
+//	
 //		int lastItem = stack.stackTagCompound.getInteger("lastItem");
 //		ItemWandCasting wand = (ItemWandCasting) stack.getItem();
-//		
+//	
 //		Vector3 target = Vector3.fromEntityCenter(player);
 //
 //		final int range = 6;
@@ -68,7 +68,9 @@
 //
 //		target.y += 0.5;
 //
-//		List<EntityItem> entities = player.worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(target.x - range, target.y - range, target.z - range, target.x + range, target.y + range, target.z + range));
+//		List<EntityItem> entities = player.worldObj.getEntitiesWithinAABB(EntityItem.class,
+// AxisAlignedBB.getBoundingBox(target.x - range, target.y - range, target.z - range, target.x + range, target.y +
+// range, target.z + range));
 //		boolean foundItem = false;
 //		boolean sameItem = false;
 //		int currentItem = 0;
@@ -112,7 +114,7 @@
 //		if (progress >= 65) {
 //			stack.stackTagCompound.setInteger("progress",0);
 //			ItemStack stack2 = targetItem.getDataWatcher().getWatchableObjectItemStack(10);
-//			
+//	
 //			ItemStack newStack = stack2;
 //			newStack.stackSize--;
 //			targetItem.setEntityItemStack(newStack);
@@ -146,7 +148,7 @@
 //						mob.tasks.removeTask(entry.action);
 //					}
 //					mob.tasks.addTask(2, new EntityAIAttackOnCollideReplacement(mob, EntityZombie.class, 1.0D, false));
-//					mob.targetTasks.addTask(0, new EntityAINearestAttackableTargetNecromancy(mob, EntityZombie.class, 0, true)); 
+//					mob.targetTasks.addTask(0, new EntityAINearestAttackableTargetNecromancy(mob, EntityZombie.class, 0, true));
 //					if(NecromancyMobProperties.get(mob) == null)
 //					{
 //						NecromancyMobProperties.register(mob);
@@ -183,7 +185,7 @@
 //					}
 //					mob.setCurrentItemOrArmor(0, new ItemStack(Item.bow));
 //					mob.tasks.addTask(2, new EntityAIArrowAttackNecromancy(mob, 1.0D, 20, 60, 15.0F));
-//					mob.targetTasks.addTask(0, new EntityAINearestAttackableTargetNecromancy(mob, EntityZombie.class, 0, true)); 
+//					mob.targetTasks.addTask(0, new EntityAINearestAttackableTargetNecromancy(mob, EntityZombie.class, 0, true));
 //					if(NecromancyMobProperties.get(mob) == null)
 //					{
 //						NecromancyMobProperties.register(mob);
@@ -250,7 +252,7 @@
 //	public void onPlayerStoppedUsingFocus(ItemStack itemstack, World world,
 //			EntityPlayer player, int count) {
 //		itemstack.stackTagCompound.setInteger("progress", 0);
-//		
+//	
 //	}
 //
 //	@Override
@@ -266,4 +268,4 @@
 //		return false;
 //	}
 //
-//}
+// }

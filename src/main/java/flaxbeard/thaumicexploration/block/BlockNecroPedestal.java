@@ -1,40 +1,41 @@
-//package flaxbeard.thaumicexploration.block;
+// package flaxbeard.thaumicexploration.block;
 //
-//import java.util.List;
+// import java.util.List;
 //
-//import net.minecraft.block.BlockContainer;
-//import net.minecraft.block.material.Material;
-//import net.minecraft.client.renderer.texture.IconRegister;
-//import net.minecraft.entity.Entity;
-//import net.minecraft.entity.item.EntityItem;
-//import net.minecraft.entity.player.EntityPlayer;
-//import net.minecraft.item.Item;
-//import net.minecraft.item.ItemStack;
-//import net.minecraft.nbt.NBTTagCompound;
-//import net.minecraft.tileentity.TileEntity;
-//import net.minecraft.util.AxisAlignedBB;
-//import net.minecraft.util.Icon;
-//import net.minecraft.world.IBlockAccess;
-//import net.minecraft.world.World;
-//import net.minecraftforge.common.ForgeDirection;
-//import thaumcraft.common.items.wands.ItemWandCasting;
-//import cpw.mods.fml.relauncher.Side;
-//import cpw.mods.fml.relauncher.SideOnly;
-//import flaxbeard.thaumicexploration.ThaumicExploration;
-//import flaxbeard.thaumicexploration.tile.TileEntityNecroPedestal;
+// import net.minecraft.block.BlockContainer;
+// import net.minecraft.block.material.Material;
+// import net.minecraft.client.renderer.texture.IconRegister;
+// import net.minecraft.entity.Entity;
+// import net.minecraft.entity.item.EntityItem;
+// import net.minecraft.entity.player.EntityPlayer;
+// import net.minecraft.item.Item;
+// import net.minecraft.item.ItemStack;
+// import net.minecraft.nbt.NBTTagCompound;
+// import net.minecraft.tileentity.TileEntity;
+// import net.minecraft.util.AxisAlignedBB;
+// import net.minecraft.util.Icon;
+// import net.minecraft.world.IBlockAccess;
+// import net.minecraft.world.World;
+// import net.minecraftforge.common.ForgeDirection;
+// import thaumcraft.common.items.wands.ItemWandCasting;
+// import cpw.mods.fml.relauncher.Side;
+// import cpw.mods.fml.relauncher.SideOnly;
+// import flaxbeard.thaumicexploration.ThaumicExploration;
+// import flaxbeard.thaumicexploration.tile.TileEntityNecroPedestal;
 //
-//public class BlockNecroPedestal extends BlockContainer{
+// public class BlockNecroPedestal extends BlockContainer{
 //
 //	  public Icon[] iconPedestal = new Icon[6];
-//	  
-//	  public void addCollisionBoxesToList(World world, int i, int j, int k, AxisAlignedBB axisalignedbb, List arraylist, Entity par7Entity) {
+//
+//	  public void addCollisionBoxesToList(World world, int i, int j, int k, AxisAlignedBB axisalignedbb, List arraylist,
+// Entity par7Entity) {
 //		  float W8 = 0.5F;
 //		  float W4 = 0.25F;
 //		  float W1 = 0.0625F;
 //	      setBlockBounds(0.0F-W4, 0.0F, 0.0F-W4, 1.0F+W4, 1.0F, 1.0F+W4);
 //	      super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
 //	  }
-//	  
+//
 //	@SideOnly(Side.CLIENT)
 //    public void registerIcons(IconRegister ir)
 //    {
@@ -51,14 +52,17 @@
 //	    setResistance(25.0F);
 //	}
 //	
-//	 public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float par7, float par8, float par9)
+//	 public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float par7, float
+// par8, float par9)
 //	  {
 ////	    if (world.isRemote) {
 ////	      return true;
 ////	    }
 //	    int metadata = world.getBlockMetadata(x, y, z);
 //	    TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
-//	    if (tileEntity instanceof TileEntityNecroPedestal && player.getCurrentEquippedItem() == null || (!(player.getCurrentEquippedItem().getItem() instanceof ItemWandCasting) && !(player.getCurrentEquippedItem().itemID == Item.flintAndSteel.itemID)))
+//	    if (tileEntity instanceof TileEntityNecroPedestal && player.getCurrentEquippedItem() == null ||
+// (!(player.getCurrentEquippedItem().getItem() instanceof ItemWandCasting) && !(player.getCurrentEquippedItem().itemID
+// == Item.flintAndSteel.itemID)))
 //	    {
 //	      TileEntityNecroPedestal ped = (TileEntityNecroPedestal)tileEntity;
 //	      	int highestFilledSlot = -1;
@@ -74,7 +78,7 @@
 //					highestFilledSlot = i;
 //				}
 //			}
-//			
+//	
 //	      if (player.isSneaking() && highestFilledSlot != -1 && !ped.crafting)
 //	      {
 //	    	ItemStack item = ped.getStackInSlot(highestFilledSlot);
@@ -82,8 +86,9 @@
 //	            float rx = world.rand.nextFloat() * 0.8F + 0.1F;
 //	            float ry = world.rand.nextFloat() * 0.8F + 0.1F;
 //	            float rz = world.rand.nextFloat() * 0.8F + 0.1F;
-//	            
-//	            EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z + rz, new ItemStack(item.itemID, item.stackSize, item.getItemDamage()));
+//
+//	            EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z + rz, new ItemStack(item.itemID,
+// item.stackSize, item.getItemDamage()));
 //	            if (item.hasTagCompound()) {
 //	              entityItem.getEntityItem().setTagCompound((NBTTagCompound)item.getTagCompound().copy());
 //	            }
@@ -95,8 +100,9 @@
 //	            ped.setInventorySlotContents(highestFilledSlot, null);
 //	    	}
 //	        world.markBlockForUpdate(x, y, z);
-//	        world.playSoundEffect(x, y, z, "random.pop", 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 1.5F);
-//	        
+//	        world.playSoundEffect(x, y, z, "random.pop", 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F
+// + 1.0F) * 1.5F);
+//
 //
 //	        return true;
 //	      }
@@ -111,13 +117,14 @@
 //	        }
 //	        player.inventory.onInventoryChanged();
 //	        world.markBlockForUpdate(x, y, z);
-//	        world.playSoundEffect(x, y, z, "random.pop", 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 1.6F);
-//	        
+//	        world.playSoundEffect(x, y, z, "random.pop", 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F
+// + 1.0F) * 1.6F);
+//
 //	        return true;
 //	      }
 //	    }
 //
-//	   
+//
 //	    return super.onBlockActivated(world, x, y, z, player, side, par7, par8, par9);
 //	  }
 //	
@@ -125,17 +132,17 @@
 //	  {
 //	    return ThaumicExploration.necroPedestalRenderID;
 //	  }
-//	  
+//
 //	  public boolean isOpaqueCube()
 //	  {
 //	    return false;
 //	  }
-//	  
+//
 //	  public boolean renderAsNormalBlock()
 //	  {
 //	    return false;
 //	  }
-//	  
+//
 //	public Icon getIcon(int side, int md)
 //	{
 //	
@@ -150,10 +157,10 @@
 //	
 //	  public void setBlockBoundsBasedOnState(IBlockAccess world, int i, int j, int k)
 //	  {
-//		  
+//
 //	      setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 //	    }
-//	  
+//
 //	  public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side)
 //	  {
 //	    if (side == ForgeDirection.UP) {
@@ -168,4 +175,4 @@
 //	}
 //	
 //
-//}
+// }

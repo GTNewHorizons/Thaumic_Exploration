@@ -5,79 +5,74 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityAutoCrafter extends TileEntity implements IInventory{
+public class TileEntityAutoCrafter extends TileEntity implements IInventory {
 
-	@Override
-	public int getSizeInventory() {
-		
-		return 0;
-	}
+    @Override
+    public int getSizeInventory() {
 
-	@Override
-	public ItemStack getStackInSlot(int i) {
-		
-		return null;
-	}
+        return 0;
+    }
 
-	@Override
-	public ItemStack decrStackSize(int i, int j) {
-		
-		return null;
-	}
+    @Override
+    public ItemStack getStackInSlot(int i) {
 
-	@Override
-	public ItemStack getStackInSlotOnClosing(int i) {
-		
-		return null;
-	}
+        return null;
+    }
 
-	@Override
-	public void setInventorySlotContents(int i, ItemStack itemstack) {
-		
-		
-	}
+    @Override
+    public ItemStack decrStackSize(int i, int j) {
 
+        return null;
+    }
 
-	@Override
-	public int getInventoryStackLimit() {
-		
-		return 0;
-	}
+    @Override
+    public ItemStack getStackInSlotOnClosing(int i) {
 
-	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
-		
-		return false;
-	}
+        return null;
+    }
 
-	@Override
-	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-		
-		return false;
-	}
+    @Override
+    public void setInventorySlotContents(int i, ItemStack itemstack) {}
 
-	@Override
-	public String getInventoryName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public int getInventoryStackLimit() {
 
-	@Override
-	public boolean hasCustomInventoryName() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+        return 0;
+    }
 
-	@Override
-	public void openInventory() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public boolean isUseableByPlayer(EntityPlayer entityplayer) {
 
-	@Override
-	public void closeInventory() {
-		// TODO Auto-generated method stub
-		
-	}
+        return false;
+    }
 
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack itemstack) {
+
+        return false;
+    }
+
+    @Override
+    public String getInventoryName() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public boolean hasCustomInventoryName() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void openInventory() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void closeInventory() {
+        // TODO Auto-generated method stub
+
+    }
 }

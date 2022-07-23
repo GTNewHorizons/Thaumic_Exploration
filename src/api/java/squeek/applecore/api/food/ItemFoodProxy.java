@@ -14,38 +14,33 @@ import net.minecraft.item.ItemStack;
  * <br>
  * {@code new ItemFoodProxy(this).onEaten(itemStack, player);}
  */
-public class ItemFoodProxy extends ItemFood
-{
-	public IEdible proxyEdible;
+public class ItemFoodProxy extends ItemFood {
+    public IEdible proxyEdible;
 
-	public ItemFoodProxy(IEdible proxyEdible)
-	{
-		super(0, false);
-	}
+    public ItemFoodProxy(IEdible proxyEdible) {
+        super(0, false);
+    }
 
-	/**
-	 * Applies the food values of the edible item to the player
-	 */
-	public void onEaten(ItemStack itemStack, EntityPlayer player)
-	{
-		player.getFoodStats().func_151686_a(this, itemStack);
-	}
+    /**
+     * Applies the food values of the edible item to the player
+     */
+    public void onEaten(ItemStack itemStack, EntityPlayer player) {
+        player.getFoodStats().func_151686_a(this, itemStack);
+    }
 
-	/**
-	 * @return The hunger value of the edible item
-	 */
-	@Override
-	public int func_150905_g(ItemStack itemStack)
-	{
-		return proxyEdible.getFoodValues(itemStack).hunger;
-	}
+    /**
+     * @return The hunger value of the edible item
+     */
+    @Override
+    public int func_150905_g(ItemStack itemStack) {
+        return proxyEdible.getFoodValues(itemStack).hunger;
+    }
 
-	/**
-	 * @return The saturation modifier of the edible item
-	 */
-	@Override
-	public float func_150906_h(ItemStack itemStack)
-	{
-		return proxyEdible.getFoodValues(itemStack).saturationModifier;
-	}
+    /**
+     * @return The saturation modifier of the edible item
+     */
+    @Override
+    public float func_150906_h(ItemStack itemStack) {
+        return proxyEdible.getFoodValues(itemStack).saturationModifier;
+    }
 }

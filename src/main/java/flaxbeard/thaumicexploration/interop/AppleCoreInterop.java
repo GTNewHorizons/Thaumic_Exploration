@@ -9,29 +9,19 @@ import squeek.applecore.api.AppleCoreAPI;
  */
 public class AppleCoreInterop {
 
-
-
-
-    public static int  getHeal(ItemStack itemStack)
-    {
+    public static int getHeal(ItemStack itemStack) {
         return AppleCoreAPI.accessor.getFoodValues(itemStack).hunger;
     }
 
-    public static float  getSaturation(ItemStack itemStack)
-    {
+    public static float getSaturation(ItemStack itemStack) {
         return AppleCoreAPI.accessor.getFoodValues(itemStack).saturationModifier;
-
     }
 
-    public static void setHunger(int hunger,EntityPlayer player)
-    {
-        AppleCoreAPI.mutator.setHunger(player,player.getFoodStats().getFoodLevel()+hunger);
+    public static void setHunger(int hunger, EntityPlayer player) {
+        AppleCoreAPI.mutator.setHunger(player, player.getFoodStats().getFoodLevel() + hunger);
     }
 
-
-    public static void setSaturation(float saturation,EntityPlayer player)
-    {
-        AppleCoreAPI.mutator.setSaturation(player,player.getFoodStats().getSaturationLevel()+saturation);
+    public static void setSaturation(float saturation, EntityPlayer player) {
+        AppleCoreAPI.mutator.setSaturation(player, player.getFoodStats().getSaturationLevel() + saturation);
     }
-
 }

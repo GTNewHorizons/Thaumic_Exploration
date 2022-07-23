@@ -1,20 +1,20 @@
-//package flaxbeard.thaumicexploration.api;
+// package flaxbeard.thaumicexploration.api;
 //
-//import java.util.ArrayList;
-//import java.util.HashMap;
+// import java.util.ArrayList;
+// import java.util.HashMap;
 //
-//import net.minecraft.block.Block;
-//import net.minecraft.entity.player.EntityPlayer;
-//import net.minecraft.item.ItemStack;
+// import net.minecraft.block.Block;
+// import net.minecraft.entity.player.EntityPlayer;
+// import net.minecraft.item.ItemStack;
 //
-//import org.apache.commons.lang3.tuple.MutablePair;
+// import org.apache.commons.lang3.tuple.MutablePair;
 //
-//import thaumcraft.api.aspects.AspectList;
-//import thaumcraft.api.crafting.InfusionRecipe;
-//import thaumcraft.common.config.ConfigResearch;
-//import flaxbeard.thaumicexploration.ThaumicExploration;
+// import thaumcraft.api.aspects.AspectList;
+// import thaumcraft.api.crafting.InfusionRecipe;
+// import thaumcraft.common.config.ConfigResearch;
+// import flaxbeard.thaumicexploration.ThaumicExploration;
 //
-//public class NecromanticAltarAPI {
+// public class NecromanticAltarAPI {
 //
 //	public static void addNecroRecipe(String string,
 //			NecromanticRecipe necromanticRecipe) {
@@ -25,7 +25,9 @@
 //		addNecroRecipe(string,necromanticRecipe);
 //		AspectList aspects = new AspectList();
 //		aspects.add(ThaumicExploration.fakeAspectNecro, necromanticRecipe.energyRequired);
-//        InfusionRecipe recipe = new InfusionRecipe(necromanticRecipe.researchRequired, necromanticRecipe.recipeOutput, getInstabilityFromRecipe(necromanticRecipe),aspects , new ItemStack(ThaumicExploration.itemAltar), necromanticRecipe.recipeInput);
+//        InfusionRecipe recipe = new InfusionRecipe(necromanticRecipe.researchRequired, necromanticRecipe.recipeOutput,
+// getInstabilityFromRecipe(necromanticRecipe),aspects , new ItemStack(ThaumicExploration.itemAltar),
+// necromanticRecipe.recipeInput);
 //        ConfigResearch.recipes.put(string, recipe);
 //	}
 //	
@@ -40,11 +42,12 @@
 //	}
 //	
 //	public static void addEnergyToItem(int id, int energy) {
-//		
+//	
 //		necroEnergyItems.put(MutablePair.of(id, -1), energy);
 //	}
 //	
-//	public static NecromanticRecipe findMatchingNecromanticInfusionRecipe(ArrayList<ItemStack> items, EntityPlayer player)
+//	public static NecromanticRecipe findMatchingNecromanticInfusionRecipe(ArrayList<ItemStack> items, EntityPlayer
+// player)
 //	{
 //
 //		NecromanticRecipe var13 = null;
@@ -62,4 +65,4 @@
 //	public static HashMap<String, NecromanticRecipe> recipes = new HashMap();
 //	public static HashMap<MutablePair,Integer> necroEnergyItems = new HashMap();
 //
-//}
+// }

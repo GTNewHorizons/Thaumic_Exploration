@@ -1,16 +1,16 @@
-//package flaxbeard.thaumicexploration.ai;
+// package flaxbeard.thaumicexploration.ai;
 //
-//import flaxbeard.thaumicexploration.data.NecromancyMobProperties;
-//import net.minecraft.entity.EntityCreature;
-//import net.minecraft.entity.EntityLivingBase;
-//import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-//import net.minecraft.pathfinding.PathEntity;
-//import net.minecraft.pathfinding.PathPoint;
-//import net.minecraft.util.MathHelper;
-//import net.minecraft.world.World;
+// import flaxbeard.thaumicexploration.data.NecromancyMobProperties;
+// import net.minecraft.entity.EntityCreature;
+// import net.minecraft.entity.EntityLivingBase;
+// import net.minecraft.entity.ai.EntityAIAttackOnCollide;
+// import net.minecraft.pathfinding.PathEntity;
+// import net.minecraft.pathfinding.PathPoint;
+// import net.minecraft.util.MathHelper;
+// import net.minecraft.world.World;
 //
-//public class EntityAIAttackOnCollideReplacement extends EntityAIAttackOnCollide
-//{
+// public class EntityAIAttackOnCollideReplacement extends EntityAIAttackOnCollide
+// {
 //    World worldObj;
 //    EntityCreature attacker;
 //
@@ -34,7 +34,8 @@
 //
 //    private int failedPathFindingPenalty;
 //
-//    public EntityAIAttackOnCollideReplacement(EntityCreature par1EntityCreature, Class par2Class, double par3, boolean par5)
+//    public EntityAIAttackOnCollideReplacement(EntityCreature par1EntityCreature, Class par2Class, double par3, boolean
+// par5)
 //    {
 //        this(par1EntityCreature, par3, par5);
 //        this.classTarget = par2Class;
@@ -62,7 +63,7 @@
 //        if (entitylivingbase == null)
 //        {
 //            return false;
-//            
+//
 //        }
 //        else if (!entitylivingbase.isEntityAlive())
 //        {
@@ -94,7 +95,9 @@
 //    public boolean continueExecuting()
 //    {
 //        EntityLivingBase entitylivingbase = this.attacker.getAttackTarget();
-//        return entitylivingbase == null ? false : (!entitylivingbase.isEntityAlive() ? false : (!this.longMemory ? !this.attacker.getNavigator().noPath() : this.attacker.func_110176_b(MathHelper.floor_double(entitylivingbase.posX), MathHelper.floor_double(entitylivingbase.posY), MathHelper.floor_double(entitylivingbase.posZ))));
+//        return entitylivingbase == null ? false : (!entitylivingbase.isEntityAlive() ? false : (!this.longMemory ?
+// !this.attacker.getNavigator().noPath() : this.attacker.func_110176_b(MathHelper.floor_double(entitylivingbase.posX),
+// MathHelper.floor_double(entitylivingbase.posY), MathHelper.floor_double(entitylivingbase.posZ))));
 //    }
 //
 //    /**
@@ -124,14 +127,16 @@
 //        entitylivingbase = prop.getTarget();
 //        this.attacker.getLookHelper().setLookPositionWithEntity(entitylivingbase, 30.0F, 30.0F);
 //
-//        if ((this.longMemory || this.attacker.getEntitySenses().canSee(entitylivingbase)) && --this.field_75445_i <= 0)
+//        if ((this.longMemory || this.attacker.getEntitySenses().canSee(entitylivingbase)) && --this.field_75445_i <=
+// 0)
 //        {
 //            this.field_75445_i = failedPathFindingPenalty + 4 + this.attacker.getRNG().nextInt(7);
 //            this.attacker.getNavigator().tryMoveToEntityLiving(entitylivingbase, this.speedTowardsTarget);
 //            if (this.attacker.getNavigator().getPath() != null)
 //            {
 //                PathPoint finalPathPoint = this.attacker.getNavigator().getPath().getFinalPathPoint();
-//                if (finalPathPoint != null && entitylivingbase.getDistanceSq(finalPathPoint.xCoord, finalPathPoint.yCoord, finalPathPoint.zCoord) < 1)
+//                if (finalPathPoint != null && entitylivingbase.getDistanceSq(finalPathPoint.xCoord,
+// finalPathPoint.yCoord, finalPathPoint.zCoord) < 1)
 //                {
 //                    failedPathFindingPenalty = 0;
 //                }
@@ -149,7 +154,8 @@
 //        this.attackTick = Math.max(this.attackTick - 1, 0);
 //        double d0 = (double)(this.attacker.width * 2.0F * this.attacker.width * 2.0F + entitylivingbase.width);
 //
-//        if (this.attacker.getDistanceSq(entitylivingbase.posX, entitylivingbase.boundingBox.minY, entitylivingbase.posZ) <= d0)
+//        if (this.attacker.getDistanceSq(entitylivingbase.posX, entitylivingbase.boundingBox.minY,
+// entitylivingbase.posZ) <= d0)
 //        {
 //            if (this.attackTick <= 0)
 //            {
@@ -164,4 +170,4 @@
 //            }
 //        }
 //    }
-//}
+// }

@@ -7,52 +7,38 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 
-public class NecromancyMobProperties implements IExtendedEntityProperties
-{
-	
-	public static final void register(EntityLiving entity)
-	{
-		entity.registerExtendedProperties("thaumicExplorationNecromancyProperties", new NecromancyMobProperties());
-	}
-	
-	public static final NecromancyMobProperties get(EntityLiving entity)
-	{
-		return (NecromancyMobProperties)entity.getExtendedProperties("thaumicExplorationNecromancyProperties");
-	}
+public class NecromancyMobProperties implements IExtendedEntityProperties {
 
-	private EntityLiving owner;
-	private EntityLiving target;
-	
-	@Override
-	public void saveNBTData(NBTTagCompound data)
-	{
+    public static final void register(EntityLiving entity) {
+        entity.registerExtendedProperties("thaumicExplorationNecromancyProperties", new NecromancyMobProperties());
+    }
 
-		
-	}
+    public static final NecromancyMobProperties get(EntityLiving entity) {
+        return (NecromancyMobProperties) entity.getExtendedProperties("thaumicExplorationNecromancyProperties");
+    }
 
-	@Override
-	public void loadNBTData(NBTTagCompound data)
-	{
+    private EntityLiving owner;
+    private EntityLiving target;
 
-	}
-	
-	public void setTarget(EntityLivingBase targetEntity) {
-		this.target = (EntityLiving) targetEntity;
-	}
-	
-	public EntityLiving getTarget() {
-		return this.target;
-	}
+    @Override
+    public void saveNBTData(NBTTagCompound data) {}
 
-	@Override
-	public void init(Entity entity, World world)
-	{
+    @Override
+    public void loadNBTData(NBTTagCompound data) {}
 
-		if( entity instanceof EntityLiving )
-		{
-			owner = (EntityLiving)entity;
-		}
+    public void setTarget(EntityLivingBase targetEntity) {
+        this.target = (EntityLiving) targetEntity;
+    }
 
-	}
+    public EntityLiving getTarget() {
+        return this.target;
+    }
 
+    @Override
+    public void init(Entity entity, World world) {
+
+        if (entity instanceof EntityLiving) {
+            owner = (EntityLiving) entity;
+        }
+    }
 }

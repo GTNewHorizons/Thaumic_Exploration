@@ -1,11 +1,10 @@
 package flaxbeard.thaumicexploration.commands;
 
 import flaxbeard.thaumicexploration.tile.TileEntitySoulBrazier;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.command.ICommand;
+import net.minecraft.command.ICommandSender;
 
 /**
  * Created by Katrina on 03/11/2014.
@@ -13,13 +12,12 @@ import java.util.List;
 public class CommandAlterRate implements ICommand {
     private List<String> aliases;
 
-
-    public CommandAlterRate()
-    {
-        aliases=new ArrayList<String>();
+    public CommandAlterRate() {
+        aliases = new ArrayList<String>();
         aliases.add("AlterRate");
         aliases.add("ar");
     }
+
     @Override
     public String getCommandName() {
         return "AlterRate";
@@ -37,10 +35,10 @@ public class CommandAlterRate implements ICommand {
 
     @Override
     public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_) {
-        int essentia=Integer.parseInt(p_71515_2_[0]);
-        int vis=Integer.parseInt(p_71515_2_[1]);
-        TileEntitySoulBrazier.EssentiaRate=essentia;
-        TileEntitySoulBrazier.VisRate=vis;
+        int essentia = Integer.parseInt(p_71515_2_[0]);
+        int vis = Integer.parseInt(p_71515_2_[1]);
+        TileEntitySoulBrazier.EssentiaRate = essentia;
+        TileEntitySoulBrazier.VisRate = vis;
     }
 
     @Override

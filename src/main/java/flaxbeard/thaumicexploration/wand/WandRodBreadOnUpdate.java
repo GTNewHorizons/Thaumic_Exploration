@@ -8,12 +8,14 @@ import thaumcraft.api.wands.IWandRodOnUpdate;
 
 public class WandRodBreadOnUpdate implements IWandRodOnUpdate {
 
-	@Override
-	public void onUpdate(ItemStack itemstack, EntityPlayer player) {
-		if (player.worldObj.rand.nextInt(1000)==0) {
-			int i = player.worldObj.rand.nextInt(5);
-			player.addChatMessage(new ChatComponentTranslation("<" + itemstack.getDisplayName() + "> " + StatCollector.translateToLocal("thaumicexploration.bread"+i),new Object()));
-		}
-	}
-
+    @Override
+    public void onUpdate(ItemStack itemstack, EntityPlayer player) {
+        if (player.worldObj.rand.nextInt(1000) == 0) {
+            int i = player.worldObj.rand.nextInt(5);
+            player.addChatMessage(new ChatComponentTranslation(
+                    "<" + itemstack.getDisplayName() + "> "
+                            + StatCollector.translateToLocal("thaumicexploration.bread" + i),
+                    new Object()));
+        }
+    }
 }
