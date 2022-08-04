@@ -21,6 +21,7 @@ public class SoulBrazierQueue {
             String aPlayerName = aJoiningPlayer.getGameProfile().getName();
             for (int i = 0; i < queueSize; i++) {
                 SoulBrazierQueueData aQueueData = SoulBrazierUtils.getPlayerDataFromWarpQueue(aPlayerUUID);
+                if (aQueueData == null) continue;
                 int aCurrentWarp = Thaumcraft.proxy.getPlayerKnowledge().getWarpPerm(aPlayerName);
                 int aTotalWarp = aCurrentWarp + aQueueData.aQueuedWarpToAdd;
                 Thaumcraft.proxy.getPlayerKnowledge().setWarpPerm(aPlayerName, aTotalWarp);
