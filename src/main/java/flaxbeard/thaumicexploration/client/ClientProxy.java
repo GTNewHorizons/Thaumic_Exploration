@@ -96,6 +96,7 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void spawnWaterOnPlayer(World worldObj, int xCoord, int yCoord, int zCoord, EntityPlayer player) {
+        if (!worldObj.isRemote) return;
         FXEssentiaTrail fx = new FXEssentiaTrail(
                 worldObj,
                 xCoord + 0.5F,
@@ -113,6 +114,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void spawnLightningBolt(
             World worldObj, double xCoord, double yCoord, double zCoord, double dX, double dY, double dZ) {
+        if (!worldObj.isRemote) return;
         FXLightningBolt bolt =
                 new FXLightningBolt(worldObj, xCoord, yCoord, zCoord, dX, dY, dZ, worldObj.rand.nextLong(), 6, 0.5F, 5);
         bolt.defaultFractal();
@@ -123,6 +125,7 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void spawnRandomWaterFountain(World worldObj, int xCoord, int yCoord, int zCoord) {
+        if (!worldObj.isRemote) return;
         FXEssentiaTrail fx = new FXEssentiaTrail(
                 worldObj,
                 xCoord + 0.5F,
@@ -140,6 +143,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void spawnWaterAtLocation(
             World worldObj, double xCoord, double yCoord, double zCoord, double dX, double dY, double dZ) {
+        if (!worldObj.isRemote) return;
         FXEssentiaTrail fx =
                 new FXEssentiaTrail(worldObj, xCoord, yCoord, zCoord, dX, dY, dZ, 5, Aspect.TOOL.getColor(), 1.0F);
         ParticleEngine.instance.addEffect(worldObj, fx);
@@ -156,12 +160,14 @@ public class ClientProxy extends CommonProxy {
             double dZ,
             int size,
             int color) {
+        if (!worldObj.isRemote) return;
         FXEssentiaTrail fx = new FXEssentiaTrail(worldObj, xCoord, yCoord, zCoord, dX, dY, dZ, size, color, 1.0F);
         ParticleEngine.instance.addEffect(worldObj, fx);
     }
 
     @Override
     public void spawnActiveBrazierParticle(World worldObj, int xCoord, int yCoord, int zCoord) {
+        if (!worldObj.isRemote) return;
         // FXEssentiaTrail fx = new FXEssentiaTrail(worldObj, xCoord+0.5F, yCoord+1.1F, zCoord+0.5F, xCoord+0.5F,
         // yCoord+1.5F, zCoord+0.5F, 5, Aspect.DARKNESS.getColor(), 1.0F);
         float offsetY = 0;
@@ -212,6 +218,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void spawnBoreSparkle(
             World worldObj, double xCoord, double yCoord, double zCoord, double x2, double y2, double z2) {
+        if (!worldObj.isRemote) return;
         FXBoreSparkle fb = new FXBoreSparkle(worldObj, xCoord, yCoord, zCoord, x2, y2, z2);
 
         fb.setRBGColorF(0.4F + worldObj.rand.nextFloat() * 0.2F, 0.2F, 0.6F + worldObj.rand.nextFloat() * 0.3F);
@@ -221,6 +228,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void spawnHarvestParticle(
             World worldObj, double xCoord, double yCoord, double zCoord, double x2, double y2, double z2) {
+        if (!worldObj.isRemote) return;
         FXBoreParticles fb = new FXBoreParticles(
                 worldObj, xCoord, yCoord, zCoord, x2, y2, z2, Blocks.coal_block, worldObj.rand.nextInt(6), 3);
         fb.setAlphaF(0.3F);
@@ -241,6 +249,7 @@ public class ClientProxy extends CommonProxy {
             double z2,
             Block block,
             int id) {
+        if (!worldObj.isRemote) return;
         FXBoreParticles fb =
                 new FXBoreParticles(worldObj, xCoord, yCoord, zCoord, x2, y2, z2, block, worldObj.rand.nextInt(6), id);
 
