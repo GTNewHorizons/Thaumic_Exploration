@@ -57,7 +57,7 @@ public class TXBootsEventHandler {
                 ItemWandCasting wand = (ItemWandCasting) player.getHeldItem().getItem();
                 if (wand.getObjectInUse(player.getHeldItem(), player.worldObj) != null
                         && wand.getCap(player.getHeldItem()) == ThaumicExploration.WAND_CAP_MECHANIST) {
-                    if (wand.getObjectInUse(player.getHeldItem(), player.worldObj) instanceof INode) {
+                    if (wand.getObjectInUse(player.getHeldItem(), player.worldObj) instanceof TileNode) {
                         if (!player.getHeldItem().hasTagCompound()) {
                             player.getHeldItem().setTagCompound(new NBTTagCompound());
                         }
