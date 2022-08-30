@@ -23,11 +23,11 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.nodes.INode;
+import thaumcraft.api.wands.IWandable;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
-import thaumcraft.common.tiles.TileNode;
 
 public class TXBootsEventHandler {
 
@@ -67,23 +67,24 @@ public class TXBootsEventHandler {
                         int nodeTicks = player.getHeldItem().stackTagCompound.getInteger("nodeTicks");
                         nodeTicks++;
 
-                        TileNode node = (TileNode) wand.getObjectInUse(player.getHeldItem(), player.worldObj);
+                        IWandable node = wand.getObjectInUse(player.getHeldItem(), player.worldObj);
+                        TileEntity nodeAsTE = (TileEntity) node;
                         node.onUsingWandTick(player.getHeldItem(), player, nodeTicks);
                         if (nodeTicks % 3 == 0) {
                             if (player.worldObj.rand.nextBoolean()) {
                                 player.worldObj.playSound(
-                                        node.xCoord,
-                                        node.yCoord,
-                                        node.zCoord,
+                                        nodeAsTE.xCoord,
+                                        nodeAsTE.yCoord,
+                                        nodeAsTE.zCoord,
                                         "tile.piston.in",
                                         0.1F + (float) (0.5F * Math.random()),
                                         0.75F,
                                         false);
                             } else {
                                 player.worldObj.playSound(
-                                        node.xCoord,
-                                        node.yCoord,
-                                        node.zCoord,
+                                        nodeAsTE.xCoord,
+                                        nodeAsTE.yCoord,
+                                        nodeAsTE.zCoord,
                                         "tile.piston.out",
                                         0.1F + (float) (0.5F * Math.random()),
                                         0.75F,
