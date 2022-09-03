@@ -167,7 +167,7 @@ tile.thaumicexploration:floatCandle.15.name=Чёрная леветирующа�
 te.researchPrefix=[TX]
 tc.research_category.TAINT=Tainturgy
 tc.research_category.NECROMANCY=Таум некромантия 
-tc.research_category.TX=Таум изотерика 
+tc.research_category.TX=Таум эзотерика 
 
 --Банка забвения
 te.name.TRASHJAR=Банка забвения
