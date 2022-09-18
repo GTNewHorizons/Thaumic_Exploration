@@ -61,10 +61,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
     }
 
     public void startCrafting() {
-        System.out.println("start crafting - 2");
         if (this.getStackInSlot(0) != null && this.getStackInSlot(0).stackSize == 0 && !this.worldObj.isRemote) {
-            System.out.println("start crafting - 3");
-            System.out.println("start crafting - 4");
             this.oldInventory = inventory;
             this.crafting = true;
             this.ticksLeft = 100;
