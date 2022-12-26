@@ -37,7 +37,7 @@ public class ItemFoodTalisman extends Item {
         initFoodBlackList();
     }
 
-    private void initFoodBlackList(){
+    private void initFoodBlackList() {
         Collections.addAll(foodBlacklist, ALL_FOOD_BLACKLIST_NAMES);
     }
 
@@ -173,15 +173,13 @@ public class ItemFoodTalisman extends Item {
             }
         }
 
-
         if (Loader.isModLoaded("AppleCore")) {
             try {
                 if (AppleCoreInterop.getHeal(food) > 0) {
                     foodCache.put(foodName.toLowerCase(), true);
                     return true;
                 }
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 foodCache.put(foodName.toLowerCase(), false);
                 return false;
             }
