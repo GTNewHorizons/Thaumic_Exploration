@@ -26,11 +26,13 @@ public class ItemFoodTalisman extends Item {
 
     public static List<String> foodBlacklist = new ArrayList<String>();
     public static Map<String, Boolean> foodCache = new HashMap<String, Boolean>();
+    private final int MAX_HEAL_SIZE_TALISMAN = 1000;
+    private final int MAX_SAT_SIZE_TALISMAN = 1000;
 
     public ItemFoodTalisman() {
         super();
         this.maxStackSize = 1;
-        this.setMaxDamage(100);
+        this.setMaxDamage(MAX_HEAL_SIZE_TALISMAN);
         foodBlacklist.add(ConfigItems.itemManaBean.getUnlocalizedName());
         foodBlacklist.add(ConfigItems.itemZombieBrain.getUnlocalizedName());
         foodBlacklist.add("item.foodstuff.0.name");
@@ -74,19 +76,19 @@ public class ItemFoodTalisman extends Item {
                         float sat;
                         float heal;
                         if (Loader.isModLoaded("AppleCore")) {
-                            sat = AppleCoreInterop.getSaturation(food) * 2;
                             heal = AppleCoreInterop.getHeal(food);
+                            sat = getSaturationFood(food, heal);
                         } else {
                             sat = ((ItemFood) food.getItem()).func_150906_h(food) * 2;
 
                             heal = ((ItemFood) food.getItem()).func_150905_g(food);
                         }
-                        if (par1ItemStack.stackTagCompound.getFloat("food") + (int) heal < 100) {
-                            if (par1ItemStack.stackTagCompound.getFloat("saturation") + sat <= 100) {
+                        if (par1ItemStack.stackTagCompound.getFloat("food") + (int) heal < MAX_HEAL_SIZE_TALISMAN) {
+                            if (par1ItemStack.stackTagCompound.getFloat("saturation") + sat <= MAX_SAT_SIZE_TALISMAN) {
                                 par1ItemStack.stackTagCompound.setFloat(
                                         "saturation", par1ItemStack.stackTagCompound.getFloat("saturation") + sat);
                             } else {
-                                par1ItemStack.stackTagCompound.setFloat("saturation", 100);
+                                par1ItemStack.stackTagCompound.setFloat("saturation", MAX_SAT_SIZE_TALISMAN);
                             }
                             if (food.stackSize <= 1) {
                                 player.inventory.setInventorySlotContents(i, null);
@@ -105,7 +107,7 @@ public class ItemFoodTalisman extends Item {
                 }
             }
             if ((player.getFoodStats().getFoodLevel() < 20)
-                    && (100 - par1ItemStack.stackTagCompound.getFloat("food")) > 0) {
+                    && (MAX_HEAL_SIZE_TALISMAN - par1ItemStack.stackTagCompound.getFloat("food")) > 0) {
                 float sat = par1ItemStack.stackTagCompound.getFloat("food");
                 float finalSat = 0;
                 if (20 - player.getFoodStats().getFoodLevel() < sat) {
@@ -153,6 +155,10 @@ public class ItemFoodTalisman extends Item {
                     par1ItemStack.getMaxDamage() - ((int) par1ItemStack.stackTagCompound.getFloat("food")));
             // par1ItemStack.stackTagCompound.getFloat("food")
         }
+    }
+
+    private float getSaturationFood(ItemStack food, float heal) {
+        return AppleCoreInterop.getSaturation(food) * 2f * heal;
     }
 
     private boolean isEdible(ItemStack food, EntityPlayer player) {
