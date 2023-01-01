@@ -1,11 +1,13 @@
 package flaxbeard.thaumicexploration.tile;
 
 import com.mojang.authlib.GameProfile;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import flaxbeard.thaumicexploration.chunkLoader.ITXChunkLoader;
 import flaxbeard.thaumicexploration.common.ConfigTX;
 import flaxbeard.thaumicexploration.misc.brazier.SoulBrazierUtils;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
@@ -21,6 +23,8 @@ import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.blocks.BlockTaintFibres;
 import thaumcraft.common.config.Config;
+import thaumcraft.common.lib.network.PacketHandler;
+import thaumcraft.common.lib.network.playerdata.PacketSyncWarp;
 import thaumcraft.common.lib.utils.Utils;
 import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 import thaumcraft.common.tiles.TileVisRelay;
@@ -92,6 +96,8 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
             active = true;
             storedWarp += playerWarp;
             Thaumcraft.proxy.getPlayerKnowledge().setWarpPerm(owner.getName(), 0);
+            PacketHandler.INSTANCE.sendTo(new PacketSyncWarp(player, (byte)0), (EntityPlayerMP) player);
+
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             return true;
         }
@@ -121,7 +127,7 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
 
         getPower();
         if (active) {
-            if (heldChunk == null && ConfigTX.allowSBChunkLoading == true) addTicket();
+            if (heldChunk == null && ConfigTX.allowSBChunkLoading) addTicket();
             if (this.count % 60 == 0) spendPower();
             if (!checkPower()) {
                 active = false;
@@ -132,7 +138,12 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
                     if (SoulBrazierUtils.isPlayerOnline(owner.getId())) {
                         int aCurrentWarp = Thaumcraft.proxy.getPlayerKnowledge().getWarpPerm(owner.getName());
                         int aTotalWarp = aCurrentWarp + storedWarp;
-                        Thaumcraft.proxy.getPlayerKnowledge().setWarpPerm(owner.getName(), aTotalWarp);
+
+                        if (aCurrentWarp != aTotalWarp) {
+                            Thaumcraft.proxy.getPlayerKnowledge().setWarpPerm(owner.getName(), aTotalWarp);
+                            EntityPlayer player = SoulBrazierUtils.getPlayerFromUUID(owner.getId());
+                            PacketHandler.INSTANCE.sendTo(new PacketSyncWarp(player, (byte)0), (EntityPlayerMP) player);
+                        }
                     }
                     // Queue warp addition to file for next join.
                     else {
