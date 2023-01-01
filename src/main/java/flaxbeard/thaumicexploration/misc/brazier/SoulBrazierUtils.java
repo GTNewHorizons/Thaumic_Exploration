@@ -16,6 +16,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.DimensionManager;
+import thaumcraft.common.lib.network.PacketHandler;
+import thaumcraft.common.lib.network.playerdata.PacketSyncWarp;
 
 public class SoulBrazierUtils {
 
@@ -51,6 +53,10 @@ public class SoulBrazierUtils {
     public static boolean isPlayerInRangeOfBrazier(EntityPlayer aPlayer, TileEntitySoulBrazier aTile) {
         double aDistance = aTile.getDistanceFrom(aPlayer.posX, aPlayer.posY, aPlayer.posZ);
         return aDistance <= 50;
+    }
+
+    public static void syncPermWarp(EntityPlayerMP player) {
+        PacketHandler.INSTANCE.sendTo(new PacketSyncWarp(player, (byte) 0), player);
     }
 
     /*

@@ -2,12 +2,14 @@ package flaxbeard.thaumicexploration.block;
 
 import com.mojang.authlib.GameProfile;
 import flaxbeard.thaumicexploration.ThaumicExploration;
+import flaxbeard.thaumicexploration.misc.brazier.SoulBrazierUtils;
 import flaxbeard.thaumicexploration.tile.TileEntitySoulBrazier;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.ChunkCoordIntPair;
@@ -31,13 +33,19 @@ public class BlockSoulBrazier extends BlockContainer {
     }
 
     @Override
-    public void breakBlock(
-            World p_149749_1_, int p_149749_2_, int p_149749_3_, int p_149749_4_, Block p_149749_5_, int p_149749_6_) {
-        TileEntitySoulBrazier entity =
-                ((TileEntitySoulBrazier) p_149749_1_.getTileEntity(p_149749_2_, p_149749_3_, p_149749_4_));
-        Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(entity.owner.getName(), entity.storedWarp);
-        ForgeChunkManager.unforceChunk(entity.heldChunk, new ChunkCoordIntPair(entity.xCoord >> 4, entity.zCoord >> 4));
-        super.breakBlock(p_149749_1_, p_149749_2_, p_149749_3_, p_149749_4_, p_149749_5_, p_149749_6_);
+    public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_) {
+        if (!world.isRemote) {
+            TileEntitySoulBrazier entity = ((TileEntitySoulBrazier) world.getTileEntity(x, y, z));
+
+            Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(entity.owner.getName(), entity.storedWarp);
+            if (SoulBrazierUtils.isPlayerOnline(entity.owner.getId())) {
+                EntityPlayer player = SoulBrazierUtils.getPlayerFromUUID(entity.owner.getId());
+                SoulBrazierUtils.syncPermWarp((EntityPlayerMP) player);
+            }
+            ForgeChunkManager.unforceChunk(
+                    entity.heldChunk, new ChunkCoordIntPair(entity.xCoord >> 4, entity.zCoord >> 4));
+        }
+        super.breakBlock(world, x, y, z, block, p_149749_6_);
     }
 
     @Override

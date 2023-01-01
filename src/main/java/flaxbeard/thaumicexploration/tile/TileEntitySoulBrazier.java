@@ -22,8 +22,6 @@ import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.blocks.BlockTaintFibres;
 import thaumcraft.common.config.Config;
-import thaumcraft.common.lib.network.PacketHandler;
-import thaumcraft.common.lib.network.playerdata.PacketSyncWarp;
 import thaumcraft.common.lib.utils.Utils;
 import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 import thaumcraft.common.tiles.TileVisRelay;
@@ -95,7 +93,7 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
             active = true;
             storedWarp += playerWarp;
             Thaumcraft.proxy.getPlayerKnowledge().setWarpPerm(owner.getName(), 0);
-            PacketHandler.INSTANCE.sendTo(new PacketSyncWarp(player, (byte) 0), (EntityPlayerMP) player);
+            SoulBrazierUtils.syncPermWarp((EntityPlayerMP) player);
 
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             return true;
@@ -141,8 +139,7 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
                         if (aCurrentWarp != aTotalWarp) {
                             Thaumcraft.proxy.getPlayerKnowledge().setWarpPerm(owner.getName(), aTotalWarp);
                             EntityPlayer player = SoulBrazierUtils.getPlayerFromUUID(owner.getId());
-                            PacketHandler.INSTANCE.sendTo(
-                                    new PacketSyncWarp(player, (byte) 0), (EntityPlayerMP) player);
+                            SoulBrazierUtils.syncPermWarp((EntityPlayerMP) player);
                         }
                     }
                     // Queue warp addition to file for next join.
