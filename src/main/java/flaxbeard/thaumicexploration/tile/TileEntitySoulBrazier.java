@@ -1,7 +1,6 @@
 package flaxbeard.thaumicexploration.tile;
 
 import com.mojang.authlib.GameProfile;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import flaxbeard.thaumicexploration.chunkLoader.ITXChunkLoader;
 import flaxbeard.thaumicexploration.common.ConfigTX;
@@ -96,7 +95,7 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
             active = true;
             storedWarp += playerWarp;
             Thaumcraft.proxy.getPlayerKnowledge().setWarpPerm(owner.getName(), 0);
-            PacketHandler.INSTANCE.sendTo(new PacketSyncWarp(player, (byte)0), (EntityPlayerMP) player);
+            PacketHandler.INSTANCE.sendTo(new PacketSyncWarp(player, (byte) 0), (EntityPlayerMP) player);
 
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             return true;
@@ -142,7 +141,8 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
                         if (aCurrentWarp != aTotalWarp) {
                             Thaumcraft.proxy.getPlayerKnowledge().setWarpPerm(owner.getName(), aTotalWarp);
                             EntityPlayer player = SoulBrazierUtils.getPlayerFromUUID(owner.getId());
-                            PacketHandler.INSTANCE.sendTo(new PacketSyncWarp(player, (byte)0), (EntityPlayerMP) player);
+                            PacketHandler.INSTANCE.sendTo(
+                                    new PacketSyncWarp(player, (byte) 0), (EntityPlayerMP) player);
                         }
                     }
                     // Queue warp addition to file for next join.
