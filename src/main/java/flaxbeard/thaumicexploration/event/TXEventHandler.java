@@ -101,8 +101,9 @@ public class TXEventHandler {
             if ((player.inventory.getCurrentItem() != null)
                     && (((player.inventory.getCurrentItem().getItem() instanceof ItemGolemPlacer))
                             || ((player.inventory.getCurrentItem().getItem() instanceof ItemGolemBell)))) {
-
-                renderMarkedBlocks(event, partialTicks, player, time);
+                // this is entirely unfinished stuff. since it might cause rare crashes under certain circumstances
+                // this is disabled for now
+                // renderMarkedBlocks(event, partialTicks, player, time);
             }
         }
     }
