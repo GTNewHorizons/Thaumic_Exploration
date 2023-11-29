@@ -13,13 +13,13 @@ dependencies {
     compileOnly('com.github.GTNewHorizons:Botania:1.10.3-GTNH:dev') {
         transitive = false
     }
-    compile('com.github.GTNewHorizons:CodeChickenLib:1.1.5.4:dev') {
+    compile('com.github.GTNewHorizons:CodeChickenLib:1.1.9:dev') {
         transitive = false
     }
-    compileOnly('com.github.GTNewHorizons:ThaumicTinkerer:2.6.5:dev') {
+    compileOnly('com.github.GTNewHorizons:ThaumicTinkerer:2.8.5:dev') {
         transitive = false
     }
-    compileOnly("com.github.GTNewHorizons:waila:1.5.21:api") {
+    compileOnly("com.github.GTNewHorizons:waila:1.6.5:api") {
         transitive = false
     }
     runtimeOnly("com.github.GTNewHorizons:CodeChickenCore:1.1.11:dev")  // Allow obfuscated Witchery to run in dev
