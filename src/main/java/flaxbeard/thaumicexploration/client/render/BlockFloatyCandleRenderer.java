@@ -1,6 +1,6 @@
 package flaxbeard.thaumicexploration.client.render;
 
-import java.awt.*;
+import java.awt.Color;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;

@@ -1,6 +1,6 @@
 package flaxbeard.thaumicexploration.item;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.List;
 
 import net.minecraft.block.Block;

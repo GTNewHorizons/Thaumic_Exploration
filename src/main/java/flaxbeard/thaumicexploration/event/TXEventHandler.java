@@ -1,6 +1,6 @@
 package flaxbeard.thaumicexploration.event;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

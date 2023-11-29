@@ -2,7 +2,7 @@ package flaxbeard.thaumicexploration.block;
 
 import java.util.Random;
 
-import javax.swing.*;
+import javax.swing.Icon;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
