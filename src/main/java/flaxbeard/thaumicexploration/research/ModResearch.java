@@ -8,6 +8,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 
+import cpw.mods.fml.common.Loader;
+import flaxbeard.thaumicexploration.ThaumicExploration;
+import flaxbeard.thaumicexploration.common.ConfigTX;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.crafting.CrucibleRecipe;
@@ -19,9 +22,6 @@ import thaumcraft.api.research.ResearchCategoryList;
 import thaumcraft.api.research.ResearchItem;
 import thaumcraft.api.research.ResearchPage;
 import thaumcraft.common.config.ConfigResearch;
-import cpw.mods.fml.common.Loader;
-import flaxbeard.thaumicexploration.ThaumicExploration;
-import flaxbeard.thaumicexploration.common.ConfigTX;
 
 public final class ModResearch {
 

@@ -8,9 +8,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
+import flaxbeard.thaumicexploration.ThaumicExploration;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
-import flaxbeard.thaumicexploration.ThaumicExploration;
 
 public class ItemTaintSeedFood extends ItemSeedFood implements IPlantable {
 

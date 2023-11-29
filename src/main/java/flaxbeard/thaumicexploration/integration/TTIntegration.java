@@ -4,6 +4,8 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 
+import flaxbeard.thaumicexploration.ThaumicExploration;
+import flaxbeard.thaumicexploration.common.ConfigTX;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumic.tinkerer.common.enchantment.EnchantmentVampirism;
@@ -11,8 +13,6 @@ import thaumic.tinkerer.common.enchantment.core.EnchantmentManager;
 import thaumic.tinkerer.common.lib.LibEnchantIDs;
 import thaumic.tinkerer.common.lib.LibMisc;
 import thaumic.tinkerer.common.lib.LibResearch;
-import flaxbeard.thaumicexploration.ThaumicExploration;
-import flaxbeard.thaumicexploration.common.ConfigTX;
 
 public class TTIntegration {
 

@@ -6,11 +6,11 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import flaxbeard.thaumicexploration.common.StringID;
+import flaxbeard.thaumicexploration.data.BoundJarNetworkManager;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.tiles.TileJarFillable;
-import flaxbeard.thaumicexploration.common.StringID;
-import flaxbeard.thaumicexploration.data.BoundJarNetworkManager;
 
 public class TileEntityBoundJar extends TileJarFillable {
 

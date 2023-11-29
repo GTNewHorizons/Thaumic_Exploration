@@ -1,9 +1,9 @@
 package flaxbeard.thaumicexploration.interop;
 
-import mcp.mobius.waila.api.IWailaRegistrar;
 import flaxbeard.thaumicexploration.block.BlockBoundJar;
 import flaxbeard.thaumicexploration.block.BlockEverburnUrn;
 import flaxbeard.thaumicexploration.block.BlockSoulBrazier;
+import mcp.mobius.waila.api.IWailaRegistrar;
 
 /**
  * Created by Katrina on 17/06/2015.

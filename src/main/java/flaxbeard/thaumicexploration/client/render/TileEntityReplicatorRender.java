@@ -13,10 +13,10 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
+import flaxbeard.thaumicexploration.tile.TileEntityReplicator;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
-import flaxbeard.thaumicexploration.tile.TileEntityReplicator;
 
 public class TileEntityReplicatorRender extends TileEntitySpecialRenderer {
 

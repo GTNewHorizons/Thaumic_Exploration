@@ -7,13 +7,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 
+import flaxbeard.thaumicexploration.ThaumicExploration;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.wands.IWandRodOnUpdate;
 import thaumcraft.common.entities.EntityAspectOrb;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import thaumcraft.common.lib.utils.InventoryUtils;
-import flaxbeard.thaumicexploration.ThaumicExploration;
 
 public class WandRodNecromancerOnUpdate implements IWandRodOnUpdate {
 

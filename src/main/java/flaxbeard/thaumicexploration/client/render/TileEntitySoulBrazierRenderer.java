@@ -8,9 +8,9 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import thaumcraft.client.lib.UtilsFX;
 import flaxbeard.thaumicexploration.client.render.model.ModelSoulBrazier;
 import flaxbeard.thaumicexploration.tile.TileEntitySoulBrazier;
+import thaumcraft.client.lib.UtilsFX;
 
 /**
  * Created by nekosune on 03/08/14.

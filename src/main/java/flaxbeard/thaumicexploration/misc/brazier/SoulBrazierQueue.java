@@ -7,10 +7,10 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-import thaumcraft.common.Thaumcraft;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import flaxbeard.thaumicexploration.tile.TileEntitySoulBrazier;
+import thaumcraft.common.Thaumcraft;
 
 public class SoulBrazierQueue {
 

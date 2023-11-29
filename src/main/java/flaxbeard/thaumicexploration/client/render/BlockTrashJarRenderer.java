@@ -7,10 +7,10 @@ import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
 
-import thaumcraft.client.renderers.block.BlockRenderer;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import flaxbeard.thaumicexploration.tile.TileEntityTrashJar;
+import thaumcraft.client.renderers.block.BlockRenderer;
 
 public class BlockTrashJarRenderer extends BlockRenderer implements ISimpleBlockRenderingHandler {
 

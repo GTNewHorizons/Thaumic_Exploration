@@ -5,9 +5,9 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import thaumcraft.api.IRunicArmor;
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
+import thaumcraft.api.IRunicArmor;
 
 public class ItemBauble extends Item implements IBauble, IRunicArmor {
 

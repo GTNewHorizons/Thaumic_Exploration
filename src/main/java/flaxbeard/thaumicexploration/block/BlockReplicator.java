@@ -16,12 +16,12 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import org.apache.commons.lang3.tuple.MutablePair;
 
-import thaumcraft.common.items.wands.ItemWandCasting;
-import thaumcraft.common.lib.utils.InventoryUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import flaxbeard.thaumicexploration.tile.TileEntityReplicator;
+import thaumcraft.common.items.wands.ItemWandCasting;
+import thaumcraft.common.lib.utils.InventoryUtils;
 
 public class BlockReplicator extends BlockContainer {
 

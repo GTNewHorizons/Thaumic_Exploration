@@ -9,11 +9,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
 import baubles.api.BaubleType;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
 
 public class ItemBaubleDiscountRing extends ItemBaubleDiscounter {
 

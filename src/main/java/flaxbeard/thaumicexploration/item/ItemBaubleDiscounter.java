@@ -7,10 +7,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 
+import baubles.api.BaubleType;
 import thaumcraft.api.IVisDiscountGear;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
-import baubles.api.BaubleType;
 
 public class ItemBaubleDiscounter extends ItemBauble implements IVisDiscountGear {
 

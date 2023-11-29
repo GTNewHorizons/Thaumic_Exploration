@@ -9,8 +9,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-import thaumcraft.api.IRunicArmor;
 import baubles.api.BaubleType;
+import thaumcraft.api.IRunicArmor;
 
 public class ItemStabilizerBelt extends ItemBauble implements IRunicArmor {
 

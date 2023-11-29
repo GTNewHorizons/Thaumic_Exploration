@@ -17,6 +17,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 
+import flaxbeard.thaumicexploration.ThaumicExploration;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
@@ -24,7 +25,6 @@ import thaumcraft.api.aspects.IAspectSource;
 import thaumcraft.api.wands.IWandable;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
-import flaxbeard.thaumicexploration.ThaumicExploration;
 
 public class TileEntityReplicator extends TileEntity implements ISidedInventory, IWandable, IAspectContainer {
 

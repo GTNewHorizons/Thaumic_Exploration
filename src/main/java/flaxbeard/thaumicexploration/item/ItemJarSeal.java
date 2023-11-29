@@ -12,17 +12,17 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
-import thaumcraft.api.aspects.AspectList;
-import thaumcraft.codechicken.lib.colour.Colour;
-import thaumcraft.codechicken.lib.colour.ColourRGBA;
-import thaumcraft.common.config.ConfigBlocks;
-import thaumcraft.common.tiles.TileJarFillable;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import flaxbeard.thaumicexploration.data.BoundJarNetworkManager;
 import flaxbeard.thaumicexploration.misc.NBTHelper;
 import flaxbeard.thaumicexploration.tile.TileEntityBoundJar;
+import thaumcraft.api.aspects.AspectList;
+import thaumcraft.codechicken.lib.colour.Colour;
+import thaumcraft.codechicken.lib.colour.ColourRGBA;
+import thaumcraft.common.config.ConfigBlocks;
+import thaumcraft.common.tiles.TileJarFillable;
 
 /**
  * Created by Katrina on 16/06/2015.

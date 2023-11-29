@@ -2,10 +2,6 @@ package flaxbeard.thaumicexploration.interop;
 
 import java.util.List;
 
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
-import mcp.mobius.waila.api.IWailaDataProvider;
-
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
@@ -15,6 +11,9 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import flaxbeard.thaumicexploration.tile.TileEntityBoundJar;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
+import mcp.mobius.waila.api.IWailaDataProvider;
 
 /**
  * Created by Katrina on 17/06/2015.

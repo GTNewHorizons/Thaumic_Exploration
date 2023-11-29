@@ -9,7 +9,6 @@ import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
-import thaumcraft.client.fx.bolt.FXLightningBolt;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.FMLNetworkEvent.ClientCustomPacketEvent;
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
@@ -19,6 +18,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufOutputStream;
 import io.netty.buffer.Unpooled;
+import thaumcraft.client.fx.bolt.FXLightningBolt;
 
 public class TXClientPacketHandler extends TXServerPacketHandler {
 

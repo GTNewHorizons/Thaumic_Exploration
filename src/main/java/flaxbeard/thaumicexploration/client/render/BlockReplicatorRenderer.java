@@ -5,10 +5,10 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
-import thaumcraft.client.renderers.block.BlockRenderer;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import flaxbeard.thaumicexploration.block.BlockReplicator;
+import thaumcraft.client.renderers.block.BlockRenderer;
 
 public class BlockReplicatorRenderer extends BlockRenderer implements ISimpleBlockRenderingHandler {
 

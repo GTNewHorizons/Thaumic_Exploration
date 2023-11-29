@@ -1,16 +1,14 @@
 package flaxbeard.thaumicexploration.client.render;
 
-import java.awt.*;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.world.IBlockAccess;
 
-import thaumcraft.client.renderers.block.BlockRenderer;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import flaxbeard.thaumicexploration.tile.TileEntitySoulBrazier;
+import thaumcraft.client.renderers.block.BlockRenderer;
 
 /**
  * Created by nekosune on 03/08/14.

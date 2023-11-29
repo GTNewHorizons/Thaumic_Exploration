@@ -1,6 +1,6 @@
 package flaxbeard.thaumicexploration.item;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;

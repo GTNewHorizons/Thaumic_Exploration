@@ -12,16 +12,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import flaxbeard.thaumicexploration.ThaumicExploration;
+import flaxbeard.thaumicexploration.tile.TileEntityBoundJar;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.blocks.BlockJar;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.ItemEssence;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import flaxbeard.thaumicexploration.ThaumicExploration;
-import flaxbeard.thaumicexploration.tile.TileEntityBoundJar;
 
 public class BlockBoundJar extends BlockJar {
 

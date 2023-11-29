@@ -1,6 +1,6 @@
 package flaxbeard.thaumicexploration.client.render;
 
-import java.awt.Color;
+import java.awt.*;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -10,10 +10,10 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import thaumcraft.common.config.ConfigBlocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import flaxbeard.thaumicexploration.client.render.model.ModelCandle;
+import thaumcraft.common.config.ConfigBlocks;
 
 @SideOnly(Side.CLIENT)
 public class TileEntityFloatyCandleRender extends TileEntitySpecialRenderer {

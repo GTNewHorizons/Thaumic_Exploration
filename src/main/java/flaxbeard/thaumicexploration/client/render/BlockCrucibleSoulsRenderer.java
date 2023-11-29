@@ -5,11 +5,11 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
-import thaumcraft.client.renderers.block.BlockRenderer;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import flaxbeard.thaumicexploration.block.BlockCrucibleSouls;
 import flaxbeard.thaumicexploration.tile.TileEntityCrucibleSouls;
+import thaumcraft.client.renderers.block.BlockRenderer;
 
 public class BlockCrucibleSoulsRenderer extends BlockRenderer implements ISimpleBlockRenderingHandler {
 

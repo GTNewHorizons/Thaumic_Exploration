@@ -7,9 +7,9 @@ import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.World;
 
-import thaumcraft.api.aspects.AspectList;
 import codechicken.lib.packet.PacketCustom;
 import flaxbeard.thaumicexploration.ThaumicExploration;
+import thaumcraft.api.aspects.AspectList;
 
 /**
  * Created by Katrina on 16/06/2015.

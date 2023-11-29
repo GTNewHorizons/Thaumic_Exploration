@@ -5,10 +5,10 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import thaumcraft.client.renderers.tile.TileJarRenderer;
-import thaumcraft.common.tiles.TileJar;
 import flaxbeard.thaumicexploration.client.render.model.ModelJarOverlay;
 import flaxbeard.thaumicexploration.tile.TileEntityBoundJar;
+import thaumcraft.client.renderers.tile.TileJarRenderer;
+import thaumcraft.common.tiles.TileJar;
 
 public class TileEntityBoundJarRender extends TileJarRenderer {
 

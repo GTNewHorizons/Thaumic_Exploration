@@ -7,9 +7,9 @@ import net.minecraft.util.IIcon;
 
 import org.lwjgl.opengl.GL11;
 
+import flaxbeard.thaumicexploration.tile.TileEntityCrucibleSouls;
 import thaumcraft.client.lib.UtilsFX;
 import thaumcraft.common.config.ConfigBlocks;
-import flaxbeard.thaumicexploration.tile.TileEntityCrucibleSouls;
 
 public class TileEntityRenderCrucibleSouls extends TileEntitySpecialRenderer {
 

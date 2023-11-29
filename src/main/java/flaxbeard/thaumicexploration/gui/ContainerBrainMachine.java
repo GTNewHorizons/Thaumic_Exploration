@@ -7,9 +7,9 @@ import net.minecraft.util.ChunkCoordinates;
 
 import org.apache.commons.lang3.tuple.MutablePair;
 
-import thaumcraft.common.container.ContainerGhostSlots;
 import flaxbeard.thaumicexploration.misc.SortingInventory;
 import flaxbeard.thaumicexploration.tile.TileEntityAutoSorter;
+import thaumcraft.common.container.ContainerGhostSlots;
 
 public class ContainerBrainMachine extends ContainerGhostSlots {
 

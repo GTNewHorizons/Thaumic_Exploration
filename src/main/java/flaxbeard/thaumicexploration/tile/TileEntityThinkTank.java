@@ -17,11 +17,11 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 
-import thaumcraft.common.config.Config;
-import thaumcraft.common.config.ConfigItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import flaxbeard.thaumicexploration.block.BlockThinkTank;
+import thaumcraft.common.config.Config;
+import thaumcraft.common.config.ConfigItems;
 
 public class TileEntityThinkTank extends TileEntity implements ISidedInventory {
 

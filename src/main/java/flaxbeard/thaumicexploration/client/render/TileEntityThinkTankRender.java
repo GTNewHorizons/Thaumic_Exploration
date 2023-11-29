@@ -13,12 +13,12 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import thaumcraft.client.lib.UtilsFX;
-import thaumcraft.client.renderers.models.ModelBrain;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import flaxbeard.thaumicexploration.client.render.model.ModelLargeJar;
 import flaxbeard.thaumicexploration.tile.TileEntityThinkTank;
+import thaumcraft.client.lib.UtilsFX;
+import thaumcraft.client.renderers.models.ModelBrain;
 
 @SideOnly(Side.CLIENT)
 public class TileEntityThinkTankRender extends TileEntitySpecialRenderer {

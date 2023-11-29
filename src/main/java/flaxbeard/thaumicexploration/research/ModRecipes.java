@@ -10,6 +10,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 
+import cpw.mods.fml.common.registry.GameRegistry;
+import flaxbeard.thaumicexploration.ThaumicExploration;
+import flaxbeard.thaumicexploration.common.ConfigTX;
+import flaxbeard.thaumicexploration.item.ItemBaubleDiscountRing;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -22,10 +26,6 @@ import thaumcraft.api.wands.WandRod;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.config.ConfigResearch;
-import cpw.mods.fml.common.registry.GameRegistry;
-import flaxbeard.thaumicexploration.ThaumicExploration;
-import flaxbeard.thaumicexploration.common.ConfigTX;
-import flaxbeard.thaumicexploration.item.ItemBaubleDiscountRing;
 
 public final class ModRecipes {
 

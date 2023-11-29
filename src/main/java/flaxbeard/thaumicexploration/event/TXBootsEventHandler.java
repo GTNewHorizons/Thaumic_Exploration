@@ -17,6 +17,11 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import flaxbeard.thaumicexploration.ThaumicExploration;
+import flaxbeard.thaumicexploration.common.ConfigTX;
+import flaxbeard.thaumicexploration.integration.TTIntegration;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.nodes.INode;
@@ -25,11 +30,6 @@ import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import flaxbeard.thaumicexploration.ThaumicExploration;
-import flaxbeard.thaumicexploration.common.ConfigTX;
-import flaxbeard.thaumicexploration.integration.TTIntegration;
 
 public class TXBootsEventHandler {
 

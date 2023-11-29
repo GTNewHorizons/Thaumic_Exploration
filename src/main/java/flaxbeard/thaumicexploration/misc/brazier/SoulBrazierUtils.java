@@ -16,10 +16,10 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.DimensionManager;
 
-import thaumcraft.common.lib.network.PacketHandler;
-import thaumcraft.common.lib.network.playerdata.PacketSyncWarp;
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import flaxbeard.thaumicexploration.tile.TileEntitySoulBrazier;
+import thaumcraft.common.lib.network.PacketHandler;
+import thaumcraft.common.lib.network.playerdata.PacketSyncWarp;
 
 public class SoulBrazierUtils {
 

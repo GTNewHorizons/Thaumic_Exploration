@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
+import flaxbeard.thaumicexploration.event.TXTickHandler;
 import thaumcraft.api.wands.IWandRodOnUpdate;
 import thaumcraft.api.wands.WandRod;
-import flaxbeard.thaumicexploration.event.TXTickHandler;
 
 public class WandRodTransmutative extends WandRod {
 

@@ -24,14 +24,6 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import org.apache.commons.lang3.tuple.MutablePair;
 
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.wands.StaffRod;
-import thaumcraft.api.wands.WandCap;
-import thaumcraft.api.wands.WandRod;
-import thaumcraft.common.blocks.BlockCandleItem;
-import thaumcraft.common.config.ConfigBlocks;
-import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
 import baubles.api.BaubleType;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -110,6 +102,14 @@ import flaxbeard.thaumicexploration.wand.WandRodBreadOnUpdate;
 import flaxbeard.thaumicexploration.wand.WandRodNecromancerOnUpdate;
 import flaxbeard.thaumicexploration.wand.WandRodTransmutationOnUpdate;
 import flaxbeard.thaumicexploration.wand.WandRodTransmutative;
+import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.aspects.AspectList;
+import thaumcraft.api.wands.StaffRod;
+import thaumcraft.api.wands.WandCap;
+import thaumcraft.api.wands.WandRod;
+import thaumcraft.common.blocks.BlockCandleItem;
+import thaumcraft.common.config.ConfigBlocks;
+import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
 
 @Mod(
         modid = ThaumicExploration.MODID,

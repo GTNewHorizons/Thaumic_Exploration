@@ -1,7 +1,11 @@
 package flaxbeard.thaumicexploration.item;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,14 +18,13 @@ import net.minecraft.potion.Potion;
 import net.minecraft.util.FoodStats;
 import net.minecraft.world.World;
 
-import thaumcraft.common.config.ConfigItems;
-
 import com.mojang.authlib.GameProfile;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import flaxbeard.thaumicexploration.interop.AppleCoreInterop;
 import flaxbeard.thaumicexploration.misc.FakePlayerPotion;
+import thaumcraft.common.config.ConfigItems;
 
 public class ItemFoodTalisman extends Item {
 

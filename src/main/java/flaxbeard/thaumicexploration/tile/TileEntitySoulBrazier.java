@@ -12,6 +12,12 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import com.mojang.authlib.GameProfile;
+
+import flaxbeard.thaumicexploration.ThaumicExploration;
+import flaxbeard.thaumicexploration.chunkLoader.ITXChunkLoader;
+import flaxbeard.thaumicexploration.common.ConfigTX;
+import flaxbeard.thaumicexploration.misc.brazier.SoulBrazierUtils;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.IEssentiaTransport;
@@ -21,13 +27,6 @@ import thaumcraft.common.config.Config;
 import thaumcraft.common.lib.utils.Utils;
 import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 import thaumcraft.common.tiles.TileVisRelay;
-
-import com.mojang.authlib.GameProfile;
-
-import flaxbeard.thaumicexploration.ThaumicExploration;
-import flaxbeard.thaumicexploration.chunkLoader.ITXChunkLoader;
-import flaxbeard.thaumicexploration.common.ConfigTX;
-import flaxbeard.thaumicexploration.misc.brazier.SoulBrazierUtils;
 
 /**
  * Created by nekosune on 03/08/14.

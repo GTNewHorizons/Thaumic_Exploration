@@ -15,6 +15,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import flaxbeard.thaumicexploration.ThaumicExploration;
+import flaxbeard.thaumicexploration.event.DamageSourceTX;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.ThaumcraftApi.EntityTags;
 import thaumcraft.api.aspects.Aspect;
@@ -24,8 +26,6 @@ import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.entities.golems.EntityGolemBase;
 import thaumcraft.common.entities.monster.EntityThaumicSlime;
-import flaxbeard.thaumicexploration.ThaumicExploration;
-import flaxbeard.thaumicexploration.event.DamageSourceTX;
 
 public class TileEntityCrucibleSouls extends TileEntity implements IAspectContainer, IEssentiaTransport {
 

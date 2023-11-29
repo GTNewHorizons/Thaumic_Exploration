@@ -13,13 +13,12 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeChunkManager;
 
-import thaumcraft.common.Thaumcraft;
-
 import com.mojang.authlib.GameProfile;
 
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import flaxbeard.thaumicexploration.misc.brazier.SoulBrazierUtils;
 import flaxbeard.thaumicexploration.tile.TileEntitySoulBrazier;
+import thaumcraft.common.Thaumcraft;
 
 /**
  * Created by nekosune on 03/08/14.

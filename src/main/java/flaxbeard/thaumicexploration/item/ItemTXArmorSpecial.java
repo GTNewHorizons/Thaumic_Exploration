@@ -10,12 +10,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
+import flaxbeard.thaumicexploration.ThaumicExploration;
 import thaumcraft.api.IRepairable;
 import thaumcraft.api.IRunicArmor;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.items.armor.Hover;
-import flaxbeard.thaumicexploration.ThaumicExploration;
 
 public class ItemTXArmorSpecial extends ItemArmor implements IRepairable, IRunicArmor {
 

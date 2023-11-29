@@ -9,12 +9,12 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import thaumcraft.api.crafting.IInfusionStabiliser;
-import thaumcraft.common.blocks.BlockCandle;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import flaxbeard.thaumicexploration.tile.TileEntityFloatyCandle;
+import thaumcraft.api.crafting.IInfusionStabiliser;
+import thaumcraft.common.blocks.BlockCandle;
 
 public class BlockFloatyCandle extends BlockCandle implements ITileEntityProvider, IInfusionStabiliser {
 

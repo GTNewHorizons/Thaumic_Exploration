@@ -11,7 +11,6 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 
-import thaumcraft.client.fx.bolt.FXLightningBolt;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
@@ -19,6 +18,7 @@ import flaxbeard.thaumicexploration.ThaumicExploration;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufOutputStream;
 import io.netty.buffer.Unpooled;
+import thaumcraft.client.fx.bolt.FXLightningBolt;
 
 public class TXTickHandler {
 

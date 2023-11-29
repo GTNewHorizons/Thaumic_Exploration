@@ -11,6 +11,8 @@ import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import thaumcraft.client.lib.UtilsFX;
 import thaumcraft.client.renderers.models.ModelBrain;
 import thaumcraft.client.renderers.models.ModelJar;
@@ -21,8 +23,6 @@ import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.tiles.TileJar;
 import thaumcraft.common.tiles.TileJarFillable;
 import thaumcraft.common.tiles.TileJarNode;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class TileEntityTrashJarRenderer extends TileEntitySpecialRenderer {

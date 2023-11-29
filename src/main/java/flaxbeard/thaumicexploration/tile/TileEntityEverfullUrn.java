@@ -16,16 +16,16 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fluids.IFluidTank;
 
-import thaumcraft.common.config.Config;
-import thaumcraft.common.config.ConfigBlocks;
-import thaumcraft.common.tiles.TileCrucible;
-import thaumcraft.common.tiles.TileSpa;
 import cpw.mods.fml.common.Loader;
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import flaxbeard.thaumicexploration.common.ConfigTX;
 import flaxbeard.thaumicexploration.integration.BotaniaIntegration;
 import flaxbeard.thaumicexploration.integration.VanillaIntegration;
 import flaxbeard.thaumicexploration.integration.WitcheryIntegration;
+import thaumcraft.common.config.Config;
+import thaumcraft.common.config.ConfigBlocks;
+import thaumcraft.common.tiles.TileCrucible;
+import thaumcraft.common.tiles.TileSpa;
 // import flaxbeard.thaumicexploration.integration.BotaniaIntegration;
 
 public class TileEntityEverfullUrn extends TileEntity implements IFluidTank, IFluidHandler {

@@ -1,6 +1,6 @@
 package flaxbeard.thaumicexploration.client.render;
 
-import java.awt.Color;
+import java.awt.*;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -8,11 +8,11 @@ import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import flaxbeard.thaumicexploration.ThaumicExploration;
 import thaumcraft.client.renderers.block.BlockRenderer;
 import thaumcraft.common.blocks.BlockCandle;
 import thaumcraft.common.lib.utils.Utils;
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import flaxbeard.thaumicexploration.ThaumicExploration;
 
 public class BlockFloatyCandleRenderer extends BlockRenderer implements ISimpleBlockRenderingHandler {
 
