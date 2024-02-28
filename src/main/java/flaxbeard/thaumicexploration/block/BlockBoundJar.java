@@ -113,7 +113,9 @@ public class BlockBoundJar extends BlockJar {
                         || (jar.aspect != null && jar.aspect == aspect && amount >= 8))) {
             player.getHeldItem().stackSize--;
             jar.aspect = aspect;
-            jar.addToContainer(aspect, amount);
+            if (!world.isRemote) {
+                jar.addToContainer(aspect, amount);
+            }
             if (!player.inventory.addItemStackToInventory(new ItemStack(ConfigItems.itemEssence, 1, 0))) {
                 player.dropItem(ConfigItems.itemEssence, 1);
             }
@@ -126,7 +128,9 @@ public class BlockBoundJar extends BlockJar {
             if (!player.inventory.addItemStackToInventory(newPhial)) {
                 player.dropItem(newPhial.getItem(), 1);
             }
-            jar.takeFromContainer(jar.aspect, 8);
+            if (!world.isRemote) {
+                jar.takeFromContainer(jar.aspect, 8);
+            }
             world.playSoundAtEntity(player, "liquid.swim", 0.25F, 1.0F);
         }
         return super.onBlockActivated(world, x, y, z, player, par6, par7, par8, par9);
