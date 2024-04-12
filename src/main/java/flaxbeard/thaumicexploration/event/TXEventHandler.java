@@ -646,7 +646,7 @@ public class TXEventHandler {
             int disarm = EnchantmentHelper.getEnchantmentLevel(ThaumicExploration.enchantmentDisarm.effectId, heldItem);
             if (disarm > 0 && !(event.entityLiving instanceof EntityPlayer)) {
                 if (event.entityLiving.getHeldItem() != null && !event.entityLiving.worldObj.isRemote
-                        && event.entityLiving.worldObj.rand.nextInt(10 - (2 * disarm)) == 0) {
+                        && (disarm >= 5 || event.entityLiving.worldObj.rand.nextInt(10 - (2 * disarm)) == 0)) {
                     ItemStack itemstack = event.entityLiving.getHeldItem();
                     event.entityLiving.setCurrentItemOrArmor(0, null);
                     World world = event.entityLiving.worldObj;
