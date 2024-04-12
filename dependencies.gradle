@@ -4,13 +4,13 @@ dependencies {
     compile('com.github.GTNewHorizons:AppleCore:3.3.0:dev')
     compile('thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev')
     compile("curse.maven:witchery-69673:2234410")
-    compileOnly('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-328-GTNH:dev') {
+    compileOnly('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-348-GTNH:dev') {
         transitive = false
     }
     compile('com.github.GTNewHorizons:Baubles:1.0.4:dev') {
         transitive = false
     }
-    compileOnly('com.github.GTNewHorizons:Botania:1.10.10-GTNH:dev') {
+    compileOnly('com.github.GTNewHorizons:Botania:1.10.12-GTNH:dev') {
         transitive = false
     }
     compile('com.github.GTNewHorizons:CodeChickenLib:1.2.1:dev') {
@@ -19,9 +19,9 @@ dependencies {
     compileOnly('com.github.GTNewHorizons:ThaumicTinkerer:2.9.2:dev') {
         transitive = false
     }
-    compileOnly("com.github.GTNewHorizons:waila:1.7.1:api") {
+    compileOnly("com.github.GTNewHorizons:waila:1.7.2:api") {
         transitive = false
     }
     runtimeOnly("com.github.GTNewHorizons:CodeChickenCore:1.2.1:dev")  // Allow obfuscated Witchery to run in dev
-    runtimeOnly("com.github.GTNewHorizons:NotEnoughItems:2.5.21-GTNH:dev")
+    runtimeOnly("com.github.GTNewHorizons:NotEnoughItems:2.5.25-GTNH:dev")
 }
