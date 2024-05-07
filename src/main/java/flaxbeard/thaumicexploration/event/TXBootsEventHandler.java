@@ -7,6 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
@@ -17,11 +18,12 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
-import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import flaxbeard.thaumicexploration.common.ConfigTX;
 import flaxbeard.thaumicexploration.integration.TTIntegration;
+import flaxbeard.thaumicexploration.item.ItemTXArmorSpecial;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.nodes.INode;
@@ -30,6 +32,7 @@ import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
+import thaumicboots.api.IBoots;
 
 public class TXBootsEventHandler {
 
@@ -298,38 +301,51 @@ public class TXBootsEventHandler {
 
     @SubscribeEvent
     public void playerJumps(LivingEvent.LivingJumpEvent event) {
+        // if not a player
+        if (!(event.entity instanceof EntityPlayer)) {
+            return;
+        }
+        EntityPlayer player = (EntityPlayer) event.entity;
 
-        if (((event.entity instanceof EntityPlayer))
-                && (((EntityPlayer) event.entity).inventory.armorItemInSlot(0) != null)
-                && (((EntityPlayer) event.entity).inventory.armorItemInSlot(0).getItem()
-                        == ThaumicExploration.bootsMeteor)) {
-            if (((EntityPlayer) event.entity).isSneaking()) {
-                Vec3 vector = event.entityLiving.getLook(0.5F);
-                double total = Math.abs(vector.zCoord + vector.xCoord);
-                EntityPlayer player = (EntityPlayer) event.entity;
-                double jump = 0;
-                if (Loader.isModLoaded("ThaumicTinkerer")) {
-                    jump = TTIntegration.getAscentLevel((EntityPlayer) event.entity);
-                }
-                if (jump >= 1) {
-                    jump = (jump + 2D) / 4D;
-                }
+        // if no boots equipped
+        if (player.inventory.armorItemInSlot(0) == null) {
+            return;
+        }
 
-                if (vector.yCoord < total) vector.yCoord = total;
+        Item item = player.inventory.armorItemInSlot(0).getItem();
 
-                event.entityLiving.motionY += ((jump + 1) * vector.yCoord) / 1.5F;
-                event.entityLiving.motionZ += (jump + 1) * vector.zCoord * 4;
-                event.entityLiving.motionX += (jump + 1) * vector.xCoord * 4;
-
-            } else {
-                event.entityLiving.motionY += 0.2750000059604645D;
+        if ((item instanceof ItemTXArmorSpecial) && !((EntityPlayer) event.entity).isSneaking()) {
+            double jump = ((ItemTXArmorSpecial) item).jumpBonus;
+            if (ThaumicExploration.isBootsActive) {
+                jump *= applyJump(player);
             }
-        } else if (((event.entity instanceof EntityPlayer))
-                && (((EntityPlayer) event.entity).inventory.armorItemInSlot(0) != null)
-                && (((EntityPlayer) event.entity).inventory.armorItemInSlot(0).getItem()
-                        == ThaumicExploration.bootsComet)) {
-                            event.entityLiving.motionY += 0.2750000059604645D;
-                        }
+            event.entityLiving.motionY += jump;
+        } else if (item == ThaumicExploration.bootsMeteor && player.isSneaking()) {
+            Vec3 vector = event.entityLiving.getLook(0.5F);
+            double total = Math.abs(vector.zCoord + vector.xCoord);
+            double jump = 0;
+            if (ThaumicExploration.isThaumTinkererActive) {
+                jump = TTIntegration.getAscentLevel(player);
+            }
+            if (jump >= 1) {
+                jump *= 0.5; // bizarre, but I made this a bit more efficient (was originally (jump*2)/4)
+            }
+            if (ThaumicExploration.isBootsActive) {
+                jump *= applyJump(player);
+            }
+
+            if (vector.yCoord < total) vector.yCoord = total;
+
+            player.motionY += ((jump + 1) * vector.yCoord) / 1.5F; // no good way to represent, 2/3 equivalent.
+            player.motionZ += (jump + 1) * vector.zCoord * 4;
+            player.motionX += (jump + 1) * vector.xCoord * 4;
+
+        }
+    }
+
+    @Optional.Method(modid = "thaumicboots")
+    public double applyJump(EntityPlayer player) {
+        return IBoots.isJumpEnabled(player.inventory.armorItemInSlot(0));
     }
 
     // TODO boot effect

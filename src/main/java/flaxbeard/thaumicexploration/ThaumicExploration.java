@@ -231,6 +231,11 @@ public class ThaumicExploration {
     public static Potion potionBinding;
     public static Potion potionTaintWithdrawl;
 
+    public static boolean isThaumTinkererActive = false;
+    public static final String TTINKER = "ThaumicTinkerer";
+    public static boolean isBootsActive = false;
+    public static final String BOOTS = "thaumicboots";
+
     @SidedProxy(
             clientSide = "flaxbeard.thaumicexploration.client.ClientProxy",
             serverSide = "flaxbeard.thaumicexploration.common.CommonProxy")
@@ -242,7 +247,12 @@ public class ThaumicExploration {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-
+        if (Loader.isModLoaded(TTINKER)) {
+            isThaumTinkererActive = true;
+        }
+        if (Loader.isModLoaded(BOOTS)) {
+            isBootsActive = true;
+        }
         // GameRegistry.registerWorldGenerator(this.worldGen = new WorldGenTX());
 
         SoulBrazierQueue aBrazierQueue = new SoulBrazierQueue();
