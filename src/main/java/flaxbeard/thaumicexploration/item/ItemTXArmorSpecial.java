@@ -54,6 +54,20 @@ public class ItemTXArmorSpecial extends ItemArmor implements IRepairable, IRunic
                 player.fallDistance = 0.0F;
             }
         }
+        if (getIntertialState(itemStack) && player.moveForward == 0
+                && player.moveStrafing == 0
+                && player.capabilities.isFlying) {
+            player.motionX *= 0.5;
+            player.motionZ *= 0.5;
+        }
+        boolean omniMode = false;
+        if (ThaumicExploration.isBootsActive) {
+            omniMode = isOmniEnabled(itemStack);
+            if ((player.moveForward == 0F && player.moveStrafing == 0F && omniMode)
+                    || (player.moveForward <= 0F && !omniMode)) {
+                return;
+            }
+        }
         if (player.moveForward != 0.0F || player.moveStrafing != 0.0F) {
             int haste = EnchantmentHelper
                     .getEnchantmentLevel(Config.enchHaste.effectId, player.inventory.armorItemInSlot(0));
@@ -121,14 +135,11 @@ public class ItemTXArmorSpecial extends ItemArmor implements IRepairable, IRunic
 
     @Optional.Method(modid = "thaumicboots")
     public void applyOmniState(EntityPlayer player, float bonus, ItemStack itemStack) {
-        boolean omniMode = itemStack.stackTagCompound.getBoolean(TAG_MODE_OMNI);
-        if (player.moveForward <= 0F && !omniMode) {
-            return;
-        }
-        if (player.moveStrafing != 0.0 && omniMode) {
-            player.moveFlying(player.moveStrafing, 0.0F, bonus);
-        } else if (player.moveForward != 0.0) {
+        if (player.moveForward != 0.0) {
             player.moveFlying(0.0F, player.moveForward, bonus);
+        }
+        if (player.moveStrafing != 0.0 && getOmniState(itemStack)) {
+            player.moveFlying(player.moveStrafing, 0.0F, bonus);
         }
     }
 
@@ -145,5 +156,19 @@ public class ItemTXArmorSpecial extends ItemArmor implements IRepairable, IRunic
             return stack.stackTagCompound.getDouble("jump");
         }
         return 1.0;
+    }
+
+    public boolean getOmniState(ItemStack stack) {
+        if (stack.stackTagCompound != null) {
+            return stack.stackTagCompound.getBoolean("omni");
+        }
+        return false;
+    }
+
+    public boolean getIntertialState(ItemStack stack) {
+        if (stack.stackTagCompound != null) {
+            return stack.stackTagCompound.getBoolean("inertiacanceling");
+        }
+        return false;
     }
 }
