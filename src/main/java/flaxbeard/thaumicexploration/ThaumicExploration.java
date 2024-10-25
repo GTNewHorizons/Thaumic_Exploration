@@ -2,7 +2,6 @@ package flaxbeard.thaumicexploration;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -20,9 +19,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.oredict.OreDictionary;
-
-import org.apache.commons.lang3.tuple.MutablePair;
 
 import baubles.api.BaubleType;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -103,13 +99,11 @@ import flaxbeard.thaumicexploration.wand.WandRodNecromancerOnUpdate;
 import flaxbeard.thaumicexploration.wand.WandRodTransmutationOnUpdate;
 import flaxbeard.thaumicexploration.wand.WandRodTransmutative;
 import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.wands.StaffRod;
 import thaumcraft.api.wands.WandCap;
 import thaumcraft.api.wands.WandRod;
 import thaumcraft.common.blocks.BlockCandleItem;
 import thaumcraft.common.config.ConfigBlocks;
-import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
 
 @Mod(
         modid = ThaumicExploration.MODID,
@@ -124,7 +118,6 @@ public class ThaumicExploration {
     public static FMLEventChannel channel;
     public static final String MODID = "ThaumicExploration";
 
-    public static ArrayList<MutablePair<Item, Integer>> allowedItems = new ArrayList<MutablePair<Item, Integer>>();
     public static Item pureZombieBrain;
     public static Item blankSeal;
     public static Item chestSeal;
@@ -582,161 +575,6 @@ public class ThaumicExploration {
         ModResearch.initResearch();
         // NecromanticAltarAPI.initNecromanticRecipes();
         proxy.setUnicode();
-
-        allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.stone), 0));
-        String[] ores = OreDictionary.getOreNames();
-        for (String ore : ores) {
-            if (ore != null) {
-                if (ore.equals("logWood")) {
-                    for (ItemStack is : OreDictionary.getOres(ore)) {
-                        AspectList ot = ThaumcraftCraftingManager.getObjectTags(is);
-                        ot = ThaumcraftCraftingManager.getBonusTags(is, ot);
-                        if (!(is.getItem() == Item.getItemFromBlock(ConfigBlocks.blockMagicalLog))
-                                && ot.getAspects().length > 0)
-                            allowedItems.add(MutablePair.of(is.getItem(), is.getItemDamage()));
-                    }
-                }
-                if (ore.equals("treeLeaves")) {
-                    for (ItemStack is : OreDictionary.getOres(ore)) {
-                        AspectList ot = ThaumcraftCraftingManager.getObjectTags(is);
-                        ot = ThaumcraftCraftingManager.getBonusTags(is, ot);
-                        if (!(is.getItem() == Item.getItemFromBlock(ConfigBlocks.blockMagicalLeaves))
-                                && ot.getAspects().length > 0)
-                            allowedItems.add(MutablePair.of(is.getItem(), is.getItemDamage()));
-                    }
-                }
-                if (ConfigTX.allowModWoodReplication) {
-                    if (ConfigTX.allowMagicPlankReplication) {
-                        if (ore.equals("plankWood")) {
-                            for (ItemStack is : OreDictionary.getOres(ore)) {
-                                AspectList ot = ThaumcraftCraftingManager.getObjectTags(is);
-                                ot = ThaumcraftCraftingManager.getBonusTags(is, ot);
-                                if (ot.getAspects().length > 0)
-                                    allowedItems.add(MutablePair.of(is.getItem(), is.getItemDamage()));
-                            }
-                        }
-                    } else {
-                        if (ore.equals("plankWood")) {
-                            for (ItemStack is : OreDictionary.getOres(ore)) {
-                                AspectList ot = ThaumcraftCraftingManager.getObjectTags(is);
-                                ot = ThaumcraftCraftingManager.getBonusTags(is, ot);
-                                if (!(is.getItem() == Item.getItemFromBlock(ConfigBlocks.blockWoodenDevice))
-                                        && ot.getAspects().length > 0)
-                                    allowedItems.add(MutablePair.of(is.getItem(), is.getItemDamage()));
-                            }
-                        }
-                    }
-
-                    if (ore.equals("slabWood")) {
-                        for (ItemStack is : OreDictionary.getOres(ore)) {
-                            AspectList ot = ThaumcraftCraftingManager.getObjectTags(is);
-                            ot = ThaumcraftCraftingManager.getBonusTags(is, ot);
-                            if (ot.getAspects().length > 0)
-                                allowedItems.add(MutablePair.of(is.getItem(), is.getItemDamage()));
-                        }
-                    }
-                    if (ore.equals("stairWood")) {
-                        for (ItemStack is : OreDictionary.getOres(ore)) {
-                            AspectList ot = ThaumcraftCraftingManager.getObjectTags(is);
-                            ot = ThaumcraftCraftingManager.getBonusTags(is, ot);
-                            if (ot.getAspects().length > 0)
-                                allowedItems.add(MutablePair.of(is.getItem(), is.getItemDamage()));
-                        }
-                    }
-                } else {
-                    allowedItems.add(
-                            MutablePair.of(Item.getItemFromBlock(Blocks.wooden_slab), OreDictionary.WILDCARD_VALUE));
-                    allowedItems.add(
-                            MutablePair.of(Item.getItemFromBlock(Blocks.birch_stairs), OreDictionary.WILDCARD_VALUE));
-                    allowedItems.add(
-                            MutablePair.of(Item.getItemFromBlock(Blocks.oak_stairs), OreDictionary.WILDCARD_VALUE));
-                    allowedItems.add(
-                            MutablePair.of(Item.getItemFromBlock(Blocks.jungle_stairs), OreDictionary.WILDCARD_VALUE));
-                    allowedItems.add(
-                            MutablePair.of(Item.getItemFromBlock(Blocks.spruce_stairs), OreDictionary.WILDCARD_VALUE));
-                    allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.log), OreDictionary.WILDCARD_VALUE));
-                    allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.log2), OreDictionary.WILDCARD_VALUE));
-                    allowedItems
-                            .add(MutablePair.of(Item.getItemFromBlock(Blocks.planks), OreDictionary.WILDCARD_VALUE));
-                    if (ConfigTX.allowMagicPlankReplication) {
-                        allowedItems.add(MutablePair.of(Item.getItemFromBlock(ConfigBlocks.blockWoodenDevice), 6));
-                        allowedItems.add(MutablePair.of(Item.getItemFromBlock(ConfigBlocks.blockWoodenDevice), 7));
-                    }
-                }
-                if (ConfigTX.allowModStoneReplication) {
-                    if (ore.equals("stone")) {
-                        for (ItemStack is : OreDictionary.getOres(ore)) {
-                            AspectList ot = ThaumcraftCraftingManager.getObjectTags(is);
-                            ot = ThaumcraftCraftingManager.getBonusTags(is, ot);
-                            if (ot.getAspects().length > 0)
-                                allowedItems.add(MutablePair.of(is.getItem(), is.getItemDamage()));
-                        }
-                    }
-                    if (ore.equals("cobblestone")) {
-                        for (ItemStack is : OreDictionary.getOres(ore)) {
-                            AspectList ot = ThaumcraftCraftingManager.getObjectTags(is);
-                            ot = ThaumcraftCraftingManager.getBonusTags(is, ot);
-                            if (ot.getAspects().length > 0)
-                                allowedItems.add(MutablePair.of(is.getItem(), is.getItemDamage()));
-                        }
-                    }
-                } else {
-                    allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.stone), OreDictionary.WILDCARD_VALUE));
-                    allowedItems.add(
-                            MutablePair.of(Item.getItemFromBlock(Blocks.cobblestone), OreDictionary.WILDCARD_VALUE));
-                }
-                allowedItems.add(
-                        MutablePair.of(Item.getItemFromBlock(Blocks.mossy_cobblestone), OreDictionary.WILDCARD_VALUE));
-                allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.stone_slab), 0));
-                allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.stone_slab), 3));
-                allowedItems
-                        .add(MutablePair.of(Item.getItemFromBlock(Blocks.stone_stairs), OreDictionary.WILDCARD_VALUE));
-
-                // All sandstone, stairs, slab
-                allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.sand), OreDictionary.WILDCARD_VALUE));
-                allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.sandstone), OreDictionary.WILDCARD_VALUE));
-                allowedItems.add(
-                        MutablePair.of(Item.getItemFromBlock(Blocks.sandstone_stairs), OreDictionary.WILDCARD_VALUE));
-                allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.stone_slab), 1));
-
-                // All stone bricks, stairs, slab
-                allowedItems
-                        .add(MutablePair.of(Item.getItemFromBlock(Blocks.brick_block), OreDictionary.WILDCARD_VALUE));
-                allowedItems
-                        .add(MutablePair.of(Item.getItemFromBlock(Blocks.brick_stairs), OreDictionary.WILDCARD_VALUE));
-                allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.stone_slab), 5));
-
-                // Bricks, stairs, slab
-                allowedItems
-                        .add(MutablePair.of(Item.getItemFromBlock(Blocks.stonebrick), OreDictionary.WILDCARD_VALUE));
-                allowedItems.add(
-                        MutablePair.of(Item.getItemFromBlock(Blocks.stone_brick_stairs), OreDictionary.WILDCARD_VALUE));
-                allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.stone_slab), 4));
-
-                // All quartz, stairs, slab
-                // allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.blockNetherQuartz),OreDictionary.WILDCARD_VALUE));
-                // allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.stairsNetherQuartz),OreDictionary.WILDCARD_VALUE));
-                // allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.stoneSingleSlab),7));
-
-                // Netherbrick, stairs, slab
-                allowedItems
-                        .add(MutablePair.of(Item.getItemFromBlock(Blocks.nether_brick), OreDictionary.WILDCARD_VALUE));
-                allowedItems.add(
-                        MutablePair
-                                .of(Item.getItemFromBlock(Blocks.nether_brick_stairs), OreDictionary.WILDCARD_VALUE));
-                allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.stone_slab), 6));
-
-                allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.soul_sand), OreDictionary.WILDCARD_VALUE));
-                allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.gravel), OreDictionary.WILDCARD_VALUE));
-                allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.glass), OreDictionary.WILDCARD_VALUE));
-                allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.grass), OreDictionary.WILDCARD_VALUE));
-                allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.dirt), OreDictionary.WILDCARD_VALUE));
-                allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.snow), OreDictionary.WILDCARD_VALUE));
-                allowedItems.add(MutablePair.of(Item.getItemFromBlock(Blocks.clay), OreDictionary.WILDCARD_VALUE));
-                allowedItems
-                        .add(MutablePair.of(Item.getItemFromBlock(Blocks.hardened_clay), OreDictionary.WILDCARD_VALUE));
-            }
-        }
     }
 
     public void addRecipes() {}
