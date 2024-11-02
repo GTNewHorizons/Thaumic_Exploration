@@ -164,19 +164,11 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
                 .getConnectableTile(this.worldObj, this.xCoord, this.yCoord, this.zCoord, ForgeDirection.DOWN);
         if (te != null) {
             IEssentiaTransport ic = (IEssentiaTransport) te;
-            if (!ic.canOutputTo(ForgeDirection.UP)) {
-                return;
-            }
-
             Aspect ta = Aspect.DEATH;
-            if ((ic.getEssentiaAmount(ForgeDirection.UP) > 0)
-                    && (ic.getSuctionAmount(ForgeDirection.UP) < getSuctionAmount(ForgeDirection.DOWN))
-                    && (getSuctionAmount(ForgeDirection.DOWN) >= ic.getMinimumSuction())) {
-                ta = ic.getEssentiaType(ForgeDirection.UP);
-            }
-
-            if ((ta != null) && (ic.getSuctionAmount(ForgeDirection.UP) < getSuctionAmount(ForgeDirection.DOWN)))
+            if (ic.canOutputTo(ForgeDirection.UP)
+                    && ic.getSuctionAmount(ForgeDirection.UP) < getSuctionAmount(ForgeDirection.DOWN)) {
                 addEssentia(ta, ic.takeEssentia(ta, 1, ForgeDirection.UP), ForgeDirection.DOWN);
+            }
         }
     }
 
