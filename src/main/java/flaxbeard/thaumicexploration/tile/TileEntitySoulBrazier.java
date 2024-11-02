@@ -307,9 +307,10 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
 
     @Override
     public void forceChunkLoading(ForgeChunkManager.Ticket ticket) {
-
-        this.heldChunk = ticket;
-        ForgeChunkManager.forceChunk(this.heldChunk, new ChunkCoordIntPair(this.xCoord >> 4, this.zCoord >> 4));
+        if (ConfigTX.allowSBChunkLoading) {
+            this.heldChunk = ticket;
+            ForgeChunkManager.forceChunk(this.heldChunk, new ChunkCoordIntPair(this.xCoord >> 4, this.zCoord >> 4));
+        }
     }
 
     @Override
