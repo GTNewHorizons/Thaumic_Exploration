@@ -170,8 +170,8 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
 
             Aspect ta = Aspect.DEATH;
             if ((ic.getEssentiaAmount(ForgeDirection.UP) > 0)
-                    && (ic.getSuctionAmount(ForgeDirection.UP) < getSuctionAmount(ForgeDirection.UP))
-                    && (getSuctionAmount(ForgeDirection.UP) >= ic.getMinimumSuction())) {
+                    && (ic.getSuctionAmount(ForgeDirection.UP) < getSuctionAmount(ForgeDirection.DOWN))
+                    && (getSuctionAmount(ForgeDirection.DOWN) >= ic.getMinimumSuction())) {
                 ta = ic.getEssentiaType(ForgeDirection.UP);
             }
 
