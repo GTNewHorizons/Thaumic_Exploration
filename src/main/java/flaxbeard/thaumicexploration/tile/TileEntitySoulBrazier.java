@@ -164,19 +164,11 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
                 .getConnectableTile(this.worldObj, this.xCoord, this.yCoord, this.zCoord, ForgeDirection.DOWN);
         if (te != null) {
             IEssentiaTransport ic = (IEssentiaTransport) te;
-            if (!ic.canOutputTo(ForgeDirection.UP)) {
-                return;
-            }
-
             Aspect ta = Aspect.DEATH;
-            if ((ic.getEssentiaAmount(ForgeDirection.UP) > 0)
-                    && (ic.getSuctionAmount(ForgeDirection.UP) < getSuctionAmount(ForgeDirection.UP))
-                    && (getSuctionAmount(ForgeDirection.UP) >= ic.getMinimumSuction())) {
-                ta = ic.getEssentiaType(ForgeDirection.UP);
-            }
-
-            if ((ta != null) && (ic.getSuctionAmount(ForgeDirection.UP) < getSuctionAmount(ForgeDirection.DOWN)))
+            if (ic.canOutputTo(ForgeDirection.UP)
+                    && ic.getSuctionAmount(ForgeDirection.UP) < getSuctionAmount(ForgeDirection.DOWN)) {
                 addEssentia(ta, ic.takeEssentia(ta, 1, ForgeDirection.UP), ForgeDirection.DOWN);
+            }
         }
     }
 
@@ -307,9 +299,10 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
 
     @Override
     public void forceChunkLoading(ForgeChunkManager.Ticket ticket) {
-
-        this.heldChunk = ticket;
-        ForgeChunkManager.forceChunk(this.heldChunk, new ChunkCoordIntPair(this.xCoord >> 4, this.zCoord >> 4));
+        if (ConfigTX.allowSBChunkLoading) {
+            this.heldChunk = ticket;
+            ForgeChunkManager.forceChunk(this.heldChunk, new ChunkCoordIntPair(this.xCoord >> 4, this.zCoord >> 4));
+        }
     }
 
     @Override
