@@ -23,6 +23,7 @@ import com.mojang.authlib.GameProfile;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import flaxbeard.thaumicexploration.interop.AppleCoreInterop;
+import flaxbeard.thaumicexploration.interop.NutritionInterop;
 import flaxbeard.thaumicexploration.misc.FakePlayerPotion;
 import thaumcraft.common.config.ConfigItems;
 
@@ -126,6 +127,11 @@ public class ItemFoodTalisman extends Item {
                     finalSat = sat - (20 - player.getFoodStats().getFoodLevel());
                     sat = 20 - player.getFoodStats().getFoodLevel();
                 }
+
+                if (Loader.isModLoaded("nutrition")) {
+                    NutritionInterop.addNutritionFromHunger(player, (int) sat);
+                }
+
                 if (Loader.isModLoaded("AppleCore")) {
                     AppleCoreInterop.setHunger((int) sat, player);
                 } else ObfuscationReflectionHelper.setPrivateValue(
@@ -146,6 +152,11 @@ public class ItemFoodTalisman extends Item {
                             - (player.getFoodStats().getFoodLevel() - player.getFoodStats().getSaturationLevel());
                     sat = player.getFoodStats().getFoodLevel() - player.getFoodStats().getSaturationLevel();
                 }
+
+                if (Loader.isModLoaded("nutrition")) {
+                    NutritionInterop.addNutritionFromHunger(player, (int) sat);
+                }
+
                 if (Loader.isModLoaded("AppleCore")) {
                     AppleCoreInterop.setSaturation(sat, player);
                 } else ObfuscationReflectionHelper.setPrivateValue(
