@@ -12,64 +12,48 @@ import thaumcraft.client.renderers.block.BlockRenderer;
 
 public class BlockReplicatorRenderer extends BlockRenderer implements ISimpleBlockRenderingHandler {
 
+    @Override
     public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
-        block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+        IIcon side = ((BlockReplicator) block).icon[1];
+        IIcon top = ((BlockReplicator) block).icon[0];
+
         renderer.setRenderBoundsFromBlock(block);
-        drawFaces(
-                renderer,
-                block,
-                ((BlockReplicator) block).icon[0],
-                ((BlockReplicator) block).icon[0],
-                ((BlockReplicator) block).icon[1],
-                ((BlockReplicator) block).icon[1],
-                ((BlockReplicator) block).icon[1],
-                ((BlockReplicator) block).icon[1],
-                true);
+        drawFaces(renderer, block, top, top, side, side, side, side, true);
     }
 
+    @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
             RenderBlocks renderer) {
-
-        int metadata = world.getBlockMetadata(x, y, z);
         block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-        setBrightness(world, x, y, z, block);
         renderer.setRenderBoundsFromBlock(block);
+        setBrightness(world, x, y, z, block);
         renderer.renderStandardBlock(block, x, y, z);
-        IIcon top = ((BlockReplicator) block).icon[2];
 
-        float f5 = 0.001F;
-        renderer.renderFaceXPos(block, x + f5, y + 1.0F, z, top);
-        renderer.renderFaceXNeg(block, x - f5, y + 1.0F, z, top);
-        renderer.renderFaceZPos(block, x, y + 1.0F, z + f5, top);
-        renderer.renderFaceZNeg(block, x, y + 1.0F, z - f5, top);
-        f5 = 0.0F;
-        renderer.renderFaceXPos(block, x + f5, y + 1.0F, z, top);
-        renderer.renderFaceXNeg(block, x - f5, y + 1.0F, z, top);
-        renderer.renderFaceZPos(block, x, y + 1.0F, z + f5, top);
-        renderer.renderFaceZNeg(block, x, y + 1.0F, z - f5, top);
-        f5 = -0.999F;
-        renderer.renderFaceXPos(block, x + f5, y + 1.0F, z, top);
-        renderer.renderFaceXNeg(block, x - f5, y + 1.0F, z, top);
-        renderer.renderFaceZPos(block, x, y + 1.0F, z + f5, top);
-        renderer.renderFaceZNeg(block, x, y + 1.0F, z - f5, top);
+        IIcon topIcon = ((BlockReplicator) block).icon[2];
+
+        float[] offsets = { 0.001F, 0.0F, -0.999F };
+        for (float offset : offsets) {
+            renderTopGlowLayer(renderer, block, x, y, z, topIcon, offset);
+        }
 
         renderer.clearOverrideBlockTexture();
-        block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-        renderer.setRenderBoundsFromBlock(block);
         return true;
     }
 
-    public boolean shouldRender3DInInventory() {
-        return true;
-    }
-
-    public int getRenderId() {
-        return ThaumicExploration.replicatorRenderID;
+    private void renderTopGlowLayer(RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float offset) {
+        renderer.renderFaceXPos(block, x + offset, y + 1.0F, z, icon);
+        renderer.renderFaceXNeg(block, x - offset, y + 1.0F, z, icon);
+        renderer.renderFaceZPos(block, x, y + 1.0F, z + offset, icon);
+        renderer.renderFaceZNeg(block, x, y + 1.0F, z - offset, icon);
     }
 
     @Override
     public boolean shouldRender3DInInventory(int modelId) {
-        // TODO Auto-generated method stub
         return modelId == ThaumicExploration.replicatorRenderID;
+    }
+
+    @Override
+    public int getRenderId() {
+        return ThaumicExploration.replicatorRenderID;
     }
 }
