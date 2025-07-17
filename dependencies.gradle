@@ -7,9 +7,6 @@ dependencies {
     compileOnly('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-652-GTNH:dev') {
         transitive = false
     }
-    compile('com.github.GTNewHorizons:Baubles:1.0.4:dev') {
-        transitive = false
-    }
     compileOnly('com.github.GTNewHorizons:Botania:1.12.12-GTNH:dev') {
         transitive = false
     }
