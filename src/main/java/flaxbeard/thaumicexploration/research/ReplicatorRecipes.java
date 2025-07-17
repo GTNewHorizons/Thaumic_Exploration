@@ -47,16 +47,20 @@ public class ReplicatorRecipes {
         // allowedItems.add(Item.getItemFromBlock(Blocks.blockNetherQuartz),OreDictionary.WILDCARD_VALUE));
         // allowedItems.add(Item.getItemFromBlock(Blocks.stairsNetherQuartz),OreDictionary.WILDCARD_VALUE));
         // allowedItems.add(Item.getItemFromBlock(Blocks.stoneSingleSlab),7));
+        allowedItemsWildcard.add(Item.getItemFromBlock(Blocks.netherrack));
         allowedItemsWildcard.add(Item.getItemFromBlock(Blocks.nether_brick));
         allowedItemsWildcard.add(Item.getItemFromBlock(Blocks.nether_brick_stairs));
         allowedItemsWildcard.add(Item.getItemFromBlock(Blocks.soul_sand));
         allowedItemsWildcard.add(Item.getItemFromBlock(Blocks.gravel));
         allowedItemsWildcard.add(Item.getItemFromBlock(Blocks.glass));
+        allowedItemsWildcard.add(Item.getItemFromBlock(Blocks.stained_glass));
         allowedItemsWildcard.add(Item.getItemFromBlock(Blocks.grass));
         allowedItemsWildcard.add(Item.getItemFromBlock(Blocks.dirt));
         allowedItemsWildcard.add(Item.getItemFromBlock(Blocks.snow));
         allowedItemsWildcard.add(Item.getItemFromBlock(Blocks.clay));
         allowedItemsWildcard.add(Item.getItemFromBlock(Blocks.hardened_clay));
+        allowedItemsWildcard.add(Item.getItemFromBlock(Blocks.stained_hardened_clay));
+        allowedItemsWildcard.add(Item.getItemFromBlock(Blocks.end_stone));
         allowedItemsWildcard.trimToSize();
         allowedItems.add(ImmutablePair.of(Item.getItemFromBlock(Blocks.stone), 0));
         if (!ConfigTX.allowModWoodReplication && ConfigTX.allowMagicPlankReplication) {
@@ -64,10 +68,10 @@ public class ReplicatorRecipes {
             allowedItems.add(ImmutablePair.of(Item.getItemFromBlock(ConfigBlocks.blockWoodenDevice), 7));
         }
         allowedItems.add(ImmutablePair.of(Item.getItemFromBlock(Blocks.stone_slab), 0));
-        allowedItems.add(ImmutablePair.of(Item.getItemFromBlock(Blocks.stone_slab), 3));
         allowedItems.add(ImmutablePair.of(Item.getItemFromBlock(Blocks.stone_slab), 1));
-        allowedItems.add(ImmutablePair.of(Item.getItemFromBlock(Blocks.stone_slab), 5));
+        allowedItems.add(ImmutablePair.of(Item.getItemFromBlock(Blocks.stone_slab), 3));
         allowedItems.add(ImmutablePair.of(Item.getItemFromBlock(Blocks.stone_slab), 4));
+        allowedItems.add(ImmutablePair.of(Item.getItemFromBlock(Blocks.stone_slab), 5));
         allowedItems.add(ImmutablePair.of(Item.getItemFromBlock(Blocks.stone_slab), 6));
         allowedItems.trimToSize();
         forbiddenItems.add(Item.getItemFromBlock(ConfigBlocks.blockMagicalLog));
