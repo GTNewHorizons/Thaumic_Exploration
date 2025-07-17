@@ -80,6 +80,9 @@ public class ReplicatorRecipes {
 
     public static boolean canStackBeReplicated(ItemStack stack) {
         Item item = stack.getItem();
+        AspectList ot = ThaumcraftCraftingManager.getObjectTags(stack);
+        ot = ThaumcraftCraftingManager.getBonusTags(stack, ot);
+        if (ot.size() == 0) return false;
         if (allowedItemsWildcard.contains(item)) {
             return true;
         }
@@ -89,15 +92,9 @@ public class ReplicatorRecipes {
         if (forbiddenItems.contains(item)) {
             return false;
         }
-        int[] oreIDs = OreDictionary.getOreIDs(stack);
-        for (int id : oreIDs) {
-            String oreName = OreDictionary.getOreName(id);
-            if (checkOreDictRules(oreName)) {
-                AspectList ot = ThaumcraftCraftingManager.getObjectTags(stack);
-                ot = ThaumcraftCraftingManager.getBonusTags(stack, ot);
-                if (ot.getAspects().length > 0) {
-                    return true;
-                }
+        for (int id : OreDictionary.getOreIDs(stack)) {
+            if (checkOreDictRules(OreDictionary.getOreName(id))) {
+                return true;
             }
         }
         return false;

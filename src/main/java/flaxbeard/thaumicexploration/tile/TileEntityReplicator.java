@@ -1,7 +1,6 @@
 package flaxbeard.thaumicexploration.tile;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -65,7 +64,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
 
     public void startCrafting() {
         ItemStack input = getStackInSlot(0);
-        if (input == null || input.stackSize == 0 || worldObj.isRemote) return;
+        if (input == null || input.stackSize > 0 || worldObj.isRemote) return;
 
         crafting = true;
         ticksLeft = 100;
@@ -87,26 +86,24 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
 
     private void updateCraftingServer() {
         markBlockForUpdate();
-        getSurroundings();
-        essentiaTicks++;
 
         if (recipeEssentia.visSize() > 0) {
+            essentiaTicks++;
+
             if (essentiaTicks > 49) {
                 essentiaTicks = 0;
+                getSurroundings();
                 drainEssentiaFromSources();
             }
-        } else {
-            if (essentiaTicks > 49) {
-                if (ticksLeft > 0) {
-                    if ((260 - ticksLeft) % 40 == 0) {
-                        worldObj.playSoundEffect(xCoord, yCoord, zCoord, "thaumcraft:rumble", 0.5F, 1.0F);
-                    }
-                    ticksLeft--;
-                } else {
-                    finishCrafting();
-                }
-            }
+            return;
         }
+
+        if (ticksLeft <= 0) {
+            finishCrafting();
+            return;
+        }
+
+        ticksLeft--;
     }
 
     private void drainEssentiaFromSources() {
@@ -115,15 +112,13 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
 
             for (ChunkCoordinates cc : sources) {
                 TileEntity te = worldObj.getTileEntity(cc.posX, cc.posY, cc.posZ);
-                if (te instanceof IAspectSource) {
-                    IAspectSource source = (IAspectSource) te;
-                    if (source.doesContainerContainAmount(aspect, 1)) {
-                        source.takeFromContainer(aspect, 1);
-                        recipeEssentia.reduce(aspect, 1);
-                        markBlockForUpdate();
-                        return;
-                    }
-                }
+                if (!(te instanceof IAspectSource source)) continue;
+                if (!source.doesContainerContainAmount(aspect, 1)) continue;
+
+                source.takeFromContainer(aspect, 1);
+                recipeEssentia.reduce(aspect, 1);
+                markBlockForUpdate();
+                return;
             }
         }
     }
@@ -144,6 +139,8 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         example.stackSize = 1;
         AspectList tags = ThaumcraftCraftingManager
                 .getBonusTags(example, ThaumcraftCraftingManager.getObjectTags(example));
+
+        if (tags.size() == 0) return;
 
         for (int i = 0; i < 5; i++) {
             ThaumicExploration.proxy.spawnFragmentParticle(
@@ -188,8 +185,6 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         return (float) (2 * Math.random() - 1.0F);
     }
 
-    // --- Utility Methods ---
-
     private void markBlockForUpdate() {
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
@@ -226,8 +221,6 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
                 || worldObj.getBlock(xCoord, yCoord + 1, zCoord).isReplaceable(worldObj, xCoord, yCoord + 1, zCoord);
     }
 
-    // --- NBT ---
-
     private void writeInventoryNBT(NBTTagCompound tag) {
         tag.setBoolean("Crafting", crafting);
         tag.setInteger("Ticks", ticksLeft);
@@ -243,8 +236,13 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         }
         tag.setTag("Items", items);
 
+        if (recipeEssentia == null || recipeEssentia.size() <= 0) {
+            return;
+        }
+
         NBTTagCompound aspects = new NBTTagCompound();
         for (Aspect a : recipeEssentia.getAspects()) {
+            if (a == null) continue;
             NBTTagCompound aTag = new NBTTagCompound();
             aTag.setInteger("Amount", recipeEssentia.getAmount(a));
             aspects.setTag(a.getTag(), aTag);
@@ -268,7 +266,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
 
         recipeEssentia = new AspectList();
         NBTTagCompound aspects = tag.getCompoundTag("Aspects");
-        for (String key : (Set<String>) aspects.func_150296_c()) {
+        for (String key : aspects.func_150296_c()) {
             Aspect a = Aspect.getAspect(key);
             if (a != null) {
                 int amount = aspects.getCompoundTag(key).getInteger("Amount");
@@ -381,8 +379,6 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         return inventory[i] != null && inventory[i].stackSize > 0;
     }
 
-    // --- Aspect Container Interface ---
-
     @Override
     public AspectList getAspects() {
         return recipeEssentia;
@@ -425,8 +421,6 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
     public int containerContains(Aspect tag) {
         return 0;
     }
-
-    // --- Wand Interface ---
 
     @Override
     public int onWandRightClick(World world, ItemStack wand, EntityPlayer player, int x, int y, int z, int side,
