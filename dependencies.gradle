@@ -11,10 +11,7 @@ dependencies {
     compileOnly('com.github.GTNewHorizons:Botania:1.12.16-GTNH:dev') {
         transitive = false
     }
-    compileOnly('com.github.GTNewHorizons:ThaumicTinkerer:2.11.20:dev') {
-        transitive = false
-    }
-    compileOnly('com.github.GTNewHorizons:ThaumicTinkerer:2.11.15:dev') {
+    compileOnly('com.github.GTNewHorizons:ThaumicTinkerer:2.11.16:dev') {
         transitive = false
     }
     compileOnly("com.github.GTNewHorizons:waila:1.8.12:api") {
