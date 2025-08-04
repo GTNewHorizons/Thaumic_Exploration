@@ -4,7 +4,7 @@ dependencies {
     compile('com.github.GTNewHorizons:AppleCore:3.3.5:dev')
     compile('thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev')
     compile("curse.maven:witchery-69673:2234410")
-    compileOnly('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-669-GTNH:dev') {
+    compileOnly('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-671-GTNH:dev') {
         transitive = false
     }
     compileOnly('com.github.GTNewHorizons:Botania:1.12.21-GTNH:dev') {
