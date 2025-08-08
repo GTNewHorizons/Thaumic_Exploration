@@ -17,7 +17,7 @@ dependencies {
     compileOnly("com.github.GTNewHorizons:waila:1.8.12:api") {
         transitive = false
     }
-    api ('com.github.GTNewHorizons:ThaumicBoots:1.4.13:dev'){
+    api('com.github.GTNewHorizons:ThaumicBoots:1.4.13:dev'){
         exclude group: 'com.github.GTNewHorizons', module: 'Thaumic_Exploration'
     }
     implementation("com.github.GTNewHorizons:CodeChickenCore:1.4.3:dev")
