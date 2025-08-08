@@ -45,7 +45,8 @@ public class TileEntityCrucibleSouls extends TileEntity implements IAspectContai
         if (this.drainTicks > 0) {}
         NBTTagCompound aspects = new NBTTagCompound();
 
-        Iterator iterator = Aspect.aspects.keySet().iterator();
+        Iterator iterator = Aspect.aspects.keySet()
+            .iterator();
         while (iterator.hasNext()) {
             Object next = iterator.next();
             NBTTagCompound tag = new NBTTagCompound();
@@ -66,7 +67,8 @@ public class TileEntityCrucibleSouls extends TileEntity implements IAspectContai
         // }
         AspectList readAspects = new AspectList();
         NBTTagCompound aspects = par1NBTTagCompound.getCompoundTag("Aspects");
-        Iterator iterator = Aspect.aspects.keySet().iterator();
+        Iterator iterator = Aspect.aspects.keySet()
+            .iterator();
         while (iterator.hasNext()) {
             Object next = iterator.next();
             NBTTagCompound aspect = aspects.getCompoundTag((String) next);
@@ -90,7 +92,8 @@ public class TileEntityCrucibleSouls extends TileEntity implements IAspectContai
         }
         NBTTagCompound aspects = new NBTTagCompound();
 
-        Iterator iterator = Aspect.aspects.keySet().iterator();
+        Iterator iterator = Aspect.aspects.keySet()
+            .iterator();
         while (iterator.hasNext()) {
             Object next = iterator.next();
             NBTTagCompound tag = new NBTTagCompound();
@@ -116,7 +119,8 @@ public class TileEntityCrucibleSouls extends TileEntity implements IAspectContai
         }
         AspectList readAspects = new AspectList();
         NBTTagCompound aspects = access.getCompoundTag("Aspects");
-        Iterator iterator = Aspect.aspects.keySet().iterator();
+        Iterator iterator = Aspect.aspects.keySet()
+            .iterator();
         while (iterator.hasNext()) {
             Object next = iterator.next();
             NBTTagCompound aspect = aspects.getCompoundTag((String) next);
@@ -166,20 +170,20 @@ public class TileEntityCrucibleSouls extends TileEntity implements IAspectContai
                 if (this.worldObj.isAirBlock(this.xCoord + x, this.yCoord + y, this.zCoord + z)) {
                     if (this.worldObj.rand.nextBoolean()) {
                         this.worldObj.setBlock(
-                                this.xCoord + x,
-                                this.yCoord + y,
-                                this.zCoord + z,
-                                ConfigBlocks.blockFluxGas,
-                                0,
-                                3);
+                            this.xCoord + x,
+                            this.yCoord + y,
+                            this.zCoord + z,
+                            ConfigBlocks.blockFluxGas,
+                            0,
+                            3);
                     } else {
                         this.worldObj.setBlock(
-                                this.xCoord + x,
-                                this.yCoord + y,
-                                this.zCoord + z,
-                                ConfigBlocks.blockFluxGoo,
-                                0,
-                                3);
+                            this.xCoord + x,
+                            this.yCoord + y,
+                            this.zCoord + z,
+                            ConfigBlocks.blockFluxGoo,
+                            0,
+                            3);
                     }
                 }
             }
@@ -188,7 +192,8 @@ public class TileEntityCrucibleSouls extends TileEntity implements IAspectContai
 
     private float tagAmount() {
         int amount = 0;
-        Iterator iterator = this.myAspects.aspects.keySet().iterator();
+        Iterator iterator = this.myAspects.aspects.keySet()
+            .iterator();
         while (iterator.hasNext()) {
             Object next = iterator.next();
             amount += this.myAspects.getAmount((Aspect) next);
@@ -200,8 +205,8 @@ public class TileEntityCrucibleSouls extends TileEntity implements IAspectContai
     public void updateEntity() {
         super.updateEntity();
         if (this.worldObj.isAirBlock(this.xCoord, this.yCoord + 1, this.zCoord)
-                || this.worldObj.getBlock(this.xCoord, this.yCoord + 1, this.zCoord) == ConfigBlocks.blockFluxGas
-                || this.worldObj.getBlock(this.xCoord, this.yCoord + 1, this.zCoord) == ConfigBlocks.blockFluxGoo) {
+            || this.worldObj.getBlock(this.xCoord, this.yCoord + 1, this.zCoord) == ConfigBlocks.blockFluxGas
+            || this.worldObj.getBlock(this.xCoord, this.yCoord + 1, this.zCoord) == ConfigBlocks.blockFluxGoo) {
             if (this.myFlux > 1.0F) {
                 this.spill();
                 this.myFlux = this.myFlux - 1.0F;
@@ -211,11 +216,10 @@ public class TileEntityCrucibleSouls extends TileEntity implements IAspectContai
             if (this.drainTicks > 0) {
                 if (this.targetMob != null && this.targetMob.getHealth() > 0) {
                     double slope = (((this.zCoord + 0.5F) - this.targetMob.posZ)
-                            / ((this.xCoord + 0.5F) - this.targetMob.posX));
+                        / ((this.xCoord + 0.5F) - this.targetMob.posX));
                     float myDistance = (float) Math.sqrt(
-                            Math.pow(this.xCoord - this.targetMob.posX, 2)
-                                    + Math.pow(this.yCoord - this.targetMob.posY, 2)
-                                    + Math.pow(this.zCoord - this.targetMob.posZ, 2));
+                        Math.pow(this.xCoord - this.targetMob.posX, 2) + Math.pow(this.yCoord - this.targetMob.posY, 2)
+                            + Math.pow(this.zCoord - this.targetMob.posZ, 2));
                     double xChange = (Math.cos(slope) / 75.0D) * myDistance;
                     double zChange = (Math.sin(slope) / 75.0D) * myDistance;
                     if (this.zCoord > this.targetMob.posZ && zChange < 0) {
@@ -239,22 +243,22 @@ public class TileEntityCrucibleSouls extends TileEntity implements IAspectContai
                         if (this.worldObj.isRemote) {
                             if (this.worldObj.rand.nextInt(2) == 0) {
                                 ThaumicExploration.instance.proxy.spawnHarvestParticle(
-                                        this.worldObj,
-                                        this.targetMob.posX,
-                                        this.targetMob.boundingBox.maxY - 0.5F,
-                                        this.targetMob.posZ,
-                                        this.xCoord + 0.5F,
-                                        this.yCoord + 0.5F,
-                                        this.zCoord + 0.5F);
+                                    this.worldObj,
+                                    this.targetMob.posX,
+                                    this.targetMob.boundingBox.maxY - 0.5F,
+                                    this.targetMob.posZ,
+                                    this.xCoord + 0.5F,
+                                    this.yCoord + 0.5F,
+                                    this.zCoord + 0.5F);
                             } else {
                                 ThaumicExploration.instance.proxy.spawnBoreSparkle(
-                                        this.worldObj,
-                                        this.targetMob.posX,
-                                        this.targetMob.boundingBox.maxY - 0.5F,
-                                        this.targetMob.posZ,
-                                        this.xCoord + 0.5F,
-                                        this.yCoord + 0.5F,
-                                        this.zCoord + 0.5F);
+                                    this.worldObj,
+                                    this.targetMob.posX,
+                                    this.targetMob.boundingBox.maxY - 0.5F,
+                                    this.targetMob.posZ,
+                                    this.xCoord + 0.5F,
+                                    this.yCoord + 0.5F,
+                                    this.zCoord + 0.5F);
                             }
                         }
 
@@ -265,9 +269,11 @@ public class TileEntityCrucibleSouls extends TileEntity implements IAspectContai
                                     for (EntityTags tag : ThaumcraftApi.scanEntities) {
                                         if (tag.entityName == name) {
 
-                                            tag.aspects.aspects.keySet().iterator();
+                                            tag.aspects.aspects.keySet()
+                                                .iterator();
 
-                                            Iterator iterator = tag.aspects.aspects.keySet().iterator();
+                                            Iterator iterator = tag.aspects.aspects.keySet()
+                                                .iterator();
 
                                             int i = 0;
                                             while (iterator.hasNext()) {
@@ -280,13 +286,11 @@ public class TileEntityCrucibleSouls extends TileEntity implements IAspectContai
                                                             if (this.worldObj.rand.nextBoolean()) {
                                                                 if (!((Aspect) next).isPrimal()) {
                                                                     if (this.worldObj.rand.nextBoolean()) {
-                                                                        this.myAspects.add(
-                                                                                ((Aspect) next).getComponents()[0],
-                                                                                1);
+                                                                        this.myAspects
+                                                                            .add(((Aspect) next).getComponents()[0], 1);
                                                                     } else {
-                                                                        this.myAspects.add(
-                                                                                ((Aspect) next).getComponents()[1],
-                                                                                1);
+                                                                        this.myAspects
+                                                                            .add(((Aspect) next).getComponents()[1], 1);
                                                                     }
                                                                 } else {
                                                                     this.myAspects.add((Aspect) next, 1);
@@ -326,20 +330,20 @@ public class TileEntityCrucibleSouls extends TileEntity implements IAspectContai
                 if (this.drainTicks == 0) {
                     this.distance = this.range + 1.0F;
                     List<EntityLivingBase> mobs = this.worldObj.getEntitiesWithinAABB(
-                            EntityLivingBase.class,
-                            AxisAlignedBB.getBoundingBox(
-                                    this.xCoord - this.range,
-                                    this.yCoord - this.yRange,
-                                    this.zCoord - this.range,
-                                    this.xCoord + this.range,
-                                    this.yCoord + this.yRange,
-                                    this.zCoord + this.range));
+                        EntityLivingBase.class,
+                        AxisAlignedBB.getBoundingBox(
+                            this.xCoord - this.range,
+                            this.yCoord - this.yRange,
+                            this.zCoord - this.range,
+                            this.xCoord + this.range,
+                            this.yCoord + this.yRange,
+                            this.zCoord + this.range));
                     for (EntityLivingBase mob : mobs) {
                         if (!(mob instanceof EntityPlayer) && !(mob instanceof EntityThaumicSlime)
-                                && !(mob instanceof EntityGolemBase)) {
+                            && !(mob instanceof EntityGolemBase)) {
                             float myDistance = (float) Math.sqrt(
-                                    Math.pow(this.xCoord - mob.posX, 2) + Math.pow(this.yCoord - mob.posY, 2)
-                                            + Math.pow(this.zCoord - mob.posZ, 2));
+                                Math.pow(this.xCoord - mob.posX, 2) + Math.pow(this.yCoord - mob.posY, 2)
+                                    + Math.pow(this.zCoord - mob.posZ, 2));
                             if (myDistance < distance) {
                                 this.drainTicks = (int) (mob.getMaxHealth() * 10);
                                 this.targetMob = mob;
@@ -399,14 +403,17 @@ public class TileEntityCrucibleSouls extends TileEntity implements IAspectContai
         if (!this.worldObj.isRemote) {
             this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
         }
-        ot.aspects.keySet().iterator();
-        Iterator iterator = ot.aspects.keySet().iterator();
+        ot.aspects.keySet()
+            .iterator();
+        Iterator iterator = ot.aspects.keySet()
+            .iterator();
         while (iterator.hasNext()) {
             Object next = iterator.next();
             if (this.myAspects.getAmount((Aspect) next) < ot.getAmount((Aspect) next)) hasIt = false;
         }
         if (hasIt) {
-            iterator = ot.aspects.keySet().iterator();
+            iterator = ot.aspects.keySet()
+                .iterator();
             while (iterator.hasNext()) {
                 Object next = iterator.next();
                 myAspects.reduce((Aspect) next, ot.getAmount((Aspect) next));
@@ -426,8 +433,10 @@ public class TileEntityCrucibleSouls extends TileEntity implements IAspectContai
     @Override
     public boolean doesContainerContain(AspectList ot) {
         boolean hasIt = true;
-        ot.aspects.keySet().iterator();
-        Iterator iterator = ot.aspects.keySet().iterator();
+        ot.aspects.keySet()
+            .iterator();
+        Iterator iterator = ot.aspects.keySet()
+            .iterator();
         while (iterator.hasNext()) {
             Object next = iterator.next();
             if (this.myAspects.getAmount((Aspect) next) < ot.getAmount((Aspect) next)) hasIt = false;
@@ -530,8 +539,8 @@ public class TileEntityCrucibleSouls extends TileEntity implements IAspectContai
     @Override
     public Aspect getEssentiaType(ForgeDirection face) {
         return this.myAspects.size() > 0
-                ? this.myAspects.getAspects()[this.worldObj.rand.nextInt(this.myAspects.getAspects().length)]
-                : null;
+            ? this.myAspects.getAspects()[this.worldObj.rand.nextInt(this.myAspects.getAspects().length)]
+            : null;
     }
 
     @Override

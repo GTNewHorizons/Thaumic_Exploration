@@ -14,7 +14,7 @@ public class ChunkLoaderCallback implements ForgeChunkManager.OrderedLoadingCall
 
     @Override
     public List<ForgeChunkManager.Ticket> ticketsLoaded(List<ForgeChunkManager.Ticket> tickets, World world,
-            int maxTicketCount) {
+        int maxTicketCount) {
         List<ForgeChunkManager.Ticket> warpChunks = new ArrayList<ForgeChunkManager.Ticket>();
         List<ForgeChunkManager.Ticket> restChunks = new ArrayList<ForgeChunkManager.Ticket>();
 
@@ -31,9 +31,12 @@ public class ChunkLoaderCallback implements ForgeChunkManager.OrderedLoadingCall
     @Override
     public void ticketsLoaded(List<ForgeChunkManager.Ticket> tickets, World world) {
         for (ForgeChunkManager.Ticket ticket : tickets) {
-            int xPos = ticket.getModData().getInteger("xCoord");
-            int yPos = ticket.getModData().getInteger("yCoord");
-            int zPos = ticket.getModData().getInteger("zCoord");
+            int xPos = ticket.getModData()
+                .getInteger("xCoord");
+            int yPos = ticket.getModData()
+                .getInteger("yCoord");
+            int zPos = ticket.getModData()
+                .getInteger("zCoord");
             if (world.getTileEntity(xPos, yPos, zPos) != null) {
                 if (world.getTileEntity(xPos, yPos, zPos) instanceof ITXChunkLoader) {
                     ((ITXChunkLoader) world.getTileEntity(xPos, yPos, zPos)).forceChunkLoading(ticket);

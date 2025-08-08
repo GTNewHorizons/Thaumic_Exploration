@@ -19,10 +19,16 @@ public class AppleCoreInterop {
     }
 
     public static void setHunger(int hunger, EntityPlayer player) {
-        AppleCoreAPI.mutator.setHunger(player, player.getFoodStats().getFoodLevel() + hunger);
+        AppleCoreAPI.mutator.setHunger(
+            player,
+            player.getFoodStats()
+                .getFoodLevel() + hunger);
     }
 
     public static void setSaturation(float saturation, EntityPlayer player) {
-        AppleCoreAPI.mutator.setSaturation(player, player.getFoodStats().getSaturationLevel() + saturation);
+        AppleCoreAPI.mutator.setSaturation(
+            player,
+            player.getFoodStats()
+                .getSaturationLevel() + saturation);
     }
 }

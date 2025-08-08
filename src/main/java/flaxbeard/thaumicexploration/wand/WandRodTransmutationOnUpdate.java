@@ -33,12 +33,12 @@ public class WandRodTransmutationOnUpdate implements IWandRodOnUpdate {
             for (int i = 0; i < 6; i++) {
                 double visCount = ((ItemWandCasting) itemstack.getItem()).getVis(itemstack, this.aspects[i]);
                 double cutoffPercent = (((((ItemWandCasting) itemstack.getItem()).getMaxVis(itemstack)) / 10) * 9)
-                        + 0.1;
+                    + 0.1;
                 double excessVis = (visCount - cutoffPercent);
 
                 if (excessVis > 0) {
                     ((ItemWandCasting) itemstack.getItem())
-                            .consumeVis(itemstack, player, this.aspects[i], (int) excessVis, true);
+                        .consumeVis(itemstack, player, this.aspects[i], (int) excessVis, true);
                     totalExcessVis += excessVis;
                 }
             }
@@ -49,20 +49,20 @@ public class WandRodTransmutationOnUpdate implements IWandRodOnUpdate {
             int eachToAdd = (int) ((totalExcessVis) / (lowAspects.size() * 4));
             for (int z = 0; z < lowAspects.size(); z++) {
                 double visCount = ((ItemWandCasting) itemstack.getItem())
-                        .getVis(itemstack, this.aspects[lowAspects.get(z)]);
+                    .getVis(itemstack, this.aspects[lowAspects.get(z)]);
                 double myWastedVis = visCount - ((ItemWandCasting) itemstack.getItem()).getMaxVis(itemstack)
-                        + eachToAdd;
+                    + eachToAdd;
                 if (myWastedVis > 0) {
                     wastedVis += myWastedVis;
                 }
                 ((ItemWandCasting) itemstack.getItem())
-                        .storeVis(itemstack, this.aspects[lowAspects.get(z)], (int) (visCount + eachToAdd));
+                    .storeVis(itemstack, this.aspects[lowAspects.get(z)], (int) (visCount + eachToAdd));
             }
             wastedVis = wastedVis / 6;
             for (int z = 0; z < 6; z++) {
                 double visCount = ((ItemWandCasting) itemstack.getItem()).getVis(itemstack, this.aspects[z]);
                 ((ItemWandCasting) itemstack.getItem())
-                        .storeVis(itemstack, this.aspects[z], (int) (visCount + wastedVis));
+                    .storeVis(itemstack, this.aspects[z], (int) (visCount + wastedVis));
             }
         }
         // }

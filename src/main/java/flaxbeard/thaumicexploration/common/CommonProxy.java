@@ -21,13 +21,13 @@ public class CommonProxy {
     public void spawnRandomWaterFountain(World worldObj, int xCoord, int yCoord, int zCoord) {}
 
     public void spawnWaterAtLocation(World worldObj, double xCoord, double yCoord, double zCoord, double dX, double dY,
-            double dZ) {}
+        double dZ) {}
 
     public void spawnBoreSparkle(World worldObj, double xCoord, double yCoord, double zCoord, double x2, double y2,
-            double z2) {}
+        double z2) {}
 
     public void spawnHarvestParticle(World worldObj, double xCoord, double yCoord, double zCoord, double x2, double y2,
-            double z2) {}
+        double z2) {}
 
     public void spawnActiveBrazierParticle(World worldObj, int xCoord, int yCoord, int zCoord) {}
 
@@ -36,13 +36,13 @@ public class CommonProxy {
     }
 
     public void spawnFragmentParticle(World worldObj, double xCoord, double yCoord, double zCoord, double x2, double y2,
-            double z2, Block block, int id) {
+        double z2, Block block, int id) {
         // TODO Auto-generated method stub
 
     }
 
     public void spawnEssentiaAtLocation(World worldObj, double xCoord, double yCoord, double zCoord, double dX,
-            double dY, double dZ, int size, int color) {
+        double dY, double dZ, int size, int color) {
         // TODO Auto-generated method stub
 
     }
@@ -53,19 +53,19 @@ public class CommonProxy {
     }
 
     public void spawnLightningBolt(World worldObj, double xCoord, double yCoord, double zCoord, double dX, double dY,
-            double dZ) {
+        double dZ) {
         // TODO Auto-generated method stub
 
     }
 
     public void spawnHarvestParticleSlow(World worldObj, double xCoord, double yCoord, double zCoord, double x2,
-            double y2, double z2) {
+        double y2, double z2) {
         // TODO Auto-generated method stub
 
     }
 
     public void spawnFragmentParticleSlow(World worldObj, double xCoord, double yCoord, double zCoord, double x2,
-            double y2, double z2, Block block, int id) {
+        double y2, double z2, Block block, int id) {
         // TODO Auto-generated method stub
 
     }

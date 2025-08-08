@@ -33,7 +33,8 @@ public class BlockBootsIce extends BlockIce {
 
         int i1 = EnchantmentHelper.getFortuneModifier(par2EntityPlayer);
         this.dropBlockAsItem(par1World, par3, par4, par5, par6, i1);
-        Material material = par1World.getBlock(par3, par4 - 1, par5).getMaterial();
+        Material material = par1World.getBlock(par3, par4 - 1, par5)
+            .getMaterial();
 
         if (material.blocksMovement() || material.isLiquid()) {
             par1World.setBlock(par3, par4, par5, Blocks.water);

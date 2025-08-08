@@ -25,14 +25,15 @@ public class EntityAICreeperDummy extends EntityAIBase {
     public boolean shouldExecute() {
         EntityLivingBase entitylivingbase = this.swellingCreeper.getAttackTarget();
         return this.swellingCreeper.getCreeperState() > 0
-                || entitylivingbase != null && this.swellingCreeper.getDistanceSqToEntity(entitylivingbase) < 9.0D;
+            || entitylivingbase != null && this.swellingCreeper.getDistanceSqToEntity(entitylivingbase) < 9.0D;
     }
 
     /**
      * Execute a one shot task or start executing a continuous task
      */
     public void startExecuting() {
-        this.swellingCreeper.getNavigator().clearPathEntity();
+        this.swellingCreeper.getNavigator()
+            .clearPathEntity();
         this.creeperAttackTarget = this.swellingCreeper.getAttackTarget();
     }
 

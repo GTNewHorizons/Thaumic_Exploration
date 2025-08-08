@@ -31,7 +31,8 @@ public class SoulBrazierUtils {
     }
 
     public static UUID getPlayerUUID(EntityPlayer aPlayer) {
-        return aPlayer.getGameProfile().getId();
+        return aPlayer.getGameProfile()
+            .getId();
     }
 
     public static EntityPlayer getPlayerFromUUID(String aUUID) {
@@ -39,9 +40,12 @@ public class SoulBrazierUtils {
     }
 
     public static EntityPlayer getPlayerFromUUID(UUID aUUID) {
-        List<EntityPlayerMP> allPlayers = MinecraftServer.getServer().getConfigurationManager().playerEntityList;
+        List<EntityPlayerMP> allPlayers = MinecraftServer.getServer()
+            .getConfigurationManager().playerEntityList;
         for (EntityPlayerMP player : allPlayers) {
-            if (player.getGameProfile().getId().equals(aUUID)) {
+            if (player.getGameProfile()
+                .getId()
+                .equals(aUUID)) {
                 return player;
             }
         }
@@ -85,15 +89,15 @@ public class SoulBrazierUtils {
         }
         String aUUID = aPlayer.toString();
         String warpKey = aUUID + "@"
-                + aTile.storedWarp
-                + "@"
-                + aTile.xCoord
-                + "@"
-                + aTile.yCoord
-                + "@"
-                + aTile.zCoord
-                + ""
-                + aTile.getWorldObj().provider.dimensionId;
+            + aTile.storedWarp
+            + "@"
+            + aTile.xCoord
+            + "@"
+            + aTile.yCoord
+            + "@"
+            + aTile.zCoord
+            + ""
+            + aTile.getWorldObj().provider.dimensionId;
         ArrayList<String> aNewDataList = new ArrayList<String>();
         ArrayList<String> aWarpData = readPlayerWarpQueueDataFromFile();
         if (aWarpData.contains(warpKey)) {

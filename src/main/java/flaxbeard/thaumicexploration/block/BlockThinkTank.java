@@ -126,7 +126,7 @@ public class BlockThinkTank extends BlockContainer {
      * Called upon block activation (right click on the block.)
      */
     public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer,
-            int par6, float par7, float par8, float par9) {
+        int par6, float par7, float par8, float par9) {
         if (par1World.isRemote) {
             return true;
         } else {
@@ -169,7 +169,7 @@ public class BlockThinkTank extends BlockContainer {
      * Called when the block is placed in the world.
      */
     public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase,
-            ItemStack par6ItemStack) {
+        ItemStack par6ItemStack) {
         int l = MathHelper.floor_double((double) (par5EntityLivingBase.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
         if (l == 0) {
@@ -190,7 +190,7 @@ public class BlockThinkTank extends BlockContainer {
 
         if (par6ItemStack.hasDisplayName()) {
             ((TileEntityThinkTank) par1World.getTileEntity(par2, par3, par4))
-                    .setGuiDisplayName(par6ItemStack.getDisplayName());
+                .setGuiDisplayName(par6ItemStack.getDisplayName());
         }
     }
 
@@ -222,15 +222,17 @@ public class BlockThinkTank extends BlockContainer {
 
                             itemstack.stackSize -= k1;
                             EntityItem entityitem = new EntityItem(
-                                    par1World,
-                                    (double) ((float) par2 + f),
-                                    (double) ((float) par3 + f1),
-                                    (double) ((float) par4 + f2),
-                                    new ItemStack(itemstack.getItem(), k1, itemstack.getItemDamage()));
+                                par1World,
+                                (double) ((float) par2 + f),
+                                (double) ((float) par3 + f1),
+                                (double) ((float) par4 + f2),
+                                new ItemStack(itemstack.getItem(), k1, itemstack.getItemDamage()));
 
                             if (itemstack.hasTagCompound()) {
                                 entityitem.getEntityItem()
-                                        .setTagCompound((NBTTagCompound) itemstack.getTagCompound().copy());
+                                    .setTagCompound(
+                                        (NBTTagCompound) itemstack.getTagCompound()
+                                            .copy());
                             }
 
                             float f3 = 0.05F;

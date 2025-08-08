@@ -46,7 +46,8 @@ public class BoundJarNetworkData extends WorldSavedData {
         for (Map.Entry<String, AspectList> entry : networks.entrySet()) {
             NBTTagCompound cmp = new NBTTagCompound();
             cmp.setString("network", entry.getKey());
-            entry.getValue().writeToNBT(cmp);
+            entry.getValue()
+                .writeToNBT(cmp);
             list.appendTag(cmp);
         }
         nbt.setTag("networks", list);

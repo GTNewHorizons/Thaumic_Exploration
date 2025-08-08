@@ -106,10 +106,10 @@ public class ReplicatorRecipes {
 
     private static boolean checkOreDictRules(String oreName) {
         return oreName != null && (oreName.equals("logWood") || oreName.equals("treeLeaves")
-                || oreName.equals("slabWood")
-                || oreName.equals("stairWood")
-                || ConfigTX.allowModStoneReplication && (oreName.equals("stone") || oreName.equals("cobblestone"))
-                || ConfigTX.allowModWoodReplication && oreName.equals("plankWood"));
+            || oreName.equals("slabWood")
+            || oreName.equals("stairWood")
+            || ConfigTX.allowModStoneReplication && (oreName.equals("stone") || oreName.equals("cobblestone"))
+            || ConfigTX.allowModWoodReplication && oreName.equals("plankWood"));
     }
 
 }

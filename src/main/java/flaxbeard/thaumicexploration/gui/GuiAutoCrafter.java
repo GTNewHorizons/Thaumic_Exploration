@@ -14,7 +14,7 @@ import flaxbeard.thaumicexploration.tile.TileEntityAutoCrafter;
 public class GuiAutoCrafter extends GuiContainer {
 
     private static final ResourceLocation furnaceGuiTextures = new ResourceLocation(
-            "thaumicexploration:textures/gui/AutoCrafter.png");
+        "thaumicexploration:textures/gui/AutoCrafter.png");
     private TileEntityAutoCrafter furnaceInventory;
 
     public GuiAutoCrafter(InventoryPlayer par1InventoryPlayer, TileEntityAutoCrafter par2TileEntityAutoCrafter) {
@@ -32,7 +32,8 @@ public class GuiAutoCrafter extends GuiContainer {
      */
     protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(furnaceGuiTextures);
+        this.mc.getTextureManager()
+            .bindTexture(furnaceGuiTextures);
         int k = (this.width - this.xSize) / 2;
         int l = (this.height - this.ySize) / 2;
         GL11.glEnable(3042);

@@ -20,9 +20,9 @@ public class TileEntityFloatyCandleRender extends TileEntitySpecialRenderer {
 
     private ModelCandle candleModel = new ModelCandle();
     private static final ResourceLocation candleTexture = new ResourceLocation(
-            "thaumicexploration:textures/models/floatyCandle.png");
+        "thaumicexploration:textures/models/floatyCandle.png");
     private static final ResourceLocation wickTexture = new ResourceLocation(
-            "thaumicexploration:textures/models/floatyCandleStub.png");
+        "thaumicexploration:textures/models/floatyCandleStub.png");
 
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double d0, double d1, double d2, float f) {
@@ -37,9 +37,9 @@ public class TileEntityFloatyCandleRender extends TileEntitySpecialRenderer {
         this.candleModel.renderWick();
         this.bindTexture(candleTexture);
         Color color = new Color(
-                ConfigBlocks.blockCandle.getRenderColor(
-                        tileentity.getWorldObj()
-                                .getBlockMetadata(tileentity.xCoord, tileentity.yCoord, tileentity.zCoord)));
+            ConfigBlocks.blockCandle.getRenderColor(
+                tileentity.getWorldObj()
+                    .getBlockMetadata(tileentity.xCoord, tileentity.yCoord, tileentity.zCoord)));
         // System.out.println(ConfigBlocks.blockCandle.getRenderColor(tileentity.worldObj.getBlockMetadata(tileentity.xCoord,
         // tileentity.yCoord, tileentity.zCoord)));
         GL11.glColor3ub((byte) color.getRed(), (byte) color.getGreen(), (byte) color.getBlue());

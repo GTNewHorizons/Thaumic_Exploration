@@ -47,14 +47,14 @@ public class WandRodNecromancerOnUpdate implements IWandRodOnUpdate {
         }
 
         AxisAlignedBB boundingBox = AxisAlignedBB.getBoundingBox(
-                par1EntityPlayer.posX - 3,
-                par1EntityPlayer.posY - 3,
-                par1EntityPlayer.posZ - 3,
-                par1EntityPlayer.posX + 3,
-                par1EntityPlayer.posY + 3,
-                par1EntityPlayer.posZ + 3);
+            par1EntityPlayer.posX - 3,
+            par1EntityPlayer.posY - 3,
+            par1EntityPlayer.posZ - 3,
+            par1EntityPlayer.posX + 3,
+            par1EntityPlayer.posY + 3,
+            par1EntityPlayer.posZ + 3);
         List<EntityAspectOrb> orbs = par1EntityPlayer.worldObj
-                .getEntitiesWithinAABB(EntityAspectOrb.class, boundingBox);
+            .getEntitiesWithinAABB(EntityAspectOrb.class, boundingBox);
 
         thisWand.storeAllVis(itemstack, lastAspects);
         NBTTagCompound tag = new NBTTagCompound();
@@ -67,31 +67,32 @@ public class WandRodNecromancerOnUpdate implements IWandRodOnUpdate {
         for (EntityAspectOrb orb : orbs) {
             if (!orb.isDead) {
                 int slot = InventoryUtils
-                        .isWandInHotbarWithRoom(orb.getAspect(), orb.getAspectValue(), par1EntityPlayer);
+                    .isWandInHotbarWithRoom(orb.getAspect(), orb.getAspectValue(), par1EntityPlayer);
                 if ((orb.orbCooldown == 0) && (par1EntityPlayer.xpCooldown == 0)
-                        && (orb.getAspect().isPrimal())
-                        && (slot >= 0)) {
+                    && (orb.getAspect()
+                        .isPrimal())
+                    && (slot >= 0)) {
                     ItemWandCasting wand = (ItemWandCasting) par1EntityPlayer.inventory.mainInventory[slot].getItem();
                     if (wand.getRod(par1EntityPlayer.inventory.mainInventory[slot])
-                            == ThaumicExploration.WAND_ROD_NECRO) {
+                        == ThaumicExploration.WAND_ROD_NECRO) {
                         wand.addVis(
-                                par1EntityPlayer.inventory.mainInventory[slot],
-                                orb.getAspect(),
-                                (int) (orb.getAspectValue() * 4.3333333333F),
-                                true);
-                    }
-                    wand.addVis(
                             par1EntityPlayer.inventory.mainInventory[slot],
                             orb.getAspect(),
-                            orb.getAspectValue(),
+                            (int) (orb.getAspectValue() * 4.3333333333F),
                             true);
+                    }
+                    wand.addVis(
+                        par1EntityPlayer.inventory.mainInventory[slot],
+                        orb.getAspect(),
+                        orb.getAspectValue(),
+                        true);
 
                     par1EntityPlayer.xpCooldown = 2;
                     orb.playSound(
-                            "random.orb",
-                            0.1F,
-                            0.5F * ((par1EntityPlayer.worldObj.rand.nextFloat()
-                                    - par1EntityPlayer.worldObj.rand.nextFloat()) * 0.7F + 1.8F));
+                        "random.orb",
+                        0.1F,
+                        0.5F * ((par1EntityPlayer.worldObj.rand.nextFloat()
+                            - par1EntityPlayer.worldObj.rand.nextFloat()) * 0.7F + 1.8F));
                     orb.setDead();
                 }
             }

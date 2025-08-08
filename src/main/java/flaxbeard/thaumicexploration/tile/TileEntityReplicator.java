@@ -2,7 +2,6 @@ package flaxbeard.thaumicexploration.tile;
 
 import java.util.ArrayList;
 
-import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,6 +16,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 
+import cpw.mods.fml.common.network.NetworkRegistry;
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -156,46 +156,46 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         ItemStack example = getStackInSlot(0).copy();
         example.stackSize = 1;
         AspectList tags = ThaumcraftCraftingManager
-                .getBonusTags(example, ThaumcraftCraftingManager.getObjectTags(example));
+            .getBonusTags(example, ThaumcraftCraftingManager.getObjectTags(example));
 
         if (tags.size() == 0) return;
 
         for (int i = 0; i < 5; i++) {
             ThaumicExploration.proxy.spawnFragmentParticle(
-                    worldObj,
-                    xCoord + 0.5F + randomOffset(),
-                    yCoord + 1.5F + randomOffset(),
-                    zCoord + 0.5F + randomOffset(),
-                    xCoord + 0.5F,
-                    yCoord + 1.5F,
-                    zCoord + 0.5F,
-                    Block.getBlockFromItem(example.getItem()),
-                    example.getItemDamage());
+                worldObj,
+                xCoord + 0.5F + randomOffset(),
+                yCoord + 1.5F + randomOffset(),
+                zCoord + 0.5F + randomOffset(),
+                xCoord + 0.5F,
+                yCoord + 1.5F,
+                zCoord + 0.5F,
+                Block.getBlockFromItem(example.getItem()),
+                example.getItemDamage());
         }
 
         if (worldObj.rand.nextInt(4) == 0 && ticksLeft > 40) {
             Aspect randomAspect = tags.getAspects()[worldObj.rand.nextInt(tags.size())];
             ThaumicExploration.proxy.spawnEssentiaAtLocation(
-                    worldObj,
-                    xCoord + 0.5F + randomOffset(),
-                    yCoord + 1.5F + randomOffset(),
-                    zCoord + 0.5F + randomOffset(),
-                    xCoord + 0.5F,
-                    yCoord + 1.5F,
-                    zCoord + 0.5F,
-                    5,
-                    randomAspect.getColor());
+                worldObj,
+                xCoord + 0.5F + randomOffset(),
+                yCoord + 1.5F + randomOffset(),
+                zCoord + 0.5F + randomOffset(),
+                xCoord + 0.5F,
+                yCoord + 1.5F,
+                zCoord + 0.5F,
+                5,
+                randomAspect.getColor());
         }
 
         if (worldObj.rand.nextInt(3) == 0) {
             ThaumicExploration.proxy.spawnBoreSparkle(
-                    worldObj,
-                    xCoord + 0.5F + randomOffset(),
-                    yCoord + 1.5F + randomOffset(),
-                    zCoord + 0.5F + randomOffset(),
-                    xCoord + 0.5F,
-                    yCoord + 1.5F,
-                    zCoord + 0.5F);
+                worldObj,
+                xCoord + 0.5F + randomOffset(),
+                yCoord + 1.5F + randomOffset(),
+                zCoord + 0.5F + randomOffset(),
+                xCoord + 0.5F,
+                yCoord + 1.5F,
+                zCoord + 0.5F);
         }
     }
 
@@ -234,9 +234,11 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
     }
 
     public boolean validLocation() {
-        Material mat = worldObj.getBlock(xCoord, yCoord + 1, zCoord).getMaterial();
+        Material mat = worldObj.getBlock(xCoord, yCoord + 1, zCoord)
+            .getMaterial();
         return mat == Config.airyMaterial || mat == Material.air
-                || worldObj.getBlock(xCoord, yCoord + 1, zCoord).isReplaceable(worldObj, xCoord, yCoord + 1, zCoord);
+            || worldObj.getBlock(xCoord, yCoord + 1, zCoord)
+                .isReplaceable(worldObj, xCoord, yCoord + 1, zCoord);
     }
 
     private void writeInventoryNBT(NBTTagCompound tag) {
@@ -287,7 +289,8 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         for (String key : aspects.func_150296_c()) {
             Aspect a = Aspect.getAspect(key);
             if (a != null) {
-                int amount = aspects.getCompoundTag(key).getInteger("Amount");
+                int amount = aspects.getCompoundTag(key)
+                    .getInteger("Amount");
                 recipeEssentia.add(a, amount);
             }
         }
@@ -379,7 +382,8 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack) {
-        return ThaumcraftCraftingManager.getObjectTags(stack).size() > 0;
+        return ThaumcraftCraftingManager.getObjectTags(stack)
+            .size() > 0;
     }
 
     @Override
@@ -442,7 +446,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
 
     @Override
     public int onWandRightClick(World world, ItemStack wand, EntityPlayer player, int x, int y, int z, int side,
-            int md) {
+        int md) {
         if (!crafting) {
             startCrafting();
             return 0;

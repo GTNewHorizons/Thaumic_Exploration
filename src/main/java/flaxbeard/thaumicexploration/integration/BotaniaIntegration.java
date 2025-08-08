@@ -20,6 +20,7 @@ public class BotaniaIntegration {
     public static void fillWater(TileEntity tile) {
         TileAltar altar = (TileAltar) tile;
         altar.hasWater = true;
-        altar.getWorldObj().func_147453_f(altar.xCoord, altar.yCoord, altar.zCoord, altar.getBlockType());
+        altar.getWorldObj()
+            .func_147453_f(altar.xCoord, altar.yCoord, altar.zCoord, altar.getBlockType());
     }
 }

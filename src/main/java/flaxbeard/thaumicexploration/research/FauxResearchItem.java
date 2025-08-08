@@ -16,20 +16,20 @@ public class FauxResearchItem extends ResearchItem {
     public ResearchItem original;
 
     public FauxResearchItem(String name, String cat, String origin, String originCategory, int x, int y,
-            ResourceLocation icon) {
+        ResourceLocation icon) {
         super(name, cat, new AspectList(), x, y, 1, icon);
         original = ((ResearchCategoryList) ResearchCategories.researchCategories.get(originCategory)).research
-                .get(origin);
+            .get(origin);
         bindToOriginal();
         setStub();
         setHidden();
     }
 
     public FauxResearchItem(String name, String cat, String origin, String originCategory, int x, int y,
-            ItemStack icon) {
+        ItemStack icon) {
         super(name, cat, new AspectList(), x, y, 1, icon);
         original = ((ResearchCategoryList) ResearchCategories.researchCategories.get(originCategory)).research
-                .get(origin);
+            .get(origin);
         bindToOriginal();
         setStub();
         setHidden();

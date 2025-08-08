@@ -86,7 +86,7 @@ public class BlockBoundJar extends BlockJar {
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7,
-            float par8, float par9) {
+        float par8, float par9) {
         if (!world.isRemote) {
             world.markBlockForUpdate(x, y, z);
         }
@@ -102,15 +102,17 @@ public class BlockBoundJar extends BlockJar {
         Aspect aspect = null;
         int amount = 0;
         if (helditem.getItemDamage() == 1) {
-            Aspect[] aspects = phial.getAspects(helditem).getAspects();
+            Aspect[] aspects = phial.getAspects(helditem)
+                .getAspects();
             if (aspects.length > 0) {
                 aspect = aspects[0];
             }
-            amount = phial.getAspects(helditem).getAmount(aspect);
+            amount = phial.getAspects(helditem)
+                .getAmount(aspect);
         }
         if (helditem != null && jar.amount <= (jar.maxAmount - 8)
-                && ((jar.aspect != null && jar.aspect != aspect && jar.amount == 0) || jar.aspect == null
-                        || (jar.aspect != null && jar.aspect == aspect && amount >= 8))) {
+            && ((jar.aspect != null && jar.aspect != aspect && jar.amount == 0) || jar.aspect == null
+                || (jar.aspect != null && jar.aspect == aspect && amount >= 8))) {
             player.getHeldItem().stackSize--;
             jar.aspect = aspect;
             if (!world.isRemote) {

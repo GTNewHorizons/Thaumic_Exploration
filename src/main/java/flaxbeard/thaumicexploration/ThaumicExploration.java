@@ -106,10 +106,10 @@ import thaumcraft.common.blocks.BlockCandleItem;
 import thaumcraft.common.config.ConfigBlocks;
 
 @Mod(
-        modid = ThaumicExploration.MODID,
-        name = "Thaumic Exploration",
-        version = "GRADLETOKEN_VERSION",
-        dependencies = "required-after:Thaumcraft;after:ThaumicTinkerer")
+    modid = ThaumicExploration.MODID,
+    name = "Thaumic Exploration",
+    version = "GRADLETOKEN_VERSION",
+    dependencies = "required-after:Thaumcraft;after:ThaumicTinkerer")
 public class ThaumicExploration {
 
     @Instance("ThaumicExploration")
@@ -230,8 +230,8 @@ public class ThaumicExploration {
     public static final String BOOTS = "thaumicboots";
 
     @SidedProxy(
-            clientSide = "flaxbeard.thaumicexploration.client.ClientProxy",
-            serverSide = "flaxbeard.thaumicexploration.common.CommonProxy")
+        clientSide = "flaxbeard.thaumicexploration.client.ClientProxy",
+        serverSide = "flaxbeard.thaumicexploration.common.CommonProxy")
     public static CommonProxy proxy;
 
     private TXTickHandler tickHandler;
@@ -250,14 +250,19 @@ public class ThaumicExploration {
 
         SoulBrazierQueue aBrazierQueue = new SoulBrazierQueue();
         MinecraftForge.EVENT_BUS.register(aBrazierQueue);
-        FMLCommonHandler.instance().bus().register(aBrazierQueue);
+        FMLCommonHandler.instance()
+            .bus()
+            .register(aBrazierQueue);
 
         Potion[] potionTypes = null;
 
         for (Field f : Potion.class.getDeclaredFields()) {
             f.setAccessible(true);
             try {
-                if (f.getName().equals("potionTypes") || f.getName().equals("field_76425_a")) {
+                if (f.getName()
+                    .equals("potionTypes")
+                    || f.getName()
+                        .equals("field_76425_a")) {
                     Field modfield = Field.class.getDeclaredField("modifiers");
                     modfield.setAccessible(true);
                     modfield.setInt(f, f.getModifiers() & ~Modifier.FINAL);
@@ -274,31 +279,48 @@ public class ThaumicExploration {
 
         tab = new TXTab(CreativeTabs.getNextID(), "thaumicExploration");
 
-        thinkTankJar = new BlockThinkTank().setBlockName("thaumicexploration:thinkTankJar").setCreativeTab(tab)
-                .setBlockTextureName("thaumicExploration:blankTexture");
-        everfullUrn = new BlockEverfullUrn().setHardness(2.0F).setBlockName("thaumicexploration:everfullUrn")
-                .setCreativeTab(tab).setBlockTextureName("thaumicExploration:everfullUrn");
-        everburnUrn = new BlockEverburnUrn().setHardness(2.0F).setBlockName("thaumicexploration:everburnUrn")
-                .setCreativeTab(tab).setBlockTextureName("thaumicExploration:everfullUrn");
-        soulBrazier = new BlockSoulBrazier().setHardness(2.0F).setBlockName("thaumicexploration:soulBrazier")
-                .setCreativeTab(tab).setBlockTextureName("thaumicExploration:soulBrazier");
-        crucibleSouls = new BlockCrucibleSouls().setHardness(2.0F).setBlockName("thaumicexploration:crucibleSouls")
-                .setCreativeTab(tab).setBlockTextureName("thaumicExploration:crucible3");
-        replicator = new BlockReplicator().setHardness(4.0F).setBlockName("thaumicexploration:replicator")
-                .setCreativeTab(tab).setBlockTextureName("thaumicexploration:replicatorBottom");
-        meltyIce = new BlockBootsIce().setBlockName("thaumicexploration:meltyIce").setHardness(0.5F).setLightOpacity(3)
-                .setStepSound(Block.soundTypeGlass).setBlockName("ice").setBlockTextureName("ice");
+        thinkTankJar = new BlockThinkTank().setBlockName("thaumicexploration:thinkTankJar")
+            .setCreativeTab(tab)
+            .setBlockTextureName("thaumicExploration:blankTexture");
+        everfullUrn = new BlockEverfullUrn().setHardness(2.0F)
+            .setBlockName("thaumicexploration:everfullUrn")
+            .setCreativeTab(tab)
+            .setBlockTextureName("thaumicExploration:everfullUrn");
+        everburnUrn = new BlockEverburnUrn().setHardness(2.0F)
+            .setBlockName("thaumicexploration:everburnUrn")
+            .setCreativeTab(tab)
+            .setBlockTextureName("thaumicExploration:everfullUrn");
+        soulBrazier = new BlockSoulBrazier().setHardness(2.0F)
+            .setBlockName("thaumicexploration:soulBrazier")
+            .setCreativeTab(tab)
+            .setBlockTextureName("thaumicExploration:soulBrazier");
+        crucibleSouls = new BlockCrucibleSouls().setHardness(2.0F)
+            .setBlockName("thaumicexploration:crucibleSouls")
+            .setCreativeTab(tab)
+            .setBlockTextureName("thaumicExploration:crucible3");
+        replicator = new BlockReplicator().setHardness(4.0F)
+            .setBlockName("thaumicexploration:replicator")
+            .setCreativeTab(tab)
+            .setBlockTextureName("thaumicexploration:replicatorBottom");
+        meltyIce = new BlockBootsIce().setBlockName("thaumicexploration:meltyIce")
+            .setHardness(0.5F)
+            .setLightOpacity(3)
+            .setStepSound(Block.soundTypeGlass)
+            .setBlockName("ice")
+            .setBlockTextureName("ice");
         // taintBerryCrop = new
         // BlockTaintBerries(taintBerryCropID).setBlockName("thaumicexploration:taintBerryCrop").setBlockTextureName("thaumicExploration:berries");
-        boundChest = new BlockBoundChest().setHardness(2.5F).setStepSound(Block.soundTypeWood)
-                .setBlockName("boundChest");
+        boundChest = new BlockBoundChest().setHardness(2.5F)
+            .setStepSound(Block.soundTypeWood)
+            .setBlockName("boundChest");
         boundJar = new BlockBoundJar().setBlockName("boundJar");
 
         // autoSorter = new
         // BlockAutoSorter().setHardness(4.0F).setBlockName("thaumicexploration:autoSorter").setCreativeTab(tab).setBlockTextureName("thaumicexploration:replicatorBottom");
         // autoCrafter = new
         // BlockAutoCrafter().setHardness(4.0F).setBlockName("thaumicexploration:autoCrafter").setCreativeTab(tab).setBlockTextureName("thaumicexploration:replicatorBottom");
-        floatCandle = new BlockFloatyCandle().setBlockName("thaumicexploration:floatCandle").setCreativeTab(tab);
+        floatCandle = new BlockFloatyCandle().setBlockName("thaumicexploration:floatCandle")
+            .setCreativeTab(tab);
         trashJar = new BlockTrashJar().setBlockName("thaumicexploration:trashJar");
 
         // GameRegistry.registerBlock(autoSorter, "autoSorter");
@@ -317,59 +339,75 @@ public class ThaumicExploration {
         GameRegistry.registerBlock(replicator, "replicator");
 
         // Items
-        transmutationCore = new Item().setUnlocalizedName("thaumicexploration:transmutationCore").setCreativeTab(tab)
-                .setTextureName("thaumicexploration:rodTransmutation");
+        transmutationCore = new Item().setUnlocalizedName("thaumicexploration:transmutationCore")
+            .setCreativeTab(tab)
+            .setTextureName("thaumicexploration:rodTransmutation");
         GameRegistry.registerItem(transmutationCore, "transmutationCore");
         transmutationStaffCore = new Item().setUnlocalizedName("thaumicexploration:transmutationStaffCore")
-                .setCreativeTab(tab).setTextureName("thaumicexploration:rodTransmutation_staff");
+            .setCreativeTab(tab)
+            .setTextureName("thaumicexploration:rodTransmutation_staff");
         GameRegistry.registerItem(transmutationStaffCore, "transmutationStaffCore");
         talismanFood = (new ItemFoodTalisman()).setUnlocalizedName("thaumicexploration:talismanFood")
-                .setCreativeTab(tab).setTextureName("thaumicexploration:talismanFood");
+            .setCreativeTab(tab)
+            .setTextureName("thaumicexploration:talismanFood");
         GameRegistry.registerItem(talismanFood, "talismanFood");
-        amberCore = new Item().setUnlocalizedName("thaumicexploration:amberCore").setCreativeTab(tab)
-                .setTextureName("thaumicexploration:rodAmber");
+        amberCore = new Item().setUnlocalizedName("thaumicexploration:amberCore")
+            .setCreativeTab(tab)
+            .setTextureName("thaumicexploration:rodAmber");
         GameRegistry.registerItem(amberCore, "amberCore");
-        amberStaffCore = new Item().setUnlocalizedName("thaumicexploration:amberStaffCore").setCreativeTab(tab)
-                .setTextureName("thaumicexploration:rodAmber_staff");
+        amberStaffCore = new Item().setUnlocalizedName("thaumicexploration:amberStaffCore")
+            .setCreativeTab(tab)
+            .setTextureName("thaumicexploration:rodAmber_staff");
         GameRegistry.registerItem(amberStaffCore, "amberStaffCore");
-        necroStaffCore = new Item().setUnlocalizedName("thaumicexploration:necroStaffCore").setCreativeTab(tab)
-                .setTextureName("thaumicexploration:rodNecro_staff");
+        necroStaffCore = new Item().setUnlocalizedName("thaumicexploration:necroStaffCore")
+            .setCreativeTab(tab)
+            .setTextureName("thaumicexploration:rodNecro_staff");
         GameRegistry.registerItem(necroStaffCore, "necroStaffCore");
         if (ConfigTX.breadWand) {
-            breadCore = new Item().setUnlocalizedName("thaumicexploration:breadCore").setCreativeTab(tab)
-                    .setTextureName("thaumicexploration:rodBread");
+            breadCore = new Item().setUnlocalizedName("thaumicexploration:breadCore")
+                .setCreativeTab(tab)
+                .setTextureName("thaumicexploration:rodBread");
             GameRegistry.registerItem(breadCore, "breadCore");
         }
-        sojournerCap = new Item().setUnlocalizedName("thaumicexploration:capSojourner").setCreativeTab(tab)
-                .setTextureName("thaumicexploration:capSojournerCharged");
+        sojournerCap = new Item().setUnlocalizedName("thaumicexploration:capSojourner")
+            .setCreativeTab(tab)
+            .setTextureName("thaumicexploration:capSojournerCharged");
         GameRegistry.registerItem(sojournerCap, "sojournerCap");
         sojournerCapUncharged = new Item().setUnlocalizedName("thaumicexploration:capSojournerInert")
-                .setCreativeTab(tab).setTextureName("thaumicexploration:capSojourner");
+            .setCreativeTab(tab)
+            .setTextureName("thaumicexploration:capSojourner");
         GameRegistry.registerItem(sojournerCapUncharged, "sojournerCapUncharged");
 
-        mechanistCap = new Item().setUnlocalizedName("thaumicexploration:capMechanist").setCreativeTab(tab)
-                .setTextureName("thaumicexploration:capMechanistCharged");
+        mechanistCap = new Item().setUnlocalizedName("thaumicexploration:capMechanist")
+            .setCreativeTab(tab)
+            .setTextureName("thaumicexploration:capMechanistCharged");
         GameRegistry.registerItem(mechanistCap, "mechanistCap");
         mechanistCapUncharged = new Item().setUnlocalizedName("thaumicexploration:capMechanistInert")
-                .setCreativeTab(tab).setTextureName("thaumicexploration:capMechanist");
+            .setCreativeTab(tab)
+            .setTextureName("thaumicexploration:capMechanist");
         GameRegistry.registerItem(mechanistCapUncharged, "mechanistCapUncharged");
 
-        pureZombieBrain = (new ItemBrain()).setUnlocalizedName("thaumicexploration:pureZombieBrain").setCreativeTab(tab)
-                .setTextureName("thaumicexploration:pureZombieBrain");
+        pureZombieBrain = (new ItemBrain()).setUnlocalizedName("thaumicexploration:pureZombieBrain")
+            .setCreativeTab(tab)
+            .setTextureName("thaumicexploration:pureZombieBrain");
         GameRegistry.registerItem(pureZombieBrain, "pureZombieBrain");
-        blankSeal = (new ItemBlankSeal().setCreativeTab(tab).setTextureName("thaumicexploration:sealBlank"));
+        blankSeal = (new ItemBlankSeal().setCreativeTab(tab)
+            .setTextureName("thaumicexploration:sealBlank"));
         GameRegistry.registerItem(blankSeal, "blankSeal");
-        chestSeal = (new ItemChestSeal().setCreativeTab(tab).setTextureName("thaumicexploration:sealChest")
-                .setUnlocalizedName("thaumicexploration:chestSeal"));
+        chestSeal = (new ItemChestSeal().setCreativeTab(tab)
+            .setTextureName("thaumicexploration:sealChest")
+            .setUnlocalizedName("thaumicexploration:chestSeal"));
         GameRegistry.registerItem(chestSeal, "chestSeal");
         chestSealLinked = (new ItemChestSealLinked().setTextureName("thaumicexploration:sealChest")
-                .setUnlocalizedName("thaumicexploration:chestSeal"));
+            .setUnlocalizedName("thaumicexploration:chestSeal"));
         GameRegistry.registerItem(chestSealLinked, "chestSealLinked");
-        jarSeal = (new ItemJarSeal().setCreativeTab(tab).setTextureName("thaumicexploration:sealJar")
-                .setUnlocalizedName("thaumicexploration:jarSeal"));
+        jarSeal = (new ItemJarSeal().setCreativeTab(tab)
+            .setTextureName("thaumicexploration:sealJar")
+            .setUnlocalizedName("thaumicexploration:jarSeal"));
         GameRegistry.registerItem(jarSeal, "jarSeal");
-        charmNoTaint = new Item().setUnlocalizedName("thaumicexploration:dreamcatcher").setCreativeTab(tab)
-                .setTextureName("thaumicexploration:dreamcatcher");
+        charmNoTaint = new Item().setUnlocalizedName("thaumicexploration:dreamcatcher")
+            .setCreativeTab(tab)
+            .setTextureName("thaumicexploration:dreamcatcher");
         GameRegistry.registerItem(charmNoTaint, "charmNoTaint");
 
         // charmTaint = new
@@ -381,31 +419,34 @@ public class ThaumicExploration {
         // GameRegistry.registerItem(maskEvil, "maskEvil");
 
         bootsMeteor = new ItemTXArmorSpecial(ThaumcraftApi.armorMatSpecial, 4, 3)
-                .setUnlocalizedName("thaumicexploration:bootsMeteor").setCreativeTab(tab)
-                .setTextureName("thaumicexploration:bootsMeteor");
+            .setUnlocalizedName("thaumicexploration:bootsMeteor")
+            .setCreativeTab(tab)
+            .setTextureName("thaumicexploration:bootsMeteor");
         GameRegistry.registerItem(bootsMeteor, "bootsMeteor");
         bootsComet = new ItemTXArmorSpecial(ThaumcraftApi.armorMatSpecial, 4, 3)
-                .setUnlocalizedName("thaumicexploration:bootsComet").setCreativeTab(tab)
-                .setTextureName("thaumicexploration:bootsComet");
+            .setUnlocalizedName("thaumicexploration:bootsComet")
+            .setCreativeTab(tab)
+            .setTextureName("thaumicexploration:bootsComet");
         GameRegistry.registerItem(bootsComet, "bootsComet");
 
         taintBerry = new ItemTaintSeedFood(1, 0.3F, Blocks.tnt, ConfigBlocks.blockTaint).setCreativeTab(tab)
-                .setUnlocalizedName("thaumicexploration:taintBerry").setTextureName("thaumicExploration:taintBerry");
+            .setUnlocalizedName("thaumicexploration:taintBerry")
+            .setTextureName("thaumicExploration:taintBerry");
         GameRegistry.registerItem(taintBerry, "taintBerry");
 
         tentacleRing = new ItemBauble(BaubleType.RING).setCreativeTab(tab)
-                .setUnlocalizedName("thaumicexploration:tentacleRing")
-                .setTextureName("thaumicExploration:taintaclering");
+            .setUnlocalizedName("thaumicexploration:tentacleRing")
+            .setTextureName("thaumicExploration:taintaclering");
         GameRegistry.registerItem(tentacleRing, "tentacleRing");
 
         stabilizerBelt = new ItemStabilizerBelt().setCreativeTab(tab)
-                .setUnlocalizedName("thaumicexploration:stabilizerBelt")
-                .setTextureName("thaumicExploration:stabilizerBelt");
+            .setUnlocalizedName("thaumicexploration:stabilizerBelt")
+            .setTextureName("thaumicExploration:stabilizerBelt");
         GameRegistry.registerItem(stabilizerBelt, "stabilizerBelt");
 
         discountRing = new ItemBaubleDiscountRing().setCreativeTab(tab)
-                .setUnlocalizedName("thaumicexploration:discountRing")
-                .setTextureName("thaumicExploration:discountRing");
+            .setUnlocalizedName("thaumicexploration:discountRing")
+            .setTextureName("thaumicExploration:discountRing");
         GameRegistry.registerItem(discountRing, "discountRing");
         ForgeChunkManager.setForcedChunkLoadingCallback(instance, new ChunkLoaderCallback());
     }
@@ -444,7 +485,9 @@ public class ThaumicExploration {
 
         // EventHandler
         MinecraftForge.EVENT_BUS.register(new TXEventHandler());
-        FMLCommonHandler.instance().bus().register(new TXEventHandler());
+        FMLCommonHandler.instance()
+            .bus()
+            .register(new TXEventHandler());
 
         // Tiles
         GameRegistry.registerTileEntity(TileEntityFloatyCandle.class, "tileEntityFloatyCandle");
@@ -464,49 +507,49 @@ public class ThaumicExploration {
 
         // Wands
         STAFF_ROD_AMBER = new StaffRod(
-                "AMBER",
-                25,
-                new ItemStack(ThaumicExploration.amberStaffCore),
-                18,
-                new WandRodAmberOnUpdate(),
-                new ResourceLocation("thaumicexploration:textures/models/rodAmber.png"));
+            "AMBER",
+            25,
+            new ItemStack(ThaumicExploration.amberStaffCore),
+            18,
+            new WandRodAmberOnUpdate(),
+            new ResourceLocation("thaumicexploration:textures/models/rodAmber.png"));
         WAND_ROD_AMBER = new WandRod(
-                "AMBER",
-                10,
-                new ItemStack(ThaumicExploration.amberCore),
-                8,
-                new WandRodAmberOnUpdate(),
-                new ResourceLocation("thaumicexploration:textures/models/rodAmber.png"));
+            "AMBER",
+            10,
+            new ItemStack(ThaumicExploration.amberCore),
+            8,
+            new WandRodAmberOnUpdate(),
+            new ResourceLocation("thaumicexploration:textures/models/rodAmber.png"));
         WAND_ROD_CRYSTAL = new WandRodTransmutative(
-                "TRANSMUTATION",
-                75,
-                new ItemStack(ThaumicExploration.transmutationCore),
-                6,
-                new WandRodTransmutationOnUpdate(),
-                new ResourceLocation("thaumicexploration:textures/models/0.png"));
+            "TRANSMUTATION",
+            75,
+            new ItemStack(ThaumicExploration.transmutationCore),
+            6,
+            new WandRodTransmutationOnUpdate(),
+            new ResourceLocation("thaumicexploration:textures/models/0.png"));
         STAFF_ROD_CRYSTAL = new StaffRodTransmutative(
-                "TRANSMUTATION",
-                175,
-                new ItemStack(ThaumicExploration.transmutationStaffCore),
-                14,
-                new WandRodTransmutationOnUpdate(),
-                new ResourceLocation("thaumicexploration:textures/models/0.png"));
+            "TRANSMUTATION",
+            175,
+            new ItemStack(ThaumicExploration.transmutationStaffCore),
+            14,
+            new WandRodTransmutationOnUpdate(),
+            new ResourceLocation("thaumicexploration:textures/models/0.png"));
         STAFF_ROD_NECRO = new StaffRod(
-                "NECROMANCER",
-                200,
-                new ItemStack(ThaumicExploration.necroStaffCore),
-                15,
-                new WandRodNecromancerOnUpdate(),
-                new ResourceLocation("thaumicexploration:textures/models/rodNecro.png"));
+            "NECROMANCER",
+            200,
+            new ItemStack(ThaumicExploration.necroStaffCore),
+            15,
+            new WandRodNecromancerOnUpdate(),
+            new ResourceLocation("thaumicexploration:textures/models/rodNecro.png"));
         // STAFF_ROD_NECRO.setRunes(true);
         if (ConfigTX.breadWand) {
             WAND_ROD_BREAD = new WandRod(
-                    "BREAD",
-                    39,
-                    new ItemStack(ThaumicExploration.breadCore),
-                    8,
-                    new WandRodBreadOnUpdate(),
-                    new ResourceLocation("thaumicexploration:textures/models/rodBread.png"));
+                "BREAD",
+                39,
+                new ItemStack(ThaumicExploration.breadCore),
+                8,
+                new WandRodBreadOnUpdate(),
+                new ResourceLocation("thaumicexploration:textures/models/rodBread.png"));
         }
         WAND_CAP_SOJOURNER = new WandCap("SOJOURNER", 0.95F, new ItemStack(ThaumicExploration.sojournerCap), 6);
         WAND_CAP_SOJOURNER.setTexture(new ResourceLocation("thaumicexploration:textures/models/capSojourner.png"));
@@ -530,19 +573,17 @@ public class ThaumicExploration {
             TTIntegration.registerEnchants();
         }
         if (Loader.isModLoaded("Waila")) {
-            FMLInterModComms.sendMessage(
-                    "Waila",
-                    "register",
-                    "flaxbeard.thaumicexploration.interop.WailaConfig.callbackRegister");
+            FMLInterModComms
+                .sendMessage("Waila", "register", "flaxbeard.thaumicexploration.interop.WailaConfig.callbackRegister");
         }
         EntityRegistry.registerModEntity(
-                EntityTaintacleMinion.class,
-                "TaintacleMinion",
-                0,
-                ThaumicExploration.instance,
-                64,
-                3,
-                false);
+            EntityTaintacleMinion.class,
+            "TaintacleMinion",
+            0,
+            ThaumicExploration.instance,
+            64,
+            3,
+            false);
         // enhancedHelmetRunic = new ItemEnhancedRunicArmor(1, enhancedHelmetRunicID, ThaumcraftApi.armorMatSpecial, 0,
         // 0).setUnlocalizedName("thaumicexploration:enhancedHelmetRunic").setCreativeTab(tab);
         // enhancedChestRunic = new ItemEnhancedRunicArmor(1,enhancedChestRunicID, ThaumcraftApi.armorMatSpecial, 0,
@@ -561,9 +602,9 @@ public class ThaumicExploration {
         // 3).setUnlocalizedName("thaumicexploration:enhancedBootsRunic");
 
         potionBinding = (new TXPotion(ConfigTX.potionBindingID, false, 0)).setIconIndex(0, 0)
-                .setPotionName("potion.binding");
+            .setPotionName("potion.binding");
         potionTaintWithdrawl = (new TXTaintPotion(ConfigTX.potionTaintWithdrawlID, true, 0))
-                .setPotionName("potion.taintWithdrawl");
+            .setPotionName("potion.taintWithdrawl");
 
         proxy.registerRenderers();
     }
@@ -587,18 +628,20 @@ public class ThaumicExploration {
     }
 
     public void addSpawn(Class<? extends EntityLiving> entityClass, int spawnProb, int min, int max,
-            BiomeGenBase[] biomes) {
+        BiomeGenBase[] biomes) {
         if (spawnProb > 0) {
             EntityRegistry.addSpawn(entityClass, spawnProb, min, max, EnumCreatureType.monster, biomes);
         }
     }
 
     private void addAchievementName(String ach, String name) {
-        LanguageRegistry.instance().addStringLocalization("achievement." + ach, "en_US", name);
+        LanguageRegistry.instance()
+            .addStringLocalization("achievement." + ach, "en_US", name);
     }
 
     private void addAchievementDesc(String ach, String desc) {
-        LanguageRegistry.instance().addStringLocalization("achievement." + ach + ".desc", "en_US", desc);
+        LanguageRegistry.instance()
+            .addStringLocalization("achievement." + ach + ".desc", "en_US", desc);
     }
 
     private class TXTab extends CreativeTabs {

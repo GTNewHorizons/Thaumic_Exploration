@@ -133,9 +133,10 @@ public class TileEntityEverfullUrn extends TileEntity implements IFluidTank, IFl
     public void updateEntity() {
         super.updateEntity();
         this.ticks++;
-        if (this.worldObj.getBlock(this.xCoord, this.yCoord + 1, this.zCoord).getMaterial() == Material.air
-                || this.worldObj.getBlock(this.xCoord, this.yCoord + 1, this.zCoord).getMaterial()
-                        == Config.airyMaterial) {
+        if (this.worldObj.getBlock(this.xCoord, this.yCoord + 1, this.zCoord)
+            .getMaterial() == Material.air
+            || this.worldObj.getBlock(this.xCoord, this.yCoord + 1, this.zCoord)
+                .getMaterial() == Config.airyMaterial) {
 
             if (this.drainTicks > 0 && drainType == 1) {
                 if (this.worldObj.getBlock(this.dX, this.dY, this.dZ) == ConfigBlocks.blockMetalDevice) {
@@ -147,15 +148,15 @@ public class TileEntityEverfullUrn extends TileEntity implements IFluidTank, IFl
                                 tile.fill(ForgeDirection.SOUTH, new FluidStack(FluidRegistry.WATER, 10), true);
                             }
                             if (this.drainTicks % 5 == 0 && this.worldObj.isRemote
-                                    && this.excessTicks < (40 * this.distance)) {
+                                && this.excessTicks < (40 * this.distance)) {
                                 ThaumicExploration.proxy.spawnWaterAtLocation(
-                                        this.worldObj,
-                                        this.xCoord + 0.5F,
-                                        this.yCoord + 1.1F,
-                                        this.zCoord + 0.5F,
-                                        this.dX + 0.5F,
-                                        this.dY + 1.1F,
-                                        this.dZ + 0.5F);
+                                    this.worldObj,
+                                    this.xCoord + 0.5F,
+                                    this.yCoord + 1.1F,
+                                    this.zCoord + 0.5F,
+                                    this.dX + 0.5F,
+                                    this.dY + 1.1F,
+                                    this.dZ + 0.5F);
                             }
                             this.excessTicks++;
                             this.drainTicks--;
@@ -180,15 +181,15 @@ public class TileEntityEverfullUrn extends TileEntity implements IFluidTank, IFl
                                 tile.fill(ForgeDirection.SOUTH, new FluidStack(FluidRegistry.WATER, 10), true);
                             }
                             if (this.drainTicks % 5 == 0 && this.worldObj.isRemote
-                                    && this.excessTicks < (40 * this.distance)) {
+                                && this.excessTicks < (40 * this.distance)) {
                                 ThaumicExploration.proxy.spawnWaterAtLocation(
-                                        this.worldObj,
-                                        this.xCoord + 0.5F,
-                                        this.yCoord + 1.1F,
-                                        this.zCoord + 0.5F,
-                                        this.dX + 0.5F,
-                                        this.dY + 1.1F,
-                                        this.dZ + 0.5F);
+                                    this.worldObj,
+                                    this.xCoord + 0.5F,
+                                    this.yCoord + 1.1F,
+                                    this.zCoord + 0.5F,
+                                    this.dX + 0.5F,
+                                    this.dY + 1.1F,
+                                    this.dZ + 0.5F);
                             }
                             this.excessTicks++;
                             this.drainTicks--;
@@ -210,15 +211,15 @@ public class TileEntityEverfullUrn extends TileEntity implements IFluidTank, IFl
                         if (BotaniaIntegration.needsWater(tile)) {
 
                             if (this.drainTicks % 5 == 0 && this.worldObj.isRemote
-                                    && this.excessTicks < (40 * this.distance)) {
+                                && this.excessTicks < (40 * this.distance)) {
                                 ThaumicExploration.proxy.spawnWaterAtLocation(
-                                        this.worldObj,
-                                        this.xCoord + 0.5F,
-                                        this.yCoord + 1.1F,
-                                        this.zCoord + 0.5F,
-                                        this.dX + 0.5F,
-                                        this.dY + 1.1F,
-                                        this.dZ + 0.5F);
+                                    this.worldObj,
+                                    this.xCoord + 0.5F,
+                                    this.yCoord + 1.1F,
+                                    this.zCoord + 0.5F,
+                                    this.dX + 0.5F,
+                                    this.dY + 1.1F,
+                                    this.dZ + 0.5F);
                             }
                             this.excessTicks++;
                             this.drainTicks--;
@@ -243,15 +244,15 @@ public class TileEntityEverfullUrn extends TileEntity implements IFluidTank, IFl
                         if (WitcheryIntegration.needsWaterCauldron(tile)) {
 
                             if (this.drainTicks % 5 == 0 && this.worldObj.isRemote
-                                    && this.excessTicks < (40 * this.distance)) {
+                                && this.excessTicks < (40 * this.distance)) {
                                 ThaumicExploration.proxy.spawnWaterAtLocation(
-                                        this.worldObj,
-                                        this.xCoord + 0.5F,
-                                        this.yCoord + 1.1F,
-                                        this.zCoord + 0.5F,
-                                        this.dX + 0.5F,
-                                        this.dY + 1.1F,
-                                        this.dZ + 0.5F);
+                                    this.worldObj,
+                                    this.xCoord + 0.5F,
+                                    this.yCoord + 1.1F,
+                                    this.zCoord + 0.5F,
+                                    this.dX + 0.5F,
+                                    this.dY + 1.1F,
+                                    this.dZ + 0.5F);
                             }
                             this.excessTicks++;
                             this.drainTicks--;
@@ -276,15 +277,15 @@ public class TileEntityEverfullUrn extends TileEntity implements IFluidTank, IFl
                         if (WitcheryIntegration.needsWaterKettle(tile)) {
 
                             if (this.drainTicks % 5 == 0 && this.worldObj.isRemote
-                                    && this.excessTicks < (40 * this.distance)) {
+                                && this.excessTicks < (40 * this.distance)) {
                                 ThaumicExploration.proxy.spawnWaterAtLocation(
-                                        this.worldObj,
-                                        this.xCoord + 0.5F,
-                                        this.yCoord + 1.1F,
-                                        this.zCoord + 0.5F,
-                                        this.dX + 0.5F,
-                                        this.dY + 1.1F,
-                                        this.dZ + 0.5F);
+                                    this.worldObj,
+                                    this.xCoord + 0.5F,
+                                    this.yCoord + 1.1F,
+                                    this.zCoord + 0.5F,
+                                    this.dX + 0.5F,
+                                    this.dY + 1.1F,
+                                    this.dZ + 0.5F);
                             }
                             this.excessTicks++;
                             this.drainTicks--;
@@ -308,15 +309,15 @@ public class TileEntityEverfullUrn extends TileEntity implements IFluidTank, IFl
                     if (VanillaIntegration.needsWater(this.worldObj, this.dX, this.dY, this.dZ)) {
 
                         if (this.drainTicks % 5 == 0 && this.worldObj.isRemote
-                                && this.excessTicks < (40 * this.distance)) {
+                            && this.excessTicks < (40 * this.distance)) {
                             ThaumicExploration.proxy.spawnWaterAtLocation(
-                                    this.worldObj,
-                                    this.xCoord + 0.5F,
-                                    this.yCoord + 1.1F,
-                                    this.zCoord + 0.5F,
-                                    this.dX + 0.5F,
-                                    this.dY + 1.1F,
-                                    this.dZ + 0.5F);
+                                this.worldObj,
+                                this.xCoord + 0.5F,
+                                this.yCoord + 1.1F,
+                                this.zCoord + 0.5F,
+                                this.dX + 0.5F,
+                                this.dY + 1.1F,
+                                this.dZ + 0.5F);
                         }
                         this.excessTicks++;
                         this.drainTicks--;
@@ -334,19 +335,19 @@ public class TileEntityEverfullUrn extends TileEntity implements IFluidTank, IFl
             if (this.drainTicks > 0 && drainType == 2) {
                 EntityPlayer player = this.burningPlayer;
                 List<EntityPlayer> players = this.worldObj.getEntitiesWithinAABB(
-                        EntityPlayer.class,
-                        AxisAlignedBB.getBoundingBox(
-                                this.xCoord - this.range,
-                                this.yCoord - this.yRange,
-                                this.zCoord - this.range,
-                                this.xCoord + this.range,
-                                this.yCoord + this.yRange,
-                                this.zCoord + this.range));
+                    EntityPlayer.class,
+                    AxisAlignedBB.getBoundingBox(
+                        this.xCoord - this.range,
+                        this.yCoord - this.yRange,
+                        this.zCoord - this.range,
+                        this.xCoord + this.range,
+                        this.yCoord + this.yRange,
+                        this.zCoord + this.range));
                 if (players.contains(player) && player.isBurning()) {
 
                     if (this.drainTicks % 3 == 0 && this.worldObj.isRemote && this.excessTicks < (40 * this.distance)) {
                         ThaumicExploration.proxy
-                                .spawnWaterOnPlayer(this.worldObj, this.xCoord, this.yCoord, this.zCoord, player);
+                            .spawnWaterOnPlayer(this.worldObj, this.xCoord, this.yCoord, this.zCoord, player);
                     }
                     this.excessTicks++;
                     this.drainTicks--;
@@ -357,12 +358,10 @@ public class TileEntityEverfullUrn extends TileEntity implements IFluidTank, IFl
                         for (int x = -1; x < 2; x++) {
                             for (int z = -1; z < 2; z++) {
                                 if (this.worldObj
-                                        .getBlock((int) player.posX + x, (int) player.posY, (int) player.posZ + z)
-                                        == Blocks.fire) {
-                                    this.worldObj.setBlockToAir(
-                                            (int) player.posX + x,
-                                            (int) player.posY,
-                                            (int) player.posZ + z);
+                                    .getBlock((int) player.posX + x, (int) player.posY, (int) player.posZ + z)
+                                    == Blocks.fire) {
+                                    this.worldObj
+                                        .setBlockToAir((int) player.posX + x, (int) player.posY, (int) player.posZ + z);
                                 }
                             }
                         }
@@ -373,26 +372,26 @@ public class TileEntityEverfullUrn extends TileEntity implements IFluidTank, IFl
             }
 
             if (ticks % 2 == 0 && this.worldObj.isRemote
-                    && (this.drainTicks <= 0 || this.excessTicks > (40 * this.distance))) {
+                && (this.drainTicks <= 0 || this.excessTicks > (40 * this.distance))) {
                 ThaumicExploration.proxy.spawnRandomWaterFountain(this.worldObj, this.xCoord, this.yCoord, this.zCoord);
             }
 
             if (ticks % 5 == 0) {
                 if (this.drainTicks == 0 || this.drainType != 2) {
                     List<EntityPlayer> players = this.worldObj.getEntitiesWithinAABB(
-                            EntityPlayer.class,
-                            AxisAlignedBB.getBoundingBox(
-                                    this.xCoord - this.range,
-                                    this.yCoord - this.yRange,
-                                    this.zCoord - this.range,
-                                    this.xCoord + this.range,
-                                    this.yCoord + this.yRange,
-                                    this.zCoord + this.range));
+                        EntityPlayer.class,
+                        AxisAlignedBB.getBoundingBox(
+                            this.xCoord - this.range,
+                            this.yCoord - this.yRange,
+                            this.zCoord - this.range,
+                            this.xCoord + this.range,
+                            this.yCoord + this.yRange,
+                            this.zCoord + this.range));
                     for (EntityPlayer player : players) {
                         if (player.isBurning()) {
                             distance = (float) Math.sqrt(
-                                    Math.pow(this.xCoord - player.posX, 2) + Math.pow(this.yCoord - player.posY, 2)
-                                            + Math.pow(this.zCoord - player.posZ, 2));
+                                Math.pow(this.xCoord - player.posX, 2) + Math.pow(this.yCoord - player.posY, 2)
+                                    + Math.pow(this.zCoord - player.posZ, 2));
                             this.drainTicks = 100;
                             this.excessTicks = 0;
                             this.drainType = 2;
@@ -409,18 +408,18 @@ public class TileEntityEverfullUrn extends TileEntity implements IFluidTank, IFl
                         for (int z = (-1 * this.range); z < (this.range + 1); z++) {
                             for (int y = (-1 * this.yRange); y < (this.yRange + 1); y++) {
                                 if (ConfigTX.allowThaumcraftCrucibleRefill
-                                        && this.worldObj.getBlock(this.xCoord + x, this.yCoord + y, this.zCoord + z)
-                                                == ConfigBlocks.blockMetalDevice) {
+                                    && this.worldObj.getBlock(this.xCoord + x, this.yCoord + y, this.zCoord + z)
+                                        == ConfigBlocks.blockMetalDevice) {
                                     if (this.worldObj
-                                            .getBlockMetadata(this.xCoord + x, this.yCoord + y, this.zCoord + z) == 0) {
+                                        .getBlockMetadata(this.xCoord + x, this.yCoord + y, this.zCoord + z) == 0) {
 
                                         TileCrucible tile = ((TileCrucible) (this.worldObj
-                                                .getTileEntity(this.xCoord + x, this.yCoord + y, this.zCoord + z)));
+                                            .getTileEntity(this.xCoord + x, this.yCoord + y, this.zCoord + z)));
                                         if (tile.tank.getFluidAmount() < tile.tank.getCapacity()) {
                                             distance = (float) Math
-                                                    .sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
+                                                .sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
                                             this.drainTicks = (tile.tank.getCapacity() - tile.tank.getFluidAmount())
-                                                    / 10;
+                                                / 10;
                                             this.excessTicks = 0;
                                             this.drainType = 1;
                                             this.dX = this.xCoord + x;
@@ -431,21 +430,20 @@ public class TileEntityEverfullUrn extends TileEntity implements IFluidTank, IFl
                                     }
                                 }
                                 if (ConfigTX.allowThaumcraftSpaRefill
-                                        && this.worldObj.getBlock(this.xCoord + x, this.yCoord + y, this.zCoord + z)
-                                                == ConfigBlocks.blockStoneDevice) {
+                                    && this.worldObj.getBlock(this.xCoord + x, this.yCoord + y, this.zCoord + z)
+                                        == ConfigBlocks.blockStoneDevice) {
                                     if (this.worldObj
-                                            .getBlockMetadata(this.xCoord + x, this.yCoord + y, this.zCoord + z)
-                                            == 12) {
+                                        .getBlockMetadata(this.xCoord + x, this.yCoord + y, this.zCoord + z) == 12) {
 
                                         TileSpa tile = ((TileSpa) (this.worldObj
-                                                .getTileEntity(this.xCoord + x, this.yCoord + y, this.zCoord + z)));
+                                            .getTileEntity(this.xCoord + x, this.yCoord + y, this.zCoord + z)));
                                         int amount = tile.tank.getFluidAmount();
                                         int capacity = tile.tank.getCapacity();
                                         if (amount < capacity) {
                                             distance = (float) Math
-                                                    .sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
+                                                .sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
                                             this.drainTicks = (tile.tank.getCapacity() - tile.tank.getFluidAmount())
-                                                    / 10;
+                                                / 10;
                                             this.excessTicks = 0;
                                             this.drainType = 4;
                                             this.dX = this.xCoord + x;
@@ -457,12 +455,12 @@ public class TileEntityEverfullUrn extends TileEntity implements IFluidTank, IFl
                                 }
                                 if (Loader.isModLoaded("Botania") && ConfigTX.allowBotaniaApothecaryPetalRefill) {
                                     if (this.worldObj.getBlock(this.xCoord + x, this.yCoord + y, this.zCoord + z)
-                                            == BotaniaIntegration.getAltar()) {
+                                        == BotaniaIntegration.getAltar()) {
                                         TileEntity tile = ((this.worldObj
-                                                .getTileEntity(this.xCoord + x, this.yCoord + y, this.zCoord + z)));
+                                            .getTileEntity(this.xCoord + x, this.yCoord + y, this.zCoord + z)));
                                         if (BotaniaIntegration.needsWater(tile)) {
                                             distance = (float) Math
-                                                    .sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
+                                                .sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
                                             this.drainTicks = 100;
                                             this.excessTicks = 0;
                                             this.drainType = 3;
@@ -475,13 +473,12 @@ public class TileEntityEverfullUrn extends TileEntity implements IFluidTank, IFl
                                 }
                                 if (Loader.isModLoaded("witchery") && ConfigTX.allowWitcheryCauldronRefill) {
                                     if (WitcheryIntegration.isCauldron(
-                                            this.worldObj
-                                                    .getBlock(this.xCoord + x, this.yCoord + y, this.zCoord + z))) {
+                                        this.worldObj.getBlock(this.xCoord + x, this.yCoord + y, this.zCoord + z))) {
                                         TileEntity tile = ((this.worldObj
-                                                .getTileEntity(this.xCoord + x, this.yCoord + y, this.zCoord + z)));
+                                            .getTileEntity(this.xCoord + x, this.yCoord + y, this.zCoord + z)));
                                         if (WitcheryIntegration.needsWaterCauldron(tile)) {
                                             distance = (float) Math
-                                                    .sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
+                                                .sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
                                             this.drainTicks = 100;
                                             this.excessTicks = 0;
                                             this.drainType = 5;
@@ -494,13 +491,12 @@ public class TileEntityEverfullUrn extends TileEntity implements IFluidTank, IFl
                                 }
                                 if (Loader.isModLoaded("witchery") && ConfigTX.allowWitcheryKettleRefill) {
                                     if (WitcheryIntegration.isKettle(
-                                            this.worldObj
-                                                    .getBlock(this.xCoord + x, this.yCoord + y, this.zCoord + z))) {
+                                        this.worldObj.getBlock(this.xCoord + x, this.yCoord + y, this.zCoord + z))) {
                                         TileEntity tile = ((this.worldObj
-                                                .getTileEntity(this.xCoord + x, this.yCoord + y, this.zCoord + z)));
+                                            .getTileEntity(this.xCoord + x, this.yCoord + y, this.zCoord + z)));
                                         if (WitcheryIntegration.needsWaterKettle(tile)) {
                                             distance = (float) Math
-                                                    .sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
+                                                .sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
                                             this.drainTicks = 100;
                                             this.excessTicks = 0;
                                             this.drainType = 6;
@@ -512,12 +508,9 @@ public class TileEntityEverfullUrn extends TileEntity implements IFluidTank, IFl
                                     }
                                 }
                                 if (ConfigTX.allowVanillaCauldronRefill && VanillaIntegration.isVanillaCauldron(
-                                        this.worldObj.getBlock(this.xCoord + x, this.yCoord + y, this.zCoord + z))) {
-                                    if (VanillaIntegration.needsWater(
-                                            this.worldObj,
-                                            this.xCoord + x,
-                                            this.yCoord + y,
-                                            this.zCoord + z)) {
+                                    this.worldObj.getBlock(this.xCoord + x, this.yCoord + y, this.zCoord + z))) {
+                                    if (VanillaIntegration
+                                        .needsWater(this.worldObj, this.xCoord + x, this.yCoord + y, this.zCoord + z)) {
                                         distance = (float) Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
                                         this.drainTicks = 100;
                                         this.excessTicks = 0;
