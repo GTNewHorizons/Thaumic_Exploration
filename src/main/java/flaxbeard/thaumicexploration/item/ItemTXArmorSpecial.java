@@ -44,19 +44,20 @@ public class ItemTXArmorSpecial extends ItemArmor implements IRepairable, IRunic
 
     public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
         return par2ItemStack.isItemEqual(new ItemStack(Items.leather)) ? true
-                : super.getIsRepairable(par1ItemStack, par2ItemStack);
+            : super.getIsRepairable(par1ItemStack, par2ItemStack);
     }
 
     @Override
     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
-        if (player.inventory.armorItemInSlot(0).getItem() == ThaumicExploration.bootsMeteor) {
+        if (player.inventory.armorItemInSlot(0)
+            .getItem() == ThaumicExploration.bootsMeteor) {
             if (player.fallDistance > 0.0F) {
                 player.fallDistance = 0.0F;
             }
         }
         if (getIntertialState(itemStack) && player.moveForward == 0
-                && player.moveStrafing == 0
-                && player.capabilities.isFlying) {
+            && player.moveStrafing == 0
+            && player.capabilities.isFlying) {
             player.motionX *= 0.5;
             player.motionZ *= 0.5;
         }
@@ -64,20 +65,21 @@ public class ItemTXArmorSpecial extends ItemArmor implements IRepairable, IRunic
         if (ThaumicExploration.isBootsActive) {
             omniMode = isOmniEnabled(itemStack);
             if ((player.moveForward == 0F && player.moveStrafing == 0F && omniMode)
-                    || (player.moveForward <= 0F && !omniMode)) {
+                || (player.moveForward <= 0F && !omniMode)) {
                 return;
             }
         }
         if (player.moveForward != 0.0F || player.moveStrafing != 0.0F) {
             int haste = EnchantmentHelper
-                    .getEnchantmentLevel(Config.enchHaste.effectId, player.inventory.armorItemInSlot(0));
-            Item item = player.inventory.armorItemInSlot(0).getItem();
+                .getEnchantmentLevel(Config.enchHaste.effectId, player.inventory.armorItemInSlot(0));
+            Item item = player.inventory.armorItemInSlot(0)
+                .getItem();
             if (item instanceof ItemTXArmorSpecial) {
                 if (player.worldObj.isRemote) {
                     if (!Thaumcraft.instance.entityEventHandler.prevStep
-                            .containsKey(Integer.valueOf(player.getEntityId()))) {
+                        .containsKey(Integer.valueOf(player.getEntityId()))) {
                         Thaumcraft.instance.entityEventHandler.prevStep
-                                .put(Integer.valueOf(player.getEntityId()), Float.valueOf(player.stepHeight));
+                            .put(Integer.valueOf(player.getEntityId()), Float.valueOf(player.stepHeight));
                     }
                     player.stepHeight = 1.0F;
                 }
@@ -92,9 +94,11 @@ public class ItemTXArmorSpecial extends ItemArmor implements IRepairable, IRunic
                     player.fallDistance = 0.0F;
                 }
             } else if (item == ThaumicExploration.bootsComet) {
-                if (!player.inventory.armorItemInSlot(0).hasTagCompound()) {
+                if (!player.inventory.armorItemInSlot(0)
+                    .hasTagCompound()) {
                     NBTTagCompound par1NBTTagCompound = new NBTTagCompound();
-                    player.inventory.armorItemInSlot(0).setTagCompound(par1NBTTagCompound);
+                    player.inventory.armorItemInSlot(0)
+                        .setTagCompound(par1NBTTagCompound);
                     player.inventory.armorItemInSlot(0).stackTagCompound.setInteger("runTicks", 0);
                 }
                 int ticks = player.inventory.armorItemInSlot(0).stackTagCompound.getInteger("runTicks");

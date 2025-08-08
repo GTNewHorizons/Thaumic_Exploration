@@ -34,7 +34,7 @@ public class EnchantmentNightVision extends Enchantment {
             }
         }
         return (!(par1Enchantment instanceof EnchantmentOxygen)
-                && !(par1Enchantment instanceof EnchantmentWaterWorker));
+            && !(par1Enchantment instanceof EnchantmentWaterWorker));
     }
 
     /**

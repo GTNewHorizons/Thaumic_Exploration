@@ -85,7 +85,7 @@ public class BlockBoundChest extends BlockContainer {
      * Called when the block is placed in the world.
      */
     public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase,
-            ItemStack par6ItemStack) {
+        ItemStack par6ItemStack) {
         // int l = par1World.getBlockId(par2, par3, par4 - 1);
         // int i1 = par1World.getBlockId(par2, par3, par4 + 1);
         // int j1 = par1World.getBlockId(par2 - 1, par3, par4);
@@ -113,7 +113,7 @@ public class BlockBoundChest extends BlockContainer {
 
         if (par6ItemStack.hasDisplayName()) {
             ((TileEntityBoundChest) par1World.getTileEntity(par2, par3, par4))
-                    .setChestGuiName(par6ItemStack.getDisplayName());
+                .setChestGuiName(par6ItemStack.getDisplayName());
         }
     }
 
@@ -144,10 +144,10 @@ public class BlockBoundChest extends BlockContainer {
      */
     private boolean isThereANeighborChest(World par1World, int par2, int par3, int par4) {
         return par1World.getBlock(par2, par3, par4) != this ? false
-                : (par1World.getBlock(par2 - 1, par3, par4) == this ? true
-                        : (par1World.getBlock(par2 + 1, par3, par4) == this ? true
-                                : (par1World.getBlock(par2, par3, par4 - 1) == this ? true
-                                        : par1World.getBlock(par2, par3, par4 + 1) == this)));
+            : (par1World.getBlock(par2 - 1, par3, par4) == this ? true
+                : (par1World.getBlock(par2 + 1, par3, par4) == this ? true
+                    : (par1World.getBlock(par2, par3, par4 - 1) == this ? true
+                        : par1World.getBlock(par2, par3, par4 + 1) == this)));
     }
 
     /**
@@ -170,7 +170,7 @@ public class BlockBoundChest extends BlockContainer {
             EntityItem entityitem;
 
             for (float f2 = this.random.nextFloat() * 0.8F + 0.1F; itemstack.stackSize > 0; par1World
-                    .spawnEntityInWorld(entityitem)) {
+                .spawnEntityInWorld(entityitem)) {
                 int k1 = this.random.nextInt(21) + 10;
 
                 if (k1 > itemstack.stackSize) {
@@ -179,18 +179,21 @@ public class BlockBoundChest extends BlockContainer {
 
                 itemstack.stackSize -= k1;
                 entityitem = new EntityItem(
-                        par1World,
-                        (double) ((float) par2 + f),
-                        (double) ((float) par3 + f1),
-                        (double) ((float) par4 + f2),
-                        new ItemStack(itemstack.getItem(), k1, itemstack.getItemDamage()));
+                    par1World,
+                    (double) ((float) par2 + f),
+                    (double) ((float) par3 + f1),
+                    (double) ((float) par4 + f2),
+                    new ItemStack(itemstack.getItem(), k1, itemstack.getItemDamage()));
                 float f3 = 0.05F;
                 entityitem.motionX = (double) ((float) this.random.nextGaussian() * f3);
                 entityitem.motionY = (double) ((float) this.random.nextGaussian() * f3 + 0.2F);
                 entityitem.motionZ = (double) ((float) this.random.nextGaussian() * f3);
 
                 if (itemstack.hasTagCompound()) {
-                    entityitem.getEntityItem().setTagCompound((NBTTagCompound) itemstack.getTagCompound().copy());
+                    entityitem.getEntityItem()
+                        .setTagCompound(
+                            (NBTTagCompound) itemstack.getTagCompound()
+                                .copy());
                 }
             }
         }
@@ -206,14 +209,14 @@ public class BlockBoundChest extends BlockContainer {
 
         if (tileentitychest != null) {
             this.dropItem(
-                    new ItemStack(
-                            ThaumicExploration.blankSeal,
-                            1,
-                            15 - ((TileEntityBoundChest) par1World.getTileEntity(par2, par3, par4)).getSealColor()),
-                    par1World,
-                    par2,
-                    par3,
-                    par4);
+                new ItemStack(
+                    ThaumicExploration.blankSeal,
+                    1,
+                    15 - ((TileEntityBoundChest) par1World.getTileEntity(par2, par3, par4)).getSealColor()),
+                par1World,
+                par2,
+                par3,
+                par4);
             for (int j1 = 0; j1 < tileentitychest.getSizeInventory(); ++j1) {
                 ItemStack itemstack = tileentitychest.getStackInSlot(j1);
                 this.dropItem(itemstack, par1World, par2, par3, par4);
@@ -229,7 +232,7 @@ public class BlockBoundChest extends BlockContainer {
      * Called upon block activation (right click on the block.)
      */
     public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer,
-            int par6, float par7, float par8, float par9) {
+        int par6, float par7, float par8, float par9) {
         if (par1World.isRemote) {
 
             return true;
@@ -305,16 +308,17 @@ public class BlockBoundChest extends BlockContainer {
      * chest.
      */
     public static boolean isOcelotBlockingChest(World par0World, int par1, int par2, int par3) {
-        Iterator iterator = par0World.getEntitiesWithinAABB(
+        Iterator iterator = par0World
+            .getEntitiesWithinAABB(
                 EntityOcelot.class,
                 AxisAlignedBB.getBoundingBox(
-                        (double) par1,
-                        (double) (par2 + 1),
-                        (double) par3,
-                        (double) (par1 + 1),
-                        (double) (par2 + 2),
-                        (double) (par3 + 1)))
-                .iterator();
+                    (double) par1,
+                    (double) (par2 + 1),
+                    (double) par3,
+                    (double) (par1 + 1),
+                    (double) (par2 + 2),
+                    (double) (par3 + 1)))
+            .iterator();
         EntityOcelot entityocelot;
 
         do {

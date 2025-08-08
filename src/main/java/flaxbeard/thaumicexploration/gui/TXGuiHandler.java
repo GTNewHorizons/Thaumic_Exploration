@@ -45,9 +45,12 @@ public class TXGuiHandler implements IGuiHandler {
             case 2:
                 ItemStack stack = player.getCurrentEquippedItem();
                 TileEntityAutoSorter sorter = (TileEntityAutoSorter) player.worldObj.getTileEntity(
-                        stack.getTagCompound().getInteger("brainx"),
-                        stack.getTagCompound().getInteger("brainy"),
-                        stack.getTagCompound().getInteger("brainz"));
+                    stack.getTagCompound()
+                        .getInteger("brainx"),
+                    stack.getTagCompound()
+                        .getInteger("brainy"),
+                    stack.getTagCompound()
+                        .getInteger("brainz"));
 
                 return new ContainerBrainMachine(player.inventory, player, sorter, new ChunkCoordinates(x, y, z), side);
             default:
@@ -85,9 +88,12 @@ public class TXGuiHandler implements IGuiHandler {
             case 2:
                 ItemStack stack = player.getCurrentEquippedItem();
                 TileEntityAutoSorter sorter = (TileEntityAutoSorter) player.worldObj.getTileEntity(
-                        stack.getTagCompound().getInteger("brainx"),
-                        stack.getTagCompound().getInteger("brainy"),
-                        stack.getTagCompound().getInteger("brainz"));
+                    stack.getTagCompound()
+                        .getInteger("brainx"),
+                    stack.getTagCompound()
+                        .getInteger("brainy"),
+                    stack.getTagCompound()
+                        .getInteger("brainz"));
 
                 return new GuiBrainMachine(player.inventory, player, sorter, new ChunkCoordinates(x, y, z), side);
             default:

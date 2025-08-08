@@ -28,7 +28,8 @@ public class ItemBaubleDiscountRing extends ItemBaubleDiscounter {
 
     @Override
     public int getVisDiscount(ItemStack arg0, EntityPlayer arg1, Aspect arg2) {
-        if (arg2 == Aspect.getPrimalAspects().get(arg0.getItemDamage())) {
+        if (arg2 == Aspect.getPrimalAspects()
+            .get(arg0.getItemDamage())) {
             return 3;
         }
         return 0;

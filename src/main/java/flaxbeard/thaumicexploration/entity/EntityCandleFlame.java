@@ -16,13 +16,13 @@ public class EntityCandleFlame extends EntityThrowable {
         super(par1World, par2EntityLivingBase);
         float f = 0.4F;
         this.motionX = 0.1D * (double) (-MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI)
-                * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI)
-                * f);
+            * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI)
+            * f);
         this.motionZ = 0.1D * (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI)
-                * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI)
-                * f);
+            * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI)
+            * f);
         this.motionY = 0.1D
-                * (double) (-MathHelper.sin((this.rotationPitch + this.func_70183_g()) / 180.0F * (float) Math.PI) * f);
+            * (double) (-MathHelper.sin((this.rotationPitch + this.func_70183_g()) / 180.0F * (float) Math.PI) * f);
         this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, this.func_70182_d(), 1.0F);
     }
 
@@ -38,7 +38,7 @@ public class EntityCandleFlame extends EntityThrowable {
             }
 
             par1MovingObjectPosition.entityHit
-                    .attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float) b0);
+                .attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float) b0);
         }
 
         for (int i = 0; i < 8; ++i) {

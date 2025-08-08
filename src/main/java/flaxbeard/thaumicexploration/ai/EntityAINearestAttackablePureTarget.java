@@ -26,17 +26,17 @@ public class EntityAINearestAttackablePureTarget extends EntityAITarget {
     private EntityLivingBase targetEntity;
 
     public EntityAINearestAttackablePureTarget(EntityCreature par1EntityCreature, Class par2Class, int par3,
-            boolean par4) {
+        boolean par4) {
         this(par1EntityCreature, par2Class, par3, par4, false);
     }
 
     public EntityAINearestAttackablePureTarget(EntityCreature par1EntityCreature, Class par2Class, int par3,
-            boolean par4, boolean par5) {
+        boolean par4, boolean par5) {
         this(par1EntityCreature, par2Class, par3, par4, par5, (IEntitySelector) null);
     }
 
     public EntityAINearestAttackablePureTarget(EntityCreature par1EntityCreature, Class par2Class, int par3,
-            boolean par4, boolean par5, IEntitySelector par6IEntitySelector) {
+        boolean par4, boolean par5, IEntitySelector par6IEntitySelector) {
         super(par1EntityCreature, par4, par5);
         this.targetClass = par2Class;
         this.targetChance = par3;
@@ -46,8 +46,10 @@ public class EntityAINearestAttackablePureTarget extends EntityAITarget {
     }
 
     public boolean isSuitableTarget(EntityLivingBase par1EntityLivingBase, boolean par2) {
-        if (par1EntityLivingBase.getEntityData().hasKey("tainted")) {
-            if (par1EntityLivingBase.getEntityData().getBoolean("tainted") == true) {
+        if (par1EntityLivingBase.getEntityData()
+            .hasKey("tainted")) {
+            if (par1EntityLivingBase.getEntityData()
+                .getBoolean("tainted") == true) {
                 return false;
             }
         }
@@ -58,14 +60,15 @@ public class EntityAINearestAttackablePureTarget extends EntityAITarget {
      * Returns whether the EntityAIBase should begin execution.
      */
     public boolean shouldExecute() {
-        if (this.targetChance > 0 && this.taskOwner.getRNG().nextInt(this.targetChance) != 0) {
+        if (this.targetChance > 0 && this.taskOwner.getRNG()
+            .nextInt(this.targetChance) != 0) {
             return false;
         } else {
             double d0 = this.getTargetDistance();
             List list = this.taskOwner.worldObj.selectEntitiesWithinAABB(
-                    this.targetClass,
-                    this.taskOwner.boundingBox.expand(d0, 4.0D, d0),
-                    this.targetEntitySelector);
+                this.targetClass,
+                this.taskOwner.boundingBox.expand(d0, 4.0D, d0),
+                this.targetEntitySelector);
             Collections.sort(list, this.theNearestAttackableTargetSorter);
             List mobsToRemove = new ArrayList<Object>();
             for (Object mob : list) {

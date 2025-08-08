@@ -27,19 +27,19 @@ public class BoundJarProvider implements IWailaDataProvider {
 
     @Override
     public List<String> getWailaHead(ItemStack itemStack, List<String> list, IWailaDataAccessor iWailaDataAccessor,
-            IWailaConfigHandler iWailaConfigHandler) {
+        IWailaConfigHandler iWailaConfigHandler) {
         return list;
     }
 
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> list, IWailaDataAccessor iWailaDataAccessor,
-            IWailaConfigHandler iWailaConfigHandler) {
+        IWailaConfigHandler iWailaConfigHandler) {
         if (!(iWailaDataAccessor.getTileEntity() instanceof TileEntityBoundJar)) return list;
 
         TileEntityBoundJar jar = (TileEntityBoundJar) iWailaDataAccessor.getTileEntity();
         String network = jar.networkName;
         String colour = StatCollector
-                .translateToLocal("item.dyePowder." + ItemDye.field_150921_b[jar.colour] + ".name");
+            .translateToLocal("item.dyePowder." + ItemDye.field_150921_b[jar.colour] + ".name");
         list.add(StatCollector.translateToLocalFormatted("txwaila.boundJar.network", network));
         list.add(StatCollector.translateToLocalFormatted("txwaila.boundJar.colour", colour));
         return list;
@@ -47,13 +47,13 @@ public class BoundJarProvider implements IWailaDataProvider {
 
     @Override
     public List<String> getWailaTail(ItemStack itemStack, List<String> list, IWailaDataAccessor iWailaDataAccessor,
-            IWailaConfigHandler iWailaConfigHandler) {
+        IWailaConfigHandler iWailaConfigHandler) {
         return list;
     }
 
     @Override
     public NBTTagCompound getNBTData(EntityPlayerMP entityPlayerMP, TileEntity tileEntity,
-            NBTTagCompound nbtTagCompound, World world, int i, int i1, int i2) {
+        NBTTagCompound nbtTagCompound, World world, int i, int i1, int i2) {
         return nbtTagCompound;
     }
 }

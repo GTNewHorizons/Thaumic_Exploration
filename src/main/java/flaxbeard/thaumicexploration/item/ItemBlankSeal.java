@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemBlankSeal extends Item {
 
     public static final String[] itemNames = { "Pale", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink",
-            "Gray", "Light Gray", "Cyan", "Purple", "Blue", "Brown", "Green", "Red", "Dark" };
+        "Gray", "Light Gray", "Cyan", "Purple", "Blue", "Brown", "Green", "Red", "Dark" };
 
     public ItemBlankSeal() {
         super();
@@ -27,9 +27,9 @@ public class ItemBlankSeal extends Item {
         if (par1ItemStack.getItemDamage() <= 15) {
             int j = 15 - par1ItemStack.getItemDamage();
             Color c = new Color(
-                    EntitySheep.fleeceColorTable[j][0],
-                    EntitySheep.fleeceColorTable[j][1],
-                    EntitySheep.fleeceColorTable[j][2]);
+                EntitySheep.fleeceColorTable[j][0],
+                EntitySheep.fleeceColorTable[j][1],
+                EntitySheep.fleeceColorTable[j][2]);
             return (c.getRGB() & 0x00ffffff);
         }
         return 0;

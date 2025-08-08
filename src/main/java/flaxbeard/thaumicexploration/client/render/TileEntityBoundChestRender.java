@@ -21,24 +21,24 @@ public class TileEntityBoundChestRender extends TileEntitySpecialRenderer {
 
     private static final ResourceLocation field_110637_a = new ResourceLocation("textures/entity/chest/normal.png");
     private static final ResourceLocation christmasTexture = new ResourceLocation(
-            "textures/entity/chest/christmas.png");
+        "textures/entity/chest/christmas.png");
     private static final ResourceLocation overlayn = new ResourceLocation(
-            "thaumicexploration:textures/blocks/boundchestoverlaynone.png");
+        "thaumicexploration:textures/blocks/boundchestoverlaynone.png");
     private static final ResourceLocation overlay0 = new ResourceLocation(
-            "thaumicexploration:textures/blocks/boundchestoverlay0.png");
+        "thaumicexploration:textures/blocks/boundchestoverlay0.png");
     private static final ResourceLocation overlay1 = new ResourceLocation(
-            "thaumicexploration:textures/blocks/boundchestoverlay1.png");
+        "thaumicexploration:textures/blocks/boundchestoverlay1.png");
     private static final ResourceLocation overlay2 = new ResourceLocation(
-            "thaumicexploration:textures/blocks/boundchestoverlay2.png");
+        "thaumicexploration:textures/blocks/boundchestoverlay2.png");
     private static final ResourceLocation overlay3 = new ResourceLocation(
-            "thaumicexploration:textures/blocks/boundchestoverlay3.png");
+        "thaumicexploration:textures/blocks/boundchestoverlay3.png");
     private static final ResourceLocation overlay4 = new ResourceLocation(
-            "thaumicexploration:textures/blocks/boundchestoverlay4.png");
+        "thaumicexploration:textures/blocks/boundchestoverlay4.png");
     private static final ResourceLocation[] overlays = { overlayn, overlay0, overlay1, overlay2, overlay3, overlay4 };
     private static final ResourceLocation seal = new ResourceLocation(
-            "thaumicexploration:textures/blocks/boundchestoverlayseal.png");
+        "thaumicexploration:textures/blocks/boundchestoverlayseal.png");
     private static final ResourceLocation christmasSeal = new ResourceLocation(
-            "thaumicexploration:textures/blocks/boundchestoverlaysealchristmas.png");
+        "thaumicexploration:textures/blocks/boundchestoverlaysealchristmas.png");
     /** The Ender Chest Chest's model. */
     private ModelChest theEnderChestModel = new ModelChest();
 
@@ -48,7 +48,7 @@ public class TileEntityBoundChestRender extends TileEntitySpecialRenderer {
      * Helps to render Ender Chest.
      */
     public void renderBoundChest(TileEntityBoundChest par1TileEntityEnderChest, double par2, double par4, double par6,
-            float par8) {
+        float par8) {
         int i = 0;
 
         if (par1TileEntityEnderChest.hasWorldObj()) {
@@ -87,7 +87,7 @@ public class TileEntityBoundChestRender extends TileEntitySpecialRenderer {
         GL11.glRotatef((float) short1, 0.0F, 1.0F, 0.0F);
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
         float f1 = par1TileEntityEnderChest.prevLidAngle
-                + (par1TileEntityEnderChest.lidAngle - par1TileEntityEnderChest.prevLidAngle) * par8;
+            + (par1TileEntityEnderChest.lidAngle - par1TileEntityEnderChest.prevLidAngle) * par8;
         f1 = 1.0F - f1;
         f1 = 1.0F - f1 * f1 * f1;
         this.theEnderChestModel.chestLid.rotateAngleX = -(f1 * (float) Math.PI / 2.0F);
@@ -98,7 +98,7 @@ public class TileEntityBoundChestRender extends TileEntitySpecialRenderer {
     }
 
     public void renderBoundChestFrame(TileEntityBoundChest par1TileEntityEnderChest, double par2, double par4,
-            double par6, float par8) {
+        double par6, float par8) {
 
         int i = 0;
 
@@ -128,10 +128,10 @@ public class TileEntityBoundChestRender extends TileEntitySpecialRenderer {
 
         int j = par1TileEntityEnderChest.clientColor;
         GL11.glColor4f(
-                colormod * EntitySheep.fleeceColorTable[j][0],
-                colormod * EntitySheep.fleeceColorTable[j][1],
-                colormod * EntitySheep.fleeceColorTable[j][2],
-                0.9F);
+            colormod * EntitySheep.fleeceColorTable[j][0],
+            colormod * EntitySheep.fleeceColorTable[j][1],
+            colormod * EntitySheep.fleeceColorTable[j][2],
+            0.9F);
         GL11.glTranslatef((float) par2, (float) par4 + 1.0F, (float) par6 + 1.0F);
         // float size = 0*(16.0F/14.0F);
         float size = 1.0F;
@@ -159,7 +159,7 @@ public class TileEntityBoundChestRender extends TileEntitySpecialRenderer {
         float offset = 0 * (1F / 14F);
         GL11.glTranslatef(-0.5F - offset, -0.5F - (2 * offset), -0.5F + offset);
         float f1 = par1TileEntityEnderChest.prevLidAngle
-                + (par1TileEntityEnderChest.lidAngle - par1TileEntityEnderChest.prevLidAngle) * par8;
+            + (par1TileEntityEnderChest.lidAngle - par1TileEntityEnderChest.prevLidAngle) * par8;
         f1 = 1.0F - f1;
         f1 = 1.0F - f1 * f1 * f1;
         this.theOverlayModel.chestLid.rotateAngleX = -(f1 * (float) Math.PI / 2.0F);
@@ -172,7 +172,7 @@ public class TileEntityBoundChestRender extends TileEntitySpecialRenderer {
     }
 
     public void renderBoundChestSeal(TileEntityBoundChest par1TileEntityEnderChest, double par2, double par4,
-            double par6, float par8) {
+        double par6, float par8) {
 
         int i = 0;
 
@@ -193,10 +193,10 @@ public class TileEntityBoundChestRender extends TileEntitySpecialRenderer {
 
         int j = par1TileEntityEnderChest.clientColor;
         GL11.glColor4f(
-                colormod * EntitySheep.fleeceColorTable[j][0],
-                colormod * EntitySheep.fleeceColorTable[j][1],
-                colormod * EntitySheep.fleeceColorTable[j][2],
-                1.0F);
+            colormod * EntitySheep.fleeceColorTable[j][0],
+            colormod * EntitySheep.fleeceColorTable[j][1],
+            colormod * EntitySheep.fleeceColorTable[j][2],
+            1.0F);
         GL11.glTranslatef((float) par2, (float) par4 + 1.0F, (float) par6 + 1.0F);
         // float size = 0*(16.0F/14.0F);
         float size = 1.0F;
@@ -224,7 +224,7 @@ public class TileEntityBoundChestRender extends TileEntitySpecialRenderer {
         float offset = 0 * (1F / 14F);
         GL11.glTranslatef(-0.5F - offset, -0.5F - (2 * offset), -0.5F + offset);
         float f1 = par1TileEntityEnderChest.prevLidAngle
-                + (par1TileEntityEnderChest.lidAngle - par1TileEntityEnderChest.prevLidAngle) * par8;
+            + (par1TileEntityEnderChest.lidAngle - par1TileEntityEnderChest.prevLidAngle) * par8;
         f1 = 1.0F - f1;
         f1 = 1.0F - f1 * f1 * f1;
         this.theOverlayModel.chestLid.rotateAngleX = -(f1 * (float) Math.PI / 2.0F);

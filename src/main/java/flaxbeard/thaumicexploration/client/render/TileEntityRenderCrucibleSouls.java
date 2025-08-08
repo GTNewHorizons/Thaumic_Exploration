@@ -31,16 +31,16 @@ public class TileEntityRenderCrucibleSouls extends TileEntitySpecialRenderer {
                 recolor = 0.5F + recolor / 2.0F;
             }
             UtilsFX.renderQuadFromIcon(
-                    true,
-                    icon,
-                    1.0F,
-                    1.0F - recolor / 3.0F,
-                    1.0F - recolor,
-                    1.0F - recolor / 2.0F,
-                    ConfigBlocks.blockMetalDevice
-                            .getMixedBrightnessForBlock(cr.getWorldObj(), cr.xCoord, cr.yCoord, cr.zCoord),
-                    771,
-                    1.0F);
+                true,
+                icon,
+                1.0F,
+                1.0F - recolor / 3.0F,
+                1.0F - recolor,
+                1.0F - recolor / 2.0F,
+                ConfigBlocks.blockMetalDevice
+                    .getMixedBrightnessForBlock(cr.getWorldObj(), cr.xCoord, cr.yCoord, cr.zCoord),
+                771,
+                1.0F);
         }
         GL11.glPopMatrix();
     }

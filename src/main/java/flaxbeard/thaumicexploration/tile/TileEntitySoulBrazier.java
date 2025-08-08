@@ -74,12 +74,14 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
 
     public boolean setActive(EntityPlayer player) {
         if (!worldObj.isRemote && !hasWarpQueue) {
-            int playerWarp = Thaumcraft.proxy.getPlayerKnowledge().getWarpPerm(owner.getName());
+            int playerWarp = Thaumcraft.proxy.getPlayerKnowledge()
+                .getWarpPerm(owner.getName());
             if (playerWarp <= 0) {
                 player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.noWarp"));
                 return false;
             }
-            if (!EntityPlayer.func_146094_a(player.getGameProfile()).equals(owner.getId())) {
+            if (!EntityPlayer.func_146094_a(player.getGameProfile())
+                .equals(owner.getId())) {
 
                 player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.invalidplayer"));
                 return false;
@@ -94,7 +96,8 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
             }
             active = true;
             storedWarp += playerWarp;
-            Thaumcraft.proxy.getPlayerKnowledge().setWarpPerm(owner.getName(), 0);
+            Thaumcraft.proxy.getPlayerKnowledge()
+                .setWarpPerm(owner.getName(), 0);
             SoulBrazierUtils.syncPermWarp((EntityPlayerMP) player);
 
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -135,11 +138,13 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
 
                     // Is player online?
                     if (SoulBrazierUtils.isPlayerOnline(owner.getId())) {
-                        int aCurrentWarp = Thaumcraft.proxy.getPlayerKnowledge().getWarpPerm(owner.getName());
+                        int aCurrentWarp = Thaumcraft.proxy.getPlayerKnowledge()
+                            .getWarpPerm(owner.getName());
                         int aTotalWarp = aCurrentWarp + storedWarp;
 
                         if (aCurrentWarp != aTotalWarp) {
-                            Thaumcraft.proxy.getPlayerKnowledge().setWarpPerm(owner.getName(), aTotalWarp);
+                            Thaumcraft.proxy.getPlayerKnowledge()
+                                .setWarpPerm(owner.getName(), aTotalWarp);
                             EntityPlayer player = SoulBrazierUtils.getPlayerFromUUID(owner.getId());
                             SoulBrazierUtils.syncPermWarp((EntityPlayerMP) player);
                         }
@@ -152,7 +157,7 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
                 }
                 storedWarp = 0;
                 ForgeChunkManager
-                        .unforceChunk(this.heldChunk, new ChunkCoordIntPair(this.xCoord >> 4, this.zCoord >> 4));
+                    .unforceChunk(this.heldChunk, new ChunkCoordIntPair(this.xCoord >> 4, this.zCoord >> 4));
                 this.heldChunk = null;
                 worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             }
@@ -161,12 +166,12 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
 
     public void fillJar() {
         TileEntity te = ThaumcraftApiHelper
-                .getConnectableTile(this.worldObj, this.xCoord, this.yCoord, this.zCoord, ForgeDirection.DOWN);
+            .getConnectableTile(this.worldObj, this.xCoord, this.yCoord, this.zCoord, ForgeDirection.DOWN);
         if (te != null) {
             IEssentiaTransport ic = (IEssentiaTransport) te;
             Aspect ta = Aspect.DEATH;
             if (ic.canOutputTo(ForgeDirection.UP)
-                    && ic.getSuctionAmount(ForgeDirection.UP) < getSuctionAmount(ForgeDirection.DOWN)) {
+                && ic.getSuctionAmount(ForgeDirection.UP) < getSuctionAmount(ForgeDirection.DOWN)) {
                 addEssentia(ta, ic.takeEssentia(ta, 1, ForgeDirection.UP), ForgeDirection.DOWN);
             }
         }
@@ -211,13 +216,13 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
                     }
                 }
                 ThaumicExploration.proxy.spawnLightningBolt(
-                        worldObj,
-                        xCoord + 0.5F + offsetX,
-                        yCoord + 1.5F + offsetY,
-                        zCoord + offsetZ + 0.5F,
-                        x,
-                        found ? y : yCoord - 1,
-                        z);
+                    worldObj,
+                    xCoord + 0.5F + offsetX,
+                    yCoord + 1.5F + offsetY,
+                    zCoord + offsetZ + 0.5F,
+                    x,
+                    found ? y : yCoord - 1,
+                    z);
                 Utils.setBiomeAt(this.worldObj, x, z, ThaumcraftWorldGenerator.biomeTaint);
             }
             if ((Config.hardNode) && (this.worldObj.rand.nextBoolean())) {
@@ -308,11 +313,15 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
     @Override
     public void addTicket() {
         ForgeChunkManager.Ticket newTicket = ForgeChunkManager
-                .requestTicket(ThaumicExploration.instance, this.worldObj, ForgeChunkManager.Type.NORMAL);
-        newTicket.getModData().setInteger("xCoord", this.xCoord);
-        newTicket.getModData().setInteger("yCoord", this.yCoord);
-        newTicket.getModData().setInteger("zCoord", this.zCoord);
-        newTicket.getModData().setBoolean("warpChunk", true);
+            .requestTicket(ThaumicExploration.instance, this.worldObj, ForgeChunkManager.Type.NORMAL);
+        newTicket.getModData()
+            .setInteger("xCoord", this.xCoord);
+        newTicket.getModData()
+            .setInteger("yCoord", this.yCoord);
+        newTicket.getModData()
+            .setInteger("zCoord", this.zCoord);
+        newTicket.getModData()
+            .setBoolean("warpChunk", true);
         this.heldChunk = newTicket;
         ForgeChunkManager.forceChunk(this.heldChunk, new ChunkCoordIntPair(this.xCoord >> 4, this.zCoord >> 4));
     }

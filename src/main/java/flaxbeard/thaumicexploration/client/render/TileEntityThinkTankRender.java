@@ -32,11 +32,11 @@ public class TileEntityThinkTankRender extends TileEntitySpecialRenderer {
     private int[] direction = { 1, 1, 1, 1, 1, 1, 1, 1 };
     private int[] numBooks = { 6, 8, 8 };
     private static final ResourceLocation brineTexture = new ResourceLocation(
-            "thaumicexploration:textures/models/largejarbrine.png");
+        "thaumicexploration:textures/models/largejarbrine.png");
     private static final ResourceLocation enchantingTableBookTextures = new ResourceLocation(
-            "textures/entity/enchanting_table_book.png");
+        "textures/entity/enchanting_table_book.png");
     private static final ResourceLocation largeJarTexture = new ResourceLocation(
-            "thaumicexploration:textures/models/largejar.png");
+        "thaumicexploration:textures/models/largejar.png");
 
     public void renderInventoryIcon(double x, double y, double z, float f) {
         GL11.glPushMatrix();
@@ -86,8 +86,8 @@ public class TileEntityThinkTankRender extends TileEntitySpecialRenderer {
             this.bindTexture(enchantingTableBookTextures);
             float rotationDegrees = -2 * ((tile.rotationTicks) % 360);
             float bob = ((i % 2 == 0 || i == 0) ? 1 : -1)
-                    * MathHelper.sin((Minecraft.getMinecraft().thePlayer.ticksExisted) / 28.0F)
-                    * 0.24F;
+                * MathHelper.sin((Minecraft.getMinecraft().thePlayer.ticksExisted) / 28.0F)
+                * 0.24F;
             GL11.glTranslatef(0.0F, -0.5F + bob, 0.0F);
             GL11.glRotatef(rotationDegrees + ((360 / numBooks[space]) * i), 0.0F, 1.0F, 0.0F);
             switch (space) {
@@ -104,13 +104,13 @@ public class TileEntityThinkTankRender extends TileEntitySpecialRenderer {
             GL11.glBlendFunc(770, 771);
 
             Minecraft.getMinecraft().thePlayer.worldObj.spawnParticle(
-                    "enchantmenttable",
-                    (float) x + 0.5F + (2 * Math.sin(rotationDegrees)),
-                    (float) y,
-                    (float) z + 0.5F + (2 * Math.cos(rotationDegrees)),
-                    0.0F,
-                    0.1F,
-                    0.0F);
+                "enchantmenttable",
+                (float) x + 0.5F + (2 * Math.sin(rotationDegrees)),
+                (float) y,
+                (float) z + 0.5F + (2 * Math.cos(rotationDegrees)),
+                0.0F,
+                0.1F,
+                0.0F);
             switch (direction[i]) {
                 case 2:
                     this.enchantmentBook.render((Entity) null, f1, 1.0F - f4, 0.0F, 0.75F, 0.0F, 0.0625F);
