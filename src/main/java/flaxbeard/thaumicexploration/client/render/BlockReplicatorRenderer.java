@@ -33,14 +33,14 @@ public class BlockReplicatorRenderer extends BlockRenderer implements ISimpleBlo
 
         float[] offsets = { 0.001F, 0.0F, -0.999F };
         for (float offset : offsets) {
-            renderTopGlowLayer(renderer, block, x, y, z, topIcon, offset);
+            renderTopSpikes(renderer, block, x, y, z, topIcon, offset);
         }
 
         renderer.clearOverrideBlockTexture();
         return true;
     }
 
-    private void renderTopGlowLayer(RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float offset) {
+    private void renderTopSpikes(RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float offset) {
         renderer.renderFaceXPos(block, x + offset, y + 1.0F, z, icon);
         renderer.renderFaceXNeg(block, x - offset, y + 1.0F, z, icon);
         renderer.renderFaceZPos(block, x, y + 1.0F, z + offset, icon);
