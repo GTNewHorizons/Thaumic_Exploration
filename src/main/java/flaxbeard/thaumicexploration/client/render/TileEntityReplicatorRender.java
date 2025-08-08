@@ -21,7 +21,7 @@ import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
 public class TileEntityReplicatorRender extends TileEntitySpecialRenderer {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(
-            "thaumicexploration:textures/blocks/replicatorRunes.png");
+        "thaumicexploration:textures/blocks/replicatorRunes.png");
 
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float partialTicks) {
@@ -33,12 +33,12 @@ public class TileEntityReplicatorRender extends TileEntitySpecialRenderer {
         renderFloatingItem(stack, x, y, z, partialTicks, replicator.crafting, replicator.ticksLeft);
 
         if (replicator.crafting) {
-            renderAspectBars(replicator, x, y, z);
+            renderAspectRunes(replicator, x, y, z);
         }
     }
 
     private void renderFloatingItem(ItemStack stack, double x, double y, double z, float partialTicks, boolean crafting,
-            int ticksLeft) {
+        int ticksLeft) {
         Minecraft mc = Minecraft.getMinecraft();
         float ticks = mc.renderViewEntity.ticksExisted + partialTicks;
         float hover = MathHelper.sin(ticks % 32767.0F / 16.0F) * 0.05F;
@@ -60,45 +60,45 @@ public class TileEntityReplicatorRender extends TileEntitySpecialRenderer {
         }
 
         RenderManager.instance.renderEntityWithPosYaw(entityItem, 0, 0, 0, 0, 0);
-        if (!Minecraft.isFancyGraphicsEnabled()) {
-            GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
-            RenderManager.instance.renderEntityWithPosYaw(entityItem, 0, 0, 0, 0, 0);
-        }
 
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glPopMatrix();
     }
 
-    private void renderAspectBars(TileEntityReplicator replicator, double x, double y, double z) {
+    private void renderAspectRunes(TileEntityReplicator replicator, double x, double y, double z) {
         Tessellator tessellator = Tessellator.instance;
         GL11.glPushMatrix();
         GL11.glTranslated(x + 0.5, y, z + 0.5);
         bindTexture(TEXTURE);
 
-        ItemStack example = replicator.getStackInSlot(0).copy();
+        ItemStack example = replicator.getStackInSlot(0)
+            .copy();
         example.stackSize = 1;
 
         AspectList tagList = ThaumcraftCraftingManager
-                .getBonusTags(example, ThaumcraftCraftingManager.getObjectTags(example));
+            .getBonusTags(example, ThaumcraftCraftingManager.getObjectTags(example));
 
+        GL11.glDisable(GL11.GL_LIGHTING);
         for (int i = 0; i < 4; i++) {
             Aspect aspect = selectAspectForRender(tagList, i);
             if (aspect == null) continue;
 
-            float offset = (tagList.getAmount(aspect) - replicator.recipeEssentia.getAmount(aspect))
-                    / (float) tagList.getAmount(aspect);
+            float fillLevel = (tagList.getAmount(aspect) - replicator.recipeEssentia.getAmount(aspect))
+                / (float) tagList.getAmount(aspect);
 
             tessellator.startDrawingQuads();
-            tessellator.setBrightness(255);
+            tessellator.setBrightness(0xF000F0);
             tessellator.setColorOpaque_I(aspect.getColor());
 
-            tessellator.addVertexWithUV(0.5, offset, -0.501, 0, 1.0 - offset);
+            tessellator.addVertexWithUV(0.5, fillLevel, -0.501, 0, 1.0 - fillLevel);
             tessellator.addVertexWithUV(0.5, 0, -0.501, 0, 1);
             tessellator.addVertexWithUV(-0.5, 0, -0.501, 1, 1);
-            tessellator.addVertexWithUV(-0.5, offset, -0.501, 1, 1.0 - offset);
+            tessellator.addVertexWithUV(-0.5, fillLevel, -0.501, 1, 1.0 - fillLevel);
             tessellator.draw();
             GL11.glRotatef(90F, 0, 1, 0);
         }
+        GL11.glEnable(GL11.GL_LIGHTING);
+
         GL11.glPopMatrix();
     }
 
