@@ -228,9 +228,10 @@ public class TileEntityBoundChest extends TileEntity implements IInventory {
      */
     public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
         return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false
-            : par1EntityPlayer
-                .getDistanceSq((double) this.xCoord + 0.5D, (double) this.yCoord + 0.5D, (double) this.zCoord + 0.5D)
-                <= 64.0D;
+                : par1EntityPlayer.getDistanceSq(
+                        (double) this.xCoord + 0.5D,
+                        (double) this.yCoord + 0.5D,
+                        (double) this.zCoord + 0.5D) <= 64.0D;
     }
 
     /**
@@ -269,18 +270,18 @@ public class TileEntityBoundChest extends TileEntity implements IInventory {
             this.chestContents = myChest.getChestContents();
         }
         if (!this.worldObj.isRemote && this.numUsingPlayers != 0
-            && (this.ticksSinceSync + this.xCoord + this.yCoord + this.zCoord) % 200 == 0) {
+                && (this.ticksSinceSync + this.xCoord + this.yCoord + this.zCoord) % 200 == 0) {
             this.numUsingPlayers = 0;
             f = 5.0F;
             List list = this.worldObj.getEntitiesWithinAABB(
-                EntityPlayer.class,
-                AxisAlignedBB.getBoundingBox(
-                    (double) ((float) this.xCoord - f),
-                    (double) ((float) this.yCoord - f),
-                    (double) ((float) this.zCoord - f),
-                    (double) ((float) (this.xCoord + 1) + f),
-                    (double) ((float) (this.yCoord + 1) + f),
-                    (double) ((float) (this.zCoord + 1) + f)));
+                    EntityPlayer.class,
+                    AxisAlignedBB.getBoundingBox(
+                            (double) ((float) this.xCoord - f),
+                            (double) ((float) this.yCoord - f),
+                            (double) ((float) this.zCoord - f),
+                            (double) ((float) (this.xCoord + 1) + f),
+                            (double) ((float) (this.yCoord + 1) + f),
+                            (double) ((float) (this.zCoord + 1) + f)));
             Iterator iterator = list.iterator();
 
             while (iterator.hasNext()) {
@@ -290,7 +291,7 @@ public class TileEntityBoundChest extends TileEntity implements IInventory {
                     IInventory iinventory = ((ContainerChest) entityplayer.openContainer).getLowerChestInventory();
 
                     if (iinventory == this || iinventory instanceof InventoryLargeChest
-                        && ((InventoryLargeChest) iinventory).isPartOfLargeChest(this)) {
+                            && ((InventoryLargeChest) iinventory).isPartOfLargeChest(this)) {
                         ++this.numUsingPlayers;
                     }
                 }
@@ -306,12 +307,12 @@ public class TileEntityBoundChest extends TileEntity implements IInventory {
             d0 = (double) this.zCoord + 0.5D;
 
             this.worldObj.playSoundEffect(
-                d1,
-                (double) this.yCoord + 0.5D,
-                d0,
-                "random.chestopen",
-                0.5F,
-                this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
+                    d1,
+                    (double) this.yCoord + 0.5D,
+                    d0,
+                    "random.chestopen",
+                    0.5F,
+                    this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
         }
 
         if (this.numUsingPlayers == 0 && this.lidAngle > 0.0F || this.numUsingPlayers > 0 && this.lidAngle < 1.0F) {
@@ -334,12 +335,12 @@ public class TileEntityBoundChest extends TileEntity implements IInventory {
                 double d2 = (double) this.zCoord + 0.5D;
 
                 this.worldObj.playSoundEffect(
-                    d0,
-                    (double) this.yCoord + 0.5D,
-                    d2,
-                    "random.chestclosed",
-                    0.5F,
-                    this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
+                        d0,
+                        (double) this.yCoord + 0.5D,
+                        d2,
+                        "random.chestclosed",
+                        0.5F,
+                        this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
             }
 
             if (this.lidAngle < 0.0F) {
@@ -472,7 +473,7 @@ public class TileEntityBoundChest extends TileEntity implements IInventory {
 
         ++this.numUsingPlayers;
         this.worldObj
-            .addBlockEvent(this.xCoord, this.yCoord, this.zCoord, this.getBlockType(), 1, this.numUsingPlayers);
+                .addBlockEvent(this.xCoord, this.yCoord, this.zCoord, this.getBlockType(), 1, this.numUsingPlayers);
         this.worldObj.notifyBlocksOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.getBlockType());
         this.worldObj.notifyBlocksOfNeighborChange(this.xCoord, this.yCoord - 1, this.zCoord, this.getBlockType());
     }
@@ -483,7 +484,7 @@ public class TileEntityBoundChest extends TileEntity implements IInventory {
 
             --this.numUsingPlayers;
             this.worldObj
-                .addBlockEvent(this.xCoord, this.yCoord, this.zCoord, this.getBlockType(), 1, this.numUsingPlayers);
+                    .addBlockEvent(this.xCoord, this.yCoord, this.zCoord, this.getBlockType(), 1, this.numUsingPlayers);
             this.worldObj.notifyBlocksOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.getBlockType());
             this.worldObj.notifyBlocksOfNeighborChange(this.xCoord, this.yCoord - 1, this.zCoord, this.getBlockType());
         }

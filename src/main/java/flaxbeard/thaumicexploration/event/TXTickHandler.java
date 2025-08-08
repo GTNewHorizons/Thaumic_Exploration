@@ -37,8 +37,8 @@ public class TXTickHandler {
 
             EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
             ItemStack item = player.getCurrentArmor(3);
-            if ((player.inventory.armorItemInSlot(0) != null) && (player.inventory.armorItemInSlot(0)
-                .getItem() == ThaumicExploration.bootsMeteor)) {
+            if ((player.inventory.armorItemInSlot(0) != null)
+                    && (player.inventory.armorItemInSlot(0).getItem() == ThaumicExploration.bootsMeteor)) {
                 if (Minecraft.getMinecraft().gameSettings.keyBindSneak.isPressed()) {
                     ByteBuf buf = Unpooled.buffer();
                     ByteBufOutputStream out = new ByteBufOutputStream(buf);
@@ -107,17 +107,17 @@ public class TXTickHandler {
                                 float offset = 0.0F;
                                 if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) offset = 0.3F;
                                 FXLightningBolt bolt = new FXLightningBolt(
-                                    player.worldObj,
-                                    player.posX,
-                                    player.boundingBox.minY + player.height / 2.0F + 0.75D - offset,
-                                    player.posZ,
-                                    this.pointedEntityLiving.posX,
-                                    this.pointedEntityLiving.boundingBox.maxY - 0.5F,
-                                    this.pointedEntityLiving.posZ,
-                                    player.worldObj.rand.nextLong(),
-                                    6,
-                                    0.5F,
-                                    5);
+                                        player.worldObj,
+                                        player.posX,
+                                        player.boundingBox.minY + player.height / 2.0F + 0.75D - offset,
+                                        player.posZ,
+                                        this.pointedEntityLiving.posX,
+                                        this.pointedEntityLiving.boundingBox.maxY - 0.5F,
+                                        this.pointedEntityLiving.posZ,
+                                        player.worldObj.rand.nextLong(),
+                                        6,
+                                        0.5F,
+                                        5);
                                 bolt.defaultFractal();
                                 bolt.setType(5);
                                 bolt.setWidth(0.125F);
@@ -143,17 +143,17 @@ public class TXTickHandler {
                                 float offset = 0.0F;
                                 if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) offset = 0.3F;
                                 FXLightningBolt bolt = new FXLightningBolt(
-                                    player.worldObj,
-                                    player.posX,
-                                    player.boundingBox.minY + player.height / 2.0F + 0.75D - offset,
-                                    player.posZ,
-                                    this.pointedEntityLiving.posX,
-                                    this.pointedEntityLiving.boundingBox.maxY - 0.5F,
-                                    this.pointedEntityLiving.posZ,
-                                    player.worldObj.rand.nextLong(),
-                                    6,
-                                    0.5F,
-                                    5);
+                                        player.worldObj,
+                                        player.posX,
+                                        player.boundingBox.minY + player.height / 2.0F + 0.75D - offset,
+                                        player.posZ,
+                                        this.pointedEntityLiving.posX,
+                                        this.pointedEntityLiving.boundingBox.maxY - 0.5F,
+                                        this.pointedEntityLiving.posZ,
+                                        player.worldObj.rand.nextLong(),
+                                        6,
+                                        0.5F,
+                                        5);
                                 bolt.defaultFractal();
                                 bolt.setType(5);
                                 bolt.setWidth(0.0625F);
@@ -186,10 +186,10 @@ public class TXTickHandler {
                 this.pointedEntity = null;
                 float f1 = 1.0F;
                 List list = Minecraft.getMinecraft().theWorld.getEntitiesWithinAABBExcludingEntity(
-                    Minecraft.getMinecraft().renderViewEntity,
-                    Minecraft.getMinecraft().renderViewEntity.boundingBox
-                        .addCoord(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0)
-                        .expand((double) f1, (double) f1, (double) f1));
+                        Minecraft.getMinecraft().renderViewEntity,
+                        Minecraft.getMinecraft().renderViewEntity.boundingBox
+                                .addCoord(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0)
+                                .expand((double) f1, (double) f1, (double) f1));
                 double d2 = d1;
 
                 for (int i = 0; i < list.size(); ++i) {
@@ -210,7 +210,7 @@ public class TXTickHandler {
 
                             if (d3 < d2 || d2 == 0.0D) {
                                 if (entity == Minecraft.getMinecraft().renderViewEntity.ridingEntity
-                                    && !entity.canRiderInteract()) {
+                                        && !entity.canRiderInteract()) {
                                     if (d2 == 0.0D) {
                                         this.pointedEntity = entity;
                                     }

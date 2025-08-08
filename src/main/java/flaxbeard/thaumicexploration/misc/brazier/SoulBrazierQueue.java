@@ -20,35 +20,31 @@ public class SoulBrazierQueue {
         UUID aPlayerUUID = SoulBrazierUtils.getPlayerUUID(aJoiningPlayer);
         int queueSize = SoulBrazierUtils.doesPlayerHaveWarpQueued(aPlayerUUID);
         if (queueSize > 0) {
-            String aPlayerName = aJoiningPlayer.getGameProfile()
-                .getName();
+            String aPlayerName = aJoiningPlayer.getGameProfile().getName();
             for (int i = 0; i < queueSize; i++) {
                 SoulBrazierQueueData aQueueData = SoulBrazierUtils.getPlayerDataFromWarpQueue(aPlayerUUID);
                 if (aQueueData == null) continue;
-                int aCurrentWarp = Thaumcraft.proxy.getPlayerKnowledge()
-                    .getWarpPerm(aPlayerName);
+                int aCurrentWarp = Thaumcraft.proxy.getPlayerKnowledge().getWarpPerm(aPlayerName);
                 int aTotalWarp = aCurrentWarp + aQueueData.aQueuedWarpToAdd;
-                Thaumcraft.proxy.getPlayerKnowledge()
-                    .setWarpPerm(aPlayerName, aTotalWarp);
+                Thaumcraft.proxy.getPlayerKnowledge().setWarpPerm(aPlayerName, aTotalWarp);
                 if (SoulBrazierUtils.removePlayerDataFromWarpQueue(
-                    aPlayerUUID,
-                    aQueueData.aTileX,
-                    aQueueData.aTileY,
-                    aQueueData.aTileZ,
-                    aQueueData.aDimension)) {
-                    updateSoulBrazier(
-                        getWorldFromID(aQueueData.aDimension),
+                        aPlayerUUID,
                         aQueueData.aTileX,
                         aQueueData.aTileY,
-                        aQueueData.aTileZ);
+                        aQueueData.aTileZ,
+                        aQueueData.aDimension)) {
+                    updateSoulBrazier(
+                            getWorldFromID(aQueueData.aDimension),
+                            aQueueData.aTileX,
+                            aQueueData.aTileY,
+                            aQueueData.aTileZ);
                 }
             }
         }
     }
 
     private static World getWorldFromID(int aID) {
-        return MinecraftServer.getServer()
-            .worldServerForDimension(aID);
+        return MinecraftServer.getServer().worldServerForDimension(aID);
     }
 
     private static boolean updateSoulBrazier(World aWorld, int aX, int aY, int aZ) {

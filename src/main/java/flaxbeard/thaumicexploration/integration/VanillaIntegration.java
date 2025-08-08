@@ -7,8 +7,7 @@ import net.minecraft.world.World;
 public class VanillaIntegration {
 
     public static boolean isVanillaCauldron(Block block) {
-        return block.getClass()
-            .equals(BlockCauldron.class);
+        return block.getClass().equals(BlockCauldron.class);
     }
 
     public static boolean needsWater(World world, int x, int y, int z) {

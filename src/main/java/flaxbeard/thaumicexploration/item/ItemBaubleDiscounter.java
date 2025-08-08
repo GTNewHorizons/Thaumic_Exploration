@@ -46,20 +46,20 @@ public class ItemBaubleDiscounter extends ItemBauble implements IVisDiscountGear
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
         if (getVisDiscount(stack, player, null) > 0) {
             list.add(
-                EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount")
-                    + ": "
-                    + getVisDiscount(stack, player, null)
-                    + "%");
+                    EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount")
+                            + ": "
+                            + getVisDiscount(stack, player, null)
+                            + "%");
         } else {
             for (Aspect pAspect : Aspect.getPrimalAspects()) {
                 if (getVisDiscount(stack, player, pAspect) > 0) {
                     list.add(
-                        EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount")
-                            + " ("
-                            + pAspect.getName()
-                            + "): "
-                            + getVisDiscount(stack, player, pAspect)
-                            + "%");
+                            EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount")
+                                    + " ("
+                                    + pAspect.getName()
+                                    + "): "
+                                    + getVisDiscount(stack, player, pAspect)
+                                    + "%");
                 }
             }
         }

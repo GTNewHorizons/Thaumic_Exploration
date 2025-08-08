@@ -20,7 +20,7 @@ public class FakePlayerPotion extends EntityPlayer {
     protected void onNewPotionEffect(PotionEffect par1PotionEffect) {
         if (!this.worldObj.isRemote) {
             Potion.potionTypes[par1PotionEffect.getPotionID()]
-                .applyAttributesModifiersToEntity(this, this.getAttributeMap(), par1PotionEffect.getAmplifier());
+                    .applyAttributesModifiersToEntity(this, this.getAttributeMap(), par1PotionEffect.getAmplifier());
         }
     }
 

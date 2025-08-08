@@ -33,7 +33,7 @@ public class BlockFloatyCandleRenderer extends BlockRenderer implements ISimpleB
     }
 
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
-        RenderBlocks renderer) {
+            RenderBlocks renderer) {
         return false;
     }
 

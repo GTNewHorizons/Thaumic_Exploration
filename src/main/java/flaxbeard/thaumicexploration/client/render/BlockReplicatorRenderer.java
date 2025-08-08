@@ -23,7 +23,7 @@ public class BlockReplicatorRenderer extends BlockRenderer implements ISimpleBlo
 
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
-        RenderBlocks renderer) {
+            RenderBlocks renderer) {
         block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
         renderer.setRenderBoundsFromBlock(block);
         setBrightness(world, x, y, z, block);

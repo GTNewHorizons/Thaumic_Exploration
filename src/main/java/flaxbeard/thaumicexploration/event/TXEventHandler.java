@@ -98,10 +98,9 @@ public class TXEventHandler {
         if ((Minecraft.getMinecraft().renderViewEntity instanceof EntityPlayer)) {
             EntityPlayer player = (EntityPlayer) Minecraft.getMinecraft().renderViewEntity;
             long time = System.currentTimeMillis();
-            if ((player.inventory.getCurrentItem() != null) && (((player.inventory.getCurrentItem()
-                .getItem() instanceof ItemGolemPlacer))
-                || ((player.inventory.getCurrentItem()
-                    .getItem() instanceof ItemGolemBell)))) {
+            if ((player.inventory.getCurrentItem() != null)
+                    && (((player.inventory.getCurrentItem().getItem() instanceof ItemGolemPlacer))
+                            || ((player.inventory.getCurrentItem().getItem() instanceof ItemGolemBell)))) {
                 // this is entirely unfinished stuff. since it might cause rare crashes under certain circumstances
                 // this is disabled for now
                 // renderMarkedBlocks(event, partialTicks, player, time);
@@ -112,19 +111,18 @@ public class TXEventHandler {
     @SideOnly(Side.CLIENT)
     public void renderMarkedBlocks(RenderWorldLastEvent event, float partialTicks, EntityPlayer player, long time) {
         Minecraft mc = Minecraft.getMinecraft();
-        if ((player.inventory.getCurrentItem()
-            .hasTagCompound()) && (!player.inventory.getCurrentItem().stackTagCompound.hasKey("golemid"))) {
+        if ((player.inventory.getCurrentItem().hasTagCompound())
+                && (!player.inventory.getCurrentItem().stackTagCompound.hasKey("golemid"))) {
             Entity golem = null;
             ChunkCoordinates cc = null;
             int face = -1;
-            if ((player.inventory.getCurrentItem()
-                .getItem() instanceof ItemGolemBell)) {
+            if ((player.inventory.getCurrentItem().getItem() instanceof ItemGolemBell)) {
 
                 ItemStack item = player.inventory.getCurrentItem();
                 cc = new ChunkCoordinates(
-                    item.stackTagCompound.getInteger("brainx"),
-                    item.stackTagCompound.getInteger("brainy"),
-                    item.stackTagCompound.getInteger("brainz"));
+                        item.stackTagCompound.getInteger("brainx"),
+                        item.stackTagCompound.getInteger("brainy"),
+                        item.stackTagCompound.getInteger("brainz"));
 
                 // cc = ItemGolemBell.getGolemHomeCoords(player.inventory.getCurrentItem());
                 // face = ItemGolemBell.getGolemHomeFace(player.inventory.getCurrentItem());
@@ -137,13 +135,13 @@ public class TXEventHandler {
                 // return;
                 // }
                 if (player.worldObj.getTileEntity(
-                    item.stackTagCompound.getInteger("brainx"),
-                    item.stackTagCompound.getInteger("brainy"),
-                    item.stackTagCompound.getInteger("brainz")) == null
-                    || !(player.worldObj.getTileEntity(
                         item.stackTagCompound.getInteger("brainx"),
                         item.stackTagCompound.getInteger("brainy"),
-                        item.stackTagCompound.getInteger("brainz")) instanceof TileEntityAutoSorter)) {
+                        item.stackTagCompound.getInteger("brainz")) == null
+                        || !(player.worldObj.getTileEntity(
+                                item.stackTagCompound.getInteger("brainx"),
+                                item.stackTagCompound.getInteger("brainy"),
+                                item.stackTagCompound.getInteger("brainz")) instanceof TileEntityAutoSorter)) {
                     return;
                 }
             }
@@ -155,19 +153,19 @@ public class TXEventHandler {
                     GL11.glPushMatrix();
 
                     drawGolemHomeOverlay(
-                        cc.posX + ForgeDirection.getOrientation(i).offsetX,
-                        cc.posY + ForgeDirection.getOrientation(i).offsetY,
-                        cc.posZ + ForgeDirection.getOrientation(i).offsetZ,
-                        i,
-                        partialTicks);
+                            cc.posX + ForgeDirection.getOrientation(i).offsetX,
+                            cc.posY + ForgeDirection.getOrientation(i).offsetY,
+                            cc.posZ + ForgeDirection.getOrientation(i).offsetZ,
+                            i,
+                            partialTicks);
                     GL11.glPopMatrix();
                 }
             }
             ItemStack item = player.inventory.getCurrentItem();
             TileEntityAutoSorter sorter = (TileEntityAutoSorter) player.worldObj.getTileEntity(
-                item.stackTagCompound.getInteger("brainx"),
-                item.stackTagCompound.getInteger("brainy"),
-                item.stackTagCompound.getInteger("brainz"));
+                    item.stackTagCompound.getInteger("brainx"),
+                    item.stackTagCompound.getInteger("brainy"),
+                    item.stackTagCompound.getInteger("brainz"));
             if (sorter != null) {
                 for (MutablePair chest : sorter.chests) {
                     ChunkCoordinates coord = (ChunkCoordinates) chest.left;
@@ -192,12 +190,12 @@ public class TXEventHandler {
                             GL11.glPushMatrix();
                             // for (int a = 0; a < 6; a++) {
                             drawAirBlockoverlay(
-                                ox + ForgeDirection.getOrientation(s).offsetX,
-                                oy + ForgeDirection.getOrientation(s).offsetY,
-                                oz + ForgeDirection.getOrientation(s).offsetZ,
-                                s,
-                                partialTicks,
-                                0);
+                                    ox + ForgeDirection.getOrientation(s).offsetX,
+                                    oy + ForgeDirection.getOrientation(s).offsetY,
+                                    oz + ForgeDirection.getOrientation(s).offsetZ,
+                                    s,
+                                    partialTicks,
+                                    0);
                             // }
                             GL11.glPopMatrix();
                         }
@@ -247,9 +245,9 @@ public class TXEventHandler {
         ForgeDirection dir = ForgeDirection.getOrientation(side);
 
         GL11.glTranslated(
-            -iPX + x + 0.5D + dir.offsetX * 0.01F,
-            -iPY + y + 0.5D + dir.offsetY * 0.01F,
-            -iPZ + z + 0.5D + dir.offsetZ * 0.01F);
+                -iPX + x + 0.5D + dir.offsetX * 0.01F,
+                -iPY + y + 0.5D + dir.offsetY * 0.01F,
+                -iPZ + z + 0.5D + dir.offsetZ * 0.01F);
         GL11.glRotatef(90.0F, -dir.offsetY, dir.offsetX, -dir.offsetZ);
 
         GL11.glPushMatrix();
@@ -271,7 +269,7 @@ public class TXEventHandler {
     }
 
     public void drawMarkerLine(double x, double y, double z, int side, float partialTicks, int color,
-        TileEntityAutoSorter sorter) {
+            TileEntityAutoSorter sorter) {
         EntityPlayer player = (EntityPlayer) Minecraft.getMinecraft().renderViewEntity;
         double iPX = player.prevPosX + (player.posX - player.prevPosX) * partialTicks;
         double iPY = player.prevPosY + (player.posY - player.prevPosY) * partialTicks;
@@ -350,39 +348,42 @@ public class TXEventHandler {
                 b = MathHelper.sin(time % 32767.0F / 16.0F + side + i) * 0.2F + 0.8F;
             }
             double dx = dc1x + MathHelper.sin(
-                (float) ((side * 20 + z % 16.0D + dist * (1.0F - f2) * Config.golemLinkQuality - time % 32767.0F / 5.0F)
-                    / 4.0D))
-                * 0.5F
-                * f3;
+                    (float) ((side * 20 + z % 16.0D
+                            + dist * (1.0F - f2) * Config.golemLinkQuality
+                            - time % 32767.0F / 5.0F) / 4.0D))
+                    * 0.5F
+                    * f3;
             double dy = dc1y + MathHelper.sin(
-                (float) ((side * 20 + x % 16.0D + dist * (1.0F - f2) * Config.golemLinkQuality - time % 32767.0F / 5.0F)
-                    / 3.0D))
-                * 0.5F
-                * f3;
+                    (float) ((side * 20 + x % 16.0D
+                            + dist * (1.0F - f2) * Config.golemLinkQuality
+                            - time % 32767.0F / 5.0F) / 3.0D))
+                    * 0.5F
+                    * f3;
             double dz = dc1z + MathHelper.sin(
-                (float) ((side * 20 + y % 16.0D + dist * (1.0F - f2) * Config.golemLinkQuality - time % 32767.0F / 5.0F)
-                    / 2.0D))
-                * 0.5F
-                * f3;
+                    (float) ((side * 20 + y % 16.0D
+                            + dist * (1.0F - f2) * Config.golemLinkQuality
+                            - time % 32767.0F / 5.0F) / 2.0D))
+                    * 0.5F
+                    * f3;
             if (i > length - Config.golemLinkQuality / 2) {
                 dx2 = dc22x + MathHelper.sin(
-                    (float) ((side * 20 + z % 16.0D
-                        + dist * (1.0F - f2) * Config.golemLinkQuality
-                        - time % 32767.0F / 5.0F) / 4.0D))
-                    * 0.5F
-                    * f3;
+                        (float) ((side * 20 + z % 16.0D
+                                + dist * (1.0F - f2) * Config.golemLinkQuality
+                                - time % 32767.0F / 5.0F) / 4.0D))
+                        * 0.5F
+                        * f3;
                 dy2 = dc22y + MathHelper.sin(
-                    (float) ((side * 20 + x % 16.0D
-                        + dist * (1.0F - f2) * Config.golemLinkQuality
-                        - time % 32767.0F / 5.0F) / 3.0D))
-                    * 0.5F
-                    * f3;
+                        (float) ((side * 20 + x % 16.0D
+                                + dist * (1.0F - f2) * Config.golemLinkQuality
+                                - time % 32767.0F / 5.0F) / 3.0D))
+                        * 0.5F
+                        * f3;
                 dz2 = dc22z + MathHelper.sin(
-                    (float) ((side * 20 + y % 16.0D
-                        + dist * (1.0F - f2) * Config.golemLinkQuality
-                        - time % 32767.0F / 5.0F) / 2.0D))
-                    * 0.5F
-                    * f3;
+                        (float) ((side * 20 + y % 16.0D
+                                + dist * (1.0F - f2) * Config.golemLinkQuality
+                                - time % 32767.0F / 5.0F) / 2.0D))
+                        * 0.5F
+                        * f3;
 
                 f3 = (length - i) / (Config.golemLinkQuality / 2.0F);
                 f4 = 1.0F - f3;
@@ -433,9 +434,9 @@ public class TXEventHandler {
         ForgeDirection dir = ForgeDirection.getOrientation(side);
 
         GL11.glTranslated(
-            -iPX + x + 0.5D - dir.offsetX * 0.01F,
-            -iPY + y + 0.5D - dir.offsetY * 0.01F,
-            -iPZ + z + 0.5D - dir.offsetZ * 0.01F);
+                -iPX + x + 0.5D - dir.offsetX * 0.01F,
+                -iPY + y + 0.5D - dir.offsetY * 0.01F,
+                -iPZ + z + 0.5D - dir.offsetZ * 0.01F);
         GL11.glRotatef(90.0F, -dir.offsetY, dir.offsetX, -dir.offsetZ);
 
         GL11.glPushMatrix();
@@ -479,9 +480,9 @@ public class TXEventHandler {
         ForgeDirection dir = ForgeDirection.getOrientation(side);
 
         GL11.glTranslated(
-            -iPX + x + 0.5D + dir.offsetX * 0.01F,
-            -iPY + y + 0.5D + dir.offsetY * 0.01F,
-            -iPZ + z + 0.5D + dir.offsetZ * 0.01F);
+                -iPX + x + 0.5D + dir.offsetX * 0.01F,
+                -iPY + y + 0.5D + dir.offsetY * 0.01F,
+                -iPZ + z + 0.5D + dir.offsetZ * 0.01F);
         GL11.glRotatef(90.0F, -dir.offsetY, dir.offsetX, -dir.offsetZ);
 
         GL11.glPushMatrix();
@@ -538,8 +539,9 @@ public class TXEventHandler {
                 mob.targetTasks.removeTask(entry.action);
             }
             // System.out.println("brainwashed1");
-            mob.targetTasks
-                .addTask(1, new EntityAINearestAttackablePureTarget((EntityCreature) mob, EntityPlayer.class, 0, true));
+            mob.targetTasks.addTask(
+                    1,
+                    new EntityAINearestAttackablePureTarget((EntityCreature) mob, EntityPlayer.class, 0, true));
         }
     }
 
@@ -566,15 +568,14 @@ public class TXEventHandler {
         if (!isEnderIO && ConfigTX.enchantmentNVEnable && event.entityLiving.getEquipmentInSlot(4) != null) {
             ItemStack heldItem = event.entityLiving.getEquipmentInSlot(4);
             int nightVision = EnchantmentHelper
-                .getEnchantmentLevel(ThaumicExploration.enchantmentNightVision.effectId, heldItem);
+                    .getEnchantmentLevel(ThaumicExploration.enchantmentNightVision.effectId, heldItem);
             if (nightVision > 0 && (!event.entityLiving.isPotionActive(Potion.nightVision.id)
-                || event.entityLiving.getActivePotionEffect(Potion.nightVision)
-                    .getDuration() < 210)) {
+                    || event.entityLiving.getActivePotionEffect(Potion.nightVision).getDuration() < 210)) {
                 event.entityLiving.addPotionEffect(new PotionEffect(Potion.nightVision.id, 210, 1, true));
             }
         }
         if (event.entityLiving instanceof EntityCreeper
-            && event.entityLiving.isPotionActive(ThaumicExploration.potionBinding)) {
+                && event.entityLiving.isPotionActive(ThaumicExploration.potionBinding)) {
             EntityCreeper creeper = (EntityCreeper) event.entityLiving;
             int size = creeper.tasks.taskEntries.size();
             for (int i = 0; i < size; i++) {
@@ -613,15 +614,15 @@ public class TXEventHandler {
     public void handleEnchantmentAttack(LivingAttackEvent event) {
 
         if ((event.entityLiving instanceof EntityEnderman || event.entityLiving instanceof EntityCreeper
-            || event.entityLiving instanceof EntityPlayer)
-            && event.source.getSourceOfDamage() instanceof EntityLivingBase
-            && ConfigTX.enchantmentBindingEnable) {
+                || event.entityLiving instanceof EntityPlayer)
+                && event.source.getSourceOfDamage() instanceof EntityLivingBase
+                && ConfigTX.enchantmentBindingEnable) {
             EntityLivingBase attacker = (EntityLivingBase) event.source.getSourceOfDamage();
             ItemStack heldItem = attacker.getHeldItem();
             if (heldItem == null) return;
 
             int binding = EnchantmentHelper
-                .getEnchantmentLevel(ThaumicExploration.enchantmentBinding.effectId, heldItem);
+                    .getEnchantmentLevel(ThaumicExploration.enchantmentBinding.effectId, heldItem);
             if (binding > 1) {
                 event.entityLiving.addPotionEffect(new PotionEffect(ThaumicExploration.potionBinding.id, 50, 1));
             }
@@ -632,7 +633,7 @@ public class TXEventHandler {
             if (heldItem == null) return;
 
             int binding = EnchantmentHelper
-                .getEnchantmentLevel(ThaumicExploration.enchantmentBinding.effectId, heldItem);
+                    .getEnchantmentLevel(ThaumicExploration.enchantmentBinding.effectId, heldItem);
             if (binding > 0) {
                 event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 50, 1));
             }
@@ -645,7 +646,7 @@ public class TXEventHandler {
             int disarm = EnchantmentHelper.getEnchantmentLevel(ThaumicExploration.enchantmentDisarm.effectId, heldItem);
             if (disarm > 0 && !(event.entityLiving instanceof EntityPlayer)) {
                 if (event.entityLiving.getHeldItem() != null && !event.entityLiving.worldObj.isRemote
-                    && (disarm >= 5 || event.entityLiving.worldObj.rand.nextInt(10 - (2 * disarm)) == 0)) {
+                        && (disarm >= 5 || event.entityLiving.worldObj.rand.nextInt(10 - (2 * disarm)) == 0)) {
                     ItemStack itemstack = event.entityLiving.getHeldItem();
                     event.entityLiving.setCurrentItemOrArmor(0, null);
                     World world = event.entityLiving.worldObj;
@@ -661,21 +662,18 @@ public class TXEventHandler {
                     k1 = itemstack.stackSize;
 
                     entityitem = new EntityItem(
-                        world,
-                        (double) ((float) x + f),
-                        (double) ((float) y + f1),
-                        (double) ((float) z + f2),
-                        new ItemStack(itemstack.getItem(), k1, itemstack.getItemDamage()));
+                            world,
+                            (double) ((float) x + f),
+                            (double) ((float) y + f1),
+                            (double) ((float) z + f2),
+                            new ItemStack(itemstack.getItem(), k1, itemstack.getItemDamage()));
                     float f3 = 0.05F;
                     entityitem.motionX = (double) ((float) world.rand.nextGaussian() * f3);
                     entityitem.motionY = (double) ((float) world.rand.nextGaussian() * f3 + 0.2F);
                     entityitem.motionZ = (double) ((float) world.rand.nextGaussian() * f3);
 
                     if (itemstack.hasTagCompound()) {
-                        entityitem.getEntityItem()
-                            .setTagCompound(
-                                (NBTTagCompound) itemstack.getTagCompound()
-                                    .copy());
+                        entityitem.getEntityItem().setTagCompound((NBTTagCompound) itemstack.getTagCompound().copy());
                     }
                     world.spawnEntityInWorld(entityitem);
                 }
@@ -701,14 +699,17 @@ public class TXEventHandler {
             for (int z = -2; z < 3; z++) {
                 if (player.worldObj.isAirBlock((int) player.posX + x, (int) player.posY, (int) player.posZ + z)) {
                     if (!player.worldObj
-                        .isAirBlock((int) player.posX + x, (int) player.posY - 1, (int) player.posZ + z)) {
+                            .isAirBlock((int) player.posX + x, (int) player.posY - 1, (int) player.posZ + z)) {
                         if (player.worldObj.isSideSolid(
-                            (int) player.posX + x,
-                            (int) player.posY - 1,
-                            (int) player.posZ + z,
-                            ForgeDirection.UP)) {
+                                (int) player.posX + x,
+                                (int) player.posY - 1,
+                                (int) player.posZ + z,
+                                ForgeDirection.UP)) {
                             safeSpots.add(
-                                new ChunkCoordinates((int) player.posX + x, (int) player.posY, (int) player.posZ + z));
+                                    new ChunkCoordinates(
+                                            (int) player.posX + x,
+                                            (int) player.posY,
+                                            (int) player.posZ + z));
                         }
                     }
                 }
@@ -720,8 +721,7 @@ public class TXEventHandler {
     private boolean hasBauble(Item item, IInventory inventory) {
         for (int i = 0; i < inventory.getSizeInventory(); i++) {
             if (inventory.getStackInSlot(i) != null) {
-                if (inventory.getStackInSlot(i)
-                    .getItem() == item) {
+                if (inventory.getStackInSlot(i).getItem() == item) {
                     return true;
                 }
             }
@@ -739,9 +739,9 @@ public class TXEventHandler {
                     int rand = player.worldObj.rand.nextInt(safeSpots.size());
                     EntityTaintacleMinion minion = new EntityTaintacleMinion(player.worldObj);
                     minion.setPosition(
-                        safeSpots.get(rand).posX + 0.5F,
-                        safeSpots.get(rand).posY,
-                        safeSpots.get(rand).posZ + 0.5F);
+                            safeSpots.get(rand).posX + 0.5F,
+                            safeSpots.get(rand).posY,
+                            safeSpots.get(rand).posZ + 0.5F);
                     player.worldObj.spawnEntityInWorld(minion);
                     minion.playSpawnSound();
                 }
@@ -755,8 +755,9 @@ public class TXEventHandler {
                         for (int i = 0; i < 10; i++) {
                             // if (player.inventory.getStackInSlot(i) != null)
 
-                            if (player.inventory.getStackInSlot(i) != null && player.inventory.getStackInSlot(i)
-                                .getItem() == ThaumicExploration.charmNoTaint) {
+                            if (player.inventory.getStackInSlot(i) != null
+                                    && player.inventory.getStackInSlot(i).getItem()
+                                            == ThaumicExploration.charmNoTaint) {
                                 event.setCanceled(true);
                                 break;
                             }
@@ -765,12 +766,12 @@ public class TXEventHandler {
                 }
             }
             if (event.source == DamageSourceThaumcraft.taint || event.source == DamageSourceThaumcraft.tentacle
-                || event.source == DamageSourceThaumcraft.swarm) {
+                    || event.source == DamageSourceThaumcraft.swarm) {
                 if (event.entityLiving instanceof EntityPlayer) {
                     EntityPlayer player = (EntityPlayer) event.entityLiving;
                     for (int i = 0; i < 10; i++) {
-                        if (player.inventory.getStackInSlot(i) != null && player.inventory.getStackInSlot(i)
-                            .getItem() == ThaumicExploration.charmNoTaint) {
+                        if (player.inventory.getStackInSlot(i) != null
+                                && player.inventory.getStackInSlot(i).getItem() == ThaumicExploration.charmNoTaint) {
                             event.setCanceled(true);
                             break;
                         }
@@ -816,13 +817,12 @@ public class TXEventHandler {
             if (event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) == Blocks.chest) {
 
                 if (event.entityPlayer.inventory.getCurrentItem() != null) {
-                    if (event.entityPlayer.inventory.getCurrentItem()
-                        .getItem() == ThaumicExploration.chestSeal) {
+                    if (event.entityPlayer.inventory.getCurrentItem().getItem() == ThaumicExploration.chestSeal) {
                         type = 1;
-                    } else if (event.entityPlayer.inventory.getCurrentItem()
-                        .getItem() == ThaumicExploration.chestSealLinked) {
-                            type = 2;
-                        }
+                    } else if (event.entityPlayer.inventory.getCurrentItem().getItem()
+                            == ThaumicExploration.chestSealLinked) {
+                                type = 2;
+                            }
                 }
             } else
                 if (event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) == ThaumicExploration.boundChest) {
@@ -831,19 +831,16 @@ public class TXEventHandler {
                     // ItemBlankSeal.itemNames[((TileEntityBoundChest) world.getBlockTileEntity(event.x, event.y,
                     // event.z)).getSealColor()]);
                     if (event.entityPlayer.inventory.getCurrentItem() != null) {
-                        if (event.entityPlayer.inventory.getCurrentItem()
-                            .getItem() == ThaumicExploration.chestSeal) {
+                        if (event.entityPlayer.inventory.getCurrentItem().getItem() == ThaumicExploration.chestSeal) {
                             int color = ((TileEntityBoundChest) world
-                                .getTileEntity(event.x, event.y, event.z)).clientColor;
+                                    .getTileEntity(event.x, event.y, event.z)).clientColor;
                             type = 3;
-                            if (15 - (event.entityPlayer.inventory.getCurrentItem()
-                                .getItemDamage()) == color) {
+                            if (15 - (event.entityPlayer.inventory.getCurrentItem().getItemDamage()) == color) {
                                 int nextID = ((TileEntityBoundChest) world.getTileEntity(event.x, event.y, event.z)).id;
                                 ItemStack linkedSeal = new ItemStack(
-                                    ThaumicExploration.chestSealLinked,
-                                    1,
-                                    event.entityPlayer.inventory.getCurrentItem()
-                                        .getItemDamage());
+                                        ThaumicExploration.chestSealLinked,
+                                        1,
+                                        event.entityPlayer.inventory.getCurrentItem().getItemDamage());
                                 NBTTagCompound tag = new NBTTagCompound();
                                 tag.setInteger("ID", nextID);
                                 tag.setInteger("x", event.x);
@@ -854,7 +851,7 @@ public class TXEventHandler {
 
                                 event.entityPlayer.inventory.addItemStackToInventory(linkedSeal);
                                 if (!event.entityPlayer.capabilities.isCreativeMode) event.entityPlayer.inventory
-                                    .decrStackSize(event.entityPlayer.inventory.currentItem, 1);
+                                        .decrStackSize(event.entityPlayer.inventory.currentItem, 1);
                             }
                             event.setCanceled(true);
                         }
@@ -864,19 +861,18 @@ public class TXEventHandler {
 
         if (event.entityPlayer.worldObj.blockExists(event.x, event.y, event.z)) {
             if (event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) == ConfigBlocks.blockJar
-                && event.entityPlayer.worldObj.getBlockMetadata(event.x, event.y, event.z) == 0) {
+                    && event.entityPlayer.worldObj.getBlockMetadata(event.x, event.y, event.z) == 0) {
                 if (event.entityPlayer.inventory.getCurrentItem() != null
-                    && ((TileJarFillable) event.entityPlayer.worldObj
-                        .getTileEntity(event.x, event.y, event.z)).aspectFilter == null
-                    && ((TileJarFillable) event.entityPlayer.worldObj.getTileEntity(event.x, event.y, event.z)).amount
-                        == 0) {
-                    if (event.entityPlayer.inventory.getCurrentItem()
-                        .getItem() == ThaumicExploration.jarSeal) {
+                        && ((TileJarFillable) event.entityPlayer.worldObj
+                                .getTileEntity(event.x, event.y, event.z)).aspectFilter == null
+                        && ((TileJarFillable) event.entityPlayer.worldObj
+                                .getTileEntity(event.x, event.y, event.z)).amount == 0) {
+                    if (event.entityPlayer.inventory.getCurrentItem().getItem() == ThaumicExploration.jarSeal) {
                         type = 4;
-                    } else if (event.entityPlayer.inventory.getCurrentItem()
-                        .getItem() == ThaumicExploration.jarSealLinked) {
-                            type = 5;
-                        }
+                    } else if (event.entityPlayer.inventory.getCurrentItem().getItem()
+                            == ThaumicExploration.jarSealLinked) {
+                                type = 5;
+                            }
                 }
             }
         }
@@ -906,8 +902,8 @@ public class TXEventHandler {
     public void playerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         for (Map.Entry<String, AspectList> entry : BoundJarNetworkManager.getData().networks.entrySet()) {
             PacketCustom.sendToPlayer(
-                BoundJarNetworkManager.getPacket(new Tuple(entry.getKey(), entry.getValue())),
-                event.player);
+                    BoundJarNetworkManager.getPacket(new Tuple(entry.getKey(), entry.getValue())),
+                    event.player);
         }
     }
 }

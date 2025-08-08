@@ -56,17 +56,13 @@ public class TXBootsEventHandler {
             // updateSpeed(player);
             checkAir(player);
 
-            if (player.getHeldItem() != null && player.getHeldItem()
-                .getItem() instanceof ItemWandCasting) {
-                ItemWandCasting wand = (ItemWandCasting) player.getHeldItem()
-                    .getItem();
+            if (player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemWandCasting) {
+                ItemWandCasting wand = (ItemWandCasting) player.getHeldItem().getItem();
                 if (wand.getObjectInUse(player.getHeldItem(), player.worldObj) != null
-                    && wand.getCap(player.getHeldItem()) == ThaumicExploration.WAND_CAP_MECHANIST) {
+                        && wand.getCap(player.getHeldItem()) == ThaumicExploration.WAND_CAP_MECHANIST) {
                     if (wand.getObjectInUse(player.getHeldItem(), player.worldObj) instanceof INode) {
-                        if (!player.getHeldItem()
-                            .hasTagCompound()) {
-                            player.getHeldItem()
-                                .setTagCompound(new NBTTagCompound());
+                        if (!player.getHeldItem().hasTagCompound()) {
+                            player.getHeldItem().setTagCompound(new NBTTagCompound());
                         }
                         if (!player.getHeldItem().stackTagCompound.hasKey("nodeTicks")) {
                             player.getHeldItem().stackTagCompound.setInteger("nodeTicks", 0);
@@ -80,33 +76,31 @@ public class TXBootsEventHandler {
                         if (nodeTicks % 3 == 0) {
                             if (player.worldObj.rand.nextBoolean()) {
                                 player.worldObj.playSound(
-                                    nodeAsTE.xCoord,
-                                    nodeAsTE.yCoord,
-                                    nodeAsTE.zCoord,
-                                    "tile.piston.in",
-                                    0.1F + (float) (0.5F * Math.random()),
-                                    0.75F,
-                                    false);
+                                        nodeAsTE.xCoord,
+                                        nodeAsTE.yCoord,
+                                        nodeAsTE.zCoord,
+                                        "tile.piston.in",
+                                        0.1F + (float) (0.5F * Math.random()),
+                                        0.75F,
+                                        false);
                             } else {
                                 player.worldObj.playSound(
-                                    nodeAsTE.xCoord,
-                                    nodeAsTE.yCoord,
-                                    nodeAsTE.zCoord,
-                                    "tile.piston.out",
-                                    0.1F + (float) (0.5F * Math.random()),
-                                    0.75F,
-                                    false);
+                                        nodeAsTE.xCoord,
+                                        nodeAsTE.yCoord,
+                                        nodeAsTE.zCoord,
+                                        "tile.piston.out",
+                                        0.1F + (float) (0.5F * Math.random()),
+                                        0.75F,
+                                        false);
                             }
                         }
                         player.getHeldItem().stackTagCompound.setInteger("nodeTicks", nodeTicks);
                     }
                 }
                 if (wand.getCap(player.getHeldItem()) == ThaumicExploration.WAND_CAP_SOJOURNER
-                    && !player.worldObj.isRemote) {
-                    if (!player.getHeldItem()
-                        .hasTagCompound()) {
-                        player.getHeldItem()
-                            .setTagCompound(new NBTTagCompound());
+                        && !player.worldObj.isRemote) {
+                    if (!player.getHeldItem().hasTagCompound()) {
+                        player.getHeldItem().setTagCompound(new NBTTagCompound());
                     }
                     if (!player.getHeldItem().stackTagCompound.hasKey("nodeTicks")) {
                         player.getHeldItem().stackTagCompound.setInteger("nodeTicks", 0);
@@ -128,22 +122,21 @@ public class TXBootsEventHandler {
                             for (int yy = -8; yy <= 8; yy++) {
                                 for (int zz = -8; zz <= 8; zz++) {
                                     TileEntity te = player.worldObj.getTileEntity(
-                                        ((int) player.posX) + xx,
-                                        ((int) player.posY) + yy,
-                                        ((int) player.posZ) + zz);
+                                            ((int) player.posX) + xx,
+                                            ((int) player.posY) + yy,
+                                            ((int) player.posZ) + zz);
                                     if ((te instanceof INode) && emptyAspects.size() > 0) {
                                         boolean canAdd = false;
                                         for (Aspect aspect : emptyAspects.getAspects()) {
-                                            if (((INode) te).getAspects()
-                                                .getAmount(aspect) > 1) {
+                                            if (((INode) te).getAspects().getAmount(aspect) > 1) {
                                                 canAdd = true;
                                             }
                                         }
                                         if (canAdd) nodes.add(
-                                            new ChunkCoordinates(
-                                                ((int) player.posX) + xx,
-                                                ((int) player.posY) + yy,
-                                                ((int) player.posZ) + zz));
+                                                new ChunkCoordinates(
+                                                        ((int) player.posX) + xx,
+                                                        ((int) player.posY) + yy,
+                                                        ((int) player.posZ) + zz));
                                     }
                                 }
                             }
@@ -151,32 +144,31 @@ public class TXBootsEventHandler {
                         ChunkCoordinates randNode;
                         if (nodes.size() != 0) {
                             if (!nodes.contains(
-                                new ChunkCoordinates(
-                                    player.getHeldItem().stackTagCompound.getInteger("drainX"),
-                                    player.getHeldItem().stackTagCompound.getInteger("drainY"),
-                                    player.getHeldItem().stackTagCompound.getInteger("drainZ")))) {
+                                    new ChunkCoordinates(
+                                            player.getHeldItem().stackTagCompound.getInteger("drainX"),
+                                            player.getHeldItem().stackTagCompound.getInteger("drainY"),
+                                            player.getHeldItem().stackTagCompound.getInteger("drainZ")))) {
                                 randNode = nodes.get(player.worldObj.rand.nextInt(nodes.size()));
                                 player.getHeldItem().stackTagCompound.setInteger("drainX", randNode.posX);
                                 player.getHeldItem().stackTagCompound.setInteger("drainY", randNode.posY);
                                 player.getHeldItem().stackTagCompound.setInteger("drainZ", randNode.posZ);
                             } else {
                                 randNode = new ChunkCoordinates(
-                                    new ChunkCoordinates(
-                                        player.getHeldItem().stackTagCompound.getInteger("drainX"),
-                                        player.getHeldItem().stackTagCompound.getInteger("drainY"),
-                                        player.getHeldItem().stackTagCompound.getInteger("drainZ")));
+                                        new ChunkCoordinates(
+                                                player.getHeldItem().stackTagCompound.getInteger("drainX"),
+                                                player.getHeldItem().stackTagCompound.getInteger("drainY"),
+                                                player.getHeldItem().stackTagCompound.getInteger("drainZ")));
                             }
                             INode node = (INode) player.worldObj
-                                .getTileEntity(randNode.posX, randNode.posY, randNode.posZ);
+                                    .getTileEntity(randNode.posX, randNode.posY, randNode.posZ);
                             AspectList possibleAspects = new AspectList();
                             for (Aspect aspect : emptyAspects.getAspects()) {
-                                if (node.getAspects()
-                                    .getAmount(aspect) > 1) {
+                                if (node.getAspects().getAmount(aspect) > 1) {
                                     possibleAspects.add(aspect, 1);
                                 }
                             }
                             Aspect takeAspect = possibleAspects.getAspects()[player.worldObj.rand
-                                .nextInt(possibleAspects.getAspects().length)];
+                                    .nextInt(possibleAspects.getAspects().length)];
                             node.takeFromContainer(takeAspect, 1);
                             player.worldObj.markBlockForUpdate(randNode.posX, randNode.posY, randNode.posZ);
                             wand.addVis(player.getHeldItem(), takeAspect, 1, true);
@@ -191,20 +183,17 @@ public class TXBootsEventHandler {
             // TODO tainted band
             boolean isTainted = false;
             for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-                if (player.inventory.getStackInSlot(i) != null && player.inventory.getStackInSlot(i)
-                    .getItem() == ThaumicExploration.charmTaint) {
+                if (player.inventory.getStackInSlot(i) != null
+                        && player.inventory.getStackInSlot(i).getItem() == ThaumicExploration.charmTaint) {
                     isTainted = true;
                     break;
                 }
             }
 
-            if (!player.getEntityData()
-                .hasKey("tainted")) {
-                player.getEntityData()
-                    .setBoolean("tainted", isTainted);
+            if (!player.getEntityData().hasKey("tainted")) {
+                player.getEntityData().setBoolean("tainted", isTainted);
             }
-            boolean wasTainted = player.getEntityData()
-                .getBoolean("tainted");
+            boolean wasTainted = player.getEntityData().getBoolean("tainted");
             if (wasTainted && !isTainted && !player.capabilities.disableDamage) {
                 player.attackEntityFrom(DamageSourceTX.noTaint, 999);
             }
@@ -213,78 +202,60 @@ public class TXBootsEventHandler {
                 // player.addPotionEffect(new PotionEffect(Potion.blindness.id,60));
                 // player.addPotionEffect(new PotionEffect(Potion.confusion.id,160));
             }
-            player.getEntityData()
-                .setBoolean("tainted", isTainted);
+            player.getEntityData().setBoolean("tainted", isTainted);
 
             if (!(player.worldObj.getBiomeGenForCoords((int) player.posX, (int) player.posZ)
-                == ThaumcraftWorldGenerator.biomeTaint)) {
+                    == ThaumcraftWorldGenerator.biomeTaint)) {
                 if (isTainted) {
-                    if (!player.getEntityData()
-                        .hasKey("taintGracePeriod")) {
-                        player.getEntityData()
-                            .setInteger("taintGracePeriod", 0);
+                    if (!player.getEntityData().hasKey("taintGracePeriod")) {
+                        player.getEntityData().setInteger("taintGracePeriod", 0);
                     }
-                    int taintGP = player.getEntityData()
-                        .getInteger("taintGracePeriod");
+                    int taintGP = player.getEntityData().getInteger("taintGracePeriod");
                     taintGP++;
-                    player.getEntityData()
-                        .setInteger("taintGracePeriod", taintGP);
+                    player.getEntityData().setInteger("taintGracePeriod", taintGP);
                     if (player.getActivePotionEffect(ThaumicExploration.potionTaintWithdrawl) == null
-                        && taintGP > 100) {
+                            && taintGP > 100) {
                         for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-                            if (player.inventory.getStackInSlot(i) != null && player.inventory.getStackInSlot(i)
-                                .getItem() == ConfigItems.itemResource
-                                && (player.inventory.getStackInSlot(i)
-                                    .getItemDamage() == 11
-                                    || player.inventory.getStackInSlot(i)
-                                        .getItemDamage() == 12)) {
+                            if (player.inventory.getStackInSlot(i) != null
+                                    && player.inventory.getStackInSlot(i).getItem() == ConfigItems.itemResource
+                                    && (player.inventory.getStackInSlot(i).getItemDamage() == 11
+                                            || player.inventory.getStackInSlot(i).getItemDamage() == 12)) {
                                 player.inventory.decrStackSize(i, 1);
                                 taintGP = 0;
-                                player.getEntityData()
-                                    .setInteger("taintGracePeriod", 0);
+                                player.getEntityData().setInteger("taintGracePeriod", 0);
                                 break;
                             }
                         }
 
                         if (taintGP > 100) player
-                            .addPotionEffect(new PotionEffect(ThaumicExploration.potionTaintWithdrawl.id, 100, 1));
+                                .addPotionEffect(new PotionEffect(ThaumicExploration.potionTaintWithdrawl.id, 100, 1));
                     }
                 }
 
             } else {
                 if (!player.worldObj.isRemote) {
                     if (isTainted) {
-                        player.getEntityData()
-                            .setInteger("taintGracePeriod", 0);
-                        if (player.getFoodStats()
-                            .getFoodLevel() < 4) {
-                            if (!player.getEntityData()
-                                .hasKey("taintFoodBuff")) {
-                                player.getEntityData()
-                                    .setInteger("taintFoodBuff", 0);
+                        player.getEntityData().setInteger("taintGracePeriod", 0);
+                        if (player.getFoodStats().getFoodLevel() < 4) {
+                            if (!player.getEntityData().hasKey("taintFoodBuff")) {
+                                player.getEntityData().setInteger("taintFoodBuff", 0);
                             }
-                            int taint = player.getEntityData()
-                                .getInteger("taintFoodBuff");
+                            int taint = player.getEntityData().getInteger("taintFoodBuff");
                             taint++;
                             if (taint > 80) {
-                                player.getFoodStats()
-                                    .addStats(1, 0.0F);
+                                player.getFoodStats().addStats(1, 0.0F);
                                 taint = 0;
                                 if (player.worldObj.isRemote) {
                                     Thaumcraft.proxy.swarmParticleFX(player.worldObj, player, 0.1F, 10.0F, 0.0F);
                                 }
                             }
 
-                            player.getEntityData()
-                                .setInteger("taintFoodBuff", taint);
+                            player.getEntityData().setInteger("taintFoodBuff", taint);
                         } else {
-                            if (!player.getEntityData()
-                                .hasKey("taintFoodBuff")) {
-                                player.getEntityData()
-                                    .setInteger("taintFoodBuff", 0);
+                            if (!player.getEntityData().hasKey("taintFoodBuff")) {
+                                player.getEntityData().setInteger("taintFoodBuff", 0);
                             }
-                            player.getEntityData()
-                                .setInteger("taintFoodBuff", 0);
+                            player.getEntityData().setInteger("taintFoodBuff", 0);
                         }
                     }
                 }
@@ -297,13 +268,13 @@ public class TXBootsEventHandler {
         }
 
         if ((event.entity.worldObj.isRemote) && (this.prevStep.containsKey(Integer.valueOf(event.entity.getEntityId())))
-            && ((((EntityPlayer) event.entity).inventory.armorItemInSlot(0) == null)
-                || (((EntityPlayer) event.entity).inventory.armorItemInSlot(0)
-                    .getItem() != ThaumicExploration.bootsMeteor
-                    && ((EntityPlayer) event.entity).inventory.armorItemInSlot(0)
-                        .getItem() != ThaumicExploration.bootsComet))) {
+                && ((((EntityPlayer) event.entity).inventory.armorItemInSlot(0) == null)
+                        || (((EntityPlayer) event.entity).inventory.armorItemInSlot(0).getItem()
+                                != ThaumicExploration.bootsMeteor
+                                && ((EntityPlayer) event.entity).inventory.armorItemInSlot(0).getItem()
+                                        != ThaumicExploration.bootsComet))) {
             event.entity.stepHeight = ((Float) this.prevStep.get(Integer.valueOf(event.entity.getEntityId())))
-                .floatValue();
+                    .floatValue();
             this.prevStep.remove(Integer.valueOf(event.entity.getEntityId()));
         }
     }
@@ -341,8 +312,7 @@ public class TXBootsEventHandler {
             return;
         }
 
-        Item item = player.inventory.armorItemInSlot(0)
-            .getItem();
+        Item item = player.inventory.armorItemInSlot(0).getItem();
 
         if ((item instanceof ItemTXArmorSpecial) && !((EntityPlayer) event.entity).isSneaking()) {
             double jump = ((ItemTXArmorSpecial) item).jumpBonus;
@@ -381,8 +351,8 @@ public class TXBootsEventHandler {
     // TODO boot effect
     public void checkAir(EntityPlayer player) {
         // meteor boots
-        if ((player.inventory.armorItemInSlot(0) != null) && (player.inventory.armorItemInSlot(0)
-            .getItem() == ThaumicExploration.bootsMeteor)) {
+        if ((player.inventory.armorItemInSlot(0) != null)
+                && (player.inventory.armorItemInSlot(0).getItem() == ThaumicExploration.bootsMeteor)) {
 
             Vec3 vector = player.getLook(1.0F);
             ItemStack item = player.inventory.armorItemInSlot(0);
@@ -429,42 +399,42 @@ public class TXBootsEventHandler {
             if (smashing) {
 
                 player.worldObj.spawnParticle(
-                    "flame",
-                    (double) (player.posX + Math.random() - 0.5F),
-                    (double) (player.posY + Math.random() - 0.5F),
-                    (double) (player.posZ + Math.random() - 0.5F),
-                    0.0D,
-                    0.0D,
-                    0.0D);
+                        "flame",
+                        (double) (player.posX + Math.random() - 0.5F),
+                        (double) (player.posY + Math.random() - 0.5F),
+                        (double) (player.posZ + Math.random() - 0.5F),
+                        0.0D,
+                        0.0D,
+                        0.0D);
                 player.worldObj.spawnParticle(
-                    "smoke",
-                    (double) (player.posX + Math.random() - 0.5F),
-                    (double) (player.posY + Math.random() - 0.5F),
-                    (double) (player.posZ + Math.random() - 0.5F),
-                    0.0D,
-                    0.0D,
-                    0.0D);
+                        "smoke",
+                        (double) (player.posX + Math.random() - 0.5F),
+                        (double) (player.posY + Math.random() - 0.5F),
+                        (double) (player.posZ + Math.random() - 0.5F),
+                        0.0D,
+                        0.0D,
+                        0.0D);
                 player.worldObj.spawnParticle(
-                    "flame",
-                    (double) (player.posX + Math.random() - 0.5F),
-                    (double) (player.posY + Math.random() - 0.5F),
-                    (double) (player.posZ + Math.random() - 0.5F),
-                    0.0D,
-                    0.0D,
-                    0.0D);
+                        "flame",
+                        (double) (player.posX + Math.random() - 0.5F),
+                        (double) (player.posY + Math.random() - 0.5F),
+                        (double) (player.posZ + Math.random() - 0.5F),
+                        0.0D,
+                        0.0D,
+                        0.0D);
                 player.motionY -= 0.1F;
                 ticks++;
             } else {
                 double motion = Math.abs(player.motionX) + Math.abs(player.motionZ) + Math.abs(0.5 * player.motionY);
                 if (!player.isWet() && motion > 0.1F) {
                     player.worldObj.spawnParticle(
-                        "flame",
-                        (double) (player.posX + Math.random() - 0.5F),
-                        (double) (player.boundingBox.minY + 0.25F + ((Math.random() - 0.5) * 0.25F)),
-                        (double) (player.posZ + Math.random() - 0.5F),
-                        0.0D,
-                        0.025D,
-                        0.0D);
+                            "flame",
+                            (double) (player.posX + Math.random() - 0.5F),
+                            (double) (player.boundingBox.minY + 0.25F + ((Math.random() - 0.5) * 0.25F)),
+                            (double) (player.posZ + Math.random() - 0.5F),
+                            0.0D,
+                            0.025D,
+                            0.0D);
                     // player.worldObj.spawnParticle("flame", (double)(player.posX + Math.random()-0.5F),
                     // (double)(player.boundingBox.minY + 0.25F + ((Math.random()-0.5)*0.25F)), (double)(player.posZ +
                     // Math.random()-0.5F), 0.0D, 0.025D, 0.0D);
@@ -476,79 +446,82 @@ public class TXBootsEventHandler {
         }
 
         // comet boots
-        else if ((player.inventory.armorItemInSlot(0) != null) && (player.inventory.armorItemInSlot(0)
-            .getItem() == ThaumicExploration.bootsComet)) {
+        else if ((player.inventory.armorItemInSlot(0) != null)
+                && (player.inventory.armorItemInSlot(0).getItem() == ThaumicExploration.bootsComet)) {
 
-                Vec3 vector = player.getLook(1.0F);
-                ItemStack item = player.inventory.armorItemInSlot(0);
-                if (!item.hasTagCompound()) {
-                    NBTTagCompound par1NBTTagCompound = new NBTTagCompound();
-                    item.setTagCompound(par1NBTTagCompound);
-                    item.stackTagCompound.setInteger("runTicks", 0);
-                }
+                    Vec3 vector = player.getLook(1.0F);
+                    ItemStack item = player.inventory.armorItemInSlot(0);
+                    if (!item.hasTagCompound()) {
+                        NBTTagCompound par1NBTTagCompound = new NBTTagCompound();
+                        item.setTagCompound(par1NBTTagCompound);
+                        item.stackTagCompound.setInteger("runTicks", 0);
+                    }
 
-                // anti-griefing config
-                if (ConfigTX.allowBootsIce) {
-                    for (int x = -5; x < 6; x++) {
-                        for (int z = -5; z < 6; z++) {
-                            if ((player.worldObj
-                                .getBlock((int) (player.posX + x), (int) (player.posY - 1), (int) (player.posZ + z))
-                                == Blocks.water
-                                || player.worldObj
-                                    .getBlock((int) (player.posX + x), (int) (player.posY - 1), (int) (player.posZ + z))
-                                    == Blocks.water)
-                                && player.worldObj
-                                    .getBlock((int) (player.posX + x), (int) player.posY - 1, (int) (player.posZ + z))
-                                    .getMaterial() == Material.water
-                                && player.worldObj.getBlockMetadata(
-                                    (int) (player.posX + x),
-                                    (int) player.posY - 1,
-                                    (int) (player.posZ + z)) == 0
-                                && !player.isInWater()
-                                && (Math.abs(x) + Math.abs(z) < 8)) {
-                                player.worldObj.setBlock(
-                                    (int) (player.posX + x),
-                                    (int) player.posY - 1,
-                                    (int) (player.posZ + z),
-                                    ThaumicExploration.meltyIce);
-                                player.worldObj.spawnParticle(
-                                    "snowballpoof",
-                                    (int) (player.posX + x),
-                                    (int) player.posY,
-                                    (int) (player.posZ + z),
-                                    0.0D,
-                                    0.025D,
-                                    0.0D);
+                    // anti-griefing config
+                    if (ConfigTX.allowBootsIce) {
+                        for (int x = -5; x < 6; x++) {
+                            for (int z = -5; z < 6; z++) {
+                                if ((player.worldObj.getBlock(
+                                        (int) (player.posX + x),
+                                        (int) (player.posY - 1),
+                                        (int) (player.posZ + z)) == Blocks.water
+                                        || player.worldObj.getBlock(
+                                                (int) (player.posX + x),
+                                                (int) (player.posY - 1),
+                                                (int) (player.posZ + z)) == Blocks.water)
+                                        && player.worldObj.getBlock(
+                                                (int) (player.posX + x),
+                                                (int) player.posY - 1,
+                                                (int) (player.posZ + z)).getMaterial() == Material.water
+                                        && player.worldObj.getBlockMetadata(
+                                                (int) (player.posX + x),
+                                                (int) player.posY - 1,
+                                                (int) (player.posZ + z)) == 0
+                                        && !player.isInWater()
+                                        && (Math.abs(x) + Math.abs(z) < 8)) {
+                                    player.worldObj.setBlock(
+                                            (int) (player.posX + x),
+                                            (int) player.posY - 1,
+                                            (int) (player.posZ + z),
+                                            ThaumicExploration.meltyIce);
+                                    player.worldObj.spawnParticle(
+                                            "snowballpoof",
+                                            (int) (player.posX + x),
+                                            (int) player.posY,
+                                            (int) (player.posZ + z),
+                                            0.0D,
+                                            0.025D,
+                                            0.0D);
+                                }
                             }
                         }
                     }
+
+                    int ticks = item.stackTagCompound.getInteger("runTicks");
+
+                    double motion = Math.abs(player.motionX) + Math.abs(player.motionZ) + Math.abs(player.motionY);
+                    if (motion > 0.1F || !player.onGround || player.isOnLadder()) {
+                        if (ticks < 100) ticks++;
+                    } else {
+                        ticks = 0;
+                    }
+
+                    if (!player.isWet() && motion > 0.1F) {
+                        player.worldObj.spawnParticle(
+                                "fireworksSpark",
+                                (double) (player.posX + Math.random() - 0.5F),
+                                (double) (player.boundingBox.minY + 0.25F + ((Math.random() - 0.5) * 0.25F)),
+                                (double) (player.posZ + Math.random() - 0.5F),
+                                0.0D,
+                                0.025D,
+                                0.0D);
+                        // player.worldObj.spawnParticle("snowballpoof", (double)(player.posX + Math.random()-0.5F),
+                        // (double)(player.boundingBox.minY + 0.25F + ((Math.random()-0.5)*0.25F)), (double)(player.posZ
+                        // +
+                        // Math.random()-0.5F), 0.0D, 0.025D, 0.0D);
+                    }
+
+                    item.stackTagCompound.setInteger("runTicks", ticks);
                 }
-
-                int ticks = item.stackTagCompound.getInteger("runTicks");
-
-                double motion = Math.abs(player.motionX) + Math.abs(player.motionZ) + Math.abs(player.motionY);
-                if (motion > 0.1F || !player.onGround || player.isOnLadder()) {
-                    if (ticks < 100) ticks++;
-                } else {
-                    ticks = 0;
-                }
-
-                if (!player.isWet() && motion > 0.1F) {
-                    player.worldObj.spawnParticle(
-                        "fireworksSpark",
-                        (double) (player.posX + Math.random() - 0.5F),
-                        (double) (player.boundingBox.minY + 0.25F + ((Math.random() - 0.5) * 0.25F)),
-                        (double) (player.posZ + Math.random() - 0.5F),
-                        0.0D,
-                        0.025D,
-                        0.0D);
-                    // player.worldObj.spawnParticle("snowballpoof", (double)(player.posX + Math.random()-0.5F),
-                    // (double)(player.boundingBox.minY + 0.25F + ((Math.random()-0.5)*0.25F)), (double)(player.posZ
-                    // +
-                    // Math.random()-0.5F), 0.0D, 0.025D, 0.0D);
-                }
-
-                item.stackTagCompound.setInteger("runTicks", ticks);
-            }
     }
 }

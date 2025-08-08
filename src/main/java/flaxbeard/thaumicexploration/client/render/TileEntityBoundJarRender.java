@@ -14,19 +14,19 @@ public class TileEntityBoundJarRender extends TileJarRenderer {
 
     private ModelJarOverlay model = new ModelJarOverlay();
     private static final ResourceLocation overlayn = new ResourceLocation(
-        "thaumicexploration:textures/blocks/boundchestoverlaynone.png");
+            "thaumicexploration:textures/blocks/boundchestoverlaynone.png");
     private static final ResourceLocation overlay0 = new ResourceLocation(
-        "thaumicexploration:textures/blocks/boundjaroverlay0.png");
+            "thaumicexploration:textures/blocks/boundjaroverlay0.png");
     private static final ResourceLocation seal = new ResourceLocation(
-        "thaumicexploration:textures/blocks/boundjaroverlayseal.png");
+            "thaumicexploration:textures/blocks/boundjaroverlayseal.png");
     private static final ResourceLocation overlay1 = new ResourceLocation(
-        "thaumicexploration:textures/blocks/boundjaroverlay1.png");
+            "thaumicexploration:textures/blocks/boundjaroverlay1.png");
     private static final ResourceLocation overlay2 = new ResourceLocation(
-        "thaumicexploration:textures/blocks/boundjaroverlay2.png");
+            "thaumicexploration:textures/blocks/boundjaroverlay2.png");
     private static final ResourceLocation overlay3 = new ResourceLocation(
-        "thaumicexploration:textures/blocks/boundjaroverlay3.png");
+            "thaumicexploration:textures/blocks/boundjaroverlay3.png");
     private static final ResourceLocation overlay4 = new ResourceLocation(
-        "thaumicexploration:textures/blocks/boundjaroverlay4.png");
+            "thaumicexploration:textures/blocks/boundjaroverlay4.png");
     private static final ResourceLocation[] overlays = { overlayn, overlay0, overlay1, overlay2, overlay3, overlay4 };
 
     public void renderTileEntityAt(TileJar tile, double x, double y, double z, float f) {

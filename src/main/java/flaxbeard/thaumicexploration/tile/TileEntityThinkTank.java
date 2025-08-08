@@ -73,12 +73,12 @@ public class TileEntityThinkTank extends TileEntity implements ISidedInventory {
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox() {
         return AxisAlignedBB.getBoundingBox(
-            this.xCoord - 1 - this.space,
-            this.yCoord - 1,
-            this.zCoord - 1 - this.space,
-            this.xCoord + 1 + this.space,
-            this.yCoord + 1,
-            this.zCoord + 1 + this.space);
+                this.xCoord - 1 - this.space,
+                this.yCoord - 1,
+                this.zCoord - 1 - this.space,
+                this.xCoord + 1 + this.space,
+                this.yCoord + 1,
+                this.zCoord + 1 + this.space);
     }
 
     /**
@@ -310,11 +310,11 @@ public class TileEntityThinkTank extends TileEntity implements ISidedInventory {
             if (flag != this.furnaceBurnTime > 0) {
                 flag1 = true;
                 BlockThinkTank.updateFurnaceBlockState(
-                    this.furnaceBurnTime > 0,
-                    this.worldObj,
-                    this.xCoord,
-                    this.yCoord,
-                    this.zCoord);
+                        this.furnaceBurnTime > 0,
+                        this.worldObj,
+                        this.xCoord,
+                        this.yCoord,
+                        this.zCoord);
             }
         }
         if (this.worldObj.isRemote) {
@@ -323,16 +323,16 @@ public class TileEntityThinkTank extends TileEntity implements ISidedInventory {
             Entity entity = null;
             if (entity == null) {
                 entity = this.worldObj
-                    .getClosestPlayer(this.xCoord + 0.5F, this.yCoord + 0.5F, this.zCoord + 0.5F, 6.0D);
+                        .getClosestPlayer(this.xCoord + 0.5F, this.yCoord + 0.5F, this.zCoord + 0.5F, 6.0D);
                 if ((entity != null) && (this.lastsigh < System.currentTimeMillis())) {
                     this.worldObj.playSound(
-                        this.xCoord + 0.5D,
-                        this.yCoord + 0.5D,
-                        this.zCoord + 0.5D,
-                        "thaumcraft:brain",
-                        0.15F,
-                        0.8F + this.worldObj.rand.nextFloat() * 0.4F,
-                        false);
+                            this.xCoord + 0.5D,
+                            this.yCoord + 0.5D,
+                            this.zCoord + 0.5D,
+                            "thaumcraft:brain",
+                            0.15F,
+                            0.8F + this.worldObj.rand.nextFloat() * 0.4F,
+                            false);
                     this.lastsigh = (System.currentTimeMillis() + 5000L + this.worldObj.rand.nextInt(25000));
                 }
             }
@@ -379,14 +379,14 @@ public class TileEntityThinkTank extends TileEntity implements ISidedInventory {
         for (int x = -2; x < 3; x++) {
             for (int z = -2; z < 3; z++) {
                 for (int y = -1; y < 2; y++) {
-                    if (this.worldObj.getBlock(this.xCoord + x, this.yCoord + y, this.zCoord + z)
-                        .getMaterial() != Config.airyMaterial
-                        && this.worldObj.getBlock(this.xCoord + x, this.yCoord + y, this.zCoord + z)
-                            .getMaterial() != Material.air
-                        && !this.worldObj.getBlock(this.xCoord + x, this.yCoord + y, this.zCoord + z)
-                            .isReplaceable(this.worldObj, this.xCoord + x, this.yCoord + y, this.zCoord + z)) {
+                    if (this.worldObj.getBlock(this.xCoord + x, this.yCoord + y, this.zCoord + z).getMaterial()
+                            != Config.airyMaterial
+                            && this.worldObj.getBlock(this.xCoord + x, this.yCoord + y, this.zCoord + z).getMaterial()
+                                    != Material.air
+                            && !this.worldObj.getBlock(this.xCoord + x, this.yCoord + y, this.zCoord + z)
+                                    .isReplaceable(this.worldObj, this.xCoord + x, this.yCoord + y, this.zCoord + z)) {
                         if (!(this.xCoord + x == this.xCoord && this.zCoord + z == this.zCoord
-                            && (this.yCoord + y == this.yCoord || this.yCoord + y == this.yCoord - 1))) {
+                                && (this.yCoord + y == this.yCoord || this.yCoord + y == this.yCoord - 1))) {
                             if (Math.abs(x) > 1 || Math.abs(z) > 1) {
                                 muchSpace = false;
                             } else {
@@ -461,9 +461,10 @@ public class TileEntityThinkTank extends TileEntity implements ISidedInventory {
      */
     public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
         return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false
-            : par1EntityPlayer
-                .getDistanceSq((double) this.xCoord + 0.5D, (double) this.yCoord + 0.5D, (double) this.zCoord + 0.5D)
-                <= 64.0D;
+                : par1EntityPlayer.getDistanceSq(
+                        (double) this.xCoord + 0.5D,
+                        (double) this.yCoord + 0.5D,
+                        (double) this.zCoord + 0.5D) <= 64.0D;
     }
 
     public void openChest() {}

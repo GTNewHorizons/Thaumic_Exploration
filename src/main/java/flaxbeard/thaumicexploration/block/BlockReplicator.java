@@ -67,7 +67,7 @@ public class BlockReplicator extends BlockContainer {
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX,
-        float hitY, float hitZ) {
+            float hitY, float hitZ) {
         if (world.isRemote) return true;
 
         TileEntity tile = world.getTileEntity(x, y, z);
@@ -95,20 +95,17 @@ public class BlockReplicator extends BlockContainer {
     }
 
     private void ejectBlockFromReplicator(World world, int x, int y, int z, TileEntityReplicator replicator,
-        ItemStack template) {
+            ItemStack template) {
         if (template.stackSize > 0) {
             EntityItem item = new EntityItem(
-                world,
-                x + 0.5,
-                y + 1.2F,
-                z + 0.5,
-                new ItemStack(template.getItem(), template.stackSize, template.getItemDamage()));
+                    world,
+                    x + 0.5,
+                    y + 1.2F,
+                    z + 0.5,
+                    new ItemStack(template.getItem(), template.stackSize, template.getItemDamage()));
 
             if (template.hasTagCompound()) {
-                item.getEntityItem()
-                    .setTagCompound(
-                        (NBTTagCompound) template.getTagCompound()
-                            .copy());
+                item.getEntityItem().setTagCompound((NBTTagCompound) template.getTagCompound().copy());
             }
 
             item.motionX = 0;
@@ -124,16 +121,16 @@ public class BlockReplicator extends BlockContainer {
 
         world.markBlockForUpdate(x, y, z);
         world.playSoundEffect(
-            x,
-            y,
-            z,
-            "random.pop",
-            0.2F,
-            (world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.5F);
+                x,
+                y,
+                z,
+                "random.pop",
+                0.2F,
+                (world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.5F);
     }
 
     private void trySetTemplateBlock(World world, int x, int y, int z, TileEntityReplicator replicator, ItemStack held,
-        EntityPlayer player) {
+            EntityPlayer player) {
         ItemStack newTemplate = held.copy();
         newTemplate.stackSize = 0;
         replicator.setInventorySlotContents(0, newTemplate);
@@ -143,12 +140,12 @@ public class BlockReplicator extends BlockContainer {
 
         world.markBlockForUpdate(x, y, z);
         world.playSoundEffect(
-            x,
-            y,
-            z,
-            "random.pop",
-            0.2F,
-            (world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.6F);
+                x,
+                y,
+                z,
+                "random.pop",
+                0.2F,
+                (world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.6F);
     }
 
     @Override

@@ -27,7 +27,7 @@ public class TXTaintPotion extends PotionFluxTaint {
     @Override
     public void performEffect(EntityLivingBase target, int par2) {
         if (target.worldObj.getBiomeGenForCoords((int) target.posX, (int) target.posZ)
-            == ThaumcraftWorldGenerator.biomeTaint) {
+                == ThaumcraftWorldGenerator.biomeTaint) {
             target.removePotionEffect(ThaumicExploration.potionTaintWithdrawl.id);
         }
         if ((!target.isEntityUndead()) && ((target.getMaxHealth() > 1.0F) || ((target instanceof EntityPlayer)))) {

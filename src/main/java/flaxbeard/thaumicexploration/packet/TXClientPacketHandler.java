@@ -73,17 +73,17 @@ public class TXClientPacketHandler extends TXServerPacketHandler {
                             if (player.getUniqueID() != Minecraft.getMinecraft().thePlayer.getUniqueID()) {
 
                                 FXLightningBolt bolt = new FXLightningBolt(
-                                    player.worldObj,
-                                    player.posX,
-                                    player.boundingBox.minY + player.height / 2.0F + 0.75D,
-                                    player.posZ,
-                                    target.posX,
-                                    target.boundingBox.maxY - 0.5F,
-                                    target.posZ,
-                                    player.worldObj.rand.nextLong(),
-                                    6,
-                                    0.5F,
-                                    5);
+                                        player.worldObj,
+                                        player.posX,
+                                        player.boundingBox.minY + player.height / 2.0F + 0.75D,
+                                        player.posZ,
+                                        target.posX,
+                                        target.boundingBox.maxY - 0.5F,
+                                        target.posZ,
+                                        player.worldObj.rand.nextLong(),
+                                        6,
+                                        0.5F,
+                                        5);
                                 bolt.defaultFractal();
                                 bolt.setType(5);
                                 // if (player.getUniqueID().equalsIgnoreCase("killajoke")) {

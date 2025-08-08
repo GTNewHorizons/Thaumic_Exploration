@@ -81,12 +81,8 @@ public class TXServerPacketHandler {
                     if (world.getEntityByID(readInt) != null) {
 
                         if (player.getCurrentArmor(3) != null) {
-                            player.getCurrentArmor(3)
-                                .damageItem(1, player);
-                            if (player.getCurrentArmor(3)
-                                .getItemDamage()
-                                == player.getCurrentArmor(3)
-                                    .getMaxDamage()) {
+                            player.getCurrentArmor(3).damageItem(1, player);
+                            if (player.getCurrentArmor(3).getItemDamage() == player.getCurrentArmor(3).getMaxDamage()) {
                                 player.inventory.armorInventory[3] = null;
                             }
                             // player.worldObj.spawnParticle("explode", (double)(target.posX + Math.random()-0.5F),
@@ -191,12 +187,10 @@ public class TXServerPacketHandler {
                 if (type == 1) {
 
                     world.setBlock(x, y, z, ThaumicExploration.boundChest, world.getBlockMetadata(x, y, z), 1);
-                    int nextID = TXWorldData.get(world)
-                        .getNextBoundChestID();
+                    int nextID = TXWorldData.get(world).getNextBoundChestID();
                     ((TileEntityBoundChest) world.getTileEntity(x, y, z)).id = nextID;
-                    ((TileEntityBoundChest) world.getTileEntity(x, y, z)).setColor(
-                        15 - player.inventory.getCurrentItem()
-                            .getItemDamage());
+                    ((TileEntityBoundChest) world.getTileEntity(x, y, z))
+                            .setColor(15 - player.inventory.getCurrentItem().getItemDamage());
                     if (!player.capabilities.isCreativeMode)
                         player.inventory.decrStackSize(player.inventory.currentItem, 1);
                     world.markBlockForUpdate(x, y, z);
@@ -204,23 +198,20 @@ public class TXServerPacketHandler {
                     world.setBlock(x, y, z, ThaumicExploration.boundChest, world.getBlockMetadata(x, y, z), 1);
                     int nextID = player.inventory.getCurrentItem().stackTagCompound.getInteger("ID");
                     ((TileEntityBoundChest) world.getTileEntity(x, y, z)).id = nextID;
-                    ((TileEntityBoundChest) world.getTileEntity(x, y, z)).setColor(
-                        15 - player.inventory.getCurrentItem()
-                            .getItemDamage());
+                    ((TileEntityBoundChest) world.getTileEntity(x, y, z))
+                            .setColor(15 - player.inventory.getCurrentItem().getItemDamage());
                     world.markBlockForUpdate(x, y, z);
                     if (!player.capabilities.isCreativeMode)
                         player.inventory.decrStackSize(player.inventory.currentItem, 1);
                 } else if (type == 3) {
                     int color = ((TileEntityBoundChest) world.getTileEntity(x, y, z)).getSealColor();
-                    if (15 - (player.inventory.getCurrentItem()
-                        .getItemDamage()) == color) {
+                    if (15 - (player.inventory.getCurrentItem().getItemDamage()) == color) {
 
                         int nextID = ((TileEntityBoundChest) world.getTileEntity(x, y, z)).id;
                         ItemStack linkedSeal = new ItemStack(
-                            ThaumicExploration.chestSealLinked,
-                            1,
-                            player.inventory.getCurrentItem()
-                                .getItemDamage());
+                                ThaumicExploration.chestSealLinked,
+                                1,
+                                player.inventory.getCurrentItem().getItemDamage());
                         NBTTagCompound tag = new NBTTagCompound();
                         tag.setInteger("ID", nextID);
                         tag.setInteger("x", x);
@@ -234,19 +225,16 @@ public class TXServerPacketHandler {
                             player.inventory.decrStackSize(player.inventory.currentItem, 1);
                     }
                 } else if (type == 7) {
-                    if (player.inventory.getCurrentItem()
-                        .getItem() instanceof IFluidContainerItem) {
-                        ((IFluidContainerItem) player.inventory.getCurrentItem()
-                            .getItem()).fill(
+                    if (player.inventory.getCurrentItem().getItem() instanceof IFluidContainerItem) {
+                        ((IFluidContainerItem) player.inventory.getCurrentItem().getItem()).fill(
                                 player.inventory.getCurrentItem(),
                                 new FluidStack(FluidRegistry.WATER, 1000),
                                 true);
-                    } else if (player.inventory.getCurrentItem()
-                        .getItem() == Items.bucket) {
+                    } else if (player.inventory.getCurrentItem().getItem() == Items.bucket) {
 
-                            player.inventory.decrStackSize(player.inventory.currentItem, 1);
-                            player.inventory.addItemStackToInventory(new ItemStack(Items.water_bucket, 1));
-                        }
+                        player.inventory.decrStackSize(player.inventory.currentItem, 1);
+                        player.inventory.addItemStackToInventory(new ItemStack(Items.water_bucket, 1));
+                    }
                 }
             }
 

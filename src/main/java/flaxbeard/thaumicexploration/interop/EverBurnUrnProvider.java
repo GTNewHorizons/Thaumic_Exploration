@@ -26,13 +26,13 @@ public class EverBurnUrnProvider implements IWailaDataProvider {
 
     @Override
     public List<String> getWailaHead(ItemStack itemStack, List<String> list, IWailaDataAccessor iWailaDataAccessor,
-        IWailaConfigHandler iWailaConfigHandler) {
+            IWailaConfigHandler iWailaConfigHandler) {
         return list;
     }
 
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> list, IWailaDataAccessor iWailaDataAccessor,
-        IWailaConfigHandler iWailaConfigHandler) {
+            IWailaConfigHandler iWailaConfigHandler) {
 
         if (iWailaDataAccessor.getTileEntity() instanceof TileEntityEverburnUrn) {
             TileEntityEverburnUrn urn = (TileEntityEverburnUrn) iWailaDataAccessor.getTileEntity();
@@ -43,13 +43,13 @@ public class EverBurnUrnProvider implements IWailaDataProvider {
 
     @Override
     public List<String> getWailaTail(ItemStack itemStack, List<String> list, IWailaDataAccessor iWailaDataAccessor,
-        IWailaConfigHandler iWailaConfigHandler) {
+            IWailaConfigHandler iWailaConfigHandler) {
         return list;
     }
 
     @Override
     public NBTTagCompound getNBTData(EntityPlayerMP entityPlayerMP, TileEntity tileEntity,
-        NBTTagCompound nbtTagCompound, World world, int i, int i1, int i2) {
+            NBTTagCompound nbtTagCompound, World world, int i, int i1, int i2) {
         return nbtTagCompound;
     }
 }

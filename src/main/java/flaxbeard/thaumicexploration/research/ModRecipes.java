@@ -43,221 +43,192 @@ public final class ModRecipes {
     private static void initConstructRecipes() {
 
         registerResearchItemC(
-            "BUILDTHINKTANK",
-            Arrays.asList(
-                new Object[] { new AspectList(), Integer.valueOf(3), Integer.valueOf(3), Integer.valueOf(3),
-                    Arrays.asList(
-                        new ItemStack[] { empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty,
-                            empty, empty, new ItemStack(ThaumicExploration.thinkTankJar), empty, empty, empty, empty,
-                            empty, empty, empty, empty, new ItemStack(Blocks.bookshelf), empty, empty, empty,
-                            empty }) }));
+                "BUILDTHINKTANK",
+                Arrays.asList(
+                        new Object[] { new AspectList(), Integer.valueOf(3), Integer.valueOf(3), Integer.valueOf(3),
+                                Arrays.asList(
+                                        new ItemStack[] { empty, empty, empty, empty, empty, empty, empty, empty, empty,
+                                                empty, empty, empty, empty,
+                                                new ItemStack(ThaumicExploration.thinkTankJar), empty, empty, empty,
+                                                empty, empty, empty, empty, empty, new ItemStack(Blocks.bookshelf),
+                                                empty, empty, empty, empty }) }));
         registerResearchItemC(
-            "BUILDNECROINFUSION",
-            Arrays.asList(
-                new Object[] { new AspectList(), Integer.valueOf(7), Integer.valueOf(1), Integer.valueOf(6),
-                    Arrays.asList(
-                        new ItemStack[] { empty, new ItemStack(ConfigBlocks.blockCandle), empty, empty, empty,
-                            new ItemStack(ConfigBlocks.blockCandle), empty, empty, empty, empty,
-                            new ItemStack(Blocks.skull), empty, empty, empty, empty, empty, new ItemStack(Blocks.skull),
-                            new ItemStack(ThaumicExploration.itemAltar), new ItemStack(Blocks.skull), empty, empty,
-                            new ItemStack(ConfigBlocks.blockCandle), empty, empty, new ItemStack(Blocks.skull), empty,
-                            empty, new ItemStack(ConfigBlocks.blockCandle), empty, empty, empty, empty, empty, empty,
-                            empty, empty, empty, empty, new ItemStack(ConfigBlocks.blockCandle), empty, empty,
-                            empty }) }));
+                "BUILDNECROINFUSION",
+                Arrays.asList(
+                        new Object[] { new AspectList(), Integer.valueOf(7), Integer.valueOf(1), Integer.valueOf(6),
+                                Arrays.asList(
+                                        new ItemStack[] { empty, new ItemStack(ConfigBlocks.blockCandle), empty, empty,
+                                                empty, new ItemStack(ConfigBlocks.blockCandle), empty, empty, empty,
+                                                empty, new ItemStack(Blocks.skull), empty, empty, empty, empty, empty,
+                                                new ItemStack(Blocks.skull),
+                                                new ItemStack(ThaumicExploration.itemAltar),
+                                                new ItemStack(Blocks.skull), empty, empty,
+                                                new ItemStack(ConfigBlocks.blockCandle), empty, empty,
+                                                new ItemStack(Blocks.skull), empty, empty,
+                                                new ItemStack(ConfigBlocks.blockCandle), empty, empty, empty, empty,
+                                                empty, empty, empty, empty, empty, empty,
+                                                new ItemStack(ConfigBlocks.blockCandle), empty, empty, empty }) }));
     }
 
     private static void initInfusionRecipes() {
         registerResearchItemI(
-            "SOULBRAZIER",
-            new ItemStack(ThaumicExploration.soulBrazier),
-            7,
-            new AspectList().add(Aspect.DEATH, 32)
-                .add(Aspect.DARKNESS, 32)
-                .add(Aspect.AURA, 32),
-            new ItemStack(Items.nether_star),
-            new ItemStack(ConfigItems.itemZombieBrain),
-            new ItemStack(ConfigItems.itemResource, 1, 16),
-            new ItemStack(ConfigItems.itemResource, 1, 16));
+                "SOULBRAZIER",
+                new ItemStack(ThaumicExploration.soulBrazier),
+                7,
+                new AspectList().add(Aspect.DEATH, 32).add(Aspect.DARKNESS, 32).add(Aspect.AURA, 32),
+                new ItemStack(Items.nether_star),
+                new ItemStack(ConfigItems.itemZombieBrain),
+                new ItemStack(ConfigItems.itemResource, 1, 16),
+                new ItemStack(ConfigItems.itemResource, 1, 16));
         registerResearchItemI(
-            "BRAINCURE",
-            new ItemStack(ThaumicExploration.pureZombieBrain),
-            3,
-            new AspectList().add(Aspect.MAN, 4)
-                .add(Aspect.MIND, 6)
-                .add(Aspect.HEAL, 2),
-            new ItemStack(ConfigItems.itemZombieBrain, 1),
-            new ItemStack(Items.potionitem, 1, 8232),
-            new ItemStack(Items.golden_apple),
-            new ItemStack(Items.water_bucket));
+                "BRAINCURE",
+                new ItemStack(ThaumicExploration.pureZombieBrain),
+                3,
+                new AspectList().add(Aspect.MAN, 4).add(Aspect.MIND, 6).add(Aspect.HEAL, 2),
+                new ItemStack(ConfigItems.itemZombieBrain, 1),
+                new ItemStack(Items.potionitem, 1, 8232),
+                new ItemStack(Items.golden_apple),
+                new ItemStack(Items.water_bucket));
         registerResearchItemI(
-            "BRAINCURE",
-            "BRAINCUREALT1",
-            new ItemStack(ThaumicExploration.pureZombieBrain),
-            3,
-            new AspectList().add(Aspect.MAN, 4)
-                .add(Aspect.MIND, 6)
-                .add(Aspect.HEAL, 2),
-            new ItemStack(ConfigItems.itemZombieBrain, 1),
-            new ItemStack(Items.potionitem, 1, 8264),
-            new ItemStack(Items.golden_apple),
-            new ItemStack(Items.water_bucket));
+                "BRAINCURE",
+                "BRAINCUREALT1",
+                new ItemStack(ThaumicExploration.pureZombieBrain),
+                3,
+                new AspectList().add(Aspect.MAN, 4).add(Aspect.MIND, 6).add(Aspect.HEAL, 2),
+                new ItemStack(ConfigItems.itemZombieBrain, 1),
+                new ItemStack(Items.potionitem, 1, 8264),
+                new ItemStack(Items.golden_apple),
+                new ItemStack(Items.water_bucket));
         registerResearchItemI(
-            "BRAINCURE",
-            "BRAINCUREALT3",
-            new ItemStack(ThaumicExploration.pureZombieBrain),
-            3,
-            new AspectList().add(Aspect.MAN, 4)
-                .add(Aspect.MIND, 6)
-                .add(Aspect.HEAL, 2),
-            new ItemStack(ConfigItems.itemZombieBrain, 1),
-            new ItemStack(Items.potionitem, 1, 16424),
-            new ItemStack(Items.golden_apple),
-            new ItemStack(Items.water_bucket));
+                "BRAINCURE",
+                "BRAINCUREALT3",
+                new ItemStack(ThaumicExploration.pureZombieBrain),
+                3,
+                new AspectList().add(Aspect.MAN, 4).add(Aspect.MIND, 6).add(Aspect.HEAL, 2),
+                new ItemStack(ConfigItems.itemZombieBrain, 1),
+                new ItemStack(Items.potionitem, 1, 16424),
+                new ItemStack(Items.golden_apple),
+                new ItemStack(Items.water_bucket));
         registerResearchItemI(
-            "BRAINCURE",
-            "BRAINCUREALT4",
-            new ItemStack(ThaumicExploration.pureZombieBrain),
-            3,
-            new AspectList().add(Aspect.MAN, 4)
-                .add(Aspect.MIND, 6)
-                .add(Aspect.HEAL, 2),
-            new ItemStack(ConfigItems.itemZombieBrain, 1),
-            new ItemStack(Items.potionitem, 1, 16456),
-            new ItemStack(Items.golden_apple),
-            new ItemStack(Items.water_bucket));
+                "BRAINCURE",
+                "BRAINCUREALT4",
+                new ItemStack(ThaumicExploration.pureZombieBrain),
+                3,
+                new AspectList().add(Aspect.MAN, 4).add(Aspect.MIND, 6).add(Aspect.HEAL, 2),
+                new ItemStack(ConfigItems.itemZombieBrain, 1),
+                new ItemStack(Items.potionitem, 1, 16456),
+                new ItemStack(Items.golden_apple),
+                new ItemStack(Items.water_bucket));
         registerResearchItemI(
-            "BRAINCURE",
-            "BRAINCUREALT5",
-            new ItemStack(ThaumicExploration.pureZombieBrain),
-            3,
-            new AspectList().add(Aspect.MAN, 4)
-                .add(Aspect.MIND, 6)
-                .add(Aspect.HEAL, 2),
-            new ItemStack(ConfigItems.itemZombieBrain, 1),
-            new ItemStack(Items.potionitem, 1, 8200),
-            new ItemStack(Items.golden_apple),
-            new ItemStack(Items.water_bucket));
+                "BRAINCURE",
+                "BRAINCUREALT5",
+                new ItemStack(ThaumicExploration.pureZombieBrain),
+                3,
+                new AspectList().add(Aspect.MAN, 4).add(Aspect.MIND, 6).add(Aspect.HEAL, 2),
+                new ItemStack(ConfigItems.itemZombieBrain, 1),
+                new ItemStack(Items.potionitem, 1, 8200),
+                new ItemStack(Items.golden_apple),
+                new ItemStack(Items.water_bucket));
 
         registerResearchItemI(
-            "ROD_AMBER",
-            new ItemStack(ThaumicExploration.amberCore),
-            5,
-            new AspectList().add(Aspect.MAGIC, 14)
-                .add(Aspect.AURA, 4)
-                .add(Aspect.TRAP, 6),
-            new ItemStack(ConfigBlocks.blockCosmeticOpaque),
-            new ItemStack(ConfigItems.itemResource, 1, 14),
-            new ItemStack(ConfigItems.itemResource, 1, 14));
+                "ROD_AMBER",
+                new ItemStack(ThaumicExploration.amberCore),
+                5,
+                new AspectList().add(Aspect.MAGIC, 14).add(Aspect.AURA, 4).add(Aspect.TRAP, 6),
+                new ItemStack(ConfigBlocks.blockCosmeticOpaque),
+                new ItemStack(ConfigItems.itemResource, 1, 14),
+                new ItemStack(ConfigItems.itemResource, 1, 14));
 
         registerResearchItemI(
-            "ROD_TRANSMUTATION",
-            new ItemStack(ThaumicExploration.transmutationCore),
-            6,
-            new AspectList().add(Aspect.MAGIC, 32)
-                .add(Aspect.EXCHANGE, 16)
-                .add(Aspect.AURA, 4),
-            new ItemStack(ConfigItems.itemResource, 1, 15),
-            new ItemStack(ConfigItems.itemShard, 1, 0),
-            new ItemStack(ConfigItems.itemShard, 1, 1),
-            new ItemStack(ConfigItems.itemShard, 1, 2),
-            new ItemStack(ConfigItems.itemShard, 1, 3),
-            new ItemStack(ConfigItems.itemShard, 1, 4),
-            new ItemStack(ConfigItems.itemShard, 1, 5),
-            new ItemStack(ConfigItems.itemResource, 1, 14));
+                "ROD_TRANSMUTATION",
+                new ItemStack(ThaumicExploration.transmutationCore),
+                6,
+                new AspectList().add(Aspect.MAGIC, 32).add(Aspect.EXCHANGE, 16).add(Aspect.AURA, 4),
+                new ItemStack(ConfigItems.itemResource, 1, 15),
+                new ItemStack(ConfigItems.itemShard, 1, 0),
+                new ItemStack(ConfigItems.itemShard, 1, 1),
+                new ItemStack(ConfigItems.itemShard, 1, 2),
+                new ItemStack(ConfigItems.itemShard, 1, 3),
+                new ItemStack(ConfigItems.itemShard, 1, 4),
+                new ItemStack(ConfigItems.itemShard, 1, 5),
+                new ItemStack(ConfigItems.itemResource, 1, 14));
 
         if (ConfigTX.breadWand) {
             registerResearchItemI(
-                "ROD_BREAD",
-                new ItemStack(ThaumicExploration.breadCore),
-                3,
-                new AspectList().add(Aspect.MAGIC, 8)
-                    .add(Aspect.CROP, 8)
-                    .add(Aspect.HUNGER, 4),
-                new ItemStack(Items.bread),
-                new ItemStack(ConfigItems.itemResource, 1, 14));
+                    "ROD_BREAD",
+                    new ItemStack(ThaumicExploration.breadCore),
+                    3,
+                    new AspectList().add(Aspect.MAGIC, 8).add(Aspect.CROP, 8).add(Aspect.HUNGER, 4),
+                    new ItemStack(Items.bread),
+                    new ItemStack(ConfigItems.itemResource, 1, 14));
         }
 
         registerResearchItemI(
-            "CRUCSOULS",
-            new ItemStack(ThaumicExploration.crucibleSouls),
-            5,
-            new AspectList().add(Aspect.DEATH, 40)
-                .add(Aspect.UNDEAD, 10)
-                .add(Aspect.HUNGER, 20)
-                .add(Aspect.TRAP, 20)
-                .add(Aspect.WEAPON, 5)
-                .add(Aspect.SOUL, 30),
-            new ItemStack(ConfigBlocks.blockStoneDevice, 1, 0),
-            new ItemStack(ConfigBlocks.blockMetalDevice, 1, 0),
-            new ItemStack(Items.rotten_flesh),
-            new ItemStack(Items.bone),
-            new ItemStack(Items.ghast_tear),
-            new ItemStack(Blocks.soul_sand),
-            new ItemStack(ConfigBlocks.blockMetalDevice, 1, 1));
+                "CRUCSOULS",
+                new ItemStack(ThaumicExploration.crucibleSouls),
+                5,
+                new AspectList().add(Aspect.DEATH, 40).add(Aspect.UNDEAD, 10).add(Aspect.HUNGER, 20)
+                        .add(Aspect.TRAP, 20).add(Aspect.WEAPON, 5).add(Aspect.SOUL, 30),
+                new ItemStack(ConfigBlocks.blockStoneDevice, 1, 0),
+                new ItemStack(ConfigBlocks.blockMetalDevice, 1, 0),
+                new ItemStack(Items.rotten_flesh),
+                new ItemStack(Items.bone),
+                new ItemStack(Items.ghast_tear),
+                new ItemStack(Blocks.soul_sand),
+                new ItemStack(ConfigBlocks.blockMetalDevice, 1, 1));
 
         registerResearchItemI(
-            "TRASHJAR",
-            new ItemStack(ThaumicExploration.trashJar),
-            7,
-            new AspectList().add(Aspect.ENTROPY, 16)
-                .add(Aspect.VOID, 12)
-                .add(Aspect.HUNGER, 12)
-                .add(Aspect.ELDRITCH, 12),
-            new ItemStack(ConfigBlocks.blockJar, 1, 3),
-            new ItemStack(ConfigBlocks.blockChestHungry),
-            new ItemStack(ConfigBlocks.blockCosmeticOpaque, 6, 2),
-            new ItemStack(ConfigItems.itemShard, 1, 5),
-            new ItemStack(ConfigBlocks.blockCosmeticOpaque, 6, 2),
-            new ItemStack(ConfigItems.itemShard, 1, 5),
-            new ItemStack(ConfigBlocks.blockCosmeticOpaque, 6, 2),
-            new ItemStack(ConfigItems.itemShard, 1, 5),
-            new ItemStack(ConfigBlocks.blockCosmeticOpaque, 6, 2));
+                "TRASHJAR",
+                new ItemStack(ThaumicExploration.trashJar),
+                7,
+                new AspectList().add(Aspect.ENTROPY, 16).add(Aspect.VOID, 12).add(Aspect.HUNGER, 12)
+                        .add(Aspect.ELDRITCH, 12),
+                new ItemStack(ConfigBlocks.blockJar, 1, 3),
+                new ItemStack(ConfigBlocks.blockChestHungry),
+                new ItemStack(ConfigBlocks.blockCosmeticOpaque, 6, 2),
+                new ItemStack(ConfigItems.itemShard, 1, 5),
+                new ItemStack(ConfigBlocks.blockCosmeticOpaque, 6, 2),
+                new ItemStack(ConfigItems.itemShard, 1, 5),
+                new ItemStack(ConfigBlocks.blockCosmeticOpaque, 6, 2),
+                new ItemStack(ConfigItems.itemShard, 1, 5),
+                new ItemStack(ConfigBlocks.blockCosmeticOpaque, 6, 2));
 
         registerResearchItemI(
-            "ROD_NECROMANCER_staff",
-            new ItemStack(ThaumicExploration.necroStaffCore),
-            6,
-            new AspectList().add(Aspect.DEATH, 32)
-                .add(Aspect.ENTROPY, 16)
-                .add(Aspect.SOUL, 16)
-                .add(Aspect.AURA, 8),
-            new ItemStack(ConfigItems.itemWandRod, 1, 57),
-            new ItemStack(Items.skull, 1, 1),
-            new ItemStack(Items.rotten_flesh),
-            new ItemStack(Items.bone),
-            new ItemStack(ThaumicExploration.pureZombieBrain),
-            new ItemStack(Items.bone),
-            new ItemStack(Items.rotten_flesh));
+                "ROD_NECROMANCER_staff",
+                new ItemStack(ThaumicExploration.necroStaffCore),
+                6,
+                new AspectList().add(Aspect.DEATH, 32).add(Aspect.ENTROPY, 16).add(Aspect.SOUL, 16).add(Aspect.AURA, 8),
+                new ItemStack(ConfigItems.itemWandRod, 1, 57),
+                new ItemStack(Items.skull, 1, 1),
+                new ItemStack(Items.rotten_flesh),
+                new ItemStack(Items.bone),
+                new ItemStack(ThaumicExploration.pureZombieBrain),
+                new ItemStack(Items.bone),
+                new ItemStack(Items.rotten_flesh));
 
         registerResearchItemI(
-            "TENTACLERING",
-            new ItemStack(ThaumicExploration.tentacleRing),
-            4,
-            new AspectList().add(Aspect.TAINT, 32)
-                .add(Aspect.WEAPON, 8)
-                .add(Aspect.ARMOR, 16)
-                .add(Aspect.BEAST, 8),
-            new ItemStack(ConfigItems.itemBaubleBlanks, 1, 1),
-            new ItemStack(ConfigItems.itemResource, 1, 11),
-            new ItemStack(ConfigItems.itemResource, 1, 12),
-            new ItemStack(ConfigItems.itemResource, 1, 11),
-            new ItemStack(ConfigItems.itemResource, 1, 12));
+                "TENTACLERING",
+                new ItemStack(ThaumicExploration.tentacleRing),
+                4,
+                new AspectList().add(Aspect.TAINT, 32).add(Aspect.WEAPON, 8).add(Aspect.ARMOR, 16).add(Aspect.BEAST, 8),
+                new ItemStack(ConfigItems.itemBaubleBlanks, 1, 1),
+                new ItemStack(ConfigItems.itemResource, 1, 11),
+                new ItemStack(ConfigItems.itemResource, 1, 12),
+                new ItemStack(ConfigItems.itemResource, 1, 11),
+                new ItemStack(ConfigItems.itemResource, 1, 12));
 
         registerResearchItemI(
-            "STABILIZERBELT",
-            new ItemStack(ThaumicExploration.stabilizerBelt),
-            3,
-            new AspectList().add(Aspect.ORDER, 12)
-                .add(Aspect.EARTH, 12)
-                .add(Aspect.ARMOR, 4)
-                .add(Aspect.TRAVEL, 8),
-            new ItemStack(ConfigItems.itemBaubleBlanks, 1, 2),
-            new ItemStack(Items.iron_ingot),
-            new ItemStack(Items.iron_ingot),
-            new ItemStack(Items.gold_ingot),
-            new ItemStack(Items.gold_ingot),
-            new ItemStack(ConfigItems.itemShard, 1, 4),
-            new ItemStack(ConfigItems.itemShard, 1, 3));
+                "STABILIZERBELT",
+                new ItemStack(ThaumicExploration.stabilizerBelt),
+                3,
+                new AspectList().add(Aspect.ORDER, 12).add(Aspect.EARTH, 12).add(Aspect.ARMOR, 4).add(Aspect.TRAVEL, 8),
+                new ItemStack(ConfigItems.itemBaubleBlanks, 1, 2),
+                new ItemStack(Items.iron_ingot),
+                new ItemStack(Items.iron_ingot),
+                new ItemStack(Items.gold_ingot),
+                new ItemStack(Items.gold_ingot),
+                new ItemStack(ConfigItems.itemShard, 1, 4),
+                new ItemStack(ConfigItems.itemShard, 1, 3));
 
         // for (int i = 0; i<16; i++) {
         // registerResearchItemI("CHESTSEAL", new ItemStack(ThaumicExploration.chestSeal, 1, i), 7,
@@ -270,110 +241,95 @@ public final class ModRecipes {
         // }
 
         registerResearchItemI(
-            "METEORBOOTS",
-            new ItemStack(ThaumicExploration.bootsMeteor),
-            4,
-            new AspectList().add(Aspect.FIRE, 25)
-                .add(Aspect.ENERGY, 25)
-                .add(Aspect.TRAVEL, 25)
-                .add(Aspect.FLIGHT, 25),
-            new ItemStack(ConfigItems.itemBootsTraveller, 1, 32767),
-            new ItemStack(ConfigBlocks.blockCrystal, 1, 1),
-            new ItemStack(Blocks.netherrack),
-            new ItemStack(Blocks.netherrack),
-            new ItemStack(Blocks.netherrack),
-            new ItemStack(ConfigItems.itemFocusFire));
+                "METEORBOOTS",
+                new ItemStack(ThaumicExploration.bootsMeteor),
+                4,
+                new AspectList().add(Aspect.FIRE, 25).add(Aspect.ENERGY, 25).add(Aspect.TRAVEL, 25)
+                        .add(Aspect.FLIGHT, 25),
+                new ItemStack(ConfigItems.itemBootsTraveller, 1, 32767),
+                new ItemStack(ConfigBlocks.blockCrystal, 1, 1),
+                new ItemStack(Blocks.netherrack),
+                new ItemStack(Blocks.netherrack),
+                new ItemStack(Blocks.netherrack),
+                new ItemStack(ConfigItems.itemFocusFire));
 
         if (ConfigTX.enchantmentBindingEnable) {
             registerResearchItemIE(
-                "ENCHBINDING",
-                "ENCHBINDING",
-                Enchantment.enchantmentsList[ThaumicExploration.enchantmentBinding.effectId],
-                3,
-                new AspectList().add(Aspect.TRAP, 8)
-                    .add(Aspect.ENTROPY, 4)
-                    .add(Aspect.TRAVEL, 4),
-                new ItemStack(Items.iron_sword),
-                new ItemStack(ConfigItems.itemResource, 1, 14),
-                new ItemStack(Blocks.soul_sand));
+                    "ENCHBINDING",
+                    "ENCHBINDING",
+                    Enchantment.enchantmentsList[ThaumicExploration.enchantmentBinding.effectId],
+                    3,
+                    new AspectList().add(Aspect.TRAP, 8).add(Aspect.ENTROPY, 4).add(Aspect.TRAVEL, 4),
+                    new ItemStack(Items.iron_sword),
+                    new ItemStack(ConfigItems.itemResource, 1, 14),
+                    new ItemStack(Blocks.soul_sand));
         }
         if (ConfigTX.enchantmentDisarmEnable) {
             registerResearchItemIE(
-                "ENCHDISARM",
-                "ENCHDISARM",
-                Enchantment.enchantmentsList[ThaumicExploration.enchantmentDisarm.effectId],
-                5,
-                new AspectList().add(Aspect.WEAPON, 4)
-                    .add(Aspect.SLIME, 8)
-                    .add(Aspect.TRAP, 4),
-                new ItemStack(Items.iron_sword),
-                new ItemStack(ConfigItems.itemResource, 1, 14),
-                new ItemStack(Items.slime_ball));
+                    "ENCHDISARM",
+                    "ENCHDISARM",
+                    Enchantment.enchantmentsList[ThaumicExploration.enchantmentDisarm.effectId],
+                    5,
+                    new AspectList().add(Aspect.WEAPON, 4).add(Aspect.SLIME, 8).add(Aspect.TRAP, 4),
+                    new ItemStack(Items.iron_sword),
+                    new ItemStack(ConfigItems.itemResource, 1, 14),
+                    new ItemStack(Items.slime_ball));
         }
         if (ConfigTX.enchantmentNVEnable) {
             registerResearchItemIE(
-                "ENCHNIGHTVISION",
-                "ENCHNIGHTVISION",
-                Enchantment.enchantmentsList[ThaumicExploration.enchantmentNightVision.effectId],
-                5,
-                new AspectList().add(Aspect.SENSES, 16)
-                    .add(Aspect.DARKNESS, 8)
-                    .add(Aspect.LIGHT, 16),
-                new ItemStack(Items.golden_carrot),
-                new ItemStack(ConfigItems.itemResource, 1, 14),
-                new ItemStack(Items.golden_carrot));
+                    "ENCHNIGHTVISION",
+                    "ENCHNIGHTVISION",
+                    Enchantment.enchantmentsList[ThaumicExploration.enchantmentNightVision.effectId],
+                    5,
+                    new AspectList().add(Aspect.SENSES, 16).add(Aspect.DARKNESS, 8).add(Aspect.LIGHT, 16),
+                    new ItemStack(Items.golden_carrot),
+                    new ItemStack(ConfigItems.itemResource, 1, 14),
+                    new ItemStack(Items.golden_carrot));
         }
 
         registerResearchItemI(
-            "TALISMANFOOD",
-            new ItemStack(ThaumicExploration.talismanFood),
-            5,
-            new AspectList().add(Aspect.HUNGER, 30)
-                .add(Aspect.FLESH, 25)
-                .add(Aspect.CROP, 25)
-                .add(Aspect.EXCHANGE, 10)
-                .add(Aspect.VOID, 32),
-            new ItemStack(ConfigItems.itemResource, 1, 15),
-            new ItemStack(Blocks.obsidian),
-            new ItemStack(Items.cooked_beef),
-            new ItemStack(Items.cooked_chicken),
-            new ItemStack(Items.cooked_porkchop),
-            new ItemStack(Items.cooked_fished),
-            new ItemStack(Items.bread),
-            new ItemStack(Blocks.chest),
-            new ItemStack(Items.golden_carrot));
+                "TALISMANFOOD",
+                new ItemStack(ThaumicExploration.talismanFood),
+                5,
+                new AspectList().add(Aspect.HUNGER, 30).add(Aspect.FLESH, 25).add(Aspect.CROP, 25)
+                        .add(Aspect.EXCHANGE, 10).add(Aspect.VOID, 32),
+                new ItemStack(ConfigItems.itemResource, 1, 15),
+                new ItemStack(Blocks.obsidian),
+                new ItemStack(Items.cooked_beef),
+                new ItemStack(Items.cooked_chicken),
+                new ItemStack(Items.cooked_porkchop),
+                new ItemStack(Items.cooked_fished),
+                new ItemStack(Items.bread),
+                new ItemStack(Blocks.chest),
+                new ItemStack(Items.golden_carrot));
 
         registerResearchItemI(
-            "REPLICATOR",
-            new ItemStack(ThaumicExploration.replicator),
-            9,
-            new AspectList().add(Aspect.CRAFT, 50)
-                .add(Aspect.MECHANISM, 30)
-                .add(Aspect.TOOL, 30)
-                .add(Aspect.ORDER, 20),
-            new ItemStack(ConfigBlocks.blockStoneDevice, 1, 2),
-            new ItemStack(ConfigBlocks.blockTable, 1, 15),
-            new ItemStack(Items.gold_ingot),
-            new ItemStack(ConfigItems.itemResource, 1, 2),
-            new ItemStack(Items.gold_ingot),
-            new ItemStack(ConfigItems.itemResource, 1, 2),
-            new ItemStack(Items.gold_ingot),
-            new ItemStack(ConfigItems.itemResource, 1, 2));
+                "REPLICATOR",
+                new ItemStack(ThaumicExploration.replicator),
+                9,
+                new AspectList().add(Aspect.CRAFT, 50).add(Aspect.MECHANISM, 30).add(Aspect.TOOL, 30)
+                        .add(Aspect.ORDER, 20),
+                new ItemStack(ConfigBlocks.blockStoneDevice, 1, 2),
+                new ItemStack(ConfigBlocks.blockTable, 1, 15),
+                new ItemStack(Items.gold_ingot),
+                new ItemStack(ConfigItems.itemResource, 1, 2),
+                new ItemStack(Items.gold_ingot),
+                new ItemStack(ConfigItems.itemResource, 1, 2),
+                new ItemStack(Items.gold_ingot),
+                new ItemStack(ConfigItems.itemResource, 1, 2));
 
         registerResearchItemI(
-            "COMETBOOTS",
-            new ItemStack(ThaumicExploration.bootsComet),
-            4,
-            new AspectList().add(Aspect.WATER, 25)
-                .add(Aspect.COLD, 25)
-                .add(Aspect.TRAVEL, 25)
-                .add(Aspect.MOTION, 25),
-            new ItemStack(ConfigItems.itemBootsTraveller, 1, 32767),
-            new ItemStack(ConfigBlocks.blockCrystal, 1, 2),
-            new ItemStack(Blocks.snow),
-            new ItemStack(Blocks.snow),
-            new ItemStack(Blocks.snow),
-            new ItemStack(ConfigItems.itemFocusFrost));
+                "COMETBOOTS",
+                new ItemStack(ThaumicExploration.bootsComet),
+                4,
+                new AspectList().add(Aspect.WATER, 25).add(Aspect.COLD, 25).add(Aspect.TRAVEL, 25)
+                        .add(Aspect.MOTION, 25),
+                new ItemStack(ConfigItems.itemBootsTraveller, 1, 32767),
+                new ItemStack(ConfigBlocks.blockCrystal, 1, 2),
+                new ItemStack(Blocks.snow),
+                new ItemStack(Blocks.snow),
+                new ItemStack(Blocks.snow),
+                new ItemStack(ConfigItems.itemFocusFrost));
 
         // registerResearchItemI("CHESTSEAL", new ItemStack(ThaumicExploration.chestSeal, 1, 32767), 7,
         // new AspectList().add(Aspect.ELDRITCH, 6).add(Aspect.EXCHANGE,4).add(Aspect.VOID, 4).add(Aspect.TRAP,
@@ -384,94 +340,80 @@ public final class ModRecipes {
         // ItemStack(ConfigItems.itemResource,1,3));
 
         registerResearchItemI(
-            "THINKTANK",
-            new ItemStack(ThaumicExploration.thinkTankJar),
-            6,
-            new AspectList().add(Aspect.GREED, 32)
-                .add(Aspect.MIND, 48)
-                .add(Aspect.SENSES, 32)
-                .add(Aspect.UNDEAD, 32)
-                .add(Aspect.ELDRITCH, 24)
-                .add(Aspect.MAGIC, 16),
-            new ItemStack(ConfigBlocks.blockJar),
-            new ItemStack(ThaumicExploration.pureZombieBrain),
-            new ItemStack(ConfigItems.itemInkwell, 1, 0),
-            new ItemStack(ThaumicExploration.pureZombieBrain),
-            new ItemStack(ConfigItems.itemThaumonomicon),
-            new ItemStack(ThaumicExploration.pureZombieBrain),
-            new ItemStack(ConfigItems.itemThaumometer));
+                "THINKTANK",
+                new ItemStack(ThaumicExploration.thinkTankJar),
+                6,
+                new AspectList().add(Aspect.GREED, 32).add(Aspect.MIND, 48).add(Aspect.SENSES, 32)
+                        .add(Aspect.UNDEAD, 32).add(Aspect.ELDRITCH, 24).add(Aspect.MAGIC, 16),
+                new ItemStack(ConfigBlocks.blockJar),
+                new ItemStack(ThaumicExploration.pureZombieBrain),
+                new ItemStack(ConfigItems.itemInkwell, 1, 0),
+                new ItemStack(ThaumicExploration.pureZombieBrain),
+                new ItemStack(ConfigItems.itemThaumonomicon),
+                new ItemStack(ThaumicExploration.pureZombieBrain),
+                new ItemStack(ConfigItems.itemThaumometer));
 
         if (ConfigTX.allowUrnWater) {
             registerResearchItemI(
-                "URN",
-                new ItemStack(ThaumicExploration.everfullUrn),
-                2,
-                new AspectList().add(Aspect.WATER, 20)
-                    .add(Aspect.VOID, 8)
-                    .add(Aspect.MAGIC, 4),
-                new ItemStack(Items.flower_pot),
-                new ItemStack(Items.water_bucket),
-                new ItemStack(Items.brick),
-                new ItemStack(Items.water_bucket),
-                new ItemStack(Items.brick),
-                new ItemStack(Items.water_bucket),
-                new ItemStack(Items.brick));
+                    "URN",
+                    new ItemStack(ThaumicExploration.everfullUrn),
+                    2,
+                    new AspectList().add(Aspect.WATER, 20).add(Aspect.VOID, 8).add(Aspect.MAGIC, 4),
+                    new ItemStack(Items.flower_pot),
+                    new ItemStack(Items.water_bucket),
+                    new ItemStack(Items.brick),
+                    new ItemStack(Items.water_bucket),
+                    new ItemStack(Items.brick),
+                    new ItemStack(Items.water_bucket),
+                    new ItemStack(Items.brick));
 
             if (ConfigTX.allowUrnLava) {
                 registerResearchItemI(
-                    "BURN",
-                    new ItemStack(ThaumicExploration.everburnUrn),
-                    2,
-                    new AspectList().add(Aspect.FIRE, 20)
-                        .add(Aspect.VOID, 8)
-                        .add(Aspect.MAGIC, 4),
-                    new ItemStack(Items.flower_pot),
-                    new ItemStack(Items.lava_bucket),
-                    new ItemStack(Items.brick),
-                    new ItemStack(Items.lava_bucket),
-                    new ItemStack(Items.brick),
-                    new ItemStack(Items.lava_bucket),
-                    new ItemStack(Items.brick));
+                        "BURN",
+                        new ItemStack(ThaumicExploration.everburnUrn),
+                        2,
+                        new AspectList().add(Aspect.FIRE, 20).add(Aspect.VOID, 8).add(Aspect.MAGIC, 4),
+                        new ItemStack(Items.flower_pot),
+                        new ItemStack(Items.lava_bucket),
+                        new ItemStack(Items.brick),
+                        new ItemStack(Items.lava_bucket),
+                        new ItemStack(Items.brick),
+                        new ItemStack(Items.lava_bucket),
+                        new ItemStack(Items.brick));
             }
         }
 
         registerResearchItemI(
-            "NECROINFUSION",
-            new ItemStack(ThaumicExploration.itemAltar),
-            7,
-            new AspectList().add(Aspect.MAGIC, 32)
-                .add(Aspect.DEATH, 16)
-                .add(Aspect.UNDEAD, 16)
-                .add(Aspect.CRAFT, 16),
-            new ItemStack(ConfigBlocks.blockStoneDevice, 1, 1),
-            new ItemStack(Blocks.netherrack),
-            new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 6),
-            new ItemStack(ConfigBlocks.blockStoneDevice, 1, 2),
-            new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 6));
+                "NECROINFUSION",
+                new ItemStack(ThaumicExploration.itemAltar),
+                7,
+                new AspectList().add(Aspect.MAGIC, 32).add(Aspect.DEATH, 16).add(Aspect.UNDEAD, 16)
+                        .add(Aspect.CRAFT, 16),
+                new ItemStack(ConfigBlocks.blockStoneDevice, 1, 1),
+                new ItemStack(Blocks.netherrack),
+                new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 6),
+                new ItemStack(ConfigBlocks.blockStoneDevice, 1, 2),
+                new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 6));
 
         registerResearchItemI(
-            "CAP_SOJOURNER",
-            new ItemStack(ThaumicExploration.sojournerCap),
-            5,
-            new AspectList().add(Aspect.AURA, 6)
-                .add(Aspect.MAGIC, 12)
-                .add(Aspect.EXCHANGE, 16)
-                .add(Aspect.ENERGY, 12),
-            new ItemStack(ThaumicExploration.sojournerCapUncharged),
-            new ItemStack(ConfigItems.itemResource, 1, 14),
-            new ItemStack(ConfigItems.itemResource, 1, 14));
+                "CAP_SOJOURNER",
+                new ItemStack(ThaumicExploration.sojournerCap),
+                5,
+                new AspectList().add(Aspect.AURA, 6).add(Aspect.MAGIC, 12).add(Aspect.EXCHANGE, 16)
+                        .add(Aspect.ENERGY, 12),
+                new ItemStack(ThaumicExploration.sojournerCapUncharged),
+                new ItemStack(ConfigItems.itemResource, 1, 14),
+                new ItemStack(ConfigItems.itemResource, 1, 14));
 
         registerResearchItemI(
-            "CAP_MECHANIST",
-            new ItemStack(ThaumicExploration.mechanistCap),
-            5,
-            new AspectList().add(Aspect.MECHANISM, 16)
-                .add(Aspect.MAGIC, 12)
-                .add(Aspect.AURA, 6)
-                .add(Aspect.ENERGY, 12),
-            new ItemStack(ThaumicExploration.mechanistCapUncharged),
-            new ItemStack(ConfigItems.itemResource, 1, 14),
-            new ItemStack(ConfigItems.itemResource, 1, 14));
+                "CAP_MECHANIST",
+                new ItemStack(ThaumicExploration.mechanistCap),
+                5,
+                new AspectList().add(Aspect.MECHANISM, 16).add(Aspect.MAGIC, 12).add(Aspect.AURA, 6)
+                        .add(Aspect.ENERGY, 12),
+                new ItemStack(ThaumicExploration.mechanistCapUncharged),
+                new ItemStack(ConfigItems.itemResource, 1, 14),
+                new ItemStack(ConfigItems.itemResource, 1, 14));
 
         // for (int i = 0; i<16; i++) {
         // registerResearchItemI("JARSEAL", new ItemStack(ThaumicExploration.jarSeal, 1, i), 7,
@@ -508,192 +450,176 @@ public final class ModRecipes {
     private static void initArcaneRecipes() {
         for (int i = 0; i <= 15; i++) {
             registerResearchItemShapeless(
-                "FLOATCANDLE" + i,
-                "FLOATCANDLE",
-                new ItemStack(ThaumicExploration.floatCandle, 3, i),
-                new AspectList().add(Aspect.AIR, 5),
-                new ItemStack(ConfigBlocks.blockCandle, 1, i),
-                new ItemStack(ConfigBlocks.blockCandle, 1, i),
-                new ItemStack(ConfigBlocks.blockCandle, 1, i),
-                new ItemStack(ConfigItems.itemShard, 1, 0));
+                    "FLOATCANDLE" + i,
+                    "FLOATCANDLE",
+                    new ItemStack(ThaumicExploration.floatCandle, 3, i),
+                    new AspectList().add(Aspect.AIR, 5),
+                    new ItemStack(ConfigBlocks.blockCandle, 1, i),
+                    new ItemStack(ConfigBlocks.blockCandle, 1, i),
+                    new ItemStack(ConfigBlocks.blockCandle, 1, i),
+                    new ItemStack(ConfigItems.itemShard, 1, 0));
         }
         registerResearchItemShapeless(
-            "FLOATCANDLE",
-            "FLOATCANDLE",
-            new ItemStack(ThaumicExploration.floatCandle, 3, 32767),
-            new AspectList().add(Aspect.AIR, 5),
-            new ItemStack(ConfigBlocks.blockCandle, 1, 32767),
-            new ItemStack(ConfigBlocks.blockCandle, 1, 32767),
-            new ItemStack(ConfigBlocks.blockCandle, 1, 32767),
-            new ItemStack(ConfigItems.itemShard, 1, 0));
+                "FLOATCANDLE",
+                "FLOATCANDLE",
+                new ItemStack(ThaumicExploration.floatCandle, 3, 32767),
+                new AspectList().add(Aspect.AIR, 5),
+                new ItemStack(ConfigBlocks.blockCandle, 1, 32767),
+                new ItemStack(ConfigBlocks.blockCandle, 1, 32767),
+                new ItemStack(ConfigBlocks.blockCandle, 1, 32767),
+                new ItemStack(ConfigItems.itemShard, 1, 0));
 
         for (int i = 0; i < 6; i++) {
             registerResearchItem(
-                "DISCOUNTRINGS" + i,
-                "DISCOUNTRINGS",
-                new ItemStack(ThaumicExploration.discountRing, 1, i),
-                new AspectList().add(
-                    Aspect.getPrimalAspects()
-                        .get(i),
-                    15),
-                " F ",
-                "F F",
-                " F ",
-                'F',
-                new ItemStack(ConfigItems.itemShard, 1, ItemBaubleDiscountRing.correspondingShards[i]));
+                    "DISCOUNTRINGS" + i,
+                    "DISCOUNTRINGS",
+                    new ItemStack(ThaumicExploration.discountRing, 1, i),
+                    new AspectList().add(Aspect.getPrimalAspects().get(i), 15),
+                    " F ",
+                    "F F",
+                    " F ",
+                    'F',
+                    new ItemStack(ConfigItems.itemShard, 1, ItemBaubleDiscountRing.correspondingShards[i]));
         }
 
         registerResearchItem(
-            "DREAMCATCHER",
-            "DREAMCATCHER",
-            new ItemStack(ThaumicExploration.charmNoTaint),
-            new AspectList().add(Aspect.ORDER, 15)
-                .add(Aspect.ENTROPY, 15),
-            "GPG",
-            "PSP",
-            "FPF",
-            'G',
-            new ItemStack(ConfigItems.itemResource, 1, 11),
-            'P',
-            new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6),
-            'S',
-            new ItemStack(ConfigItems.itemResource, 1, 12),
-            'F',
-            new ItemStack(Items.feather));
+                "DREAMCATCHER",
+                "DREAMCATCHER",
+                new ItemStack(ThaumicExploration.charmNoTaint),
+                new AspectList().add(Aspect.ORDER, 15).add(Aspect.ENTROPY, 15),
+                "GPG",
+                "PSP",
+                "FPF",
+                'G',
+                new ItemStack(ConfigItems.itemResource, 1, 11),
+                'P',
+                new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6),
+                'S',
+                new ItemStack(ConfigItems.itemResource, 1, 12),
+                'F',
+                new ItemStack(Items.feather));
 
         registerResearchItem(
-            "DREAMCATCHER2",
-            "DREAMCATCHER",
-            new ItemStack(ThaumicExploration.charmNoTaint),
-            new AspectList().add(Aspect.ORDER, 15)
-                .add(Aspect.ENTROPY, 15),
-            "GPG",
-            "PSP",
-            "FPF",
-            'G',
-            "gooTaint",
-            'P',
-            new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6),
-            'S',
-            new ItemStack(ConfigItems.itemResource, 1, 12),
-            'F',
-            "tendrilTaint");
+                "DREAMCATCHER2",
+                "DREAMCATCHER",
+                new ItemStack(ThaumicExploration.charmNoTaint),
+                new AspectList().add(Aspect.ORDER, 15).add(Aspect.ENTROPY, 15),
+                "GPG",
+                "PSP",
+                "FPF",
+                'G',
+                "gooTaint",
+                'P',
+                new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6),
+                'S',
+                new ItemStack(ConfigItems.itemResource, 1, 12),
+                'F',
+                "tendrilTaint");
 
         registerResearchItem(
-            "UNCHARGEDSOJOURNER",
-            "CAP_SOJOURNER",
-            new ItemStack(ThaumicExploration.sojournerCapUncharged),
-            new AspectList().add(Aspect.AIR, 6)
-                .add(Aspect.ENTROPY, 6)
-                .add(Aspect.ORDER, 6),
-            "ABA",
-            "A A",
-            'A',
-            new ItemStack(Items.dye, 1, 4),
-            'B',
-            new ItemStack(Items.diamond));
+                "UNCHARGEDSOJOURNER",
+                "CAP_SOJOURNER",
+                new ItemStack(ThaumicExploration.sojournerCapUncharged),
+                new AspectList().add(Aspect.AIR, 6).add(Aspect.ENTROPY, 6).add(Aspect.ORDER, 6),
+                "ABA",
+                "A A",
+                'A',
+                new ItemStack(Items.dye, 1, 4),
+                'B',
+                new ItemStack(Items.diamond));
 
         registerResearchItem(
-            "UNCHARGEDMECHANIST",
-            "CAP_MECHANIST",
-            new ItemStack(ThaumicExploration.mechanistCapUncharged),
-            new AspectList().add(Aspect.FIRE, 6)
-                .add(Aspect.ENTROPY, 6)
-                .add(Aspect.ORDER, 6),
-            "AAA",
-            "ABA",
-            " C ",
-            'A',
-            new ItemStack(Items.redstone),
-            'B',
-            new ItemStack(Blocks.piston),
-            'C',
-            new ItemStack(Items.repeater));
+                "UNCHARGEDMECHANIST",
+                "CAP_MECHANIST",
+                new ItemStack(ThaumicExploration.mechanistCapUncharged),
+                new AspectList().add(Aspect.FIRE, 6).add(Aspect.ENTROPY, 6).add(Aspect.ORDER, 6),
+                "AAA",
+                "ABA",
+                " C ",
+                'A',
+                new ItemStack(Items.redstone),
+                'B',
+                new ItemStack(Blocks.piston),
+                'C',
+                new ItemStack(Items.repeater));
 
         registerResearchItem(
-            "ROD_AMBER_staff",
-            "ROD_AMBER_staff",
-            new ItemStack(ThaumicExploration.amberStaffCore),
-            new AspectList().add(Aspect.ORDER, ((WandRod) WandRod.rods.get("AMBER_staff")).getCraftCost()),
-            "  S",
-            " G ",
-            "G  ",
-            'S',
-            new ItemStack(ConfigItems.itemResource, 1, 15),
-            'G',
-            new ItemStack(ThaumicExploration.amberCore));
+                "ROD_AMBER_staff",
+                "ROD_AMBER_staff",
+                new ItemStack(ThaumicExploration.amberStaffCore),
+                new AspectList().add(Aspect.ORDER, ((WandRod) WandRod.rods.get("AMBER_staff")).getCraftCost()),
+                "  S",
+                " G ",
+                "G  ",
+                'S',
+                new ItemStack(ConfigItems.itemResource, 1, 15),
+                'G',
+                new ItemStack(ThaumicExploration.amberCore));
 
         registerResearchItem(
-            "ROD_TRANSMUTATION_staff",
-            "ROD_TRANSMUTATION_staff",
-            new ItemStack(ThaumicExploration.transmutationStaffCore),
-            new AspectList().add(Aspect.ORDER, ((WandRod) WandRod.rods.get("AMBER_staff")).getCraftCost()),
-            "  S",
-            " G ",
-            "G  ",
-            'S',
-            new ItemStack(ConfigItems.itemResource, 1, 15),
-            'G',
-            new ItemStack(ThaumicExploration.transmutationCore));
+                "ROD_TRANSMUTATION_staff",
+                "ROD_TRANSMUTATION_staff",
+                new ItemStack(ThaumicExploration.transmutationStaffCore),
+                new AspectList().add(Aspect.ORDER, ((WandRod) WandRod.rods.get("AMBER_staff")).getCraftCost()),
+                "  S",
+                " G ",
+                "G  ",
+                'S',
+                new ItemStack(ConfigItems.itemResource, 1, 15),
+                'G',
+                new ItemStack(ThaumicExploration.transmutationCore));
     }
 
     private static void initCraftingRecipes() {
         for (int i = 0; i < 16; i++) {
             GameRegistry.addRecipe(
-                new ItemStack(ThaumicExploration.blankSeal, 1, i),
+                    new ItemStack(ThaumicExploration.blankSeal, 1, i),
+                    " X ",
+                    "XZX",
+                    " X ",
+                    'X',
+                    new ItemStack(ConfigItems.itemResource, 1, 4),
+                    'Z',
+                    new ItemStack(Items.dye, 1, i));
+        }
+
+        registerCraftingRecipe(
+                "BLANKSEAL",
+                new ItemStack(ThaumicExploration.blankSeal, 1, 32767),
                 " X ",
                 "XZX",
                 " X ",
                 'X',
                 new ItemStack(ConfigItems.itemResource, 1, 4),
                 'Z',
-                new ItemStack(Items.dye, 1, i));
-        }
-
-        registerCraftingRecipe(
-            "BLANKSEAL",
-            new ItemStack(ThaumicExploration.blankSeal, 1, 32767),
-            " X ",
-            "XZX",
-            " X ",
-            'X',
-            new ItemStack(ConfigItems.itemResource, 1, 4),
-            'Z',
-            new ItemStack(Items.dye, 1, 32767));
+                new ItemStack(Items.dye, 1, 32767));
     }
 
     private static void initCrucibleRecipes() {
         registerCrucibleRecipe(
-            "FLESHCURE",
-            "FLESHCURE",
-            new ItemStack(Items.leather, 2),
-            new ItemStack(Items.rotten_flesh),
-            new AspectList().add(Aspect.FLESH, 2)
-                .add(Aspect.CLOTH, 1));
+                "FLESHCURE",
+                "FLESHCURE",
+                new ItemStack(Items.leather, 2),
+                new ItemStack(Items.rotten_flesh),
+                new AspectList().add(Aspect.FLESH, 2).add(Aspect.CLOTH, 1));
         for (int i = 0; i < 16; i++) {
             registerCrucibleRecipe(
-                "CHESTSEAL",
-                "CHESTSEAL",
-                new ItemStack(ThaumicExploration.chestSeal, 1, i),
-                new ItemStack(ThaumicExploration.blankSeal, 1, i),
-                new AspectList().add(Aspect.ELDRITCH, 6)
-                    .add(Aspect.EXCHANGE, 4)
-                    .add(Aspect.VOID, 4)
-                    .add(Aspect.TRAP, 4)
-                    .add(Aspect.TRAVEL, 6));
+                    "CHESTSEAL",
+                    "CHESTSEAL",
+                    new ItemStack(ThaumicExploration.chestSeal, 1, i),
+                    new ItemStack(ThaumicExploration.blankSeal, 1, i),
+                    new AspectList().add(Aspect.ELDRITCH, 6).add(Aspect.EXCHANGE, 4).add(Aspect.VOID, 4)
+                            .add(Aspect.TRAP, 4).add(Aspect.TRAVEL, 6));
         }
 
         for (int i = 0; i < 16; i++) {
             registerCrucibleRecipe(
-                "JARSEAL",
-                "JARSEAL",
-                new ItemStack(ThaumicExploration.jarSeal, 1, i),
-                new ItemStack(ThaumicExploration.blankSeal, 1, i),
-                new AspectList().add(Aspect.ELDRITCH, 6)
-                    .add(Aspect.EXCHANGE, 4)
-                    .add(Aspect.CRYSTAL, 4)
-                    .add(Aspect.TRAP, 4)
-                    .add(Aspect.TRAVEL, 6));
+                    "JARSEAL",
+                    "JARSEAL",
+                    new ItemStack(ThaumicExploration.jarSeal, 1, i),
+                    new ItemStack(ThaumicExploration.blankSeal, 1, i),
+                    new AspectList().add(Aspect.ELDRITCH, 6).add(Aspect.EXCHANGE, 4).add(Aspect.CRYSTAL, 4)
+                            .add(Aspect.TRAP, 4).add(Aspect.TRAVEL, 6));
         }
         // registerCrucibleRecipe("CHESTSEAL","CHESTSEAL", new ItemStack(ThaumicExploration.chestSeal,1,1), new
         // ItemStack(ThaumicExploration.blankSeal,1,32767),
@@ -714,62 +640,61 @@ public final class ModRecipes {
     }
 
     private static void registerResearchItem(String name, String research, ItemStack output, AspectList aspects,
-        Object... stuff) {
+            Object... stuff) {
         ShapedArcaneRecipe recipe = ThaumcraftApi.addArcaneCraftingRecipe(research, output, aspects, stuff);
         ConfigResearch.recipes.put(name, recipe);
     }
 
     private static void registerCraftingRecipe(String name, ItemStack output, Object... stuff) {
         GameRegistry.addRecipe(output, stuff);
-        List<IRecipe> recipeList = CraftingManager.getInstance()
-            .getRecipeList();
+        List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
         if (name != null && name.length() != 0) ConfigResearch.recipes.put(name, recipeList.get(recipeList.size() - 1));
     }
 
     private static void registerCrucibleRecipe(String name, String research, ItemStack output, ItemStack input,
-        AspectList aspects) {
+            AspectList aspects) {
         CrucibleRecipe recipe = ThaumcraftApi.addCrucibleRecipe(name, output, input, aspects);
         ConfigResearch.recipes.put(research, recipe);
     }
 
     private static void registerResearchItemI(String name, Object output, int instability, AspectList aspects,
-        ItemStack input, ItemStack... stuff) {
+            ItemStack input, ItemStack... stuff) {
         InfusionRecipe recipe = ThaumcraftApi
-            .addInfusionCraftingRecipe(name, output, instability, aspects, input, stuff);
+                .addInfusionCraftingRecipe(name, output, instability, aspects, input, stuff);
         ConfigResearch.recipes.put(name, recipe);
     }
 
     private static void registerResearchItemShapeless(String name, String research, ItemStack output,
-        AspectList aspects, Object... stuff) {
+            AspectList aspects, Object... stuff) {
         ShapelessArcaneRecipe recipe = ThaumcraftApi.addShapelessArcaneCraftingRecipe(research, output, aspects, stuff);
         ConfigResearch.recipes.put(name, recipe);
     }
 
     private static void registerResearchItemI(String name, String research, Object output, int instability,
-        AspectList aspects, ItemStack input, ItemStack... stuff) {
+            AspectList aspects, ItemStack input, ItemStack... stuff) {
         InfusionRecipe recipe = ThaumcraftApi
-            .addInfusionCraftingRecipe(name, output, instability, aspects, input, stuff);
+                .addInfusionCraftingRecipe(name, output, instability, aspects, input, stuff);
         ConfigResearch.recipes.put(research, recipe);
     }
 
     private static void registerResearchItemIUI(String research, String name, Object output, int instability,
-        AspectList aspects, ItemStack input, ItemStack... stuff) {
+            AspectList aspects, ItemStack input, ItemStack... stuff) {
         InfusionRecipe recipe = ThaumcraftApi
-            .addInfusionCraftingRecipe(name, output, instability, aspects, input, stuff);
+                .addInfusionCraftingRecipe(name, output, instability, aspects, input, stuff);
         ConfigResearch.recipes.put(research, recipe);
     }
 
     private static void registerResearchItemIE(String name, String research, Enchantment output, int instability,
-        AspectList aspects, ItemStack... stuff) {
+            AspectList aspects, ItemStack... stuff) {
         InfusionEnchantmentRecipe recipe = ThaumcraftApi
-            .addInfusionEnchantmentRecipe(name, output, instability, aspects, stuff);
+                .addInfusionEnchantmentRecipe(name, output, instability, aspects, stuff);
         ConfigResearch.recipes.put(research, recipe);
     }
 
     private static void registerResearchItemIU(String research, String name, Object[] objects, int instability,
-        AspectList aspects, ItemStack input, ItemStack... stuff) {
+            AspectList aspects, ItemStack input, ItemStack... stuff) {
         InfusionRecipe recipe = ThaumcraftApi
-            .addInfusionCraftingRecipe(name, objects, instability, aspects, input, stuff);
+                .addInfusionCraftingRecipe(name, objects, instability, aspects, input, stuff);
         ConfigResearch.recipes.put(research, recipe);
     }
 

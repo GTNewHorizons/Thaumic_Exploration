@@ -66,7 +66,7 @@ public class BlockEverfullUrn extends BlockContainer {
     }
 
     public void addCollisionBoxesToList(World world, int i, int j, int k, AxisAlignedBB axisalignedbb, List arraylist,
-        Entity par7Entity) {
+            Entity par7Entity) {
         float f = (14.0F / 16.0F);
         float f1 = (2.0F / 16.0F);
         float f2 = (9.0F / 16.0F);
@@ -113,7 +113,7 @@ public class BlockEverfullUrn extends BlockContainer {
     }
 
     public boolean onBlockActivated(World world, int par2, int par3, int par4, EntityPlayer entityPlayer, int par6,
-        float par7, float par8, float par9) {
+            float par7, float par8, float par9) {
         FluidStack water = new FluidStack(FluidRegistry.WATER, 1000);
         ItemStack activeStack = entityPlayer.getCurrentEquippedItem();
 

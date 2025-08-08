@@ -14,7 +14,7 @@ import flaxbeard.thaumicexploration.tile.TileEntityThinkTank;
 public class GuiThinkTank extends GuiContainer {
 
     private static final ResourceLocation furnaceGuiTextures = new ResourceLocation(
-        "thaumicexploration:textures/gui/thinktank.png");
+            "thaumicexploration:textures/gui/thinktank.png");
     private TileEntityThinkTank furnaceInventory;
 
     public GuiThinkTank(InventoryPlayer par1InventoryPlayer, TileEntityThinkTank par2TileEntityThinkTank) {
@@ -32,8 +32,7 @@ public class GuiThinkTank extends GuiContainer {
      */
     protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager()
-            .bindTexture(furnaceGuiTextures);
+        this.mc.getTextureManager().bindTexture(furnaceGuiTextures);
         int k = (this.width - this.xSize) / 2;
         int l = (this.height - this.ySize) / 2;
         GL11.glEnable(3042);

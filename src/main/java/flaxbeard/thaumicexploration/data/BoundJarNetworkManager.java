@@ -20,11 +20,10 @@ public class BoundJarNetworkManager {
 
         @Override
         public void handlePacket(PacketCustom packetCustom, Minecraft minecraft,
-            INetHandlerPlayClient iNetHandlerPlayClient) {
+                INetHandlerPlayClient iNetHandlerPlayClient) {
             String id = packetCustom.readString();
             if (!data.networks.containsKey(id)) data.networks.put(id, new AspectList());
-            data.networks.get(id)
-                .readFromNBT(packetCustom.readNBTTagCompound());
+            data.networks.get(id).readFromNBT(packetCustom.readNBTTagCompound());
         }
     }
 
@@ -42,7 +41,7 @@ public class BoundJarNetworkManager {
         if (world != null) {
 
             data = (BoundJarNetworkData) world.mapStorage
-                .loadData(BoundJarNetworkData.class, BoundJarNetworkData.IDENTIFIER);
+                    .loadData(BoundJarNetworkData.class, BoundJarNetworkData.IDENTIFIER);
             if (data == null) {
                 data = new BoundJarNetworkData();
                 data.markDirty();

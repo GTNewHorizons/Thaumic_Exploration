@@ -20,12 +20,12 @@ public class ContainerBrainMachine extends ContainerGhostSlots {
     public SortingInventory inventory = new SortingInventory();
 
     public ContainerBrainMachine(IInventory pinventory, EntityPlayer player, TileEntityAutoSorter sorter,
-        ChunkCoordinates chunkCoordinates, int s) {
+            ChunkCoordinates chunkCoordinates, int s) {
         cc = chunkCoordinates;
         te = sorter;
         side = s;
-        System.out
-            .println("X: " + chunkCoordinates.posX + " Y: " + chunkCoordinates.posY + " Z: " + chunkCoordinates.posZ);
+        System.out.println(
+                "X: " + chunkCoordinates.posX + " Y: " + chunkCoordinates.posY + " Z: " + chunkCoordinates.posZ);
         if (!sorter.chestSorts.containsKey(MutablePair.of(chunkCoordinates, side))) {
             sorter.chestSorts.put(MutablePair.of(chunkCoordinates, side), inventory);
         } else {

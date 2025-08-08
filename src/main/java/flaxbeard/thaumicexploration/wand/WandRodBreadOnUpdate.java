@@ -14,11 +14,11 @@ public class WandRodBreadOnUpdate implements IWandRodOnUpdate {
         if (player.worldObj.rand.nextInt(1000) == 0) {
             int i = player.worldObj.rand.nextInt(5);
             player.addChatMessage(
-                new ChatComponentTranslation(
-                    "<" + itemstack.getDisplayName()
-                        + "> "
-                        + StatCollector.translateToLocal("thaumicexploration.bread" + i),
-                    new Object()));
+                    new ChatComponentTranslation(
+                            "<" + itemstack.getDisplayName()
+                                    + "> "
+                                    + StatCollector.translateToLocal("thaumicexploration.bread" + i),
+                            new Object()));
         }
     }
 }

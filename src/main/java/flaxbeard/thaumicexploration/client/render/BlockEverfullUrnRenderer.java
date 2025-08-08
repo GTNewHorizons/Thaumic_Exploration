@@ -124,7 +124,7 @@ public class BlockEverfullUrnRenderer implements ISimpleBlockRenderingHandler {
 
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int par2, int par3, int par4, Block block, int modelId,
-        RenderBlocks renderer) {
+            RenderBlocks renderer) {
         Tessellator tessellator = Tessellator.instance;
         tessellator.setBrightness(block.getMixedBrightnessForBlock(world, par2, par3, par4));
 

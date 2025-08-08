@@ -65,9 +65,7 @@ public class TileEntityAutoSorter extends TileEntity implements IInventory {
         }
         for (MutablePair<int[], MutablePair> info : accessible) {
             MutablePair loc = info.right;
-            System.out.println(
-                chestSorts.keySet()
-                    .contains(loc));
+            System.out.println(chestSorts.keySet().contains(loc));
             SortingInventory sort = chestSorts.get(loc);
             if (sort != null) {
                 if (sort.type == 1) {
@@ -90,7 +88,7 @@ public class TileEntityAutoSorter extends TileEntity implements IInventory {
     }
 
     private boolean arrayContains(ArrayList<MutablePair<int[], MutablePair>> array,
-        MutablePair<int[], MutablePair> pair) {
+            MutablePair<int[], MutablePair> pair) {
         boolean contains = false;
         for (MutablePair<int[], MutablePair> item : array) {
             if (Arrays.equals(pair.left, item.left) && pair.right.equals(item.right)) {

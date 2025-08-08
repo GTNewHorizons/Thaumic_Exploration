@@ -153,8 +153,7 @@ public class TileEntityBoundJar extends TileJarFillable {
 
     public void updateEntity() {
 
-        aspectList = BoundJarNetworkManager.getAspect(networkName)
-            .copy();
+        aspectList = BoundJarNetworkManager.getAspect(networkName).copy();
 
         if (!this.worldObj.isRemote) {
             if (this.accessTicks > 0) {

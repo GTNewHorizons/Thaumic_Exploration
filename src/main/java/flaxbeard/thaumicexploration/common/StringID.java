@@ -23,25 +23,15 @@ public class StringID {
             Random rand = new Random();
 
             int num = rand.nextInt(adjectivesFile.size() - 1);
-            Output = Output + adjectivesFile.get(num)
-                .substring(0, 1)
-                .toUpperCase()
-                + adjectivesFile.get(num)
-                    .substring(1);
+            Output = Output + adjectivesFile.get(num).substring(0, 1).toUpperCase()
+                    + adjectivesFile.get(num).substring(1);
 
             num = rand.nextInt(adjectivesFile.size() - 1);
-            Output = Output + adjectivesFile.get(num)
-                .substring(0, 1)
-                .toUpperCase()
-                + adjectivesFile.get(num)
-                    .substring(1);
+            Output = Output + adjectivesFile.get(num).substring(0, 1).toUpperCase()
+                    + adjectivesFile.get(num).substring(1);
 
             num = rand.nextInt(animalsFile.size() - 1);
-            Output = Output + animalsFile.get(num)
-                .substring(0, 1)
-                .toUpperCase()
-                + animalsFile.get(num)
-                    .substring(1);
+            Output = Output + animalsFile.get(num).substring(0, 1).toUpperCase() + animalsFile.get(num).substring(1);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,8 +41,7 @@ public class StringID {
     }
 
     public static List<String> getList(String name) throws IOException {
-        InputStream strm = StringID.class.getClassLoader()
-            .getResourceAsStream(name);
+        InputStream strm = StringID.class.getClassLoader().getResourceAsStream(name);
         List<String> strings = new ArrayList<String>();
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(strm));

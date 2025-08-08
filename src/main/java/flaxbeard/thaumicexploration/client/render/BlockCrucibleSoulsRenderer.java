@@ -17,19 +17,19 @@ public class BlockCrucibleSoulsRenderer extends BlockRenderer implements ISimple
         block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
         renderer.setRenderBoundsFromBlock(block);
         drawFaces(
-            renderer,
-            block,
-            ((BlockCrucibleSouls) block).IIcon[2],
-            ((BlockCrucibleSouls) block).IIcon[4],
-            ((BlockCrucibleSouls) block).IIcon[3],
-            ((BlockCrucibleSouls) block).IIcon[3],
-            ((BlockCrucibleSouls) block).IIcon[3],
-            ((BlockCrucibleSouls) block).IIcon[3],
-            true);
+                renderer,
+                block,
+                ((BlockCrucibleSouls) block).IIcon[2],
+                ((BlockCrucibleSouls) block).IIcon[4],
+                ((BlockCrucibleSouls) block).IIcon[3],
+                ((BlockCrucibleSouls) block).IIcon[3],
+                ((BlockCrucibleSouls) block).IIcon[3],
+                ((BlockCrucibleSouls) block).IIcon[3],
+                true);
     }
 
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
-        RenderBlocks renderer) {
+            RenderBlocks renderer) {
 
         int metadata = world.getBlockMetadata(x, y, z);
         block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);

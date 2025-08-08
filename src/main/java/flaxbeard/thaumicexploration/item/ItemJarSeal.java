@@ -45,7 +45,7 @@ public class ItemJarSeal extends Item {
 
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float dx,
-        float dy, float dz) {
+            float dy, float dz) {
         if (world.getBlock(x, y, z) == ConfigBlocks.blockJar) {
             TileJarFillable entity = (TileJarFillable) world.getTileEntity(x, y, z);
             if (entity.amount == 0 && entity.aspectFilter == null) {
@@ -97,8 +97,7 @@ public class ItemJarSeal extends Item {
 
         Colour colour = new ColourRGBA(color);
         if (p_82790_2_ == 0) return colour.rgba();
-        else if (getNetwork(p_82790_1_) != null) return colour.invert()
-            .rgba();
+        else if (getNetwork(p_82790_1_) != null) return colour.invert().rgba();
         else return colour.rgba();
     }
 
@@ -130,16 +129,13 @@ public class ItemJarSeal extends Item {
     public String getNetwork(ItemStack stack) {
         if (stack.hasDisplayName()) return stack.getDisplayName();
 
-        if (NBTHelper.getItemStackTag(stack)
-            .hasKey("network"))
-            return NBTHelper.getItemStackTag(stack)
-                .getString("network");
+        if (NBTHelper.getItemStackTag(stack).hasKey("network"))
+            return NBTHelper.getItemStackTag(stack).getString("network");
         else return null;
     }
 
     public void setNetwork(ItemStack stack, String networkName) {
-        NBTHelper.getItemStackTag(stack)
-            .setString("network", networkName);
+        NBTHelper.getItemStackTag(stack).setString("network", networkName);
     }
 
     @Override

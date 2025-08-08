@@ -34,8 +34,9 @@ public class CommandCheckWarp implements ICommand {
     @Override
     public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_) {
         p_71515_1_.addChatMessage(
-            new ChatComponentText(
-                "Permanent Warp: " + Thaumcraft.proxy.playerKnowledge.getWarpPerm(p_71515_1_.getCommandSenderName())));
+                new ChatComponentText(
+                        "Permanent Warp: "
+                                + Thaumcraft.proxy.playerKnowledge.getWarpPerm(p_71515_1_.getCommandSenderName())));
     }
 
     @Override

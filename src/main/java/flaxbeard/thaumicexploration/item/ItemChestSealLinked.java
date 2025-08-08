@@ -22,7 +22,7 @@ public class ItemChestSealLinked extends Item {
 
     public IIcon theIcon;
     public static final String[] itemNames = { "Pale", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink",
-        "Gray", "Light Gray", "Cyan", "Purple", "Blue", "Brown", "Green", "Red", "Dark" };
+            "Gray", "Light Gray", "Cyan", "Purple", "Blue", "Brown", "Green", "Red", "Dark" };
 
     public ItemChestSealLinked() {
         super();
@@ -64,16 +64,16 @@ public class ItemChestSealLinked extends Item {
             if (par2 == 0) {
                 int j = 15 - par1ItemStack.getItemDamage();
                 Color c = new Color(
-                    EntitySheep.fleeceColorTable[j][0],
-                    EntitySheep.fleeceColorTable[j][1],
-                    EntitySheep.fleeceColorTable[j][2]);
+                        EntitySheep.fleeceColorTable[j][0],
+                        EntitySheep.fleeceColorTable[j][1],
+                        EntitySheep.fleeceColorTable[j][2]);
                 return (c.getRGB() & 0x00ffffff);
             } else {
                 int j = 15 - par1ItemStack.getItemDamage();
                 Color c = new Color(
-                    EntitySheep.fleeceColorTable[j][0],
-                    EntitySheep.fleeceColorTable[j][1],
-                    EntitySheep.fleeceColorTable[j][2]);
+                        EntitySheep.fleeceColorTable[j][0],
+                        EntitySheep.fleeceColorTable[j][1],
+                        EntitySheep.fleeceColorTable[j][2]);
                 Color c2 = new Color(255 - c.getRed(), 255 - c.getGreen(), 255 - c.getBlue());;
                 return (c2.getRGB() & 0x00ffffff);
             }
@@ -89,7 +89,7 @@ public class ItemChestSealLinked extends Item {
     }
 
     public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side,
-        float hitX, float hitY, float hitZ) {
+            float hitX, float hitY, float hitZ) {
         if (!player.canPlayerEdit(x, y, z, side, stack)) {
             return false;
         } else {
@@ -133,16 +133,16 @@ public class ItemChestSealLinked extends Item {
                 dimension = "End";
             }
             par3List.add(
-                "Linked to " + par1ItemStack.stackTagCompound.getInteger("x")
-                    + ","
-                    + par1ItemStack.stackTagCompound.getInteger("y")
-                    + ","
-                    + par1ItemStack.stackTagCompound.getInteger("z")
-                    + " in the "
-                    + dimension
-                    + " (Network "
-                    + par1ItemStack.stackTagCompound.getInteger("ID")
-                    + ")");
+                    "Linked to " + par1ItemStack.stackTagCompound.getInteger("x")
+                            + ","
+                            + par1ItemStack.stackTagCompound.getInteger("y")
+                            + ","
+                            + par1ItemStack.stackTagCompound.getInteger("z")
+                            + " in the "
+                            + dimension
+                            + " (Network "
+                            + par1ItemStack.stackTagCompound.getInteger("ID")
+                            + ")");
         }
     }
 

@@ -23,7 +23,7 @@ public class TXResearchItem extends ResearchItem {
     }
 
     public TXResearchItem(String par1, String par2, AspectList tags, int par3, int par4, int par5,
-        ResourceLocation icon) {
+            ResourceLocation icon) {
         super(par1, par2, tags, par3, par4, par5, icon);
     }
 
@@ -38,7 +38,7 @@ public class TXResearchItem extends ResearchItem {
     public String getText() {
         if (ConfigTX.prefix) {
             return StatCollector.translateToLocal("te.researchPrefix") + " "
-                + StatCollector.translateToLocal("te.tag." + key);
+                    + StatCollector.translateToLocal("te.tag." + key);
         } else {
             return StatCollector.translateToLocal("te.tag." + key);
         }

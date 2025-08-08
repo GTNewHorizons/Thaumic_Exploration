@@ -19,7 +19,7 @@ public class TileEntitySoulBrazierRenderer extends TileEntitySpecialRenderer {
 
     private ModelSoulBrazier brazierModel = new ModelSoulBrazier();
     private static final ResourceLocation baseTexture = new ResourceLocation(
-        "thaumicexploration:textures/models/soulBrazier.png");
+            "thaumicexploration:textures/models/soulBrazier.png");
 
     @Override
     public void renderTileEntityAt(TileEntity tile, double d0, double d1, double d2, float par8) {
@@ -53,16 +53,16 @@ public class TileEntitySoulBrazierRenderer extends TileEntitySpecialRenderer {
                                                                                            // LIGHTNING
 
             UtilsFX.renderFacingQuad(
-                tile.xCoord + 0.5D,
-                tile.yCoord + 1.5D,
-                tile.zCoord + 0.5D,
-                0.0F,
-                0.7F, // SIZE
-                count / 37.0F * alpha * 4.0F, // ALPHA
-                1,
-                0,
-                par8,
-                11665663); // COLOR
+                    tile.xCoord + 0.5D,
+                    tile.yCoord + 1.5D,
+                    tile.zCoord + 0.5D,
+                    0.0F,
+                    0.7F, // SIZE
+                    count / 37.0F * alpha * 4.0F, // ALPHA
+                    1,
+                    0,
+                    par8,
+                    11665663); // COLOR
             GL11.glDepthMask(true);
             GL11.glDisable(3042);
             GL11.glAlphaFunc(516, 0.1F);

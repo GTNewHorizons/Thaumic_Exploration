@@ -27,9 +27,9 @@ public class EntityTaintacleMinion extends EntityTaintacleSmall {
         Entity entity = null;
 
         List ents = this.worldObj.getEntitiesWithinAABB(
-            EntityLivingBase.class,
-            AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX, this.posY, this.posZ)
-                .expand(16.0D, 8.0D, 16.0D));
+                EntityLivingBase.class,
+                AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX, this.posY, this.posZ)
+                        .expand(16.0D, 8.0D, 16.0D));
         double distance;
         if (ents.size() > 0) {
             distance = 1.7976931348623157E+308D;
