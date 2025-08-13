@@ -507,10 +507,17 @@ public final class ModResearch {
         research.setPages(new ResearchPage("1"), infusionPage("ROD_NECROMANCER_staff"));
 
         if (ConfigTX.breadWand) {
-            // research = new TXResearchItem("ROD_BREAD", "THAUMATURGY", new AspectList().add(Aspect.MAGIC,
-            // 5).add(Aspect.CROP, 3).add(Aspect.HUNGER, 4).add(Aspect.HARVEST, 3), -11, 0, 1, new
-            // ItemStack(ThaumicExploration.breadCore)).setParents("ROD_AMBER").setConcealed().registerResearchItem().setSecondary();
-            // research.setPages(new ResearchPage("1"), infusionPage("ROD_BREAD"));
+            research = new TXResearchItem(
+                    "ROD_BREAD",
+                    "TX",
+                    new AspectList().add(Aspect.MAGIC, 5).add(Aspect.CROP, 3).add(Aspect.HUNGER, 4)
+                            .add(Aspect.HARVEST, 3),
+                    -3,
+                    -1,
+                    1,
+                    new ItemStack(ThaumicExploration.breadCore)).setParents("TXROD_greatwood", "INFUSION")
+                            .setConcealed().registerResearchItem().setSecondary();
+            research.setPages(new ResearchPage("1"), infusionPage("ROD_BREAD"));
         }
 
         // Sealery
