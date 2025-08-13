@@ -19,6 +19,6 @@ dependencies {
     api('com.github.GTNewHorizons:ThaumicBoots:1.4.13:dev') {
         exclude group: 'com.github.GTNewHorizons', module: 'Thaumic_Exploration'
     }
-    implementation("com.github.GTNewHorizons:CodeChickenCore:1.4.3:dev")
-    runtimeOnly("com.github.GTNewHorizons:NotEnoughItems:2.7.69-GTNH:dev")
+    implementation("com.github.GTNewHorizons:CodeChickenCore:1.4.7:dev")
+    runtimeOnly("com.github.GTNewHorizons:NotEnoughItems:2.7.72-GTNH:dev")
 }
