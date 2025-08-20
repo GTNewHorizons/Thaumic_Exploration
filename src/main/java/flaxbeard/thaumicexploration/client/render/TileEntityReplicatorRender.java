@@ -21,7 +21,7 @@ import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
 public class TileEntityReplicatorRender extends TileEntitySpecialRenderer {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(
-        "thaumicexploration:textures/blocks/replicatorRunes.png");
+            "thaumicexploration:textures/blocks/replicatorRunes.png");
 
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float partialTicks) {
@@ -38,7 +38,7 @@ public class TileEntityReplicatorRender extends TileEntitySpecialRenderer {
     }
 
     private void renderFloatingItem(ItemStack stack, double x, double y, double z, float partialTicks, boolean crafting,
-        int ticksLeft) {
+            int ticksLeft) {
         Minecraft mc = Minecraft.getMinecraft();
         float ticks = mc.renderViewEntity.ticksExisted + partialTicks;
         float hover = MathHelper.sin(ticks % 32767.0F / 16.0F) * 0.05F;
@@ -71,12 +71,11 @@ public class TileEntityReplicatorRender extends TileEntitySpecialRenderer {
         GL11.glTranslated(x + 0.5, y, z + 0.5);
         bindTexture(TEXTURE);
 
-        ItemStack example = replicator.getStackInSlot(0)
-            .copy();
+        ItemStack example = replicator.getStackInSlot(0).copy();
         example.stackSize = 1;
 
         AspectList tagList = ThaumcraftCraftingManager
-            .getBonusTags(example, ThaumcraftCraftingManager.getObjectTags(example));
+                .getBonusTags(example, ThaumcraftCraftingManager.getObjectTags(example));
 
         GL11.glDisable(GL11.GL_LIGHTING);
         for (int i = 0; i < 4; i++) {
@@ -84,7 +83,7 @@ public class TileEntityReplicatorRender extends TileEntitySpecialRenderer {
             if (aspect == null) continue;
 
             float fillLevel = (tagList.getAmount(aspect) - replicator.recipeEssentia.getAmount(aspect))
-                / (float) tagList.getAmount(aspect);
+                    / (float) tagList.getAmount(aspect);
 
             tessellator.startDrawingQuads();
             tessellator.setBrightness(0xF000F0);
