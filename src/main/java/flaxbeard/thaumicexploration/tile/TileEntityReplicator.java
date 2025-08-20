@@ -2,7 +2,6 @@ package flaxbeard.thaumicexploration.tile;
 
 import java.util.ArrayList;
 
-import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,6 +16,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 
+import cpw.mods.fml.common.network.NetworkRegistry;
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -118,20 +118,20 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
                 if (!(te instanceof IAspectSource source)) continue;
                 if (!source.doesContainerContainAmount(aspect, 1)) continue;
                 PacketHandler.INSTANCE.sendToAllAround(
-                    new PacketFXEssentiaSource(
-                        this.xCoord,
-                        this.yCoord + 1,
-                        this.zCoord,
-                        (byte) (this.xCoord - cc.posX),
-                        (byte) (this.yCoord - cc.posY + 1),
-                        (byte) (this.zCoord - cc.posZ),
-                        aspect.getColor()),
-                    new NetworkRegistry.TargetPoint(
-                        getWorldObj().provider.dimensionId,
-                        this.xCoord,
-                        this.yCoord,
-                        this.zCoord,
-                        32.0D));
+                        new PacketFXEssentiaSource(
+                                this.xCoord,
+                                this.yCoord + 1,
+                                this.zCoord,
+                                (byte) (this.xCoord - cc.posX),
+                                (byte) (this.yCoord - cc.posY + 1),
+                                (byte) (this.zCoord - cc.posZ),
+                                aspect.getColor()),
+                        new NetworkRegistry.TargetPoint(
+                                getWorldObj().provider.dimensionId,
+                                this.xCoord,
+                                this.yCoord,
+                                this.zCoord,
+                                32.0D));
 
                 source.takeFromContainer(aspect, 1);
                 recipeEssentia.reduce(aspect, 1);
