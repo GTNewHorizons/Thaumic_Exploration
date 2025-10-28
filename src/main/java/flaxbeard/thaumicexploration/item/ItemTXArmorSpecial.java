@@ -121,9 +121,9 @@ public class ItemTXArmorSpecial extends ItemArmor implements IRepairable, IRunic
                 player.moveFlying(0.0F, player.moveForward, bonus);
             }
         } else if (Hover.getHover(player.getEntityId())) {
-            player.jumpMovementFactor = 0.03F;
+            player.jumpMovementFactor = 0.01F * speedMod + 0.02F;
         } else {
-            player.jumpMovementFactor = 0.05F;
+            player.jumpMovementFactor = 0.03F * speedMod + 0.02F;
         }
     }
 
