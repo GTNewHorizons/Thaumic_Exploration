@@ -1,7 +1,6 @@
 package flaxbeard.thaumicexploration.client;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -88,11 +87,6 @@ public class ClientProxy extends CommonProxy {
                 new ItemRenderThinkTank(renderThinkTank, new TileEntityThinkTank()));
         // MinecraftForgeClient.registerItemRenderer(ThaumicExploration.everfullUrn.blockID, new
         // ItemRenderEverfullUrn(new TileEntityEverfullUrnRender(), new TileEntityEverfullUrn()));
-    }
-
-    @Override
-    public void setUnicode() {
-        Minecraft.getMinecraft().fontRenderer.setUnicodeFlag(false);
     }
 
     @Override
