@@ -145,14 +145,14 @@ public class ItemTXArmorSpecial extends ItemArmor implements IRepairable, IRunic
 
     // Avoid NSM Exception when ThaumicBoots is not present.
     public double getSpeedModifier(ItemStack stack) {
-        if (stack.stackTagCompound != null) {
+        if (stack.stackTagCompound != null && stack.stackTagCompound.hasKey("speed")) {
             return stack.stackTagCompound.getDouble("speed");
         }
         return 1.0;
     }
 
     public double getJumpModifier(ItemStack stack) {
-        if (stack.stackTagCompound != null) {
+        if (stack.stackTagCompound != null && stack.stackTagCompound.hasKey("jump")) {
             return stack.stackTagCompound.getDouble("jump");
         }
         return 1.0;
