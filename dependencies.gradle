@@ -4,22 +4,22 @@ dependencies {
     compileOnly('com.github.GTNewHorizons:AppleCore:3.3.7:dev')
     compile('thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev')
     compile("curse.maven:witchery-69673:2234410")
-    compileOnly('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-727-GTNH:dev') {
+    compileOnly('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-742-GTNH:dev') {
         transitive = false
     }
     compile('com.github.GTNewHorizons:Baubles-Expanded:2.2.2-GTNH:dev')
-    compileOnly('com.github.GTNewHorizons:Botania:1.13.3-GTNH:dev') {
+    compileOnly('com.github.GTNewHorizons:Botania:1.13.4-GTNH:dev') {
         transitive = false
     }
     compileOnly('com.github.GTNewHorizons:ThaumicTinkerer:2.12.2:dev') {
         transitive = false
     }
-    compileOnly("com.github.GTNewHorizons:waila:1.9.7:api") {
+    compileOnly("com.github.GTNewHorizons:waila:1.9.9:api") {
         transitive = false
     }
-    api('com.github.GTNewHorizons:ThaumicBoots:1.5.0:dev') {
+    api('com.github.GTNewHorizons:ThaumicBoots:1.5.2:dev') {
         exclude group: 'com.github.GTNewHorizons', module: 'Thaumic_Exploration'
     }
-    implementation("com.github.GTNewHorizons:CodeChickenCore:1.4.7:dev")
-    runtimeOnly("com.github.GTNewHorizons:NotEnoughItems:2.8.26-GTNH:dev")
+    implementation("com.github.GTNewHorizons:CodeChickenCore:1.4.8:dev")
+    runtimeOnly("com.github.GTNewHorizons:NotEnoughItems:2.8.37-GTNH:dev")
 }
