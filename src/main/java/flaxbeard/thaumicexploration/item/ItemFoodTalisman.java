@@ -68,9 +68,11 @@ public class ItemFoodTalisman extends Item {
     @Override
     public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5) {
 
-        if (par3Entity instanceof EntityPlayer && !par2World.isRemote && par3Entity.ticksExisted % 20 == 0) {
-            EntityPlayer player = (EntityPlayer) par3Entity;
+        if (!(par3Entity instanceof EntityPlayer && par3Entity.ticksExisted % 20 == 0)) return;
 
+        EntityPlayer player = (EntityPlayer) par3Entity;
+
+        if (!par2World.isRemote) {
             if (!par1ItemStack.hasTagCompound()) {
                 par1ItemStack.setTagCompound(new NBTTagCompound());
             }
@@ -118,50 +120,57 @@ public class ItemFoodTalisman extends Item {
                     }
                 }
             }
-            if ((player.getFoodStats().getFoodLevel() < 20)
-                    && (MAX_HEAL_SIZE_TALISMAN - par1ItemStack.stackTagCompound.getFloat("food")) > 0) {
-                float sat = par1ItemStack.stackTagCompound.getFloat("food");
-                float finalSat = 0;
-                if (20 - player.getFoodStats().getFoodLevel() < sat) {
-                    finalSat = sat - (20 - player.getFoodStats().getFoodLevel());
-                    sat = 20 - player.getFoodStats().getFoodLevel();
-                }
-                if (Loader.isModLoaded("AppleCore")) {
-                    AppleCoreInterop.setHunger((int) sat, player);
-                } else ObfuscationReflectionHelper.setPrivateValue(
+        }
+        if ((player.getFoodStats().getFoodLevel() < 20)
+                && (MAX_HEAL_SIZE_TALISMAN - par1ItemStack.stackTagCompound.getFloat("food")) > 0) {
+            float sat = par1ItemStack.stackTagCompound.getFloat("food");
+            float finalSat = 0;
+            if (20 - player.getFoodStats().getFoodLevel() < sat) {
+                finalSat = sat - (20 - player.getFoodStats().getFoodLevel());
+                sat = 20 - player.getFoodStats().getFoodLevel();
+            }
+            if (Loader.isModLoaded("AppleCore")) {
+                AppleCoreInterop.setHunger((int) sat, player);
+            } else if (!par2World.isRemote) {
+                ObfuscationReflectionHelper.setPrivateValue(
                         FoodStats.class,
                         player.getFoodStats(),
                         (int) (player.getFoodStats().getFoodLevel() + sat),
                         "field_75127_a",
                         "foodLevel");
+            }
+            if (!par2World.isRemote) {
                 par1ItemStack.stackTagCompound.setFloat("food", finalSat);
                 par1ItemStack.setItemDamage(par1ItemStack.getItemDamage());
             }
-            if ((player.getFoodStats().getSaturationLevel() < player.getFoodStats().getFoodLevel())
-                    && par1ItemStack.stackTagCompound.getFloat("saturation") > 0) {
-                float sat = par1ItemStack.stackTagCompound.getFloat("saturation");
-                float finalSat = 0;
-                if (player.getFoodStats().getFoodLevel() - player.getFoodStats().getSaturationLevel() < sat) {
-                    finalSat = sat
-                            - (player.getFoodStats().getFoodLevel() - player.getFoodStats().getSaturationLevel());
-                    sat = player.getFoodStats().getFoodLevel() - player.getFoodStats().getSaturationLevel();
-                }
-                if (Loader.isModLoaded("AppleCore")) {
-                    AppleCoreInterop.setSaturation(sat, player);
-                } else ObfuscationReflectionHelper.setPrivateValue(
+        }
+        if ((player.getFoodStats().getSaturationLevel() < player.getFoodStats().getFoodLevel())
+                && par1ItemStack.stackTagCompound.getFloat("saturation") > 0) {
+            float sat = par1ItemStack.stackTagCompound.getFloat("saturation");
+            float finalSat = 0;
+            if (player.getFoodStats().getFoodLevel() - player.getFoodStats().getSaturationLevel() < sat) {
+                finalSat = sat - (player.getFoodStats().getFoodLevel() - player.getFoodStats().getSaturationLevel());
+                sat = player.getFoodStats().getFoodLevel() - player.getFoodStats().getSaturationLevel();
+            }
+            if (Loader.isModLoaded("AppleCore")) {
+                AppleCoreInterop.setSaturation(sat, player);
+            } else if (!par2World.isRemote) {
+                ObfuscationReflectionHelper.setPrivateValue(
                         FoodStats.class,
                         player.getFoodStats(),
                         (player.getFoodStats().getFoodLevel() + sat),
                         "field_75125_b",
                         "foodSaturationLevel");
+            }
+            if (!par2World.isRemote) {
                 par1ItemStack.stackTagCompound.setFloat("saturation", finalSat);
                 par1ItemStack.setItemDamage(par1ItemStack.getItemDamage());
             }
-            // TODO WIP shit
-            par1ItemStack.setItemDamage(
-                    par1ItemStack.getMaxDamage() - ((int) par1ItemStack.stackTagCompound.getFloat("food")));
-            // par1ItemStack.stackTagCompound.getFloat("food")
         }
+        // TODO WIP shit
+        par1ItemStack
+                .setItemDamage(par1ItemStack.getMaxDamage() - ((int) par1ItemStack.stackTagCompound.getFloat("food")));
+        // par1ItemStack.stackTagCompound.getFloat("food")
     }
 
     private float getSaturationFood(ItemStack food, float heal) {
