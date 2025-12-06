@@ -172,8 +172,6 @@ public class ThaumicExploration {
 
     public static Item taintBerry;
 
-    public static Item itemAltar;
-
     public static Block boundChest;
     public static Block boundJar;
     public static Block thinkTankJar;
@@ -185,14 +183,10 @@ public class ThaumicExploration {
 
     public static Block trashJar;
 
-    public static Block necroPedestal;
-    public static Block necroFire;
-
     public static Block crucibleSouls;
     public static Block taintBerryCrop;
     public static Block meltyIce;
     public static Block replicator;
-    public static Block skullCandle;
     public static Block floatCandle;
 
     public static WandRod WAND_ROD_CRYSTAL;
@@ -246,7 +240,6 @@ public class ThaumicExploration {
         if (Loader.isModLoaded(BOOTS)) {
             isBootsActive = true;
         }
-        // GameRegistry.registerWorldGenerator(this.worldGen = new WorldGenTX());
 
         SoulBrazierQueue aBrazierQueue = new SoulBrazierQueue();
         MinecraftForge.EVENT_BUS.register(aBrazierQueue);
@@ -427,9 +420,6 @@ public class ThaumicExploration {
         this.entityEventHandler = new TXBootsEventHandler();
         MinecraftForge.EVENT_BUS.register(this.entityEventHandler);
 
-        // this.entityEventHandler2 = new TXArmorEventHandler();
-        // inecraftForge.EVENT_BUS.register(this.entityEventHandler2);
-
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new TXGuiHandler());
 
         everfullUrnRenderID = RenderingRegistry.getNextAvailableRenderId();
@@ -573,7 +563,6 @@ public class ThaumicExploration {
         // Researches, Thaumcraft Recipes
         ModRecipes.initRecipes();
         ModResearch.initResearch();
-        // NecromanticAltarAPI.initNecromanticRecipes();
         proxy.setUnicode();
     }
 
