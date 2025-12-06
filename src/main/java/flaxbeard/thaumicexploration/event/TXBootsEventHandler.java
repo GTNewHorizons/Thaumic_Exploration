@@ -14,7 +14,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Vec3;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
@@ -262,14 +261,6 @@ public class TXBootsEventHandler {
             event.entity.stepHeight = ((Float) this.prevStep.get(Integer.valueOf(event.entity.getEntityId())))
                     .floatValue();
             this.prevStep.remove(Integer.valueOf(event.entity.getEntityId()));
-        }
-    }
-
-    @SubscribeEvent
-    public void joinWorld(EntityJoinWorldEvent event) {
-        if ((event.entity instanceof EntityPlayer)) {
-            EntityPlayer player = (EntityPlayer) event.entity;
-            // updateSpeed(player);
         }
     }
 
