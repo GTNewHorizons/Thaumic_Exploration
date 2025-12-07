@@ -20,6 +20,7 @@ import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.items.armor.Hover;
 import thaumicboots.api.IBoots;
+import thaumicboots.mixins.early.minecraft.EntityLivingBaseAccessor;
 
 @Interface(iface = "thaumicboots.api.IBoots", modid = "thaumicboots")
 public class ItemTXArmorSpecial extends ItemArmor implements IRepairable, IRunicArmor, IBoots {
@@ -121,9 +122,9 @@ public class ItemTXArmorSpecial extends ItemArmor implements IRepairable, IRunic
                 player.moveFlying(0.0F, player.moveForward, bonus);
             }
         } else if (Hover.getHover(player.getEntityId())) {
-            player.jumpMovementFactor = 0.03F;
+            player.jumpMovementFactor = 0.01F * speedMod + 0.02F;
         } else {
-            player.jumpMovementFactor = 0.05F;
+            player.jumpMovementFactor = 0.03F * speedMod + 0.02F;
         }
     }
 
@@ -138,8 +139,17 @@ public class ItemTXArmorSpecial extends ItemArmor implements IRepairable, IRunic
         if (player.moveForward != 0.0) {
             player.moveFlying(0.0F, player.moveForward, bonus);
         }
-        if (player.moveStrafing != 0.0 && getOmniState(itemStack)) {
-            player.moveFlying(player.moveStrafing, 0.0F, bonus);
+        if (getOmniState(itemStack)) {
+            if (player.moveStrafing != 0.0) {
+                player.moveFlying(player.moveStrafing, 0.0F, bonus);
+            }
+            boolean jumping = ((EntityLivingBaseAccessor) player).getIsJumping();
+            boolean sneaking = player.isSneaking();
+            if (sneaking && !jumping && !player.onGround) {
+                player.motionY -= bonus;
+            } else if (jumping && !sneaking) {
+                player.motionY += bonus;
+            }
         }
     }
 
