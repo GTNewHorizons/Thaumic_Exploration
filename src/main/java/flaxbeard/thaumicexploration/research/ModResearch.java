@@ -351,27 +351,7 @@ public final class ModResearch {
                 new ItemStack(ThaumicExploration.tentacleRing)).setParents("TAINTBASICS").setHidden()
                         .setEntityTriggers(new String[] { "Thaumcraft.Taintacle" }).registerResearchItem();
         research.setPages(new ResearchPage("1"), infusionPage("TENTACLERING"));
-        // Necromancy
-        // taint = new ResourceLocation("thaumicexploration:textures/tabs/necromancyResearch.png");
-        // research = new TXResearchItem("NECROINFUSION", "NECROMANCY", new AspectList(), -5, 0, 0,
-        // taint).registerResearchItem();
-        // research.setPages(new ResearchPage("1"), new ResearchPage("2"), new ResearchPage("3"),
-        // infusionPage("NECROINFUSION"));
-        // research = new TXResearchItem("ROD_NECROMANCER", "NECROMANCY", new AspectList(), -2, -2, 0, new
-        // ItemStack(ThaumicExploration.necroCore)).setConcealed().setParents("NECROINFUSION").registerResearchItem();
-        // research.setPages(new ResearchPage("1"), infusionPage("ROD_NECROMANCER"));
-        // research = new TXResearchItem("NECROENERGY", "NECROMANCY", new AspectList(), -7, 0, 0, new
-        // ResourceLocation("thaumicexploration",
-        // "textures/tabs/necroAspectResearch.png")).setConcealed().setParents("NECROINFUSION").registerResearchItem().setRound().setAutoUnlock();
-        // int numItems = (int) Math.ceil(NecromanticAltarAPI.necroEnergyItems.size() / 4.0F);
-        // ArrayList<ResearchPage> test = new ArrayList<ResearchPage>();
-        // test.add(new ResearchPage("1"));
-        // for (int i = 0; i<numItems;i++) {
-        // test.add(new ResearchPage("NE#"+i));
-        // }
-        // research.setPages(test.toArray(new ResearchPage[0]));
-        //
-        // {
+
         if (ConfigTX.allowEnchants) {
             research = new FauxResearchItem(
                     "TXINFUSIONENCHANTMENT",
@@ -562,9 +542,6 @@ public final class ModResearch {
     }
 
     private static void registerResearchPages() {
-        // ResourceLocation background = new ResourceLocation("thaumicexploration:textures/gui/taintBackground.png");
-        // ResearchCategories.registerCategory("TAINT", new
-        // ResourceLocation("thaumicexploration:textures/tabs/taintResearch.png"), background);
         ResourceLocation background2 = new ResourceLocation("thaumcraft", "textures/gui/gui_researchback.png");
         ResearchCategories.registerCategory(
                 "TX",

@@ -37,7 +37,6 @@ public final class ModRecipes {
         initInfusionRecipes();
         initCrucibleRecipes();
         initConstructRecipes();
-        initNecromanticRecipes();
     }
 
     private static void initConstructRecipes() {
@@ -52,22 +51,6 @@ public final class ModRecipes {
                                                 new ItemStack(ThaumicExploration.thinkTankJar), empty, empty, empty,
                                                 empty, empty, empty, empty, empty, new ItemStack(Blocks.bookshelf),
                                                 empty, empty, empty, empty }) }));
-        registerResearchItemC(
-                "BUILDNECROINFUSION",
-                Arrays.asList(
-                        new Object[] { new AspectList(), Integer.valueOf(7), Integer.valueOf(1), Integer.valueOf(6),
-                                Arrays.asList(
-                                        new ItemStack[] { empty, new ItemStack(ConfigBlocks.blockCandle), empty, empty,
-                                                empty, new ItemStack(ConfigBlocks.blockCandle), empty, empty, empty,
-                                                empty, new ItemStack(Blocks.skull), empty, empty, empty, empty, empty,
-                                                new ItemStack(Blocks.skull),
-                                                new ItemStack(ThaumicExploration.itemAltar),
-                                                new ItemStack(Blocks.skull), empty, empty,
-                                                new ItemStack(ConfigBlocks.blockCandle), empty, empty,
-                                                new ItemStack(Blocks.skull), empty, empty,
-                                                new ItemStack(ConfigBlocks.blockCandle), empty, empty, empty, empty,
-                                                empty, empty, empty, empty, empty, empty,
-                                                new ItemStack(ConfigBlocks.blockCandle), empty, empty, empty }) }));
     }
 
     private static void initInfusionRecipes() {
@@ -384,18 +367,6 @@ public final class ModRecipes {
         }
 
         registerResearchItemI(
-                "NECROINFUSION",
-                new ItemStack(ThaumicExploration.itemAltar),
-                7,
-                new AspectList().add(Aspect.MAGIC, 32).add(Aspect.DEATH, 16).add(Aspect.UNDEAD, 16)
-                        .add(Aspect.CRAFT, 16),
-                new ItemStack(ConfigBlocks.blockStoneDevice, 1, 1),
-                new ItemStack(Blocks.netherrack),
-                new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 6),
-                new ItemStack(ConfigBlocks.blockStoneDevice, 1, 2),
-                new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 6));
-
-        registerResearchItemI(
                 "CAP_SOJOURNER",
                 new ItemStack(ThaumicExploration.sojournerCap),
                 5,
@@ -625,18 +596,6 @@ public final class ModRecipes {
         // ItemStack(ThaumicExploration.blankSeal,1,32767),
         // new AspectList().add(Aspect.ELDRITCH, 6).add(Aspect.EXCHANGE,4).add(Aspect.VOID, 4).add(Aspect.TRAP,
         // 4).add(Aspect.TRAVEL, 12));
-    }
-
-    public static void initNecromanticRecipes() {
-        // NecromanticAltarAPI.addNecroRecipeWithThaumnomiconDisplay("ROD_NECROMANCER", new
-        // NecromanticRecipe("NECROWAND", new ItemStack(ThaumicExploration.necroCore), new ItemStack[]{new
-        // ItemStack(Items.skull,1,1),new ItemStack(Items.bone),new ItemStack(Items.bone),new
-        // ItemStack(ConfigItems.itemResource,1,14),new ItemStack(ConfigItems.itemResource,1,14)}, 25));
-        // NecromanticAltarAPI.addEnergyToItem(Items.rottenFlesh,1);
-        // NecromanticAltarAPI.addEnergyToItem(Items.bone,2);
-        // NecromanticAltarAPI.addEnergyToItem(ConfigItems.itemResource,5,4);
-        // NecromanticAltarAPI.addEnergyToItem(Items.skull,1,5);
-        // NecromanticAltarAPI.addEnergyToItem(Items.appleRed,1);
     }
 
     private static void registerResearchItem(String name, String research, ItemStack output, AspectList aspects,
