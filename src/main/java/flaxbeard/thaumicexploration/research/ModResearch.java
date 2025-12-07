@@ -275,12 +275,6 @@ public final class ModResearch {
             research.setPages(new ResearchPage("1"), infusionPage("COMETBOOTS"));
         }
 
-        // research = new TXResearchItem("ENHANCEDRUNICARMOR", "ARTIFICE", new AspectList().add(Aspect.ARMOR,
-        // 12).add(Aspect.ENERGY, 7).add(Aspect.MAGIC, 7).add(Aspect.AIR, 7).add(Aspect.MIND, 7).add(Aspect.ORDER, 5),
-        // 7,4, 3, new
-        // ItemStack(ThaumicExploration.enhancedChestRunic)).setParents("RUNICARMOR","RUNICARMORUPGRADES").setParentsHidden("RUNICBOOTS","INFUSION","RUNICGOGGLES","RUNICBOOTSTRAVELLER").setConcealed().registerResearchItem();
-        // research.setPages(new ResearchPage("1"),new
-        // ResearchPage("2"),infusionPage("EnhancedRunicArmorHelm"),infusionPage("EnhancedRunicArmorChest"),infusionPage("EnhancedRunicArmorLegs"),infusionPage("EnhancedRunicArmorBoots"));
         if (ConfigTX.allowSojourner || ConfigTX.allowMechanist) {
             research = new FauxResearchItem(
                     "TXCAP_thaumium",
@@ -351,27 +345,7 @@ public final class ModResearch {
                 new ItemStack(ThaumicExploration.tentacleRing)).setParents("TAINTBASICS").setHidden()
                         .setEntityTriggers(new String[] { "Thaumcraft.Taintacle" }).registerResearchItem();
         research.setPages(new ResearchPage("1"), infusionPage("TENTACLERING"));
-        // Necromancy
-        // taint = new ResourceLocation("thaumicexploration:textures/tabs/necromancyResearch.png");
-        // research = new TXResearchItem("NECROINFUSION", "NECROMANCY", new AspectList(), -5, 0, 0,
-        // taint).registerResearchItem();
-        // research.setPages(new ResearchPage("1"), new ResearchPage("2"), new ResearchPage("3"),
-        // infusionPage("NECROINFUSION"));
-        // research = new TXResearchItem("ROD_NECROMANCER", "NECROMANCY", new AspectList(), -2, -2, 0, new
-        // ItemStack(ThaumicExploration.necroCore)).setConcealed().setParents("NECROINFUSION").registerResearchItem();
-        // research.setPages(new ResearchPage("1"), infusionPage("ROD_NECROMANCER"));
-        // research = new TXResearchItem("NECROENERGY", "NECROMANCY", new AspectList(), -7, 0, 0, new
-        // ResourceLocation("thaumicexploration",
-        // "textures/tabs/necroAspectResearch.png")).setConcealed().setParents("NECROINFUSION").registerResearchItem().setRound().setAutoUnlock();
-        // int numItems = (int) Math.ceil(NecromanticAltarAPI.necroEnergyItems.size() / 4.0F);
-        // ArrayList<ResearchPage> test = new ArrayList<ResearchPage>();
-        // test.add(new ResearchPage("1"));
-        // for (int i = 0; i<numItems;i++) {
-        // test.add(new ResearchPage("NE#"+i));
-        // }
-        // research.setPages(test.toArray(new ResearchPage[0]));
-        //
-        // {
+
         if (ConfigTX.allowEnchants) {
             research = new FauxResearchItem(
                     "TXINFUSIONENCHANTMENT",
@@ -381,10 +355,6 @@ public final class ModResearch {
                     -5,
                     -6,
                     getOriginalGraphic("INFUSIONENCHANTMENT", "ARTIFICE")).registerResearchItem();
-            // research = new TXResearchItem("ENCHBINDING", "ARTIFICE", new AspectList().add(Aspect.TRAP,
-            // 6).add(Aspect.ENTROPY, 5).add(Aspect.TRAVEL, 3), -8, 9, 1, new
-            // ResourceLocation("thaumicexploration:textures/tabs/binding.png")).setParents("INFUSIONENCHANTMENT").setConcealed().setSecondary().registerResearchItem();
-            // research.setPages(new ResearchPage("1"), infusionEnchantPage("ENCHBINDING"));
             if (ConfigTX.enchantmentBindingEnable) {
                 research = new TXResearchItem(
                         "ENCHBINDING",
@@ -524,10 +494,6 @@ public final class ModResearch {
         ResourceLocation chestSeal = new ResourceLocation("thaumicexploration:textures/tabs/chestSeals.png");
         ResourceLocation jarSeal = new ResourceLocation("thaumicexploration:textures/tabs/jarSeals.png");
         if (ConfigTX.allowBoundInventories) {
-            // research = new TXResearchItem("CHESTSEAL", "TX", new AspectList().add(Aspect.ELDRITCH,
-            // 5).add(Aspect.TRAP, 8).add(Aspect.TRAVEL, 5).add(Aspect.VOID,3), -9, -3, 2,
-            // chestSeal).setConcealed().setParentsHidden("MIRROR","TALLOW").registerResearchItem();
-            // research.setPages(new ResearchPage("1"),recipePage("BLANKSEAL"),cruciblePage("CHESTSEAL"));
             research = new TXResearchItem(
                     "JARSEAL",
                     "TX",
@@ -562,9 +528,6 @@ public final class ModResearch {
     }
 
     private static void registerResearchPages() {
-        // ResourceLocation background = new ResourceLocation("thaumicexploration:textures/gui/taintBackground.png");
-        // ResearchCategories.registerCategory("TAINT", new
-        // ResourceLocation("thaumicexploration:textures/tabs/taintResearch.png"), background);
         ResourceLocation background2 = new ResourceLocation("thaumcraft", "textures/gui/gui_researchback.png");
         ResearchCategories.registerCategory(
                 "TX",

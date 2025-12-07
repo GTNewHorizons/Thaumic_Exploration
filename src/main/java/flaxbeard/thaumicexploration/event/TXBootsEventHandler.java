@@ -14,7 +14,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Vec3;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
@@ -40,20 +39,8 @@ public class TXBootsEventHandler {
 
     @SubscribeEvent
     public void livingTick(LivingUpdateEvent event) {
-        /*
-         * if (event.entity instanceof EntityPlayer) { // PlayerKnowledge rp = Thaumcraft.proxy.getPlayerKnowledge(); //
-         * if (!rp.hasDiscoveredAspect(((EntityPlayer)event.entity).username, ThaumicExploration.fakeAspectNecro)) { //
-         * System.out.println(event.entity.worldObj.isRemote+" Discovering fake aspect"); //
-         * //PacketHandler.sendAspectDiscoveryPacket(ThaumicExploration.fakeAspectNecro.getTag(),
-         * (EntityPlayerMP)event.entity); // // rp.addDiscoveredAspect(((EntityPlayer)event.entity).username,
-         * ThaumicExploration.fakeAspectNecro); // if (rp.hasDiscoveredAspect(((EntityPlayer)event.entity).username,
-         * ThaumicExploration.fakeAspectNecro)) { //
-         * System.out.println(event.entity.worldObj.isRemote+" has discovered fake aspect"); // } // } }
-         */
         if ((event.entity instanceof EntityPlayer)) {
             EntityPlayer player = (EntityPlayer) event.entity;
-            // Utils.setWalkSpeed(player.capabilities, Utils.getWalkSpeed(genericPlayerCapabilities));
-            // updateSpeed(player);
             checkAir(player);
 
             if (player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemWandCasting) {
@@ -199,8 +186,6 @@ public class TXBootsEventHandler {
             }
             if (!wasTainted && isTainted) {
                 player.worldObj.playSoundEffect(player.posX, player.posY, player.posZ, "thaumcraft:zap", 1.0F, 1.0F);
-                // player.addPotionEffect(new PotionEffect(Potion.blindness.id,60));
-                // player.addPotionEffect(new PotionEffect(Potion.confusion.id,160));
             }
             player.getEntityData().setBoolean("tainted", isTainted);
 
@@ -276,24 +261,6 @@ public class TXBootsEventHandler {
             event.entity.stepHeight = ((Float) this.prevStep.get(Integer.valueOf(event.entity.getEntityId())))
                     .floatValue();
             this.prevStep.remove(Integer.valueOf(event.entity.getEntityId()));
-        }
-    }
-    /*
-     * @SubscribeEvent public void onEntityUpdate(LivingUpdateEvent event){ if (event.entity instanceof EntityPlayer) {
-     * EntityPlayer player = (EntityPlayer)event.entity; PotionEffect effect =
-     * player.getActivePotionEffect(Config.potionTaintPoisonID); if (!(effect == null)) { PotionEffect neweffect = new
-     * PotionEffect(Potion.nightVision.id, Integer.MAX_VALUE, -42, true); player.addPotionEffect(neweffect);
-     * System.out.println("some flux here"); } else { //System.out.println("no flux"); }
-     * /*if(player.isPotionActive(PotionFluxTaint.instance.id)){ for (int i = 0; i<player.inventory.getSizeInventory();
-     * i++) { if (player.inventory.getStackInSlot(i) != null && player.inventory.getStackInSlot(i).getItem() ==
-     * ThaumicExploration.charmTaint) { player.removePotionEffect(PotionFluxTaint.instance.id); //break; } } } } }
-     */
-
-    @SubscribeEvent
-    public void joinWorld(EntityJoinWorldEvent event) {
-        if ((event.entity instanceof EntityPlayer)) {
-            EntityPlayer player = (EntityPlayer) event.entity;
-            // updateSpeed(player);
         }
     }
 
