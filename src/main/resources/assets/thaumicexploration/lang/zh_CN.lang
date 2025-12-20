@@ -28,7 +28,6 @@ item.thaumicexploration:dreamcatcher.name=辟邪符
 item.thaumicexploration:ringTaint.name=腐化之环
 item.thaumicexploration:talismanFood.name=补给之符
 item.thaumicexploration:taintBerry.name=腐化浆果
-item.thaumicexploration:necroAltar.name=巫术基座
 thaumicexploration.bread0=你会和我做朋友么?
 thaumicexploration.bread1=请吃了我(English)
 thaumicexploration.bread2=你饿了么?
@@ -347,18 +346,6 @@ te.text.ROD_TRANSMUTATION.1=研究元始魔力的性质时,你发现你能偶发
 te.name.ROD_NECROMANCER=亡灵杖柄
 te.tag.ROD_NECROMANCER=邪恶的魔力储存
 te.text.ROD_NECROMANCER.1=对你而言到处找节点补充法杖魔力是个麻烦事.为了解决这一问题,你制作了这一有效利用死亡能量的杖柄.<BR><BR>它能两倍吸收怪物死后遗留的魔力,快速充能法杖.不幸的是,用于注入的黑暗能量与其它形式的魔力适用性不佳.抽取节点以及其他方式获得的魔力会有四分之一的损失.又因为该杖柄有相当于银树杖的储存容量,使得二选一成为了艰难的选项.
-
---Necromantic Energy
-te.name.NECROENERGY=亡灵之力
-te.tag.NECROENERGY=不死的能量
-te.text.NECROENERGY.1=使用亡灵祭坛注魔时,需要特定量的亡灵之力.这种能量可通过在祭坛献祭特殊物品提供,这里给出了这些物品的列表.
-
---Necro Infusion
-te.name.NECROINFUSION=亡灵注魔
-te.tag.NECROINFUSION=Kali ma! Kali maaa!
-te.text.NECROINFUSION.1=利用自然界的神秘能量固然好,不过你还想要更多.活体生物的能量是你长久以来的所求之物.终于,这一天到来了.<BR><BR>通过给奥术基座注入邪恶能量,装饰上亡灵生物的头颅,围绕着基座摆放五芒星形的蜡烛,你做出了一个能让你融合拥有邪恶能量的物品的祭坛.法杖右击就能启动祭坛.拿物品右击祭坛放入物品,shift并右击祭坛移除物品.
-te.text.NECROINFUSION.2=要注魔一个物品,只需用法杖点击一下.每次注魔都需要一定量的亡灵能量,或称NE(Necromantic Energy),可通过向祭坛献祭含有NE的物品来提供.为此,在祭坛上方点火然后投入物品.NE提供足够时,注魔就完成了.
-te.text.NECROINFUSION.3=下面展示了一个亡灵注魔祭坛的安装示例.<IMG>thaumicexploration:textures/tabs/altarSetup.png:0:0:255:255:0.5</IMG> 放在祭坛的头颅可以来自僵尸,骷髅射手,或是凋零骷髅.
 
 --Taint Basics
 te.name.TAINTBASICS=腐化
