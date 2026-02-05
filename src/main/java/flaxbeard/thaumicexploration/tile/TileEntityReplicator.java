@@ -227,7 +227,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
     }
 
     public void updateRedstoneState(boolean newState) {
-        if (newState != redstoneState && !crafting && newState) {
+        if (!redstoneState && newState && !crafting) {
             startCrafting();
         }
         redstoneState = newState;
