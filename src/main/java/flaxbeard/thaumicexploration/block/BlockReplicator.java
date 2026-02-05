@@ -118,7 +118,8 @@ public class BlockReplicator extends BlockContainer {
                 (world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.5F);
     }
 
-    private void trySetTemplateBlock(World world, int x, int y, int z, TileEntityReplicator replicator, ItemStack held) {
+    private void trySetTemplateBlock(World world, int x, int y, int z, TileEntityReplicator replicator,
+            ItemStack held) {
         ItemStack newTemplate = held.copy();
         newTemplate.stackSize = 0;
         replicator.setInventorySlotContents(0, newTemplate);
