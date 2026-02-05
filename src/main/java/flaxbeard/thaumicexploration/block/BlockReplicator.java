@@ -113,11 +113,10 @@ public class BlockReplicator extends BlockContainer {
             item.motionZ = 0;
 
             world.spawnEntityInWorld(item);
+            template.stackSize = 0;
         } else {
             replicator.setInventorySlotContents(0, null);
         }
-
-        template.stackSize--;
 
         world.markBlockForUpdate(x, y, z);
         world.playSoundEffect(
