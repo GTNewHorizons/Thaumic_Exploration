@@ -31,7 +31,7 @@ public class TileEntityReplicatorRender extends TileEntitySpecialRenderer {
 
         renderFloatingItem(stack, x, y, z, partialTicks, replicator.crafting, replicator.ticksLeft);
 
-        if (replicator.crafting) {
+        if (replicator.crafting || replicator.ticksLeft > 0) {
             renderAspectRunes(replicator, x, y, z);
         }
     }
