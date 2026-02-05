@@ -66,34 +66,60 @@ public class TileEntityReplicatorRender extends TileEntitySpecialRenderer {
 
     private void renderAspectRunes(TileEntityReplicator replicator, double x, double y, double z) {
         Tessellator tessellator = Tessellator.instance;
+
+        final int TEX_H = 16;
+        final int RUNE_TOP_PX = 3;
+        final int RUNE_HEIGHT_PX = 10;
+        final int RUNE_BOTTOM_PX = RUNE_TOP_PX + RUNE_HEIGHT_PX;
+
+        final float runeHeight = RUNE_HEIGHT_PX / (float) TEX_H; // 10 / 16
+        final float runeBottom = (1.0f - runeHeight) / 2.0f;
+
         GL11.glPushMatrix();
         GL11.glTranslated(x + 0.5, y, z + 0.5);
         bindTexture(TEXTURE);
 
-        ItemStack example = replicator.getStackInSlot(0).copy();
-        example.stackSize = 1;
-
         GL11.glDisable(GL11.GL_LIGHTING);
+
         for (int i = 0; i < 4; i++) {
             Aspect aspect = selectAspectForRender(replicator.displayEssentia, i);
-            if (aspect == null) continue;
+            if (aspect == null) {
+                GL11.glRotatef(90F, 0, 1, 0);
+                continue;
+            }
 
-            float fillLevel = (replicator.displayEssentia.getAmount(aspect) - replicator.recipeEssentia.getAmount(aspect))
-                    / (float) replicator.displayEssentia.getAmount(aspect);
+            float current = replicator.displayEssentia.getAmount(aspect);
+            float required = replicator.recipeEssentia.getAmount(aspect);
+
+            float fillRatio = current <= 0 ? 0f : MathHelper.clamp_float((current - required) / current, 0f, 1f);
+
+            int filledPixels = MathHelper.clamp_int(Math.round(fillRatio * RUNE_HEIGHT_PX), 0, RUNE_HEIGHT_PX);
+
+            if (filledPixels == 0) {
+                GL11.glRotatef(90F, 0, 1, 0);
+                continue;
+            }
+
+            float yFill = runeBottom + filledPixels / (float) TEX_H;
+
+            float vBottom = RUNE_BOTTOM_PX / (float) TEX_H;
+            float vFill = (RUNE_BOTTOM_PX - filledPixels) / (float) TEX_H;
 
             tessellator.startDrawingQuads();
             tessellator.setBrightness(0xF000F0);
             tessellator.setColorOpaque_I(aspect.getColor());
 
-            tessellator.addVertexWithUV(0.5, fillLevel, -0.501, 0, 1.0 - fillLevel);
-            tessellator.addVertexWithUV(0.5, 0, -0.501, 0, 1);
-            tessellator.addVertexWithUV(-0.5, 0, -0.501, 1, 1);
-            tessellator.addVertexWithUV(-0.5, fillLevel, -0.501, 1, 1.0 - fillLevel);
+            tessellator.addVertexWithUV(0.5, yFill, -0.501, 0, vFill);
+            tessellator.addVertexWithUV(0.5, runeBottom, -0.501, 0, vBottom);
+            tessellator.addVertexWithUV(-0.5, runeBottom, -0.501, 1, vBottom);
+            tessellator.addVertexWithUV(-0.5, yFill, -0.501, 1, vFill);
+
             tessellator.draw();
+
             GL11.glRotatef(90F, 0, 1, 0);
         }
-        GL11.glEnable(GL11.GL_LIGHTING);
 
+        GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
     }
 
