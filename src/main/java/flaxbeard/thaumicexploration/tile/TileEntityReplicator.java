@@ -16,6 +16,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 
+import org.jetbrains.annotations.NotNull;
+
 import cpw.mods.fml.common.network.NetworkRegistry;
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import thaumcraft.api.aspects.Aspect;
@@ -76,6 +78,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         ItemStack copy = input.copy();
         copy.stackSize = 1;
         recipeEssentia = ThaumcraftCraftingManager.getBonusTags(copy, ThaumcraftCraftingManager.getObjectTags(copy));
+        displayEssentia = recipeEssentia.copy();
 
         worldObj.playSoundEffect(xCoord, yCoord, zCoord, "thaumcraft:craftstart", 0.5F, 1.0F);
         markBlockForUpdate();
@@ -258,14 +261,19 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
             return;
         }
 
+        tag.setTag("Aspects", essentiaToNBT(recipeEssentia));
+        tag.setTag("Display", essentiaToNBT(displayEssentia));
+    }
+
+    private @NotNull NBTTagCompound essentiaToNBT(AspectList list) {
         NBTTagCompound aspects = new NBTTagCompound();
-        for (Aspect a : recipeEssentia.getAspects()) {
+        for (Aspect a : list.getAspects()) {
             if (a == null) continue;
             NBTTagCompound aTag = new NBTTagCompound();
-            aTag.setInteger("Amount", recipeEssentia.getAmount(a));
+            aTag.setInteger("Amount", list.getAmount(a));
             aspects.setTag(a.getTag(), aTag);
         }
-        tag.setTag("Aspects", aspects);
+        return aspects;
     }
 
     private void readInventoryNBT(NBTTagCompound tag) {
@@ -282,8 +290,14 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
             }
         }
 
-        recipeEssentia = new AspectList();
-        NBTTagCompound aspects = tag.getCompoundTag("Aspects");
+        recipeEssentia.aspects.clear();
+        nbtToEssentia(tag.getCompoundTag("Aspects"), recipeEssentia);
+
+        displayEssentia.aspects.clear();
+        nbtToEssentia(tag.getCompoundTag("Display"), displayEssentia);
+    }
+
+    private void nbtToEssentia(NBTTagCompound aspects, AspectList recipeEssentia) {
         for (String key : aspects.func_150296_c()) {
             Aspect a = Aspect.getAspect(key);
             if (a != null) {

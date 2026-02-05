@@ -16,7 +16,6 @@ import org.lwjgl.opengl.GL11;
 import flaxbeard.thaumicexploration.tile.TileEntityReplicator;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
-import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
 
 public class TileEntityReplicatorRender extends TileEntitySpecialRenderer {
 
@@ -74,16 +73,13 @@ public class TileEntityReplicatorRender extends TileEntitySpecialRenderer {
         ItemStack example = replicator.getStackInSlot(0).copy();
         example.stackSize = 1;
 
-        AspectList tagList = ThaumcraftCraftingManager
-                .getBonusTags(example, ThaumcraftCraftingManager.getObjectTags(example));
-
         GL11.glDisable(GL11.GL_LIGHTING);
         for (int i = 0; i < 4; i++) {
-            Aspect aspect = selectAspectForRender(tagList, i);
+            Aspect aspect = selectAspectForRender(replicator.displayEssentia, i);
             if (aspect == null) continue;
 
-            float fillLevel = (tagList.getAmount(aspect) - replicator.recipeEssentia.getAmount(aspect))
-                    / (float) tagList.getAmount(aspect);
+            float fillLevel = (replicator.displayEssentia.getAmount(aspect) - replicator.recipeEssentia.getAmount(aspect))
+                    / (float) replicator.displayEssentia.getAmount(aspect);
 
             tessellator.startDrawingQuads();
             tessellator.setBrightness(0xF000F0);
