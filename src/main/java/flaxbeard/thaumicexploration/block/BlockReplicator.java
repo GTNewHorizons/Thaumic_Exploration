@@ -99,10 +99,6 @@ public class BlockReplicator extends BlockContainer {
         if (template.stackSize > 0) {
             EntityItem item = new EntityItem(world, x + 0.5, y + 1.2F, z + 0.5, template.copy());
 
-            if (template.hasTagCompound()) {
-                item.getEntityItem().setTagCompound((NBTTagCompound) template.getTagCompound().copy());
-            }
-
             item.motionX = 0;
             item.motionY = 0.2F;
             item.motionZ = 0;
