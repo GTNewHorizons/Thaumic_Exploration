@@ -102,7 +102,7 @@ public class BlockReplicator extends BlockContainer {
                     x + 0.5,
                     y + 1.2F,
                     z + 0.5,
-                    new ItemStack(template.getItem(), template.stackSize, template.getItemDamage()));
+                    template.copy());
 
             if (template.hasTagCompound()) {
                 item.getEntityItem().setTagCompound((NBTTagCompound) template.getTagCompound().copy());
