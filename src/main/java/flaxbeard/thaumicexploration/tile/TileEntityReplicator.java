@@ -83,8 +83,8 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
 
     public void cancelCrafting() {
         crafting = false;
-        recipeEssentia = new AspectList();
-        displayEssentia = new AspectList();
+        recipeEssentia.aspects.clear();
+        displayEssentia.aspects.clear();;
     }
 
     private void updateCraftingServer() {
