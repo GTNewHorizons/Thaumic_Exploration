@@ -97,12 +97,7 @@ public class BlockReplicator extends BlockContainer {
     private void ejectBlockFromReplicator(World world, int x, int y, int z, TileEntityReplicator replicator,
             ItemStack template) {
         if (template.stackSize > 0) {
-            EntityItem item = new EntityItem(
-                    world,
-                    x + 0.5,
-                    y + 1.2F,
-                    z + 0.5,
-                    template.copy());
+            EntityItem item = new EntityItem(world, x + 0.5, y + 1.2F, z + 0.5, template.copy());
 
             if (template.hasTagCompound()) {
                 item.getEntityItem().setTagCompound((NBTTagCompound) template.getTagCompound().copy());

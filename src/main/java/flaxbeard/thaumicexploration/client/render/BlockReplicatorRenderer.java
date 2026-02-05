@@ -6,10 +6,11 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
+import org.lwjgl.opengl.GL11;
+
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import flaxbeard.thaumicexploration.block.BlockReplicator;
-import org.lwjgl.opengl.GL11;
 import thaumcraft.client.renderers.block.BlockRenderer;
 
 public class BlockReplicatorRenderer extends BlockRenderer implements ISimpleBlockRenderingHandler {
