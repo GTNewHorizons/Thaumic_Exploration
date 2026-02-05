@@ -137,7 +137,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
                                 32.0D));
 
                 source.takeFromContainer(aspect, 1);
-                recipeEssentia.reduce(aspect, 1);
+                recipeEssentia.remove(aspect, 1);
                 markBlockForUpdate();
                 return;
             }
