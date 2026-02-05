@@ -1,6 +1,7 @@
 package flaxbeard.thaumicexploration.tile;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -97,8 +98,8 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
             essentiaTicks++;
 
             if (essentiaTicks > 49) {
+                if (sources.isEmpty()) getSurroundings();
                 essentiaTicks = 0;
-                getSurroundings();
                 drainEssentiaFromSources();
             }
             return;
@@ -116,9 +117,15 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         for (Aspect aspect : recipeEssentia.getAspects()) {
             if (recipeEssentia.getAmount(aspect) <= 0) continue;
 
-            for (ChunkCoordinates cc : sources) {
-                TileEntity te = worldObj.getTileEntity(cc.posX, cc.posY, cc.posZ);
-                if (!(te instanceof IAspectSource source)) continue;
+            Iterator<ChunkCoordinates> it = sources.iterator();
+            while (it.hasNext()) {
+                ChunkCoordinates cc = it.next();
+
+                if (!(worldObj.getTileEntity(cc.posX, cc.posY, cc.posZ) instanceof IAspectSource source
+                        && validContainer(source))) {
+                    it.remove();
+                    continue;
+                }
                 if (!source.doesContainerContainAmount(aspect, 1)) continue;
                 PacketHandler.INSTANCE.sendToAllAround(
                         new PacketFXEssentiaSource(
@@ -142,6 +149,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
                 return;
             }
         }
+        getSurroundings(); // Fallback if none of the sources in range have the required aspect
     }
 
     private void finishCrafting() {
@@ -217,12 +225,22 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
                     int y = yCoord - yy;
                     int z = zCoord + zz;
                     TileEntity te = worldObj.getTileEntity(x, y, z);
-                    if (te instanceof IAspectSource) {
+                    if (te instanceof IAspectSource source && validContainer(source)) {
                         sources.add(new ChunkCoordinates(x, y, z));
                     }
                 }
             }
         }
+    }
+
+    private boolean validContainer(IAspectSource source) {
+        AspectList sourceAspects = source.getAspects();
+        for (Aspect aspect : displayEssentia.getAspects()) {
+            if (sourceAspects.aspects.containsKey(aspect)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void updateRedstoneState(boolean newState) {
