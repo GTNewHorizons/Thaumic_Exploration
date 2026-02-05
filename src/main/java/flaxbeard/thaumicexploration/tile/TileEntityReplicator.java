@@ -149,19 +149,15 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         result.stackSize++;
         setInventorySlotContents(0, result);
         crafting = false;
-        recipeEssentia = new AspectList();
+        recipeEssentia.aspects.clear();
         markBlockForUpdate();
     }
 
     private void spawnClientParticles() {
-        if (ticksLeft >= 100) return;
+        if (ticksLeft >= 100 || displayEssentia.aspects.isEmpty()) return;
 
         ItemStack example = getStackInSlot(0).copy();
         example.stackSize = 1;
-        AspectList tags = ThaumcraftCraftingManager
-                .getBonusTags(example, ThaumcraftCraftingManager.getObjectTags(example));
-
-        if (tags.size() == 0) return;
 
         for (int i = 0; i < 5; i++) {
             ThaumicExploration.proxy.spawnFragmentParticle(
@@ -177,7 +173,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         }
 
         if (worldObj.rand.nextInt(4) == 0 && ticksLeft > 40) {
-            Aspect randomAspect = tags.getAspects()[worldObj.rand.nextInt(tags.size())];
+            Aspect randomAspect = displayEssentia.getAspects()[worldObj.rand.nextInt(displayEssentia.size())];
             ThaumicExploration.proxy.spawnEssentiaAtLocation(
                     worldObj,
                     xCoord + 0.5F + randomOffset(),
@@ -257,10 +253,6 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         }
         tag.setTag("Items", items);
 
-        if (recipeEssentia == null || recipeEssentia.size() <= 0) {
-            return;
-        }
-
         tag.setTag("Aspects", essentiaToNBT(recipeEssentia));
         tag.setTag("Display", essentiaToNBT(displayEssentia));
     }
@@ -290,19 +282,17 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
             }
         }
 
-        recipeEssentia.aspects.clear();
         nbtToEssentia(tag.getCompoundTag("Aspects"), recipeEssentia);
-
-        displayEssentia.aspects.clear();
         nbtToEssentia(tag.getCompoundTag("Display"), displayEssentia);
     }
 
-    private void nbtToEssentia(NBTTagCompound aspects, AspectList recipeEssentia) {
+    private void nbtToEssentia(NBTTagCompound aspects, AspectList list) {
+        list.aspects.clear();
         for (String key : aspects.func_150296_c()) {
             Aspect a = Aspect.getAspect(key);
             if (a != null) {
                 int amount = aspects.getCompoundTag(key).getInteger("Amount");
-                recipeEssentia.add(a, amount);
+                list.add(a, amount);
             }
         }
     }
