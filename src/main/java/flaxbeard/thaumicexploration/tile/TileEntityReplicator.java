@@ -88,7 +88,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
     public void cancelCrafting() {
         crafting = false;
         recipeEssentia.aspects.clear();
-        displayEssentia.aspects.clear();;
+        displayEssentia.aspects.clear();
     }
 
     private void updateCraftingServer() {
@@ -320,6 +320,10 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         NBTTagCompound tag = new NBTTagCompound();
         writeInventoryNBT(tag);
         return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tag);
+    }
+
+    public void clearSources() {
+        sources.clear();
     }
 
     @Override
