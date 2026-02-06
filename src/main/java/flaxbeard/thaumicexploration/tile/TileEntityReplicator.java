@@ -1,6 +1,7 @@
 package flaxbeard.thaumicexploration.tile;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -15,6 +16,8 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
+
+import org.jetbrains.annotations.NotNull;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
 import flaxbeard.thaumicexploration.ThaumicExploration;
@@ -76,6 +79,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         ItemStack copy = input.copy();
         copy.stackSize = 1;
         recipeEssentia = ThaumcraftCraftingManager.getBonusTags(copy, ThaumcraftCraftingManager.getObjectTags(copy));
+        displayEssentia = recipeEssentia.copy();
 
         worldObj.playSoundEffect(xCoord, yCoord, zCoord, "thaumcraft:craftstart", 0.5F, 1.0F);
         markBlockForUpdate();
@@ -83,8 +87,8 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
 
     public void cancelCrafting() {
         crafting = false;
-        recipeEssentia = new AspectList();
-        displayEssentia = new AspectList();
+        recipeEssentia.aspects.clear();
+        displayEssentia.aspects.clear();
     }
 
     private void updateCraftingServer() {
@@ -94,8 +98,8 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
             essentiaTicks++;
 
             if (essentiaTicks > 49) {
+                if (sources.isEmpty()) getSurroundings();
                 essentiaTicks = 0;
-                getSurroundings();
                 drainEssentiaFromSources();
             }
             return;
@@ -113,9 +117,15 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         for (Aspect aspect : recipeEssentia.getAspects()) {
             if (recipeEssentia.getAmount(aspect) <= 0) continue;
 
-            for (ChunkCoordinates cc : sources) {
-                TileEntity te = worldObj.getTileEntity(cc.posX, cc.posY, cc.posZ);
-                if (!(te instanceof IAspectSource source)) continue;
+            Iterator<ChunkCoordinates> it = sources.iterator();
+            while (it.hasNext()) {
+                ChunkCoordinates cc = it.next();
+
+                if (!(worldObj.getTileEntity(cc.posX, cc.posY, cc.posZ) instanceof IAspectSource source
+                        && validContainer(source))) {
+                    it.remove();
+                    continue;
+                }
                 if (!source.doesContainerContainAmount(aspect, 1)) continue;
                 PacketHandler.INSTANCE.sendToAllAround(
                         new PacketFXEssentiaSource(
@@ -134,11 +144,12 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
                                 32.0D));
 
                 source.takeFromContainer(aspect, 1);
-                recipeEssentia.reduce(aspect, 1);
+                recipeEssentia.remove(aspect, 1);
                 markBlockForUpdate();
                 return;
             }
         }
+        getSurroundings(); // Fallback if none of the sources in range have the required aspect
     }
 
     private void finishCrafting() {
@@ -146,19 +157,15 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         result.stackSize++;
         setInventorySlotContents(0, result);
         crafting = false;
-        recipeEssentia = new AspectList();
+        recipeEssentia.aspects.clear();
         markBlockForUpdate();
     }
 
     private void spawnClientParticles() {
-        if (ticksLeft >= 100) return;
+        if (ticksLeft >= 100 || displayEssentia.aspects.isEmpty()) return;
 
         ItemStack example = getStackInSlot(0).copy();
         example.stackSize = 1;
-        AspectList tags = ThaumcraftCraftingManager
-                .getBonusTags(example, ThaumcraftCraftingManager.getObjectTags(example));
-
-        if (tags.size() == 0) return;
 
         for (int i = 0; i < 5; i++) {
             ThaumicExploration.proxy.spawnFragmentParticle(
@@ -174,7 +181,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         }
 
         if (worldObj.rand.nextInt(4) == 0 && ticksLeft > 40) {
-            Aspect randomAspect = tags.getAspects()[worldObj.rand.nextInt(tags.size())];
+            Aspect randomAspect = displayEssentia.getAspects()[worldObj.rand.nextInt(displayEssentia.size())];
             ThaumicExploration.proxy.spawnEssentiaAtLocation(
                     worldObj,
                     xCoord + 0.5F + randomOffset(),
@@ -218,7 +225,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
                     int y = yCoord - yy;
                     int z = zCoord + zz;
                     TileEntity te = worldObj.getTileEntity(x, y, z);
-                    if (te instanceof IAspectSource) {
+                    if (te instanceof IAspectSource source && validContainer(source)) {
                         sources.add(new ChunkCoordinates(x, y, z));
                     }
                 }
@@ -226,8 +233,18 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         }
     }
 
+    private boolean validContainer(IAspectSource source) {
+        AspectList sourceAspects = source.getAspects();
+        for (Aspect aspect : displayEssentia.getAspects()) {
+            if (sourceAspects.aspects.containsKey(aspect)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void updateRedstoneState(boolean newState) {
-        if (newState != redstoneState && !crafting && newState) {
+        if (!redstoneState && newState && !crafting) {
             startCrafting();
         }
         redstoneState = newState;
@@ -254,18 +271,19 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         }
         tag.setTag("Items", items);
 
-        if (recipeEssentia == null || recipeEssentia.size() <= 0) {
-            return;
-        }
+        tag.setTag("Aspects", essentiaToNBT(recipeEssentia));
+        tag.setTag("Display", essentiaToNBT(displayEssentia));
+    }
 
+    private @NotNull NBTTagCompound essentiaToNBT(AspectList list) {
         NBTTagCompound aspects = new NBTTagCompound();
-        for (Aspect a : recipeEssentia.getAspects()) {
+        for (Aspect a : list.getAspects()) {
             if (a == null) continue;
             NBTTagCompound aTag = new NBTTagCompound();
-            aTag.setInteger("Amount", recipeEssentia.getAmount(a));
+            aTag.setInteger("Amount", list.getAmount(a));
             aspects.setTag(a.getTag(), aTag);
         }
-        tag.setTag("Aspects", aspects);
+        return aspects;
     }
 
     private void readInventoryNBT(NBTTagCompound tag) {
@@ -282,13 +300,17 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
             }
         }
 
-        recipeEssentia = new AspectList();
-        NBTTagCompound aspects = tag.getCompoundTag("Aspects");
+        nbtToEssentia(tag.getCompoundTag("Aspects"), recipeEssentia);
+        nbtToEssentia(tag.getCompoundTag("Display"), displayEssentia);
+    }
+
+    private void nbtToEssentia(NBTTagCompound aspects, AspectList list) {
+        list.aspects.clear();
         for (String key : aspects.func_150296_c()) {
             Aspect a = Aspect.getAspect(key);
             if (a != null) {
                 int amount = aspects.getCompoundTag(key).getInteger("Amount");
-                recipeEssentia.add(a, amount);
+                list.add(a, amount);
             }
         }
     }
@@ -298,6 +320,10 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         NBTTagCompound tag = new NBTTagCompound();
         writeInventoryNBT(tag);
         return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tag);
+    }
+
+    public void clearSources() {
+        sources.clear();
     }
 
     @Override

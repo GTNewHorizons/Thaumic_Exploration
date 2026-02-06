@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -87,7 +86,7 @@ public class BlockReplicator extends BlockContainer {
         }
 
         if (held != null && ReplicatorRecipes.canStackBeReplicated(held)) {
-            trySetTemplateBlock(world, x, y, z, replicator, held, player);
+            trySetTemplateBlock(world, x, y, z, replicator, held);
             return true;
         }
 
@@ -97,27 +96,17 @@ public class BlockReplicator extends BlockContainer {
     private void ejectBlockFromReplicator(World world, int x, int y, int z, TileEntityReplicator replicator,
             ItemStack template) {
         if (template.stackSize > 0) {
-            EntityItem item = new EntityItem(
-                    world,
-                    x + 0.5,
-                    y + 1.2F,
-                    z + 0.5,
-                    new ItemStack(template.getItem(), template.stackSize, template.getItemDamage()));
-
-            if (template.hasTagCompound()) {
-                item.getEntityItem().setTagCompound((NBTTagCompound) template.getTagCompound().copy());
-            }
+            EntityItem item = new EntityItem(world, x + 0.5, y + 1.2F, z + 0.5, template.copy());
 
             item.motionX = 0;
             item.motionY = 0.2F;
             item.motionZ = 0;
 
             world.spawnEntityInWorld(item);
+            template.stackSize = 0;
         } else {
             replicator.setInventorySlotContents(0, null);
         }
-
-        template.stackSize--;
 
         world.markBlockForUpdate(x, y, z);
         world.playSoundEffect(
@@ -129,11 +118,12 @@ public class BlockReplicator extends BlockContainer {
                 (world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.5F);
     }
 
-    private void trySetTemplateBlock(World world, int x, int y, int z, TileEntityReplicator replicator, ItemStack held,
-            EntityPlayer player) {
+    private void trySetTemplateBlock(World world, int x, int y, int z, TileEntityReplicator replicator,
+            ItemStack held) {
         ItemStack newTemplate = held.copy();
         newTemplate.stackSize = 0;
         replicator.setInventorySlotContents(0, newTemplate);
+        replicator.clearSources();
 
         // If you want to consume the item: (uncomment if needed)
         // if (--held.stackSize <= 0) player.setCurrentItemOrArmor(0, null);
