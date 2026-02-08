@@ -86,7 +86,7 @@ public class BlockReplicator extends BlockContainer {
         }
 
         if (held != null && ReplicatorRecipes.canStackBeReplicated(held)) {
-            trySetTemplateBlock(world, x, y, z, replicator, held);
+            setTemplateBlock(world, x, y, z, replicator, held);
             return true;
         }
 
@@ -118,15 +118,11 @@ public class BlockReplicator extends BlockContainer {
                 (world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.5F);
     }
 
-    private void trySetTemplateBlock(World world, int x, int y, int z, TileEntityReplicator replicator,
-            ItemStack held) {
+    private void setTemplateBlock(World world, int x, int y, int z, TileEntityReplicator replicator, ItemStack held) {
         ItemStack newTemplate = held.copy();
         newTemplate.stackSize = 0;
         replicator.setInventorySlotContents(0, newTemplate);
         replicator.clearSources();
-
-        // If you want to consume the item: (uncomment if needed)
-        // if (--held.stackSize <= 0) player.setCurrentItemOrArmor(0, null);
 
         world.markBlockForUpdate(x, y, z);
         world.playSoundEffect(
