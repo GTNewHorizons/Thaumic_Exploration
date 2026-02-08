@@ -114,19 +114,16 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
     }
 
     private void drainEssentiaFromSources() {
-        for (Aspect aspect : recipeEssentia.getAspects()) {
-            if (recipeEssentia.getAmount(aspect) <= 0) continue;
-
-            Iterator<ChunkCoordinates> it = sources.iterator();
-            while (it.hasNext()) {
-                ChunkCoordinates cc = it.next();
-
-                if (!(worldObj.getTileEntity(cc.posX, cc.posY, cc.posZ) instanceof IAspectSource source
-                        && validContainer(source))) {
-                    it.remove();
-                    continue;
-                }
-                if (!source.doesContainerContainAmount(aspect, 1)) continue;
+        Iterator<ChunkCoordinates> it = sources.iterator();
+        while (it.hasNext()) {
+            ChunkCoordinates cc = it.next();
+            IAspectSource source = getValidAspectSource(worldObj.getTileEntity(cc.posX, cc.posY, cc.posZ));
+            if (source == null) {
+                it.remove();
+                continue;
+            }
+            for (Aspect aspect : recipeEssentia.getAspects()) {
+                if (recipeEssentia.getAmount(aspect) <= 0 || !source.doesContainerContainAmount(aspect, 1)) continue;
                 PacketHandler.INSTANCE.sendToAllAround(
                         new PacketFXEssentiaSource(
                                 this.xCoord,
@@ -225,7 +222,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
                     int y = yCoord - yy;
                     int z = zCoord + zz;
                     TileEntity te = worldObj.getTileEntity(x, y, z);
-                    if (te instanceof IAspectSource source && validContainer(source)) {
+                    if (getValidAspectSource(te) != null) {
                         sources.add(new ChunkCoordinates(x, y, z));
                     }
                 }
@@ -233,14 +230,20 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         }
     }
 
-    private boolean validContainer(IAspectSource source) {
-        AspectList sourceAspects = source.getAspects();
+    /**
+     * Get the IAspectSource from a TileEntity iff it contains at least one relevant type of essentia.
+     * 
+     * @return IAspectSource from a TileEntity if valid, otherwise null
+     */
+    private IAspectSource getValidAspectSource(TileEntity source) {
+        if (!(source instanceof IAspectSource as)) return null;
+        AspectList sourceAspects = as.getAspects();
         for (Aspect aspect : displayEssentia.getAspects()) {
             if (sourceAspects.aspects.containsKey(aspect)) {
-                return true;
+                return as;
             }
         }
-        return false;
+        return null;
     }
 
     public void updateRedstoneState(boolean newState) {
