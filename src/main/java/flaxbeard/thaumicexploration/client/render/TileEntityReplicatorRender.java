@@ -27,7 +27,7 @@ public class TileEntityReplicatorRender extends TileEntitySpecialRenderer {
         TileEntityReplicator replicator = (TileEntityReplicator) tile;
         ItemStack stack = replicator.getStackInSlot(0);
 
-        if (stack == null || !replicator.validLocation() || replicator.displayEssentia.size() == 0) return;
+        if (stack == null || !replicator.validLocation() || replicator.templateEssentia.size() == 0) return;
 
         renderFloatingItem(stack, x, y, z, partialTicks, replicator.crafting, replicator.ticksLeft);
 
@@ -82,10 +82,10 @@ public class TileEntityReplicatorRender extends TileEntitySpecialRenderer {
         GL11.glDisable(GL11.GL_LIGHTING);
 
         for (int i = 0; i < 4; i++) {
-            Aspect aspect = selectAspectForRender(replicator.displayEssentia, i);
+            Aspect aspect = selectAspectForRender(replicator.templateEssentia, i);
 
-            float current = replicator.displayEssentia.getAmount(aspect);
-            float required = replicator.recipeEssentia.getAmount(aspect);
+            float current = replicator.templateEssentia.getAmount(aspect);
+            float required = replicator.requiredEssentia.getAmount(aspect);
 
             float fillRatio = current <= 0 ? 0f : MathHelper.clamp_float((current - required) / current, 0f, 1f);
 
