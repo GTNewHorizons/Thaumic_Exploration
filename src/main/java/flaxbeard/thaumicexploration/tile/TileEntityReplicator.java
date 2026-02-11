@@ -62,6 +62,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
     public void updateEntity() {
         if (crafting) {
             if (worldObj.isRemote) {
+                if (requiredEssentia.size() <= 0) ticksLeft--;
                 spawnClientParticles();
             } else {
                 updateCraftingServer();
@@ -94,8 +95,6 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
     }
 
     private void updateCraftingServer() {
-        markBlockForUpdate();
-
         if (requiredEssentia.visSize() > 0) {
             essentiaTicks++;
 
@@ -379,16 +378,15 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         ItemStack copy = item.copy();
         copy.stackSize = 0;
 
+        markBlockForUpdate();
         if (item.stackSize <= count) {
             ItemStack ret = item;
             item = copy;
-            markBlockForUpdate();
             return ret;
         }
 
         ItemStack ret = item.splitStack(count);
         if (item.stackSize == 0) item = copy;
-        markBlockForUpdate();
         return ret;
     }
 
