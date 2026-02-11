@@ -35,7 +35,7 @@ import thaumcraft.common.lib.network.fx.PacketFXEssentiaSource;
 public class TileEntityReplicator extends TileEntity implements ISidedInventory, IWandable, IAspectContainer {
 
     private static final int[] slots = { 0 };
-    private final ItemStack[] inventory = new ItemStack[1];
+    private ItemStack item;
     private final ArrayList<ChunkCoordinates> sources = new ArrayList<>();
 
     public boolean crafting = false;
@@ -268,15 +268,12 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         tag.setInteger("Ticks", ticksLeft);
 
         NBTTagList items = new NBTTagList();
-        for (int i = 0; i < inventory.length; i++) {
-            if (inventory[i] != null) {
-                NBTTagCompound itemTag = new NBTTagCompound();
-                itemTag.setByte("Slot", (byte) i);
-                inventory[i].writeToNBT(itemTag);
-                items.appendTag(itemTag);
-            }
+        if (item != null) {
+            NBTTagCompound itemTag = new NBTTagCompound();
+            item.writeToNBT(itemTag);
+            items.appendTag(itemTag);
+            tag.setTag("Item", itemTag);
         }
-        tag.setTag("Items", items);
 
         tag.setTag("Aspects", essentiaToNBT(requiredEssentia));
         tag.setTag("Template", essentiaToNBT(templateEssentia));
@@ -294,17 +291,15 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
     }
 
     private void readInventoryNBT(NBTTagCompound tag) {
-        inventory[0] = null;
+        item = null;
         ticksLeft = tag.getInteger("Ticks");
         crafting = tag.getBoolean("Crafting");
 
-        NBTTagList items = tag.getTagList("Items", 10);
-        for (int i = 0; i < items.tagCount(); i++) {
-            NBTTagCompound itemTag = items.getCompoundTagAt(i);
-            int slot = itemTag.getByte("Slot");
-            if (slot >= 0 && slot < inventory.length) {
-                inventory[slot] = ItemStack.loadItemStackFromNBT(itemTag);
-            }
+        if (tag.hasKey("Items")) {
+            NBTTagList items = tag.getTagList("Items", 10);
+            item = ItemStack.loadItemStackFromNBT(items.getCompoundTagAt(0));
+        } else if (tag.hasKey("Item")) {
+            item = ItemStack.loadItemStackFromNBT((NBTTagCompound) tag.getTag("Item"));
         }
 
         nbtToEssentia(tag.getCompoundTag("Aspects"), requiredEssentia);
@@ -345,7 +340,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
 
     @Override
     public ItemStack getStackInSlot(int i) {
-        return inventory[i];
+        return item;
     }
 
     @Override
@@ -371,9 +366,9 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
 
     @Override
     public void setInventorySlotContents(int i, ItemStack stack) {
-        inventory[i] = stack;
-        if (stack != null && stack.stackSize > getInventoryStackLimit()) {
-            stack.stackSize = getInventoryStackLimit();
+        item = stack;
+        if (item != null && item.stackSize > getInventoryStackLimit()) {
+            item.stackSize = getInventoryStackLimit();
         }
         markBlockForUpdate();
         markDirty();
@@ -381,28 +376,28 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
 
     @Override
     public ItemStack decrStackSize(int i, int count) {
-        if (inventory[i] == null) return null;
+        if (item == null) return null;
 
-        ItemStack copy = inventory[i].copy();
+        ItemStack copy = item.copy();
         copy.stackSize = 0;
 
-        if (inventory[i].stackSize <= count) {
-            ItemStack ret = inventory[i];
-            inventory[i] = copy;
+        if (item.stackSize <= count) {
+            ItemStack ret = item;
+            item = copy;
             markBlockForUpdate();
             return ret;
         }
 
-        ItemStack ret = inventory[i].splitStack(count);
-        if (inventory[i].stackSize == 0) inventory[i] = copy;
+        ItemStack ret = item.splitStack(count);
+        if (item.stackSize == 0) item = copy;
         markBlockForUpdate();
         return ret;
     }
 
     @Override
     public ItemStack getStackInSlotOnClosing(int i) {
-        ItemStack stack = inventory[i];
-        inventory[i] = null;
+        ItemStack stack = item;
+        item = null;
         return stack;
     }
 
@@ -413,7 +408,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack) {
-        return ThaumcraftCraftingManager.getObjectTags(stack).size() > 0;
+        return ReplicatorRecipes.canStackBeReplicated(stack);
     }
 
     @Override
@@ -428,7 +423,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
 
     @Override
     public boolean canExtractItem(int i, ItemStack stack, int side) {
-        return inventory[i] != null && inventory[i].stackSize > 0;
+        return item != null && item.stackSize > 0;
     }
 
     @Override
