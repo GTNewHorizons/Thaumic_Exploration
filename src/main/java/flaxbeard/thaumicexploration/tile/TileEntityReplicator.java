@@ -254,9 +254,11 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
     }
 
     public boolean validLocation() {
-        Material mat = worldObj.getBlock(xCoord, yCoord + 1, zCoord).getMaterial();
+        Block block = worldObj.getBlock(xCoord, yCoord + 1, zCoord);
+        Material mat = block.getMaterial();
         return mat == Config.airyMaterial || mat == Material.air
-                || worldObj.getBlock(xCoord, yCoord + 1, zCoord).isReplaceable(worldObj, xCoord, yCoord + 1, zCoord);
+                || block.isReplaceable(worldObj, xCoord, yCoord + 1, zCoord)
+                || block.getLightOpacity() == 0;
     }
 
     private void writeInventoryNBT(NBTTagCompound tag) {
