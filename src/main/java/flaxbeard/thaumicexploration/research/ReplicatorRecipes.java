@@ -83,6 +83,7 @@ public class ReplicatorRecipes {
     }
 
     public static boolean canStackBeReplicated(ItemStack stack) {
+        if (stack == null) return false;
         Item item = stack.getItem();
         AspectList ot = ThaumcraftCraftingManager.getObjectTags(stack);
         ot = ThaumcraftCraftingManager.getBonusTags(stack, ot);

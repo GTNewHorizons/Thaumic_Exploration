@@ -61,22 +61,28 @@ public class BlockReplicator extends BlockContainer {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX,
             float hitY, float hitZ) {
-        if (world.isRemote) return true;
-
         TileEntity tile = world.getTileEntity(x, y, z);
-        if (!(tile instanceof TileEntityReplicator replicator)) return true;
+        if (!(tile instanceof TileEntityReplicator replicator)) return false;
 
         ItemStack held = player.getCurrentEquippedItem();
         ItemStack template = replicator.getStackInSlot(0);
 
         if (template != null && template.stackSize > 0) {
+            if (world.isRemote) return true;
             ejectBlockFromReplicator(world, x, y, z, template);
             replicator.markDirty();
             return true;
         }
 
+        if (template == null && ReplicatorRecipes.canStackBeReplicated(held)) {
+            if (world.isRemote) return true;
+            setTemplateBlock(world, x, y, z, replicator, held);
+            return true;
+        }
+
         if (held == null) {
             if (replicator.crafting) {
+                if (world.isRemote) return true;
                 replicator.cancelCrafting();
                 world.playSoundEffect(
                         x,
@@ -85,22 +91,17 @@ public class BlockReplicator extends BlockContainer {
                         "thaumcraft:craftfail",
                         0.5F,
                         (world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.6F);
-            } else {
+            } else if (template != null) {
+                if (world.isRemote) return true;
                 replicator.setInventorySlotContents(0, null);
                 playPopSound(world, x, y, z);
             }
 
             replicator.markDirty();
             world.markBlockForUpdate(x, y, z);
-            return true;
         }
 
-        if (template == null && ReplicatorRecipes.canStackBeReplicated(held)) {
-            setTemplateBlock(world, x, y, z, replicator, held);
-            return true;
-        }
-
-        return true;
+        return false;
     }
 
     private void ejectBlockFromReplicator(World world, int x, int y, int z, ItemStack template) {
