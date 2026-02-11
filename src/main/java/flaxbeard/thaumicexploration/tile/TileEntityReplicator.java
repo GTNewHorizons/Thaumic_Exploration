@@ -272,18 +272,18 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
             tag.setTag("Item", itemTag);
         }
 
-        tag.setTag("Aspects", essentiaToNBT(requiredEssentia));
-        tag.setTag("Template", essentiaToNBT(templateEssentia));
+        tag.setTag("Aspects", writeEssentiaNBT(requiredEssentia));
+        tag.setTag("Template", writeEssentiaNBT(templateEssentia));
     }
 
-    private @NotNull NBTTagCompound essentiaToNBT(AspectList list) {
+    private @NotNull NBTTagCompound writeEssentiaNBT(AspectList list) {
         NBTTagCompound aspects = new NBTTagCompound();
+
         for (Aspect a : list.getAspects()) {
             if (a == null) continue;
-            NBTTagCompound aTag = new NBTTagCompound();
-            aTag.setInteger("Amount", list.getAmount(a));
-            aspects.setTag(a.getTag(), aTag);
+            aspects.setInteger(a.getTag(), list.getAmount(a));
         }
+
         return aspects;
     }
 
@@ -299,17 +299,18 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
             item = ItemStack.loadItemStackFromNBT((NBTTagCompound) tag.getTag("Item"));
         }
 
-        nbtToEssentia(tag.getCompoundTag("Aspects"), requiredEssentia);
-        nbtToEssentia(tag.getCompoundTag("Template"), templateEssentia);
+        readEssentiaNBT(tag.getCompoundTag("Aspects"), requiredEssentia);
+        readEssentiaNBT(tag.getCompoundTag("Template"), templateEssentia);
     }
 
-    private void nbtToEssentia(NBTTagCompound aspects, AspectList list) {
+    private void readEssentiaNBT(NBTTagCompound tag, AspectList list) {
         list.aspects.clear();
-        for (String key : aspects.func_150296_c()) {
-            Aspect a = Aspect.getAspect(key);
-            if (a != null) {
-                int amount = aspects.getCompoundTag(key).getInteger("Amount");
-                list.add(a, amount);
+        for (String key : tag.func_150296_c()) { // getKeySet()
+            Aspect aspect = Aspect.getAspect(key);
+            if (aspect == null) continue;
+            int amount = tag.getInteger(key);
+            if (amount > 0) {
+                list.add(aspect, amount);
             }
         }
     }
