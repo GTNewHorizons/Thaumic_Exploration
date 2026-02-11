@@ -152,9 +152,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
     }
 
     private void finishCrafting() {
-        ItemStack result = getStackInSlot(0).copy();
-        result.stackSize++;
-        setInventorySlotContents(0, result);
+        item.stackSize++;
         crafting = false;
         requiredEssentia.aspects.clear();
         markBlockForUpdate();
