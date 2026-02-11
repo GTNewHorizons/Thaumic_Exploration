@@ -27,12 +27,14 @@ public class TileEntityReplicatorRender extends TileEntitySpecialRenderer {
         TileEntityReplicator replicator = (TileEntityReplicator) tile;
         ItemStack stack = replicator.getStackInSlot(0);
 
-        if (stack == null || !replicator.validLocation() || replicator.templateEssentia.size() == 0) return;
-
-        renderFloatingItem(stack, x, y, z, partialTicks, replicator.crafting, replicator.ticksLeft);
+        if (stack == null || replicator.templateEssentia.size() == 0) return;
 
         if (replicator.crafting || replicator.ticksLeft > 0) {
             renderAspectRunes(replicator, x, y, z);
+        }
+
+        if (replicator.validLocation()) {
+            renderFloatingItem(stack, x, y, z, partialTicks, replicator.crafting, replicator.ticksLeft);
         }
     }
 
