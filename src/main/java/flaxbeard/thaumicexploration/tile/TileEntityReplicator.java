@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
 import flaxbeard.thaumicexploration.ThaumicExploration;
+import flaxbeard.thaumicexploration.research.ReplicatorRecipes;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
@@ -70,7 +71,8 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
 
     public void startCrafting() {
         ItemStack input = getStackInSlot(0);
-        if (input == null || input.stackSize > 0 || worldObj.isRemote) return;
+        if (input == null || input.stackSize > 0 || worldObj.isRemote || !ReplicatorRecipes.canStackBeReplicated(input))
+            return;
 
         crafting = true;
         ticksLeft = 100;
