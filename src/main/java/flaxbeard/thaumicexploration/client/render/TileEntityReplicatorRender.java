@@ -51,7 +51,7 @@ public class TileEntityReplicatorRender extends TileEntitySpecialRenderer {
         GL11.glRotatef(ticks % 360.0F, 0.0F, 1.0F, 0.0F);
         GL11.glScalef(scale, scale, scale);
 
-        EntityItem entityItem = new EntityItem(mc.theWorld, 0.0D, 0.0D, 0.0D, stack.copy());
+        EntityItem entityItem = new EntityItem(mc.theWorld, 0.0D, 0.0D, 0.0D, stack);
         entityItem.hoverStart = 0.0F;
 
         if (!crafting && stack.stackSize == 0) {
