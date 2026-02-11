@@ -70,7 +70,7 @@ public class BlockReplicator extends BlockContainer {
         ItemStack template = replicator.getStackInSlot(0);
 
         if (template != null && template.stackSize > 0) {
-            ejectBlockFromReplicator(world, x, y, z, replicator, template);
+            ejectBlockFromReplicator(world, x, y, z, template);
             return true;
         }
 
@@ -101,8 +101,7 @@ public class BlockReplicator extends BlockContainer {
         return true;
     }
 
-    private void ejectBlockFromReplicator(World world, int x, int y, int z, TileEntityReplicator replicator,
-            ItemStack template) {
+    private void ejectBlockFromReplicator(World world, int x, int y, int z, ItemStack template) {
         EntityItem item = new EntityItem(world, x + 0.5, y + 1.2F, z + 0.5, template.copy());
 
         item.motionX = 0;
