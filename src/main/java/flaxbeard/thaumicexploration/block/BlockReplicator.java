@@ -71,6 +71,7 @@ public class BlockReplicator extends BlockContainer {
 
         if (template != null && template.stackSize > 0) {
             ejectBlockFromReplicator(world, x, y, z, template);
+            replicator.markDirty();
             return true;
         }
 
@@ -89,6 +90,7 @@ public class BlockReplicator extends BlockContainer {
                 playPopSound(world, x, y, z);
             }
 
+            replicator.markDirty();
             world.markBlockForUpdate(x, y, z);
             return true;
         }

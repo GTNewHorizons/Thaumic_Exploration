@@ -374,6 +374,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
             stack.stackSize = getInventoryStackLimit();
         }
         markBlockForUpdate();
+        markDirty();
     }
 
     @Override
