@@ -17,7 +17,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import flaxbeard.thaumicexploration.research.ReplicatorRecipes;
 import flaxbeard.thaumicexploration.tile.TileEntityReplicator;
-import thaumcraft.common.items.wands.ItemWandCasting;
 import thaumcraft.common.lib.utils.InventoryUtils;
 
 public class BlockReplicator extends BlockContainer {
@@ -46,11 +45,6 @@ public class BlockReplicator extends BlockContainer {
     }
 
     @Override
-    public boolean renderAsNormalBlock() {
-        return false;
-    }
-
-    @Override
     public int getRenderType() {
         return ThaumicExploration.replicatorRenderID;
     }
@@ -73,19 +67,33 @@ public class BlockReplicator extends BlockContainer {
         if (!(tile instanceof TileEntityReplicator replicator)) return true;
 
         ItemStack held = player.getCurrentEquippedItem();
-
-        if (replicator.crafting && (held == null || !(held.getItem() instanceof ItemWandCasting))) {
-            replicator.cancelCrafting();
-        }
-
         ItemStack template = replicator.getStackInSlot(0);
 
-        if (template != null && (held == null || !(held.getItem() instanceof ItemWandCasting))) {
+        if (template != null && template.stackSize > 0) {
             ejectBlockFromReplicator(world, x, y, z, replicator, template);
             return true;
         }
 
-        if (held != null && ReplicatorRecipes.canStackBeReplicated(held)) {
+        if (held == null) {
+            if (replicator.crafting) {
+                replicator.cancelCrafting();
+                world.playSoundEffect(
+                        x,
+                        y,
+                        z,
+                        "thaumcraft:craftfail",
+                        0.5F,
+                        (world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.6F);
+            } else {
+                replicator.setInventorySlotContents(0, null);
+                playPopSound(world, x, y, z);
+            }
+
+            world.markBlockForUpdate(x, y, z);
+            return true;
+        }
+
+        if (template == null && ReplicatorRecipes.canStackBeReplicated(held)) {
             setTemplateBlock(world, x, y, z, replicator, held);
             return true;
         }
@@ -95,27 +103,17 @@ public class BlockReplicator extends BlockContainer {
 
     private void ejectBlockFromReplicator(World world, int x, int y, int z, TileEntityReplicator replicator,
             ItemStack template) {
-        if (template.stackSize > 0) {
-            EntityItem item = new EntityItem(world, x + 0.5, y + 1.2F, z + 0.5, template.copy());
+        EntityItem item = new EntityItem(world, x + 0.5, y + 1.2F, z + 0.5, template.copy());
 
-            item.motionX = 0;
-            item.motionY = 0.2F;
-            item.motionZ = 0;
+        item.motionX = 0;
+        item.motionY = 0.2F;
+        item.motionZ = 0;
 
-            world.spawnEntityInWorld(item);
-            template.stackSize = 0;
-        } else {
-            replicator.setInventorySlotContents(0, null);
-        }
+        world.spawnEntityInWorld(item);
+        template.stackSize = 0;
+        playPopSound(world, x, y, z);
 
         world.markBlockForUpdate(x, y, z);
-        world.playSoundEffect(
-                x,
-                y,
-                z,
-                "random.pop",
-                0.2F,
-                (world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.5F);
     }
 
     private void setTemplateBlock(World world, int x, int y, int z, TileEntityReplicator replicator, ItemStack held) {
@@ -123,15 +121,20 @@ public class BlockReplicator extends BlockContainer {
         newTemplate.stackSize = 0;
         replicator.setInventorySlotContents(0, newTemplate);
         replicator.clearSources();
-
+        replicator.markDirty();
         world.markBlockForUpdate(x, y, z);
+
+        playPopSound(world, x, y, z);
+    }
+
+    private static void playPopSound(World world, int x, int y, int z) {
         world.playSoundEffect(
                 x,
                 y,
                 z,
                 "random.pop",
                 0.2F,
-                (world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.6F);
+                (world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.5F);
     }
 
     @Override
