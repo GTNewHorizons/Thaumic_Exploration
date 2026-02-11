@@ -27,9 +27,9 @@ public class TileEntityReplicatorRender extends TileEntitySpecialRenderer {
         TileEntityReplicator replicator = (TileEntityReplicator) tile;
         ItemStack stack = replicator.getStackInSlot(0);
 
-        if (stack == null || replicator.templateEssentia.size() == 0) return;
+        if (stack == null) return;
 
-        if (replicator.crafting || replicator.ticksLeft > 0) {
+        if (replicator.templateEssentia.size() > 0 && (replicator.crafting || replicator.ticksLeft > 0)) {
             renderAspectRunes(replicator, x, y, z);
         }
 
