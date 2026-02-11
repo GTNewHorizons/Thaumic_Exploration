@@ -65,6 +65,7 @@ import flaxbeard.thaumicexploration.event.TXEventHandler;
 import flaxbeard.thaumicexploration.event.TXTickHandler;
 import flaxbeard.thaumicexploration.gui.TXGuiHandler;
 import flaxbeard.thaumicexploration.integration.TTIntegration;
+import flaxbeard.thaumicexploration.integration.nei.IMCForNEI;
 import flaxbeard.thaumicexploration.item.ItemBauble;
 import flaxbeard.thaumicexploration.item.ItemBaubleDiscountRing;
 import flaxbeard.thaumicexploration.item.ItemBlankSeal;
@@ -556,6 +557,10 @@ public class ThaumicExploration {
                 .setPotionName("potion.taintWithdrawl");
 
         proxy.registerRenderers();
+
+        if (Loader.isModLoaded("NotEnoughItems")) {
+            IMCForNEI.IMCSender();
+        }
     }
 
     @EventHandler
