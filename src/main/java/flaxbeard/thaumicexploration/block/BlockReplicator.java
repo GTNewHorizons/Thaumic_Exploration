@@ -91,12 +91,13 @@ public class BlockReplicator extends BlockContainer {
                         "thaumcraft:craftfail",
                         0.5F,
                         (world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.6F);
+                return true;
             } else if (template != null) {
                 if (world.isRemote) return true;
                 replicator.setInventorySlotContents(0, null);
                 playPopSound(world, x, y, z);
+                return true;
             }
-
             replicator.markDirty();
             world.markBlockForUpdate(x, y, z);
         }
