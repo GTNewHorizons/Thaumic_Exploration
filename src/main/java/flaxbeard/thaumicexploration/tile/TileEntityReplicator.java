@@ -372,21 +372,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
 
     @Override
     public ItemStack decrStackSize(int i, int count) {
-        if (item == null) return null;
-
-        ItemStack copy = item.copy();
-        copy.stackSize = 0;
-
-        markBlockForUpdate();
-        if (item.stackSize <= count) {
-            ItemStack ret = item;
-            item = copy;
-            return ret;
-        }
-
-        ItemStack ret = item.splitStack(count);
-        if (item.stackSize == 0) item = copy;
-        return ret;
+        return item != null ? item.splitStack(Math.min(item.stackSize, count)) : null;
     }
 
     @Override
