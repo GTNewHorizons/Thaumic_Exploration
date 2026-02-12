@@ -264,11 +264,9 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         tag.setBoolean("Crafting", crafting);
         tag.setInteger("Ticks", ticksLeft);
 
-        NBTTagList items = new NBTTagList();
         if (item != null) {
             NBTTagCompound itemTag = new NBTTagCompound();
             item.writeToNBT(itemTag);
-            items.appendTag(itemTag);
             tag.setTag("Item", itemTag);
         }
 
