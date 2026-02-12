@@ -93,6 +93,8 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         crafting = false;
         requiredEssentia.aspects.clear();
         templateEssentia.aspects.clear();
+        markBlockForUpdate();
+        markDirty();
     }
 
     private void updateCraftingServer() {
