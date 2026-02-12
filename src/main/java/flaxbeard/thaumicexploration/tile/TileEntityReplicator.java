@@ -17,6 +17,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 
+import net.minecraftforge.common.util.Constants;
 import org.jetbrains.annotations.NotNull;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -290,10 +291,10 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         ticksLeft = tag.getInteger("Ticks");
         crafting = tag.getBoolean("Crafting");
 
-        if (tag.hasKey("Items")) {
-            NBTTagList items = tag.getTagList("Items", 10);
+        if (tag.hasKey("Items", Constants.NBT.TAG_COMPOUND)) {
+            NBTTagList items = tag.getTagList("Items", Constants.NBT.TAG_COMPOUND);
             item = ItemStack.loadItemStackFromNBT(items.getCompoundTagAt(0));
-        } else if (tag.hasKey("Item")) {
+        } else if (tag.hasKey("Item", Constants.NBT.TAG_COMPOUND)) {
             item = ItemStack.loadItemStackFromNBT((NBTTagCompound) tag.getTag("Item"));
         }
 
