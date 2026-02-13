@@ -378,6 +378,8 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
         if (item != null) {
             markBlockForUpdate();
             markDirty();
+            // this.item is intentionally not replaced by null when stackSize hits zero
+            // so it can continue acting as a template.
             return item.splitStack(Math.min(item.stackSize, count));
         } else {
             return null;
