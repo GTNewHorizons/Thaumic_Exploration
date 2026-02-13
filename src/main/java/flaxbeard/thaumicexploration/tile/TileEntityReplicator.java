@@ -16,8 +16,13 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 
+import org.jetbrains.annotations.NotNull;
+
+import cpw.mods.fml.common.network.NetworkRegistry;
 import flaxbeard.thaumicexploration.ThaumicExploration;
+import flaxbeard.thaumicexploration.research.ReplicatorRecipes;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
@@ -25,31 +30,306 @@ import thaumcraft.api.aspects.IAspectSource;
 import thaumcraft.api.wands.IWandable;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
+import thaumcraft.common.lib.network.PacketHandler;
+import thaumcraft.common.lib.network.fx.PacketFXEssentiaSource;
 
 public class TileEntityReplicator extends TileEntity implements ISidedInventory, IWandable, IAspectContainer {
 
     private static final int[] slots = { 0 };
-    public boolean crafting;
-    private ItemStack[] oldInventory = new ItemStack[1];
-    private ItemStack[] inventory = new ItemStack[1];
-    public int ticksLeft;
-    public AspectList recipeEssentia = new AspectList();
-    public AspectList displayEssentia = new AspectList();
-    private ArrayList<ChunkCoordinates> sources = new ArrayList();
-    private int soundTicks;
-    private int essentiaTicks;
+    private ItemStack item;
+    private final ArrayList<ChunkCoordinates> sources = new ArrayList<>();
 
+    public boolean crafting = false;
     public boolean redstoneState = false;
+    public int ticksLeft = 0;
+    private int essentiaTicks = 0;
 
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound) {
-        super.writeToNBT(par1NBTTagCompound);
+    public AspectList requiredEssentia = new AspectList();
+    public AspectList templateEssentia = new AspectList();
 
-        this.writeInventoryNBT(par1NBTTagCompound);
+    @Override
+    public void writeToNBT(NBTTagCompound tag) {
+        super.writeToNBT(tag);
+        writeInventoryNBT(tag);
     }
 
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound) {
-        super.readFromNBT(par1NBTTagCompound);
-        this.readInventoryNBT(par1NBTTagCompound);
+    @Override
+    public void readFromNBT(NBTTagCompound tag) {
+        super.readFromNBT(tag);
+        readInventoryNBT(tag);
+    }
+
+    @Override
+    public void updateEntity() {
+        if (crafting) {
+            if (worldObj.isRemote) {
+                if (requiredEssentia.size() <= 0) ticksLeft--;
+                spawnClientParticles();
+            } else {
+                updateCraftingServer();
+            }
+        }
+    }
+
+    public void startCrafting() {
+        ItemStack input = getStackInSlot(0);
+        if (input == null || input.stackSize > 0 || worldObj.isRemote || !ReplicatorRecipes.canStackBeReplicated(input))
+            return;
+
+        crafting = true;
+        ticksLeft = 100;
+        essentiaTicks = 0;
+
+        ItemStack copy = input.copy();
+        copy.stackSize = 1;
+        requiredEssentia = ThaumcraftCraftingManager.getBonusTags(copy, ThaumcraftCraftingManager.getObjectTags(copy));
+        templateEssentia = requiredEssentia.copy();
+
+        worldObj.playSoundEffect(xCoord, yCoord, zCoord, "thaumcraft:craftstart", 0.5F, 1.0F);
+        markBlockForUpdate();
+    }
+
+    public void cancelCrafting() {
+        crafting = false;
+        requiredEssentia.aspects.clear();
+        templateEssentia.aspects.clear();
+        markBlockForUpdate();
+        markDirty();
+    }
+
+    private void updateCraftingServer() {
+        if (requiredEssentia.visSize() > 0) {
+            essentiaTicks++;
+
+            if (essentiaTicks > 49) {
+                if (sources.isEmpty()) getSurroundings();
+                essentiaTicks = 0;
+                drainEssentiaFromSources();
+            }
+            return;
+        }
+
+        if (ticksLeft <= 0) {
+            finishCrafting();
+            return;
+        }
+
+        ticksLeft--;
+    }
+
+    private void drainEssentiaFromSources() {
+        Iterator<ChunkCoordinates> it = sources.iterator();
+        while (it.hasNext()) {
+            ChunkCoordinates cc = it.next();
+            IAspectSource source = getValidAspectSource(worldObj.getTileEntity(cc.posX, cc.posY, cc.posZ));
+            if (source == null) {
+                it.remove();
+                continue;
+            }
+            for (Aspect aspect : requiredEssentia.getAspects()) {
+                if (requiredEssentia.getAmount(aspect) <= 0 || !source.doesContainerContainAmount(aspect, 1)) continue;
+                PacketHandler.INSTANCE.sendToAllAround(
+                        new PacketFXEssentiaSource(
+                                this.xCoord,
+                                this.yCoord + 1,
+                                this.zCoord,
+                                (byte) (this.xCoord - cc.posX),
+                                (byte) (this.yCoord - cc.posY + 1),
+                                (byte) (this.zCoord - cc.posZ),
+                                aspect.getColor()),
+                        new NetworkRegistry.TargetPoint(
+                                getWorldObj().provider.dimensionId,
+                                this.xCoord,
+                                this.yCoord,
+                                this.zCoord,
+                                32.0D));
+
+                source.takeFromContainer(aspect, 1);
+                requiredEssentia.remove(aspect, 1);
+                markBlockForUpdate();
+                return;
+            }
+        }
+        getSurroundings(); // Fallback if none of the sources in range have the required aspect
+    }
+
+    private void finishCrafting() {
+        item.stackSize++;
+        crafting = false;
+        requiredEssentia.aspects.clear();
+        markBlockForUpdate();
+    }
+
+    private void spawnClientParticles() {
+        if (ticksLeft >= 100 || templateEssentia.aspects.isEmpty()) return;
+
+        ItemStack example = getStackInSlot(0).copy();
+        example.stackSize = 1;
+
+        for (int i = 0; i < 5; i++) {
+            ThaumicExploration.proxy.spawnFragmentParticle(
+                    worldObj,
+                    xCoord + 0.5F + randomOffset(),
+                    yCoord + 1.5F + randomOffset(),
+                    zCoord + 0.5F + randomOffset(),
+                    xCoord + 0.5F,
+                    yCoord + 1.5F,
+                    zCoord + 0.5F,
+                    Block.getBlockFromItem(example.getItem()),
+                    example.getItemDamage());
+        }
+
+        if (worldObj.rand.nextInt(4) == 0 && ticksLeft > 40) {
+            Aspect randomAspect = templateEssentia.getAspects()[worldObj.rand.nextInt(templateEssentia.size())];
+            ThaumicExploration.proxy.spawnEssentiaAtLocation(
+                    worldObj,
+                    xCoord + 0.5F + randomOffset(),
+                    yCoord + 1.5F + randomOffset(),
+                    zCoord + 0.5F + randomOffset(),
+                    xCoord + 0.5F,
+                    yCoord + 1.5F,
+                    zCoord + 0.5F,
+                    5,
+                    randomAspect.getColor());
+        }
+
+        if (worldObj.rand.nextInt(3) == 0) {
+            ThaumicExploration.proxy.spawnBoreSparkle(
+                    worldObj,
+                    xCoord + 0.5F + randomOffset(),
+                    yCoord + 1.5F + randomOffset(),
+                    zCoord + 0.5F + randomOffset(),
+                    xCoord + 0.5F,
+                    yCoord + 1.5F,
+                    zCoord + 0.5F);
+        }
+    }
+
+    private float randomOffset() {
+        return (float) (2 * Math.random() - 1.0F);
+    }
+
+    private void markBlockForUpdate() {
+        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+    }
+
+    private void getSurroundings() {
+        sources.clear();
+        for (int xx = -12; xx <= 12; xx++) {
+            for (int zz = -12; zz <= 12; zz++) {
+                for (int yy = -5; yy <= 10; yy++) {
+                    if (xx == 0 && zz == 0 && yy == 0) continue;
+
+                    int x = xCoord + xx;
+                    int y = yCoord - yy;
+                    int z = zCoord + zz;
+                    TileEntity te = worldObj.getTileEntity(x, y, z);
+                    if (getValidAspectSource(te) != null) {
+                        sources.add(new ChunkCoordinates(x, y, z));
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Get the IAspectSource from a TileEntity iff it contains at least one relevant type of essentia.
+     *
+     * @return IAspectSource from a TileEntity if valid, otherwise null
+     */
+    private IAspectSource getValidAspectSource(TileEntity source) {
+        if (!(source instanceof IAspectSource as)) return null;
+        AspectList sourceAspects = as.getAspects();
+        for (Aspect aspect : templateEssentia.getAspects()) {
+            if (sourceAspects.aspects.containsKey(aspect)) {
+                return as;
+            }
+        }
+        return null;
+    }
+
+    public void updateRedstoneState(boolean newState) {
+        if (!redstoneState && newState && !crafting) {
+            startCrafting();
+        }
+        redstoneState = newState;
+    }
+
+    public boolean validLocation() {
+        Block block = worldObj.getBlock(xCoord, yCoord + 1, zCoord);
+        Material mat = block.getMaterial();
+        return mat == Config.airyMaterial || mat == Material.air
+                || block.isReplaceable(worldObj, xCoord, yCoord + 1, zCoord)
+                || block.getLightOpacity() == 0;
+    }
+
+    private void writeInventoryNBT(NBTTagCompound tag) {
+        tag.setBoolean("Crafting", crafting);
+        tag.setInteger("Ticks", ticksLeft);
+
+        if (item != null) {
+            NBTTagCompound itemTag = new NBTTagCompound();
+            item.writeToNBT(itemTag);
+            tag.setTag("Item", itemTag);
+        }
+
+        tag.setTag("Aspects", writeEssentiaNBT(requiredEssentia));
+        tag.setTag("Template", writeEssentiaNBT(templateEssentia));
+    }
+
+    private @NotNull NBTTagCompound writeEssentiaNBT(AspectList list) {
+        NBTTagCompound aspects = new NBTTagCompound();
+
+        for (Aspect a : list.getAspects()) {
+            if (a == null) continue;
+            aspects.setInteger(a.getTag(), list.getAmount(a));
+        }
+
+        return aspects;
+    }
+
+    private void readInventoryNBT(NBTTagCompound tag) {
+        item = null;
+        ticksLeft = tag.getInteger("Ticks");
+        crafting = tag.getBoolean("Crafting");
+
+        if (tag.hasKey("Items", Constants.NBT.TAG_LIST)) {
+            NBTTagList items = tag.getTagList("Items", Constants.NBT.TAG_COMPOUND);
+            item = ItemStack.loadItemStackFromNBT(items.getCompoundTagAt(0));
+        } else if (tag.hasKey("Item", Constants.NBT.TAG_COMPOUND)) {
+            item = ItemStack.loadItemStackFromNBT((NBTTagCompound) tag.getTag("Item"));
+        }
+
+        readEssentiaNBT(tag.getCompoundTag("Aspects"), requiredEssentia);
+        readEssentiaNBT(tag.getCompoundTag("Template"), templateEssentia);
+    }
+
+    private void readEssentiaNBT(NBTTagCompound tag, AspectList list) {
+        list.aspects.clear();
+        for (String key : tag.func_150296_c()) { // getKeySet()
+            Aspect aspect = Aspect.getAspect(key);
+            if (aspect == null) continue;
+            int amount = tag.getInteger(key);
+            if (amount > 0) {
+                list.add(aspect, amount);
+            }
+        }
+    }
+
+    @Override
+    public Packet getDescriptionPacket() {
+        NBTTagCompound tag = new NBTTagCompound();
+        writeInventoryNBT(tag);
+        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tag);
+    }
+
+    public void clearSources() {
+        sources.clear();
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+        readInventoryNBT(pkt.func_148857_g());
     }
 
     @Override
@@ -59,368 +339,88 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
 
     @Override
     public ItemStack getStackInSlot(int i) {
-        return this.inventory[i];
-    }
-
-    public void startCrafting() {
-        if (this.getStackInSlot(0) != null && this.getStackInSlot(0).stackSize == 0 && !this.worldObj.isRemote) {
-            this.oldInventory = inventory;
-            this.crafting = true;
-            this.ticksLeft = 100;
-            ItemStack example = this.getStackInSlot(0).copy();
-            example.stackSize = 1;
-            AspectList ot = ThaumcraftCraftingManager.getObjectTags(example);
-            ot = ThaumcraftCraftingManager.getBonusTags(example, ot);
-            this.recipeEssentia = ot;
-            this.worldObj.playSoundEffect(this.xCoord, this.yCoord, this.zCoord, "thaumcraft:craftstart", 0.5F, 1.0F);
-            this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
-            this.essentiaTicks = 0;
-        }
-    }
-
-    public void cancelCrafting() {
-        this.crafting = false;
-        this.recipeEssentia = new AspectList();
-        this.displayEssentia = new AspectList();
-    }
-
-    public void updateEntity() {
-        if (this.crafting && this.worldObj.isRemote && this.ticksLeft < 100) {
-            ItemStack example = this.getStackInSlot(0).copy();
-            example.stackSize = 1;
-            AspectList ot = ThaumcraftCraftingManager.getObjectTags(example);
-            ot = ThaumcraftCraftingManager.getBonusTags(example, ot);
-            for (int i = 0; i < 5; i++) {
-                ThaumicExploration.proxy.spawnFragmentParticle(
-                        this.worldObj,
-                        this.xCoord + 0.5F + (2 * Math.random() - 1.0F),
-                        this.yCoord + 1.5F + (2 * Math.random() - 1.0F),
-                        this.zCoord + 0.5F + (2 * Math.random() - 1.0F),
-                        this.xCoord + 0.5F,
-                        this.yCoord + 1.5F,
-                        this.zCoord + 0.5F,
-                        Block.getBlockFromItem(example.getItem()),
-                        example.getItemDamage());
-            }
-
-            if (this.worldObj.rand.nextInt(4) == 0 && this.ticksLeft > 40) {
-                ThaumicExploration.proxy.spawnEssentiaAtLocation(
-                        this.worldObj,
-                        this.xCoord + 0.5F + (2 * Math.random() - 1.0F),
-                        this.yCoord + 1.5F + (2 * Math.random() - 1.0F),
-                        this.zCoord + 0.5F + (2 * Math.random() - 1.0F),
-                        this.xCoord + 0.5F,
-                        this.yCoord + 1.5F,
-                        this.zCoord + 0.5F,
-                        5,
-                        ot.getAspects()[this.worldObj.rand.nextInt(ot.getAspects().length)].getColor());
-            }
-            if (this.worldObj.rand.nextInt(3) == 0) {
-                ThaumicExploration.proxy.spawnBoreSparkle(
-                        this.worldObj,
-                        this.xCoord + 0.5F + (2 * Math.random() - 1.0F),
-                        this.yCoord + 1.5F + (2 * Math.random() - 1.0F),
-                        this.zCoord + 0.5F + (2 * Math.random() - 1.0F),
-                        this.xCoord + 0.5F,
-                        this.yCoord + 1.5F,
-                        this.zCoord + 0.5F);
-            }
-        }
-
-        if (this.crafting && !this.worldObj.isRemote) {
-
-            if (true) {
-                this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
-
-                getSurroundings();
-                essentiaTicks++;
-                if (this.recipeEssentia.visSize() > 0) {
-
-                    if (essentiaTicks > 49) {
-                        essentiaTicks = 0;
-                        for (Aspect aspect : this.recipeEssentia.getAspects()) {
-                            if (this.recipeEssentia.getAmount(aspect) > 0) {
-                                for (ChunkCoordinates cc : this.sources) {
-                                    TileEntity te = this.worldObj.getTileEntity(cc.posX, cc.posY, cc.posZ);
-                                    if ((te != null) && ((te instanceof IAspectSource))) {
-                                        IAspectSource as = (IAspectSource) te;
-                                        if (as.doesContainerContainAmount(aspect, 1)) {
-                                            as.takeFromContainer(aspect, 1);
-                                            this.recipeEssentia.reduce(aspect, 1);
-
-                                            // ByteArrayOutputStream bos = new
-                                            // ByteArrayOutputStream(8);
-                                            // DataOutputStream outputStream = new
-                                            // DataOutputStream(bos);
-                                            //
-                                            // try
-                                            // {
-                                            // outputStream.writeByte(6);
-                                            //
-                                            // outputStream.writeInt(this.worldObj.provider.dimensionId);
-                                            // outputStream.writeInt(this.xCoord);
-                                            // outputStream.writeInt(this.yCoord);
-                                            // outputStream.writeInt(this.zCoord);
-                                            // outputStream.writeInt(cc.posX);
-                                            // outputStream.writeInt(cc.posY);
-                                            // outputStream.writeInt(cc.posZ);
-                                            // outputStream.writeInt(aspect.getColor());
-                                            //
-                                            // }
-                                            // catch (Exception ex)
-                                            // {
-                                            // ex.printStackTrace();
-                                            // }
-                                            //
-                                            // Packet250CustomPayload packet = new
-                                            // Packet250CustomPayload();
-                                            // packet.channel = "tExploration";
-                                            // packet.data = bos.toByteArray();
-                                            // packet.length = bos.size();
-                                            // PacketDispatcher.sendPacketToAllPlayers(packet);
-
-                                            this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
-                                            return;
-                                        }
-                                    }
-                                }
-                                Aspect[] ingEss = this.recipeEssentia.getAspects();
-                            }
-                        }
-                    }
-                } else {
-                    if (this.ticksLeft > 0) {
-                        if (this.essentiaTicks > 49) {
-                            if (260 - this.ticksLeft % 40 == 0) {
-                                this.worldObj.playSoundEffect(
-                                        this.xCoord,
-                                        this.yCoord,
-                                        this.zCoord,
-                                        "thaumcraft:rumble",
-                                        0.5F,
-                                        1.0F);
-                            }
-                            this.ticksLeft--;
-                        }
-                    } else {
-                        ItemStack stack = this.getStackInSlot(0).copy();
-                        stack.stackSize++;
-                        this.setInventorySlotContents(0, stack);
-                        this.crafting = false;
-                        this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
-                        this.recipeEssentia = new AspectList();
-                    }
-                }
-            }
-        }
-    }
-
-    public boolean validLocation() {
-        if (this.worldObj.getBlock(this.xCoord, this.yCoord + 1, this.zCoord).getMaterial() != Config.airyMaterial
-                && this.worldObj.getBlock(this.xCoord, this.yCoord + 1, this.zCoord).getMaterial() != Material.air
-                && !this.worldObj.getBlock(this.xCoord, this.yCoord + 1, this.zCoord)
-                        .isReplaceable(this.worldObj, this.xCoord, this.yCoord + 1, this.zCoord)) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public ItemStack decrStackSize(int i, int j) {
-        if (this.inventory[i] != null) {
-            ItemStack template = this.inventory[i].copy();
-            template.stackSize = 0;
-            this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
-            if (this.inventory[i].stackSize <= j) {
-
-                ItemStack itemstack = this.inventory[i];
-
-                this.inventory[i] = template;
-                return itemstack;
-            }
-            ItemStack itemstack = this.inventory[i].splitStack(j);
-            if (this.inventory[i] == null) {
-                this.inventory[i] = template;
-            }
-            // if (this.inventory[i ].stackSize == 0) {
-            // this.inventory[i] = null;
-            // }
-            return itemstack;
-        }
-        return null;
-    }
-
-    @Override
-    public ItemStack getStackInSlotOnClosing(int i) {
-        // TODO Auto-generated method stub
-        if (this.inventory[i] != null) {
-            ItemStack itemstack = this.inventory[i];
-            this.inventory[i] = null;
-            return itemstack;
-        }
-        return null;
-    }
-
-    @Override
-    public void setInventorySlotContents(int i, ItemStack itemstack) {
-        // if (itemstack != null) {
-        this.inventory[i] = itemstack;
-        if ((itemstack != null) && (itemstack.stackSize > getInventoryStackLimit())) {
-            itemstack.stackSize = getInventoryStackLimit();
-        }
-        this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
-        // }
-    }
-
-    private void getSurroundings() {
-        ArrayList<ChunkCoordinates> stuff = new ArrayList();
-        this.sources.clear();
-        for (int xx = -12; xx <= 12; xx++) {
-            for (int zz = -12; zz <= 12; zz++) {
-                boolean skip = false;
-                for (int yy = -5; yy <= 10; yy++) {
-                    if ((xx != 0) || (zz != 0)) {
-                        int x = this.xCoord + xx;
-                        int y = this.yCoord - yy;
-                        int z = this.zCoord + zz;
-
-                        TileEntity te = this.worldObj.getTileEntity(x, y, z);
-                        if ((te != null) && ((te instanceof IAspectSource))) {
-                            this.sources.add(new ChunkCoordinates(x, y, z));
-                        }
-                    }
-                }
-            }
-        }
+        return item;
     }
 
     @Override
     public String getInventoryName() {
-        // TODO Auto-generated method stub
         return "replicator";
     }
 
     @Override
     public boolean hasCustomInventoryName() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public int getInventoryStackLimit() {
-        // TODO Auto-generated method stub
         return 1;
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer entityplayer) {
-        // TODO Auto-generated method stub
-        return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this;
+    public void openInventory() {}
+
+    @Override
+    public void closeInventory() {}
+
+    @Override
+    public void setInventorySlotContents(int i, ItemStack stack) {
+        item = stack;
+        if (item != null && item.stackSize > getInventoryStackLimit()) {
+            item.stackSize = getInventoryStackLimit();
+        }
+        markBlockForUpdate();
+        markDirty();
     }
 
     @Override
-    public void openInventory() {
-        // TODO Auto-generated method stub
-
+    public ItemStack decrStackSize(int i, int count) {
+        if (item != null) {
+            markBlockForUpdate();
+            markDirty();
+            // this.item is intentionally not replaced by null when stackSize hits zero
+            // so it can continue acting as a template.
+            return item.splitStack(Math.min(item.stackSize, count));
+        } else {
+            return null;
+        }
     }
 
     @Override
-    public void closeInventory() {
-        // TODO Auto-generated method stub
-
+    public ItemStack getStackInSlotOnClosing(int i) {
+        ItemStack stack = item;
+        item = null;
+        return stack;
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-        // TODO Auto-generated method stub
-        return true;
+    public boolean isUseableByPlayer(EntityPlayer player) {
+        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this;
     }
 
     @Override
-    public int[] getAccessibleSlotsFromSide(int var1) {
-        // TODO Auto-generated method stub
+    public boolean isItemValidForSlot(int i, ItemStack stack) {
+        return ReplicatorRecipes.canStackBeReplicated(stack);
+    }
+
+    @Override
+    public int[] getAccessibleSlotsFromSide(int side) {
         return slots;
     }
 
     @Override
-    public boolean canInsertItem(int i, ItemStack itemstack, int j) {
-        // TODO Auto-generated method stub
+    public boolean canInsertItem(int i, ItemStack stack, int side) {
         return false;
     }
 
     @Override
-    public boolean canExtractItem(int i, ItemStack itemstack, int j) {
-        // TODO Auto-generated method stub
-        return this.inventory[i].stackSize > 0;
-    }
-
-    public void readInventoryNBT(NBTTagCompound nbttagcompound) {
-        NBTTagList nbttaglist = (NBTTagList) nbttagcompound.getTag("Items");
-        this.inventory = new ItemStack[getSizeInventory()];
-        for (int i = 0; i < nbttaglist.tagCount(); i++) {
-            NBTTagCompound nbttagcompound1 = (NBTTagCompound) nbttaglist.getCompoundTagAt(i);
-            byte b0 = nbttagcompound1.getByte("Slot");
-            if ((b0 >= 0) && (b0 < this.inventory.length)) {
-                this.inventory[b0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-            }
-        }
-        this.ticksLeft = nbttagcompound.getInteger("Ticks");
-        this.crafting = nbttagcompound.getBoolean("Crafting");
-        AspectList readAspects = new AspectList();
-        NBTTagCompound aspects = nbttagcompound.getCompoundTag("Aspects");
-        Iterator iterator = Aspect.aspects.keySet().iterator();
-        while (iterator.hasNext()) {
-            Object next = iterator.next();
-            NBTTagCompound aspect = aspects.getCompoundTag((String) next);
-            int amount = aspect.getInteger("Amount");
-            if (amount > 0) {
-                readAspects.add(Aspect.getAspect((String) next), amount);
-            }
-        }
-        this.recipeEssentia = readAspects;
-    }
-
-    public void writeInventoryNBT(NBTTagCompound nbttagcompound) {
-        nbttagcompound.setBoolean("Crafting", this.crafting);
-        nbttagcompound.setInteger("Ticks", this.ticksLeft);
-        NBTTagList nbttaglist = new NBTTagList();
-        for (int i = 0; i < this.inventory.length; i++) {
-            if (this.inventory[i] != null) {
-                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-                nbttagcompound1.setByte("Slot", (byte) i);
-                this.inventory[i].writeToNBT(nbttagcompound1);
-                nbttaglist.appendTag(nbttagcompound1);
-            }
-        }
-        nbttagcompound.setTag("Items", nbttaglist);
-        NBTTagCompound aspects = new NBTTagCompound();
-
-        Iterator iterator = Aspect.aspects.keySet().iterator();
-        while (iterator.hasNext()) {
-            Object next = iterator.next();
-            NBTTagCompound tag = new NBTTagCompound();
-            tag.setInteger("Amount", this.recipeEssentia.getAmount(Aspect.getAspect((String) next)));
-            aspects.setTag((String) next, tag);
-        }
-        nbttagcompound.setTag("Aspects", aspects);
-    }
-
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-        super.onDataPacket(net, pkt);
-        this.readInventoryNBT(pkt.func_148857_g());
-    }
-
-    public Packet getDescriptionPacket() {
-        super.getDescriptionPacket();
-        NBTTagCompound access = new NBTTagCompound();
-        this.writeInventoryNBT(access);
-        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, access);
+    public boolean canExtractItem(int i, ItemStack stack, int side) {
+        return item != null && item.stackSize > 0;
     }
 
     @Override
     public AspectList getAspects() {
-        // TODO Auto-generated method stub
-        return this.recipeEssentia;
+        return requiredEssentia;
     }
 
     @Override
@@ -462,30 +462,23 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
     }
 
     @Override
-    public int onWandRightClick(World world, ItemStack wandstack, EntityPlayer player, int x, int y, int z, int side,
+    public int onWandRightClick(World world, ItemStack wand, EntityPlayer player, int x, int y, int z, int side,
             int md) {
-        if (!this.crafting) {
-            this.startCrafting();
+        if (!crafting) {
+            startCrafting();
             return 0;
         }
         return -1;
     }
 
     @Override
-    public ItemStack onWandRightClick(World world, ItemStack wandstack, EntityPlayer player) {
-        return wandstack;
+    public ItemStack onWandRightClick(World world, ItemStack wand, EntityPlayer player) {
+        return wand;
     }
 
     @Override
-    public void onUsingWandTick(ItemStack wandstack, EntityPlayer player, int count) {}
+    public void onUsingWandTick(ItemStack wand, EntityPlayer player, int count) {}
 
     @Override
-    public void onWandStoppedUsing(ItemStack wandstack, World world, EntityPlayer player, int count) {}
-
-    public void updateRedstoneState(boolean flag) {
-        if (flag != redstoneState && !this.crafting && flag == true) {
-            this.startCrafting();
-        }
-        redstoneState = flag;
-    }
+    public void onWandStoppedUsing(ItemStack wand, World world, EntityPlayer player, int count) {}
 }
