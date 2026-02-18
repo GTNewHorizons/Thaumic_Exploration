@@ -3,7 +3,7 @@
 dependencies {
     compileOnly('com.github.GTNewHorizons:AppleCore:3.3.9:dev')
     compile('thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev')
-    compile(rfg.deobf("curse.maven:witchery-69673:2234410"))
+    compileOnly(rfg.deobf("curse.maven:witchery-69673:2234410"))
     compileOnly('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-827-GTNH:dev') {
         transitive = false
     }
