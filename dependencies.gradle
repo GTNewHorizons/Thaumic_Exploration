@@ -3,7 +3,7 @@
 dependencies {
     compileOnly('com.github.GTNewHorizons:AppleCore:3.3.9:dev')
     compile('thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev')
-    compile("curse.maven:witchery-69673:2234410")
+    compile(rfg.deobf("curse.maven:witchery-69673:2234410"))
     compileOnly('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-827-GTNH:dev') {
         transitive = false
     }
@@ -17,7 +17,7 @@ dependencies {
     compileOnly("com.github.GTNewHorizons:waila:1.19.22:api") {
         transitive = false
     }
-    api('com.github.GTNewHorizons:ThaumicBoots:1.5.8:dev') {
+    compileOnly('com.github.GTNewHorizons:ThaumicBoots:1.5.8:dev') {
         exclude group: 'com.github.GTNewHorizons', module: 'Thaumic_Exploration'
     }
     implementation("com.github.GTNewHorizons:CodeChickenCore:1.4.10:dev")
