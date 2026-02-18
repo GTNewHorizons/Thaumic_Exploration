@@ -4,6 +4,7 @@ import static codechicken.lib.gui.GuiDraw.drawTexturedModalRect;
 import static thaumcraft.codechicken.lib.render.CCRenderState.changeTexture;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,6 +109,12 @@ public class ReplicatorHandler extends TemplateRecipeHandler {
         if (focus != null) {
             GuiDraw.drawTexturedModalRect(focus.x, focus.y, 162, 0, 18, 18);
         }
+    }
+
+    // This is needed to pull up the handler when finding the usages of the Thaumic Replicator.
+    @Override
+    public void loadTransferRects() {
+        transferRects.add(new RecipeTransferRect(new Rectangle(0, 0, 0, 0), "ThaumicExploration.replicator"));
     }
 
     @Override
