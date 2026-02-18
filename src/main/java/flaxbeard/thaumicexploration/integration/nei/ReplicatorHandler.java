@@ -114,7 +114,7 @@ public class ReplicatorHandler extends TemplateRecipeHandler {
     // This is needed to pull up the handler when finding the usages of the Thaumic Replicator.
     @Override
     public void loadTransferRects() {
-        transferRects.add(new RecipeTransferRect(new Rectangle(0, 0, 0, 0), "ThaumicExploration.replicator"));
+        transferRects.add(new RecipeTransferRect(new Rectangle(0, 0, 0, 0), getOverlayIdentifier()));
     }
 
     @Override
