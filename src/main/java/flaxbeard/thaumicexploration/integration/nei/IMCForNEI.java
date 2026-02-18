@@ -8,21 +8,20 @@ import flaxbeard.thaumicexploration.ThaumicExploration;
 public class IMCForNEI {
 
     public static void IMCSender() {
-        sendHandler("ThaumicExploration.replicator", "ThaumicExploration:replicator", 127, 0);
-        sendCatalyst("ThaumicExploration.replicator", "ThaumicExploration:replicator");
-    }
-
-    private static void sendHandler(String handlerName, String stack, int height, int recipesPerPage) {
         NBTTagCompound NBT = new NBTTagCompound();
-        NBT.setString("handler", handlerName);
+        NBT.setString("handler", "ThaumicExploration.replicator");
         NBT.setString("modName", "Thaumic Exploration");
         NBT.setString("modId", ThaumicExploration.MODID);
         NBT.setBoolean("modRequired", true);
-        NBT.setString("itemName", stack);
-        NBT.setInteger("handlerHeight", height);
-        NBT.setInteger("maxRecipesPerPage", recipesPerPage);
+        NBT.setString("itemName", "ThaumicExploration:replicator");
+        NBT.setInteger("handlerHeight", 18);
+        NBT.setBoolean("multipleWidgetsAllowed", true);
+        NBT.setBoolean("showFavoritesButton", false);
+        NBT.setBoolean("showOverlayButton", false);
+        NBT.setInteger("maxRecipesPerPage", 0);
         NBT.setBoolean("showOverlayButton", false);
         FMLInterModComms.sendMessage("NotEnoughItems", "registerHandlerInfo", NBT);
+        sendCatalyst("ThaumicExploration.replicator", "ThaumicExploration:replicator");
     }
 
     private static void sendCatalyst(String handlerName, String stack) {

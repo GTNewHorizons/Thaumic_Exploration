@@ -25,8 +25,6 @@ public class ReplicatorHandler extends TemplateRecipeHandler {
 
     private static List<ItemStack> validItems = new ArrayList<>();
     private static final int COLUMNS = 9;
-    private static final int ROWS_PER_PAGE = 6;
-    private static final int ITEMS_PER_PAGE = COLUMNS * ROWS_PER_PAGE;
 
     private class CachedReplicatorRecipe extends CachedRecipe {
 
@@ -92,8 +90,8 @@ public class ReplicatorHandler extends TemplateRecipeHandler {
     private void buildPages(ItemStack focusStack) {
         int total = validItems.size();
 
-        for (int start = 0; start < total; start += ITEMS_PER_PAGE) {
-            int end = start + ITEMS_PER_PAGE;
+        for (int start = 0; start < total; start += COLUMNS) {
+            int end = start + COLUMNS;
             arecipes.add(new CachedReplicatorRecipe(focusStack, start, end));
         }
     }
@@ -102,7 +100,7 @@ public class ReplicatorHandler extends TemplateRecipeHandler {
     public void drawBackground(int recipeIndex) {
         GL11.glColor4f(1, 1, 1, 1);
         changeTexture(getGuiTexture());
-        drawTexturedModalRect(2, 1, 0, 0, 162, 108);
+        drawTexturedModalRect(2, 1, 0, 0, 162, 18);
 
         CachedReplicatorRecipe recipe = (CachedReplicatorRecipe) this.arecipes.get(recipeIndex);
         Point focus = recipe.focus;
