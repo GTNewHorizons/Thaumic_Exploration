@@ -132,7 +132,15 @@ public class ReplicatorHandler extends TemplateRecipeHandler {
     public static void init() {
         validItems.clear();
         for (Object obj : Item.itemRegistry) {
-            Item item = (Item) obj;
+            if (!(obj instanceof Item item)) continue;
+
+            if (!item.getHasSubtypes()) {
+                ItemStack stack = new ItemStack(item);
+                if (ReplicatorRecipes.canStackBeReplicated(stack)) {
+                    validItems.add(stack);
+                }
+                continue;
+            }
 
             List<ItemStack> subItems = new ArrayList<>();
             try {
