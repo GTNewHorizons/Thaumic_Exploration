@@ -131,19 +131,7 @@ public class ReplicatorHandler extends TemplateRecipeHandler {
     }
 
     public static void init() {
-        List<ItemStack> result = new ArrayList<>();
-
-        for (ItemStack stack : ItemList.items) {
-            if (ReplicatorRecipes.canStackBeReplicated(stack)) {
-                result.add(stack);
-            }
-        }
-
-        if (!result.isEmpty()) {
-            validItems = result;
-            return;
-        }
-
+        validItems.clear();
         for (Object obj : Item.itemRegistry) {
             Item item = (Item) obj;
 
@@ -160,11 +148,9 @@ public class ReplicatorHandler extends TemplateRecipeHandler {
 
             for (ItemStack stack : subItems) {
                 if (ReplicatorRecipes.canStackBeReplicated(stack)) {
-                    result.add(stack);
+                    validItems.add(stack);
                 }
             }
         }
-
-        validItems = result;
     }
 }
