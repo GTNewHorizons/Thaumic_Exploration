@@ -83,19 +83,22 @@ public class ReplicatorRecipes {
     }
 
     public static boolean canStackBeReplicated(ItemStack stack) {
+        if (!matchesRules(stack)) return false;
+        AspectList ot = ThaumcraftCraftingManager.getObjectTags(stack);
+        return ot.size() != 0 || ThaumcraftCraftingManager.getBonusTags(stack, ot).size() != 0;
+    }
+
+    private static boolean matchesRules(ItemStack stack) {
         if (stack == null) return false;
         Item item = stack.getItem();
-        AspectList ot = ThaumcraftCraftingManager.getObjectTags(stack);
-        ot = ThaumcraftCraftingManager.getBonusTags(stack, ot);
-        if (ot.size() == 0) return false;
+        if (forbiddenItems.contains(item)) {
+            return false;
+        }
         if (allowedItemsWildcard.contains(item)) {
             return true;
         }
         if (allowedItems.contains(ImmutablePair.of(item, stack.getItemDamage()))) {
             return true;
-        }
-        if (forbiddenItems.contains(item)) {
-            return false;
         }
         for (int id : OreDictionary.getOreIDs(stack)) {
             if (checkOreDictRules(OreDictionary.getOreName(id))) {
