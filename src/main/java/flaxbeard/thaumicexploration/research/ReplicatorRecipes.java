@@ -83,14 +83,13 @@ public class ReplicatorRecipes {
     }
 
     public static boolean canStackBeReplicated(ItemStack stack) {
-        if (stack == null) return false;
         if (!matchesRules(stack)) return false;
         AspectList ot = ThaumcraftCraftingManager.getObjectTags(stack);
-        ot = ThaumcraftCraftingManager.getBonusTags(stack, ot);
-        return ot.size() != 0;
+        return ot.size() != 0 || ThaumcraftCraftingManager.getBonusTags(stack, ot).size() != 0;
     }
 
     private static boolean matchesRules(ItemStack stack) {
+        if (stack == null) return false;
         Item item = stack.getItem();
         if (forbiddenItems.contains(item)) {
             return false;
