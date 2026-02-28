@@ -71,8 +71,8 @@ public class ItemFoodTalisman extends Item {
         if (!world.isRemote && (itemStack.stackTagCompound.getFloat("food") < MAX_HEAL_SIZE_TALISMAN
                 || itemStack.stackTagCompound.getFloat("saturation") < MAX_SAT_SIZE_TALISMAN)) {
             for (int i = 0; i < 10; i++) {
-                if (itemStack.stackTagCompound.getFloat("food") == MAX_HEAL_SIZE_TALISMAN
-                        && itemStack.stackTagCompound.getFloat("saturation") == MAX_SAT_SIZE_TALISMAN) {
+                if (itemStack.stackTagCompound.getFloat("food") >= MAX_HEAL_SIZE_TALISMAN
+                        && itemStack.stackTagCompound.getFloat("saturation") >= MAX_SAT_SIZE_TALISMAN) {
                     break;
                 }
                 if (player.inventory.getStackInSlot(i) == null) {
