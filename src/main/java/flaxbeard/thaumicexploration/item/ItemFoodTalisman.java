@@ -111,9 +111,11 @@ public class ItemFoodTalisman extends Item {
                 }
                 player.inventory.decrStackSize(i, 1);
 
-                //TODO Fix sound not playing
-                //player.playSound("random.eat", 1f, 1f);
-
+                world.playSoundAtEntity(
+                        player,
+                        "random.eat",
+                        0.5F + 0.5F * (float) player.worldObj.rand.nextInt(2),
+                        (player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.2F + 1.0F);
             }
         }
         if ((player.getFoodStats().getFoodLevel() < 20)
