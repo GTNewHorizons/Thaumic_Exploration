@@ -99,11 +99,11 @@ public class ItemFoodTalisman extends Item {
                     itemStack.stackTagCompound
                             .setFloat("food", itemStack.stackTagCompound.getFloat("food") + (int) heal);
                 }
-                if (itemStack.stackTagCompound.getFloat("saturation") + (int) sat >= MAX_SAT_SIZE_TALISMAN) {
+                if (itemStack.stackTagCompound.getFloat("saturation") + sat >= MAX_SAT_SIZE_TALISMAN) {
                     itemStack.stackTagCompound.setFloat("saturation", MAX_SAT_SIZE_TALISMAN);
                 } else {
                     itemStack.stackTagCompound
-                            .setFloat("saturation", itemStack.stackTagCompound.getFloat("saturation") + (int) sat);
+                            .setFloat("saturation", itemStack.stackTagCompound.getFloat("saturation") + sat);
                 }
 
                 if (food.stackSize <= 1) {
