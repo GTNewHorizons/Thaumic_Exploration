@@ -116,6 +116,9 @@ public class ItemFoodTalisman extends Item {
                         "random.eat",
                         0.5F + 0.5F * (float) player.worldObj.rand.nextInt(2),
                         (player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.2F + 1.0F);
+
+                // Exit the loop to only eat one item per update
+                break;
             }
         }
         if ((player.getFoodStats().getFoodLevel() < 20)
