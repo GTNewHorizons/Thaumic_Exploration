@@ -67,9 +67,6 @@ public class ItemFoodTalisman extends Item {
 
         if (!world.isRemote && (itemStack.stackTagCompound.getFloat("nourishment") < MAX_NOURISHMENT_SIZE_TALISMAN)) {
             for (int i = 0; i < 9; i++) {
-                if (itemStack.stackTagCompound.getFloat("nourishment") >= MAX_NOURISHMENT_SIZE_TALISMAN) {
-                    break;
-                }
                 if (player.inventory.getStackInSlot(i) == null) {
                     continue;
                 }
