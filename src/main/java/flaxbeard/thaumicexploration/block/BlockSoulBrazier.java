@@ -58,6 +58,8 @@ public class BlockSoulBrazier extends BlockContainer {
             if (SoulBrazierUtils.isPlayerOnline(entity.owner.getId())) {
                 EntityPlayer player = SoulBrazierUtils.getPlayerFromUUID(entity.owner.getId());
                 SoulBrazierUtils.syncPermWarp((EntityPlayerMP) player);
+            } else {
+                // TODO PlayerLoggedInEvent use
             }
             ForgeChunkManager
                     .unforceChunk(entity.heldChunk, new ChunkCoordIntPair(entity.xCoord >> 4, entity.zCoord >> 4));
@@ -66,33 +68,21 @@ public class BlockSoulBrazier extends BlockContainer {
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, int x, int y, int z,
-            EntityPlayer player, int side, float subX, float subY, float subZ) {
-        super.onBlockActivated(
-                worldIn,
-                x,
-                y,
-                z,
-                player,
-                side,
-                subX,
-                subY,
-                subZ);
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX,
+            float subY, float subZ) {
+        super.onBlockActivated(worldIn, x, y, z, player, side, subX, subY, subZ);
         // if(player.getGameProfile().getId().equals(((TileEntitySoulBrazier)worldIn.getTileEntity(x,y,z)).owner.getId()))
         // {
-        return ((TileEntitySoulBrazier) worldIn.getTileEntity(x, y, z))
-                .setActive(player);
+        return ((TileEntitySoulBrazier) worldIn.getTileEntity(x, y, z)).setActive(player);
     }
 
     @Override
-    public void onBlockClicked(World worldIn, int x, int y, int z,
-            EntityPlayer player) {
+    public void onBlockClicked(World worldIn, int x, int y, int z, EntityPlayer player) {
         super.onBlockClicked(worldIn, x, y, z, player);
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, int x, int y, int z,
-            EntityLivingBase placer, ItemStack itemIn) {
+    public void onBlockPlacedBy(World worldIn, int x, int y, int z, EntityLivingBase placer, ItemStack itemIn) {
         super.onBlockPlacedBy(worldIn, x, y, z, placer, itemIn);
 
         GameProfile profile = ((EntityPlayer) placer).getGameProfile();
