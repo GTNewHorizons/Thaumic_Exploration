@@ -35,7 +35,7 @@ public class BlockSoulBrazier extends BlockContainer {
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_) {
+    public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
         if (!world.isRemote) {
             TileEntitySoulBrazier entity = ((TileEntitySoulBrazier) world.getTileEntity(x, y, z));
 
@@ -47,41 +47,41 @@ public class BlockSoulBrazier extends BlockContainer {
             ForgeChunkManager
                     .unforceChunk(entity.heldChunk, new ChunkCoordIntPair(entity.xCoord >> 4, entity.zCoord >> 4));
         }
-        super.breakBlock(world, x, y, z, block, p_149749_6_);
+        super.breakBlock(world, x, y, z, block, meta);
     }
 
     @Override
-    public boolean onBlockActivated(World p_149727_1_, int p_149727_2_, int p_149727_3_, int p_149727_4_,
-            EntityPlayer p_149727_5_, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
+    public boolean onBlockActivated(World worldIn, int x, int y, int z,
+            EntityPlayer player, int side, float subX, float subY, float subZ) {
         super.onBlockActivated(
-                p_149727_1_,
-                p_149727_2_,
-                p_149727_3_,
-                p_149727_4_,
-                p_149727_5_,
-                p_149727_6_,
-                p_149727_7_,
-                p_149727_8_,
-                p_149727_9_);
-        // if(p_149727_5_.getGameProfile().getId().equals(((TileEntitySoulBrazier)p_149727_1_.getTileEntity(p_149727_2_,p_149727_3_,p_149727_4_)).owner.getId()))
+                worldIn,
+                x,
+                y,
+                z,
+                player,
+                side,
+                subX,
+                subY,
+                subZ);
+        // if(player.getGameProfile().getId().equals(((TileEntitySoulBrazier)worldIn.getTileEntity(x,y,z)).owner.getId()))
         // {
-        return ((TileEntitySoulBrazier) p_149727_1_.getTileEntity(p_149727_2_, p_149727_3_, p_149727_4_))
-                .setActive(p_149727_5_);
+        return ((TileEntitySoulBrazier) worldIn.getTileEntity(x, y, z))
+                .setActive(player);
     }
 
     @Override
-    public void onBlockClicked(World p_149699_1_, int p_149699_2_, int p_149699_3_, int p_149699_4_,
-            EntityPlayer p_149699_5_) {
-        super.onBlockClicked(p_149699_1_, p_149699_2_, p_149699_3_, p_149699_4_, p_149699_5_);
+    public void onBlockClicked(World worldIn, int x, int y, int z,
+            EntityPlayer player) {
+        super.onBlockClicked(worldIn, x, y, z, player);
     }
 
     @Override
-    public void onBlockPlacedBy(World p_149689_1_, int p_149689_2_, int p_149689_3_, int p_149689_4_,
-            EntityLivingBase p_149689_5_, ItemStack p_149689_6_) {
-        super.onBlockPlacedBy(p_149689_1_, p_149689_2_, p_149689_3_, p_149689_4_, p_149689_5_, p_149689_6_);
+    public void onBlockPlacedBy(World worldIn, int x, int y, int z,
+            EntityLivingBase placer, ItemStack itemIn) {
+        super.onBlockPlacedBy(worldIn, x, y, z, placer, itemIn);
 
-        GameProfile profile = ((EntityPlayer) p_149689_5_).getGameProfile();
-        ((TileEntitySoulBrazier) p_149689_1_.getTileEntity(p_149689_2_, p_149689_3_, p_149689_4_)).owner = profile;
+        GameProfile profile = ((EntityPlayer) placer).getGameProfile();
+        ((TileEntitySoulBrazier) worldIn.getTileEntity(x, y, z)).owner = profile;
     }
 
     /**
@@ -96,7 +96,7 @@ public class BlockSoulBrazier extends BlockContainer {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
+    public TileEntity createNewTileEntity(World worldIn, int metadata) {
         return new TileEntitySoulBrazier();
     }
 
