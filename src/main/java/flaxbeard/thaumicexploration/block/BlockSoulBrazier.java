@@ -3,12 +3,14 @@ package flaxbeard.thaumicexploration.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.ChunkCoordIntPair;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeChunkManager;
@@ -27,10 +29,23 @@ public class BlockSoulBrazier extends BlockContainer {
 
     public BlockSoulBrazier() {
         super(Material.rock);
+        setResistance(2000.0F);
         setBlockTextureName("thaumicexploration:soulBrazier");
     }
 
     public boolean isOpaqueCube() {
+        return false;
+    }
+
+    public boolean canEntityDestroy(IBlockAccess world, int x, int y, int z, Entity entity) {
+        return false;
+    }
+
+    @Override
+    public void onBlockExploded(World world, int x, int y, int z, Explosion explosion) {}
+
+    @Override
+    public boolean canDropFromExplosion(Explosion explosion) {
         return false;
     }
 
