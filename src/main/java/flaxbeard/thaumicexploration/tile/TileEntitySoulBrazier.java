@@ -1,7 +1,8 @@
 package flaxbeard.thaumicexploration.tile;
 
+import java.util.Random;
+
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
@@ -169,38 +170,33 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
         currentVis = Math.max(0, currentVis - VisRate);
     }
 
-    public void changeTaint() {
-        int x = this.xCoord + this.worldObj.rand.nextInt(16) - this.worldObj.rand.nextInt(16);
-        int y = 0;
-        int z = this.zCoord + this.worldObj.rand.nextInt(16) - this.worldObj.rand.nextInt(16);
-        BiomeGenBase bg = this.worldObj.getBiomeGenForCoords(x, z);
-        if (bg.biomeID != ThaumcraftWorldGenerator.biomeTaint.biomeID) {
-            float offsetY = (float) (Math.sin(Math.toRadians(tick * 1.0F)) / 4.0F);
+    private void changeTaint() {
+        Random rand = this.worldObj.rand;
+
+        int x = this.xCoord + rand.nextInt(33) - 16;
+        int y = this.yCoord + rand.nextInt(33) - 16;
+        int z = this.zCoord + rand.nextInt(33) - 16;
+        BiomeGenBase biome = this.worldObj.getBiomeGenForCoords(x, z);
+        if (biome.biomeID != ThaumcraftWorldGenerator.biomeTaint.biomeID) {
+            // tick is always a multiple of 45 when we get to this function
+            float offsetY = (float) (Math.sin(Math.toRadians(tick)) / 4.0F);
             float offsetZ = (float) (Math.sin(Math.toRadians(tick * 3.0F)) / 4.0F);
             float offsetX = (float) (Math.cos(Math.toRadians(tick * 3.0F)) / 4.0F);
-            boolean found = false;
-            for (int yTest = yCoord - 5; yTest <= yCoord + 5; yTest++) {
-                if (worldObj.getBlock(x, yTest, z) != Blocks.air && worldObj.getBlock(x, yTest, z) == Blocks.air) {
-                    found = true;
-                    y = yTest;
-                    break;
-                }
-            }
             ThaumicExploration.proxy.spawnLightningBolt(
                     worldObj,
                     xCoord + 0.5F + offsetX,
                     yCoord + 1.5F + offsetY,
-                    zCoord + offsetZ + 0.5F,
+                    zCoord + 0.5f + offsetZ,
                     x,
-                    found ? y : yCoord - 1,
+                    y,
                     z);
             Utils.setBiomeAt(this.worldObj, x, z, ThaumcraftWorldGenerator.biomeTaint);
         }
-        if ((Config.hardNode) && (this.worldObj.rand.nextBoolean())) {
-            x = this.xCoord + this.worldObj.rand.nextInt(16) - this.worldObj.rand.nextInt(16);
-            z = this.zCoord + this.worldObj.rand.nextInt(16) - this.worldObj.rand.nextInt(16);
-            y = this.yCoord + this.worldObj.rand.nextInt(16) - this.worldObj.rand.nextInt(16);
-            if (!BlockTaintFibres.spreadFibres(this.worldObj, x, y, z));
+        if ((Config.hardNode) && (rand.nextBoolean())) {
+            x = this.xCoord + rand.nextInt(33) - 16;
+            z = this.zCoord + rand.nextInt(33) - 16;
+            y = this.yCoord + rand.nextInt(33) - 16;
+            BlockTaintFibres.spreadFibres(this.worldObj, x, y, z);
         }
         this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
     }
