@@ -50,7 +50,7 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
         currentEssentia = nbttagcompound.getInteger("currentEssentia");
         currentVis = nbttagcompound.getInteger("currentVis");
         active = nbttagcompound.getBoolean("active");
-        owner = NBTUtil.func_152459_a(nbttagcompound.getCompoundTag("owner"));
+        owner = NBTUtil.readGameProfileFromNBT(nbttagcompound.getCompoundTag("owner"));
     }
 
     @Override
@@ -61,7 +61,7 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
         nbttagcompound.setInteger("currentVis", currentVis);
         nbttagcompound.setBoolean("active", active);
         NBTTagCompound gameProfile = new NBTTagCompound();
-        NBTUtil.func_152460_a(gameProfile, owner);
+        NBTUtil.writeGameProfileToNBT(gameProfile, owner);
         nbttagcompound.setTag("owner", gameProfile);
     }
 
@@ -69,7 +69,7 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
         if (worldObj.isRemote) {
             return true;
         }
-        if (!EntityPlayer.func_146094_a(player.getGameProfile()).equals(owner.getId())) {
+        if (!EntityPlayer.getUUID(player.getGameProfile()).equals(owner.getId())) {
             player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.invalidplayer"));
             return false;
         }
