@@ -178,10 +178,10 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
         int z = this.zCoord + rand.nextInt(33) - 16;
         BiomeGenBase biome = this.worldObj.getBiomeGenForCoords(x, z);
         if (biome.biomeID != ThaumcraftWorldGenerator.biomeTaint.biomeID) {
-            // tick is always a multiple of 45 when we get to this function
-            float offsetY = (float) (Math.sin(Math.toRadians(tick)) / 4.0F);
-            float offsetZ = (float) (Math.sin(Math.toRadians(tick * 3.0F)) / 4.0F);
-            float offsetX = (float) (Math.cos(Math.toRadians(tick * 3.0F)) / 4.0F);
+            int randOffset = rand.nextInt(360);
+            float offsetY = (float) (Math.sin(Math.toRadians(randOffset)) / 4.0F);
+            float offsetZ = (float) (Math.sin(Math.toRadians(randOffset * 3.0F)) / 4.0F);
+            float offsetX = (float) (Math.cos(Math.toRadians(randOffset * 3.0F)) / 4.0F);
             ThaumicExploration.proxy.spawnLightningBolt(
                     worldObj,
                     xCoord + 0.5F + offsetX,
