@@ -1,7 +1,6 @@
 package flaxbeard.thaumicexploration.tile;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
@@ -17,7 +16,6 @@ import com.mojang.authlib.GameProfile;
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import flaxbeard.thaumicexploration.chunkLoader.ITXChunkLoader;
 import flaxbeard.thaumicexploration.common.ConfigTX;
-import flaxbeard.thaumicexploration.misc.brazier.SoulBrazierUtils;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.IEssentiaTransport;
@@ -37,16 +35,13 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
     public int currentEssentia;
     public int currentVis;
     public boolean active;
-    public boolean hasWarpQueue = false;
     public GameProfile owner;
-    public int count;
-    private int ticks = 0;
-    private static int EssentiaCapacity = 16;
-    private static int VisCapacity = 16;
+    public int tick;
+    private static final int VisCapacity = 16;
+    private static final int EssentiaCapacity = 16;
     public static int EssentiaRate = 1;
     public static int VisRate = 3;
     public ForgeChunkManager.Ticket heldChunk;
-    public static boolean renderWisp = false;
 
     @Override
     public void readCustomNBT(NBTTagCompound nbttagcompound) {
@@ -55,7 +50,6 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
         currentEssentia = nbttagcompound.getInteger("currentEssentia");
         currentVis = nbttagcompound.getInteger("currentVis");
         active = nbttagcompound.getBoolean("active");
-        hasWarpQueue = nbttagcompound.getBoolean("hasWarpQueue");
         owner = NBTUtil.func_152459_a(nbttagcompound.getCompoundTag("owner"));
     }
 
@@ -66,89 +60,78 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
         nbttagcompound.setInteger("currentEssentia", currentEssentia);
         nbttagcompound.setInteger("currentVis", currentVis);
         nbttagcompound.setBoolean("active", active);
-        nbttagcompound.setBoolean("hasWarpQueue", hasWarpQueue);
         NBTTagCompound gameProfile = new NBTTagCompound();
         NBTUtil.func_152460_a(gameProfile, owner);
         nbttagcompound.setTag("owner", gameProfile);
     }
 
     public boolean setActive(EntityPlayer player) {
-        if (!worldObj.isRemote && !hasWarpQueue) {
-            int playerWarp = Thaumcraft.proxy.getPlayerKnowledge().getWarpPerm(owner.getName());
-            if (playerWarp <= 0) {
-                player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.noWarp"));
-                return false;
-            }
-            if (!EntityPlayer.func_146094_a(player.getGameProfile()).equals(owner.getId())) {
-
-                player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.invalidplayer"));
-                return false;
-            }
-            if (!checkPower()) {
-                player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.nopower"));
-                return false;
-            }
-            if (!SoulBrazierUtils.isPlayerInRangeOfBrazier(player, this)) {
-                player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.norange"));
-                return false;
-            }
-            active = true;
-            storedWarp += playerWarp;
-            Thaumcraft.proxy.getPlayerKnowledge().setWarpPerm(owner.getName(), 0);
-            SoulBrazierUtils.syncPermWarp((EntityPlayerMP) player);
-
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        if (worldObj.isRemote) {
             return true;
         }
+        if (!EntityPlayer.func_146094_a(player.getGameProfile()).equals(owner.getId())) {
+            player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.invalidplayer"));
+            return false;
+        }
+        if (!hasPower()) {
+            player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.nopower"));
+            return false;
+        }
+        if (this.getDistanceFrom(player.posX, player.posY, player.posZ) > 50) {
+            player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.norange"));
+            return false;
+        }
+        int playerWarp = Thaumcraft.proxy.getPlayerKnowledge().getWarpPerm(owner.getName());
+        if (playerWarp <= 0) {
+            player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.noWarp"));
+            return false;
+        }
+
+        active = true;
+        storedWarp += playerWarp;
+        Thaumcraft.proxy.getPlayerKnowledge().setWarpPerm(owner.getName(), 0);
+        // TODO send a message about the weight of madness lifting to the brazier
+        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+
         return true;
     }
 
     @Override
     public void updateEntity() {
-        super.updateEntity();
-        if (this.count == Integer.MAX_VALUE) {
-            this.count = 0;
-        }
-        this.count += 1;
-        if (hasWarpQueue) {
+        if (worldObj.isRemote) {
             return;
         }
-        if (!renderWisp && ThaumicExploration.proxy.getIsReadyForWisp()) {
-            renderWisp = true;
+        super.updateEntity();
+        if (this.tick == 360) {
+            this.tick = 0;
         }
-        if (this.count % 10 == 0 && renderWisp && active) {
-            ThaumicExploration.proxy.spawnActiveBrazierParticle(worldObj, xCoord, yCoord, zCoord);
-        }
-        if ((this.count % 5 == 0) && (this.currentEssentia < EssentiaCapacity)) {
-            fillJar();
-        }
-        changeTaint();
+        this.tick += 1;
 
-        getPower();
+        if (this.tick % 5 == 0) {
+            if (this.currentVis < VisCapacity) {
+                getVis();
+            }
+            if (this.currentEssentia < EssentiaCapacity) {
+                getEssentia();
+            }
+        }
+
         if (active) {
             if (heldChunk == null && ConfigTX.allowSBChunkLoading) addTicket();
-            if (this.count % 60 == 0) spendPower();
-            if (!checkPower()) {
+
+            if (this.tick % 10 == 0 && ThaumicExploration.proxy.getIsReadyForWisp()) {
+                ThaumicExploration.proxy.spawnActiveBrazierParticle(worldObj, xCoord, yCoord, zCoord);
+            }
+            if (this.tick % 45 == 0) changeTaint();
+            if (this.tick % 60 == 0) spendPower();
+
+            if (!hasPower()) {
                 active = false;
-
-                if (!worldObj.isRemote) {
-
-                    // Is player online?
-                    if (SoulBrazierUtils.isPlayerOnline(owner.getId())) {
-                        int aCurrentWarp = Thaumcraft.proxy.getPlayerKnowledge().getWarpPerm(owner.getName());
-                        int aTotalWarp = aCurrentWarp + storedWarp;
-
-                        if (aCurrentWarp != aTotalWarp) {
-                            Thaumcraft.proxy.getPlayerKnowledge().setWarpPerm(owner.getName(), aTotalWarp);
-                            EntityPlayer player = SoulBrazierUtils.getPlayerFromUUID(owner.getId());
-                            SoulBrazierUtils.syncPermWarp((EntityPlayerMP) player);
-                        }
-                    }
-                    // Queue warp addition to file for next join.
-                    else {
-                        SoulBrazierUtils.writePlayerWarpToQueueFile(owner.getId(), this);
-                        hasWarpQueue = true;
-                    }
+                int currentWarp = Thaumcraft.proxy.getPlayerKnowledge().getWarpPerm(owner.getName());
+                int totalWarp = currentWarp + storedWarp;
+                if (currentWarp < totalWarp) {
+                    // TODO send a message: The Familiar weight of old madness
+                    Thaumcraft.proxy.getPlayerKnowledge().setWarpPerm(owner.getName(), totalWarp);
                 }
                 storedWarp = 0;
                 ForgeChunkManager
@@ -159,20 +142,25 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
         }
     }
 
-    public void fillJar() {
-        TileEntity te = ThaumcraftApiHelper
+    private void getVis() {
+        currentVis += this.consumeVis(Aspect.FIRE, 1);
+    }
+
+    public void getEssentia() {
+        TileEntity connectable = ThaumcraftApiHelper
                 .getConnectableTile(this.worldObj, this.xCoord, this.yCoord, this.zCoord, ForgeDirection.DOWN);
-        if (te != null) {
-            IEssentiaTransport ic = (IEssentiaTransport) te;
-            Aspect ta = Aspect.DEATH;
-            if (ic.canOutputTo(ForgeDirection.UP)
-                    && ic.getSuctionAmount(ForgeDirection.UP) < getSuctionAmount(ForgeDirection.DOWN)) {
-                addEssentia(ta, ic.takeEssentia(ta, 1, ForgeDirection.UP), ForgeDirection.DOWN);
-            }
+        if (connectable == null) {
+            return;
+        }
+        IEssentiaTransport ic = (IEssentiaTransport) connectable;
+        Aspect aspect = Aspect.DEATH;
+        if (ic.canOutputTo(ForgeDirection.UP)
+                && ic.getSuctionAmount(ForgeDirection.UP) < getSuctionAmount(ForgeDirection.DOWN)) {
+            addEssentia(aspect, ic.takeEssentia(aspect, 1, ForgeDirection.UP), ForgeDirection.DOWN);
         }
     }
 
-    public boolean checkPower() {
+    public boolean hasPower() {
         return currentEssentia > 0 && currentVis > 0;
     }
 
@@ -181,53 +169,40 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
         currentVis = Math.max(0, currentVis - VisRate);
     }
 
-    private void getPower() {
-        if (this.count % 5 == 0) {
-            if (this.currentVis < VisCapacity) {
-                currentVis += this.consumeVis(Aspect.FIRE, 1);
-            }
-        }
-    }
-
     public void changeTaint() {
-        if (active && (this.count % 50 == 0)) {
-            int x = 0;
-            int z = 0;
-            int y = 0;
-            x = this.xCoord + this.worldObj.rand.nextInt(16) - this.worldObj.rand.nextInt(16);
-
-            z = this.zCoord + this.worldObj.rand.nextInt(16) - this.worldObj.rand.nextInt(16);
-            BiomeGenBase bg = this.worldObj.getBiomeGenForCoords(x, z);
-            if (bg.biomeID != ThaumcraftWorldGenerator.biomeTaint.biomeID) {
-                float offsetY = (float) (Math.sin(Math.toRadians(count * 1.0F)) / 4.0F);
-                float offsetZ = (float) (Math.sin(Math.toRadians(count * 3.0F)) / 4.0F);
-                float offsetX = (float) (Math.cos(Math.toRadians(count * 3.0F)) / 4.0F);
-                boolean found = false;
-                for (int yTest = yCoord - 5; yTest <= yCoord + 5; yTest++) {
-                    if (worldObj.getBlock(x, yTest, z) != Blocks.air && worldObj.getBlock(x, yTest, z) == Blocks.air) {
-                        found = true;
-                        y = yTest;
-                        break;
-                    }
+        int x = this.xCoord + this.worldObj.rand.nextInt(16) - this.worldObj.rand.nextInt(16);
+        int y = 0;
+        int z = this.zCoord + this.worldObj.rand.nextInt(16) - this.worldObj.rand.nextInt(16);
+        BiomeGenBase bg = this.worldObj.getBiomeGenForCoords(x, z);
+        if (bg.biomeID != ThaumcraftWorldGenerator.biomeTaint.biomeID) {
+            float offsetY = (float) (Math.sin(Math.toRadians(tick * 1.0F)) / 4.0F);
+            float offsetZ = (float) (Math.sin(Math.toRadians(tick * 3.0F)) / 4.0F);
+            float offsetX = (float) (Math.cos(Math.toRadians(tick * 3.0F)) / 4.0F);
+            boolean found = false;
+            for (int yTest = yCoord - 5; yTest <= yCoord + 5; yTest++) {
+                if (worldObj.getBlock(x, yTest, z) != Blocks.air && worldObj.getBlock(x, yTest, z) == Blocks.air) {
+                    found = true;
+                    y = yTest;
+                    break;
                 }
-                ThaumicExploration.proxy.spawnLightningBolt(
-                        worldObj,
-                        xCoord + 0.5F + offsetX,
-                        yCoord + 1.5F + offsetY,
-                        zCoord + offsetZ + 0.5F,
-                        x,
-                        found ? y : yCoord - 1,
-                        z);
-                Utils.setBiomeAt(this.worldObj, x, z, ThaumcraftWorldGenerator.biomeTaint);
             }
-            if ((Config.hardNode) && (this.worldObj.rand.nextBoolean())) {
-                x = this.xCoord + this.worldObj.rand.nextInt(16) - this.worldObj.rand.nextInt(16);
-                z = this.zCoord + this.worldObj.rand.nextInt(16) - this.worldObj.rand.nextInt(16);
-                y = this.yCoord + this.worldObj.rand.nextInt(16) - this.worldObj.rand.nextInt(16);
-                if (!BlockTaintFibres.spreadFibres(this.worldObj, x, y, z));
-            }
-            this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+            ThaumicExploration.proxy.spawnLightningBolt(
+                    worldObj,
+                    xCoord + 0.5F + offsetX,
+                    yCoord + 1.5F + offsetY,
+                    zCoord + offsetZ + 0.5F,
+                    x,
+                    found ? y : yCoord - 1,
+                    z);
+            Utils.setBiomeAt(this.worldObj, x, z, ThaumcraftWorldGenerator.biomeTaint);
         }
+        if ((Config.hardNode) && (this.worldObj.rand.nextBoolean())) {
+            x = this.xCoord + this.worldObj.rand.nextInt(16) - this.worldObj.rand.nextInt(16);
+            z = this.zCoord + this.worldObj.rand.nextInt(16) - this.worldObj.rand.nextInt(16);
+            y = this.yCoord + this.worldObj.rand.nextInt(16) - this.worldObj.rand.nextInt(16);
+            if (!BlockTaintFibres.spreadFibres(this.worldObj, x, y, z));
+        }
+        this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
     }
 
     @Override
@@ -265,7 +240,6 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
 
     @Override
     public int addEssentia(Aspect aspect, int i, ForgeDirection forgeDirection) {
-        int newEssentia = 0;
         int filled = EssentiaCapacity - currentEssentia;
         if (i < filled) {
             currentEssentia += i;

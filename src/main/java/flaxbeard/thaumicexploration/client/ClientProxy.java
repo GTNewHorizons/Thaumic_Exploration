@@ -183,9 +183,9 @@ public class ClientProxy extends CommonProxy {
         if (worldObj.getTileEntity(xCoord, yCoord, zCoord) != null
                 && worldObj.getTileEntity(xCoord, yCoord, zCoord) instanceof TileEntitySoulBrazier) {
             TileEntitySoulBrazier brazier = (TileEntitySoulBrazier) worldObj.getTileEntity(xCoord, yCoord, zCoord);
-            offsetY = (float) (Math.sin(Math.toRadians(brazier.count * 1.0F)) / 4.0F);
-            offsetZ = (float) (Math.sin(Math.toRadians(brazier.count * 3.0F)) / 4.0F);
-            offsetX = (float) (Math.cos(Math.toRadians(brazier.count * 3.0F)) / 4.0F);
+            offsetY = (float) (Math.sin(Math.toRadians(brazier.tick * 1.0F)) / 4.0F);
+            offsetZ = (float) (Math.sin(Math.toRadians(brazier.tick * 3.0F)) / 4.0F);
+            offsetX = (float) (Math.cos(Math.toRadians(brazier.tick * 3.0F)) / 4.0F);
         }
         // ParticleEngine.instance.addEffect(worldObj, fs);
         FXWisp ef = new FXWisp(
