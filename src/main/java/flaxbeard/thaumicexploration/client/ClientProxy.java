@@ -174,19 +174,12 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void spawnActiveBrazierParticle(World worldObj, int xCoord, int yCoord, int zCoord) {
         if (!worldObj.isRemote) return;
-        // FXEssentiaTrail fx = new FXEssentiaTrail(worldObj, xCoord+0.5F, yCoord+1.1F, zCoord+0.5F, xCoord+0.5F,
-        // yCoord+1.5F, zCoord+0.5F, 5, Aspect.DARKNESS.getColor(), 1.0F);
-        float offsetY = 0;
-        float offsetZ = 0;
-        float offsetX = 0;
 
-        if (worldObj.getTileEntity(xCoord, yCoord, zCoord) != null
-                && worldObj.getTileEntity(xCoord, yCoord, zCoord) instanceof TileEntitySoulBrazier) {
-            TileEntitySoulBrazier brazier = (TileEntitySoulBrazier) worldObj.getTileEntity(xCoord, yCoord, zCoord);
-            offsetY = (float) (Math.sin(Math.toRadians(brazier.tick * 1.0F)) / 4.0F);
-            offsetZ = (float) (Math.sin(Math.toRadians(brazier.tick * 3.0F)) / 4.0F);
-            offsetX = (float) (Math.cos(Math.toRadians(brazier.tick * 3.0F)) / 4.0F);
-        }
+        int randOffset = worldObj.rand.nextInt(360);
+        float offsetY = (float) (Math.sin(Math.toRadians(randOffset * 1.0F)) / 4.0F);
+        float offsetZ = (float) (Math.sin(Math.toRadians(randOffset * 3.0F)) / 4.0F);
+        float offsetX = (float) (Math.cos(Math.toRadians(randOffset * 3.0F)) / 4.0F);
+
         // ParticleEngine.instance.addEffect(worldObj, fs);
         FXWisp ef = new FXWisp(
                 worldObj,
