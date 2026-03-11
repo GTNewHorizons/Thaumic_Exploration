@@ -123,7 +123,7 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
             if (this.tick % 10 == 0 && ThaumicExploration.proxy.getIsReadyForWisp()) {
                 ThaumicExploration.proxy.spawnActiveBrazierParticle(worldObj, xCoord, yCoord, zCoord);
             }
-            if (this.tick % 45 == 0) changeTaint();
+            if (this.tick % 50 == 0) changeTaint();
             if (this.tick % 60 == 0) spendPower();
 
             if (!hasPower()) {
