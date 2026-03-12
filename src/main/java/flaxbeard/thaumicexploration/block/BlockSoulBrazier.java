@@ -36,11 +36,11 @@ public class BlockSoulBrazier extends BlockContainer {
     public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
         if (!world.isRemote) {
             TileEntitySoulBrazier entity = ((TileEntitySoulBrazier) world.getTileEntity(x, y, z));
-            String owner = entity.owner.getName();
-            if (TXUtils.isPlayerOnline(owner)) {
-                Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(owner, entity.storedWarp);
+            String ownerUsername = entity.owner.getName();
+            if (TXUtils.isPlayerOnline(ownerUsername)) {
+                Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(ownerUsername, entity.storedWarp);
             } else {
-                TXUtils.addWarpPermOfflinePlayer(owner, entity.storedWarp);
+                TXUtils.addWarpPermOfflinePlayer(ownerUsername, entity.storedWarp);
             }
             ForgeChunkManager
                     .unforceChunk(entity.heldChunk, new ChunkCoordIntPair(entity.xCoord >> 4, entity.zCoord >> 4));

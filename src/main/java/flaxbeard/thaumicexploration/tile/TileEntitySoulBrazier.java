@@ -2,6 +2,7 @@ package flaxbeard.thaumicexploration.tile;
 
 import java.util.Random;
 
+import flaxbeard.thaumicexploration.misc.TXUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
@@ -103,7 +104,7 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
             return;
         }
         super.updateEntity();
-        if (this.tick == 360) {
+        if (this.tick == 60) {
             this.tick = 0;
         }
         this.tick += 1;
@@ -128,12 +129,15 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
 
             if (!hasPower()) {
                 active = false;
-                int currentWarp = Thaumcraft.proxy.getPlayerKnowledge().getWarpPerm(owner.getName());
-                int totalWarp = currentWarp + storedWarp;
-                if (currentWarp < totalWarp) {
+
+                String ownerUsername = owner.getName();
+                if (TXUtils.isPlayerOnline(ownerUsername)) {
                     // TODO send a message: The Familiar weight of old madness
-                    Thaumcraft.proxy.getPlayerKnowledge().setWarpPerm(owner.getName(), totalWarp);
+                    Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(ownerUsername, storedWarp);
+                } else {
+                    TXUtils.addWarpPermOfflinePlayer(ownerUsername, storedWarp);
                 }
+
                 storedWarp = 0;
                 ForgeChunkManager
                         .unforceChunk(this.heldChunk, new ChunkCoordIntPair(this.xCoord >> 4, this.zCoord >> 4));
