@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeChunkManager;
 
 import flaxbeard.thaumicexploration.ThaumicExploration;
+import flaxbeard.thaumicexploration.misc.TXUtils;
 import flaxbeard.thaumicexploration.tile.TileEntitySoulBrazier;
 import thaumcraft.common.Thaumcraft;
 
@@ -35,7 +36,12 @@ public class BlockSoulBrazier extends BlockContainer {
     public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
         if (!world.isRemote) {
             TileEntitySoulBrazier entity = ((TileEntitySoulBrazier) world.getTileEntity(x, y, z));
-            Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(entity.owner.getName(), entity.storedWarp);
+            String owner = entity.owner.getName();
+            if (TXUtils.isPlayerOnline(owner)) {
+                Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(owner, entity.storedWarp);
+            } else {
+                TXUtils.addWarpPermOfflinePlayer(owner, entity.storedWarp);
+            }
             ForgeChunkManager
                     .unforceChunk(entity.heldChunk, new ChunkCoordIntPair(entity.xCoord >> 4, entity.zCoord >> 4));
         }
