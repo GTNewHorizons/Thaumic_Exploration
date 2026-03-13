@@ -2,7 +2,6 @@ package flaxbeard.thaumicexploration.tile;
 
 import java.util.Random;
 
-import flaxbeard.thaumicexploration.misc.TXUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
@@ -18,6 +17,7 @@ import com.mojang.authlib.GameProfile;
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import flaxbeard.thaumicexploration.chunkLoader.ITXChunkLoader;
 import flaxbeard.thaumicexploration.common.ConfigTX;
+import flaxbeard.thaumicexploration.misc.TXUtils;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.IEssentiaTransport;
@@ -80,6 +80,7 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
             return false;
         }
         if (this.getDistanceFrom(player.posX, player.posY, player.posZ) > 50) {
+            // TODO fix or remove
             player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.norange"));
             return false;
         }
@@ -104,7 +105,8 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
             return;
         }
         super.updateEntity();
-        if (this.tick == 60) {
+        // tick is used to render the spherically rotating particle
+        if (this.tick == 360) {
             this.tick = 0;
         }
         this.tick += 1;
@@ -121,8 +123,8 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
         if (active) {
             if (heldChunk == null && ConfigTX.allowSBChunkLoading) addTicket();
 
-            if (this.tick % 10 == 0 && ThaumicExploration.proxy.getIsReadyForWisp()) {
-                ThaumicExploration.proxy.spawnActiveBrazierParticle(worldObj, xCoord, yCoord, zCoord);
+            if (this.tick % 5 == 0 && ThaumicExploration.proxy.getIsReadyForWisp()) {
+                ThaumicExploration.proxy.spawnActiveBrazierParticle(worldObj, xCoord, yCoord, zCoord, this.tick);
             }
             if (this.tick % 50 == 0) changeTaint();
             if (this.tick % 60 == 0) spendPower();
@@ -178,31 +180,38 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
         Random rand = this.worldObj.rand;
 
         int x = this.xCoord + rand.nextInt(33) - 16;
-        int y = this.yCoord + rand.nextInt(33) - 16;
+        int y = this.yCoord + rand.nextInt(17) - 8;
         int z = this.zCoord + rand.nextInt(33) - 16;
+
         BiomeGenBase biome = this.worldObj.getBiomeGenForCoords(x, z);
         if (biome.biomeID != ThaumcraftWorldGenerator.biomeTaint.biomeID) {
-            int randOffset = rand.nextInt(360);
-            float offsetY = (float) (Math.sin(Math.toRadians(randOffset)) / 4.0F);
-            float offsetZ = (float) (Math.sin(Math.toRadians(randOffset * 3.0F)) / 4.0F);
-            float offsetX = (float) (Math.cos(Math.toRadians(randOffset * 3.0F)) / 4.0F);
-            ThaumicExploration.proxy.spawnLightningBolt(
-                    worldObj,
-                    xCoord + 0.5F + offsetX,
-                    yCoord + 1.5F + offsetY,
-                    zCoord + 0.5f + offsetZ,
-                    x,
-                    y,
-                    z);
+            spawnTaintLightning(x, y, z);
             Utils.setBiomeAt(this.worldObj, x, z, ThaumcraftWorldGenerator.biomeTaint);
         }
-        if ((Config.hardNode) && (rand.nextBoolean())) {
+
+        if (Config.hardNode && rand.nextBoolean()) {
             x = this.xCoord + rand.nextInt(33) - 16;
+            y = this.yCoord + rand.nextInt(17) - 8;
             z = this.zCoord + rand.nextInt(33) - 16;
-            y = this.yCoord + rand.nextInt(33) - 16;
+            spawnTaintLightning(x, y, z);
             BlockTaintFibres.spreadFibres(this.worldObj, x, y, z);
         }
+
         this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+    }
+
+    private void spawnTaintLightning(int x, int y, int z) {
+        float offsetX = (float) (Math.cos(Math.toRadians(this.tick * 3.0)) / 4.0);
+        float offsetY = (float) (Math.sin(Math.toRadians(this.tick)) / 4.0);
+        float offsetZ = (float) (Math.sin(Math.toRadians(this.tick * 3.0)) / 4.0);
+        ThaumicExploration.proxy.spawnLightningBolt(
+                worldObj,
+                xCoord + 0.5F + offsetX,
+                yCoord + 1.5F + offsetY,
+                zCoord + 0.5F + offsetZ,
+                x,
+                y,
+                z);
     }
 
     @Override

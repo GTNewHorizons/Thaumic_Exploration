@@ -172,25 +172,22 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public void spawnActiveBrazierParticle(World worldObj, int xCoord, int yCoord, int zCoord) {
+    public void spawnActiveBrazierParticle(World worldObj, int xCoord, int yCoord, int zCoord, int tick) {
         if (!worldObj.isRemote) return;
 
-        int randOffset = worldObj.rand.nextInt(360);
-        float offsetY = (float) (Math.sin(Math.toRadians(randOffset * 1.0F)) / 4.0F);
-        float offsetZ = (float) (Math.sin(Math.toRadians(randOffset * 3.0F)) / 4.0F);
-        float offsetX = (float) (Math.cos(Math.toRadians(randOffset * 3.0F)) / 4.0F);
+        float offsetY = (float) (Math.sin(Math.toRadians(tick * 1.0F)) * 0.25);
+        float offsetZ = (float) (Math.sin(Math.toRadians(tick * 3.0F)) * 0.25);
+        float offsetX = (float) (Math.cos(Math.toRadians(tick * 3.0F)) * 0.25);
 
-        // ParticleEngine.instance.addEffect(worldObj, fs);
         FXWisp ef = new FXWisp(
                 worldObj,
                 xCoord + 0.55F + offsetX,
                 yCoord + 1.5F + offsetY,
                 zCoord + 0.55F + offsetZ,
                 (float) Math.random() / 1.125F,
-                (float) (178.0F / 255.0F),
+                (float) (0.698f),
                 (float) 0.0f,
-                (float) (255.0F / 255.0F));
-
+                (float) (1.0f));
         ef.setGravity(0);
         ef.shrink = false;
         ef.noClip = true;
