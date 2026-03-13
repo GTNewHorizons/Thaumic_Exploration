@@ -141,7 +141,7 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
                     }
                     this.storedWarp = 0;
                     ForgeChunkManager
-                        .unforceChunk(this.heldChunk, new ChunkCoordIntPair(this.xCoord >> 4, this.zCoord >> 4));
+                            .unforceChunk(this.heldChunk, new ChunkCoordIntPair(this.xCoord >> 4, this.zCoord >> 4));
                 }
                 this.heldChunk = null;
                 worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
