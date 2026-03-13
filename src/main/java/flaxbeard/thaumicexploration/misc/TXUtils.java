@@ -16,7 +16,7 @@ public class TXUtils {
         return server.getConfigurationManager().func_152612_a(username) != null;
     }
 
-    public static void addWarpPermOfflinePlayer(String owner, int storedWarp) {
+    public static void addWarpPermOfflinePlayer(String owner, int addedWarp) {
 
         File playerDataDir = new File(DimensionManager.getCurrentSaveRootDirectory(), "playerdata");
         File playerDataFile = new File(playerDataDir, owner + ".thaum");
@@ -31,7 +31,7 @@ public class TXUtils {
         }
 
         int currentWarp = playerData.getInteger("Thaumcraft.eldritch");
-        playerData.setInteger("Thaumcraft.eldritch", currentWarp + storedWarp);
+        playerData.setInteger("Thaumcraft.eldritch", currentWarp + addedWarp);
 
         try {
             File tempFile = new File(playerDataDir, owner + ".thaum");
