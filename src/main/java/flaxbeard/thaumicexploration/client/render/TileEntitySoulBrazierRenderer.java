@@ -21,8 +21,6 @@ public class TileEntitySoulBrazierRenderer extends TileEntitySpecialRenderer {
     private static final ResourceLocation baseTexture = new ResourceLocation(
             "thaumicexploration:textures/models/soulBrazier.png");
 
-
-
     @Override
     public void renderTileEntityAt(TileEntity tile, double d0, double d1, double d2, float par8) {
         // TODO Auto-generated method stub

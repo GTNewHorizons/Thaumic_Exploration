@@ -101,9 +101,7 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
 
     @Override
     public void updateEntity() {
-        if (worldObj.isRemote) {
-            return;
-        }
+
         super.updateEntity();
         // tick is used to render the spherically rotating particle
         if (this.tick == 360) {
@@ -132,17 +130,18 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
             if (!hasPower()) {
                 active = false;
 
-                String ownerUsername = owner.getName();
-                if (TXUtils.isPlayerOnline(ownerUsername)) {
-                    // TODO send a message: The Familiar weight of old madness
-                    Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(ownerUsername, storedWarp);
-                } else {
-                    TXUtils.addWarpPermOfflinePlayer(ownerUsername, storedWarp);
-                }
-
-                storedWarp = 0;
-                ForgeChunkManager
+                if (!worldObj.isRemote) {
+                    String ownerUsername = owner.getName();
+                    if (TXUtils.isPlayerOnline(ownerUsername)) {
+                        // TODO send a message: The Familiar weight of old madness
+                        Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(ownerUsername, storedWarp);
+                    } else {
+                        TXUtils.addWarpPermOfflinePlayer(ownerUsername, storedWarp);
+                    }
+                    storedWarp = 0;
+                    ForgeChunkManager
                         .unforceChunk(this.heldChunk, new ChunkCoordIntPair(this.xCoord >> 4, this.zCoord >> 4));
+                }
                 this.heldChunk = null;
                 worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             }
