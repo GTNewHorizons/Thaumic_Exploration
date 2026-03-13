@@ -3,6 +3,7 @@ package flaxbeard.thaumicexploration.tile;
 import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
@@ -80,7 +81,6 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
             return false;
         }
         if (this.getDistanceFrom(player.posX, player.posY, player.posZ) > 50) {
-            // TODO fix or remove
             player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.norange"));
             return false;
         }
@@ -93,7 +93,7 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
         active = true;
         storedWarp += playerWarp;
         Thaumcraft.proxy.getPlayerKnowledge().setWarpPerm(owner.getName(), 0);
-        // TODO send a message about the weight of madness lifting to the brazier
+        player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.storeWarp"));
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 
         return true;
@@ -131,14 +131,15 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
                 active = false;
 
                 if (!worldObj.isRemote) {
-                    String ownerUsername = owner.getName();
-                    if (TXUtils.isPlayerOnline(ownerUsername)) {
-                        // TODO send a message: The Familiar weight of old madness
-                        Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(ownerUsername, storedWarp);
+                    String ownerUsername = this.owner.getName();
+                    EntityPlayerMP player = TXUtils.getPlayerEntity(ownerUsername);
+                    if (player != null) {
+                        Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(ownerUsername, this.storedWarp);
+                        player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.returnWarp"));
                     } else {
-                        TXUtils.addWarpPermOfflinePlayer(ownerUsername, storedWarp);
+                        TXUtils.addWarpPermOfflinePlayer(ownerUsername, this.storedWarp);
                     }
-                    storedWarp = 0;
+                    this.storedWarp = 0;
                     ForgeChunkManager
                         .unforceChunk(this.heldChunk, new ChunkCoordIntPair(this.xCoord >> 4, this.zCoord >> 4));
                 }

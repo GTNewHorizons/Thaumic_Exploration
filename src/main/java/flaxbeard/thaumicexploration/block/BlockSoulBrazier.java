@@ -5,8 +5,10 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -39,8 +41,10 @@ public class BlockSoulBrazier extends BlockContainer {
         if (!world.isRemote) {
             TileEntitySoulBrazier entity = ((TileEntitySoulBrazier) world.getTileEntity(x, y, z));
             String ownerUsername = entity.owner.getName();
-            if (TXUtils.isPlayerOnline(ownerUsername)) {
+            EntityPlayerMP player = TXUtils.getPlayerEntity(ownerUsername);
+            if (player != null) {
                 Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(ownerUsername, entity.storedWarp);
+                player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.returnWarp"));
             } else {
                 TXUtils.addWarpPermOfflinePlayer(ownerUsername, entity.storedWarp);
             }

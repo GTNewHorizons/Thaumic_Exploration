@@ -3,6 +3,7 @@ package flaxbeard.thaumicexploration.misc;
 import java.io.File;
 import java.io.IOException;
 
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
@@ -10,10 +11,10 @@ import net.minecraftforge.common.DimensionManager;
 
 public class TXUtils {
 
-    public static boolean isPlayerOnline(String username) {
+    public static EntityPlayerMP getPlayerEntity(String username) {
         MinecraftServer server = MinecraftServer.getServer();
         // func_152612_a is getPlayerByUsername
-        return server.getConfigurationManager().func_152612_a(username) != null;
+        return server.getConfigurationManager().func_152612_a(username);
     }
 
     public static void addWarpPermOfflinePlayer(String owner, int addedWarp) {
