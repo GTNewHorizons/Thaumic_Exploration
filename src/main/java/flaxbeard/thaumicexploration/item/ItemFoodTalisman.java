@@ -55,7 +55,9 @@ public class ItemFoodTalisman extends Item {
 
     @Override
     public void onUpdate(ItemStack talisman, World world, Entity entity, int slot, boolean isSelected) {
-        if (!(entity instanceof EntityPlayer) || entity.ticksExisted % 20 != 0) return;
+        if (!(entity instanceof EntityPlayer) || entity.ticksExisted % 20 != 0) {
+            return;
+        }
 
         EntityPlayer player = (EntityPlayer) entity;
 
@@ -80,8 +82,8 @@ public class ItemFoodTalisman extends Item {
                 continue;
             }
 
-            float saturation;
             float heal;
+            float saturation;
             if (Loader.isModLoaded("AppleCore")) {
                 heal = AppleCoreInterop.getHeal(food);
                 saturation = AppleCoreInterop.getSaturation(food) * 2f * heal;
@@ -90,9 +92,9 @@ public class ItemFoodTalisman extends Item {
                 saturation = ((ItemFood) food.getItem()).func_150906_h(food) * 2;
             }
 
-            int gainedNourishment = Math.round((saturation + heal) / 2);
-            int newNourishment = Math.min(nourishment + gainedNourishment, MAX_NOURISHMENT_SIZE_TALISMAN);
-            talisman.stackTagCompound.setInteger("nourishment", newNourishment);
+            int foodNourishment = Math.round((saturation + heal) / 2);
+            nourishment = Math.min(nourishment + foodNourishment, MAX_NOURISHMENT_SIZE_TALISMAN);
+            talisman.stackTagCompound.setInteger("nourishment", nourishment);
 
             if (food.stackSize <= 1) {
                 player.inventory.setInventorySlotContents(i, null);
@@ -147,7 +149,6 @@ public class ItemFoodTalisman extends Item {
         }
 
         talisman.stackTagCompound.setInteger("nourishment", Math.max(nourishment, 0));
-        talisman.setItemDamage(talisman.getItemDamage()); // trigger re-render
     }
 
     private void setDefaultTags(ItemStack talisman) {
