@@ -49,16 +49,18 @@ public class TileEntitySoulBrazierRenderer extends TileEntitySpecialRenderer {
             float alpha = MathHelper.sin(Minecraft.getMinecraft().renderViewEntity.ticksExisted / 8.0F) * 0.1F + 0.5F;
             UtilsFX.bindTexture("textures/misc/node_bubble.png");
 
-            int count = brazier.tick % 60 == 0 || (brazier.tick - 1) % 60 == 0 ? 7 : 37; // PERHAPS THIS COULD BE THE
-                                                                                         // LIGHTNING
-
+            // Perhaps this could be the lightning (?) legacy comment
+            int flash = 37;
+            if (brazier.tick % 60 == 0 || brazier.tick % 60 == 1) {
+                flash = 7;
+            }
             UtilsFX.renderFacingQuad(
                     tile.xCoord + 0.5D,
                     tile.yCoord + 1.5D,
                     tile.zCoord + 0.5D,
                     0.0F,
                     0.7F, // SIZE
-                    count / 37.0F * alpha * 4.0F, // ALPHA
+                    flash / 37.0F * alpha * 4.0F, // ALPHA
                     1,
                     0,
                     par8,
