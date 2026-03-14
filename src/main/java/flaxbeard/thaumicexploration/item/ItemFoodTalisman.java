@@ -49,7 +49,7 @@ public class ItemFoodTalisman extends Item {
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
         setDefaultTags(par1ItemStack);
         par3List.add(
-                "Currently holds " + (int) par1ItemStack.stackTagCompound.getFloat("nourishment")
+                "Currently holds " + par1ItemStack.stackTagCompound.getInteger("nourishment")
                         + " points of nourishment.");
         // super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
     }
@@ -65,7 +65,7 @@ public class ItemFoodTalisman extends Item {
             setDefaultTags(itemStack);
         }
 
-        if (!world.isRemote && (itemStack.stackTagCompound.getFloat("nourishment") < MAX_NOURISHMENT_SIZE_TALISMAN)) {
+        if (!world.isRemote && (itemStack.stackTagCompound.getInteger("nourishment") < MAX_NOURISHMENT_SIZE_TALISMAN)) {
             for (int i = 0; i < 9; i++) {
                 if (player.inventory.getStackInSlot(i) == null) {
                     continue;
@@ -74,25 +74,26 @@ public class ItemFoodTalisman extends Item {
                     continue;
                 }
                 ItemStack food = player.inventory.getStackInSlot(i);
-                float sat;
+                float saturation;
                 float heal;
-                float nourishment;
+                int nourishment;
                 if (Loader.isModLoaded("AppleCore")) {
                     heal = AppleCoreInterop.getHeal(food);
-                    sat = getSaturationFood(food, heal);
+                    saturation = AppleCoreInterop.getSaturation(food) * 2f * heal;
                 } else {
-                    sat = ((ItemFood) food.getItem()).func_150906_h(food) * 2;
                     heal = ((ItemFood) food.getItem()).func_150905_g(food);
+                    saturation = ((ItemFood) food.getItem()).func_150906_h(food) * 2;
                 }
 
-                nourishment = (sat + heal) / 2.0f;
+                nourishment = Math.round((saturation + heal) / 2);
 
-                if (itemStack.stackTagCompound.getFloat("nourishment") + (int) nourishment
+                if (itemStack.stackTagCompound.getInteger("nourishment") + nourishment
                         >= MAX_NOURISHMENT_SIZE_TALISMAN) {
-                    itemStack.stackTagCompound.setFloat("nourishment", MAX_NOURISHMENT_SIZE_TALISMAN);
+                    itemStack.stackTagCompound.setInteger("nourishment", MAX_NOURISHMENT_SIZE_TALISMAN);
                 } else {
-                    itemStack.stackTagCompound
-                            .setFloat("nourishment", itemStack.stackTagCompound.getFloat("nourishment") + nourishment);
+                    itemStack.stackTagCompound.setInteger(
+                            "nourishment",
+                            itemStack.stackTagCompound.getInteger("nourishment") + nourishment);
                 }
 
                 if (food.stackSize <= 1) {
@@ -111,54 +112,54 @@ public class ItemFoodTalisman extends Item {
             }
         }
         if ((player.getFoodStats().getFoodLevel() < 20)
-                && (MAX_NOURISHMENT_SIZE_TALISMAN - itemStack.stackTagCompound.getFloat("nourishment")) > 0) {
-            float sat = itemStack.stackTagCompound.getFloat("nourishment");
-            float finalSat = 0;
-            if (20 - player.getFoodStats().getFoodLevel() < sat) {
-                finalSat = sat - (20 - player.getFoodStats().getFoodLevel());
-                sat = 20 - player.getFoodStats().getFoodLevel();
+                && (MAX_NOURISHMENT_SIZE_TALISMAN - itemStack.stackTagCompound.getInteger("nourishment")) > 0) {
+            int nourishment = itemStack.stackTagCompound.getInteger("nourishment");
+            float finalNourishment = 0;
+            if (20 - player.getFoodStats().getFoodLevel() < nourishment) {
+                finalNourishment = nourishment - (20 - player.getFoodStats().getFoodLevel());
+                nourishment = 20 - player.getFoodStats().getFoodLevel();
             }
             if (Loader.isModLoaded("AppleCore")) {
-                AppleCoreInterop.setHunger((int) sat, player);
+                AppleCoreInterop.setHunger(nourishment, player);
             } else if (!world.isRemote) {
                 ObfuscationReflectionHelper.setPrivateValue(
                         FoodStats.class,
                         player.getFoodStats(),
-                        (int) (player.getFoodStats().getFoodLevel() + sat),
+                        player.getFoodStats().getFoodLevel() + nourishment,
                         "field_75127_a",
                         "foodLevel");
             }
             if (!world.isRemote) {
-                itemStack.stackTagCompound.setFloat("nourishment", finalSat);
+                itemStack.stackTagCompound.setInteger("nourishment", Math.round(finalNourishment));
                 itemStack.setItemDamage(itemStack.getItemDamage());
             }
         }
         if ((player.getFoodStats().getSaturationLevel() < player.getFoodStats().getFoodLevel())
-                && itemStack.stackTagCompound.getFloat("nourishment") > 0) {
-            float sat = itemStack.stackTagCompound.getFloat("nourishment");
-            float finalSat = 0;
-            if (player.getFoodStats().getFoodLevel() - player.getFoodStats().getSaturationLevel() < sat) {
-                finalSat = sat - (player.getFoodStats().getFoodLevel() - player.getFoodStats().getSaturationLevel());
-                sat = player.getFoodStats().getFoodLevel() - player.getFoodStats().getSaturationLevel();
+                && itemStack.stackTagCompound.getInteger("nourishment") > 0) {
+            float nourishment = itemStack.stackTagCompound.getInteger("nourishment");
+            float finalNourishment = 0;
+            if (player.getFoodStats().getFoodLevel() - player.getFoodStats().getSaturationLevel() < nourishment) {
+                finalNourishment = nourishment
+                        - (player.getFoodStats().getFoodLevel() - player.getFoodStats().getSaturationLevel());
+                nourishment = player.getFoodStats().getFoodLevel() - player.getFoodStats().getSaturationLevel();
             }
             if (Loader.isModLoaded("AppleCore")) {
-                AppleCoreInterop.setSaturation(sat, player);
+                AppleCoreInterop.setSaturation(nourishment, player);
             } else if (!world.isRemote) {
                 ObfuscationReflectionHelper.setPrivateValue(
                         FoodStats.class,
                         player.getFoodStats(),
-                        (player.getFoodStats().getFoodLevel() + sat),
+                        (player.getFoodStats().getFoodLevel() + nourishment),
                         "field_75125_b",
                         "foodSaturationLevel");
             }
             if (!world.isRemote) {
-                itemStack.stackTagCompound.setFloat("nourishment", finalSat);
+                itemStack.stackTagCompound.setInteger("nourishment", Math.round(finalNourishment));
                 itemStack.setItemDamage(itemStack.getItemDamage());
             }
         }
-        // TODO WIP shit
-        itemStack.setItemDamage(itemStack.getMaxDamage() - ((int) itemStack.stackTagCompound.getFloat("nourishment")));
-        // itemStack.stackTagCompound.getFloat("food")
+        itemStack.setItemDamage(itemStack.getMaxDamage() - itemStack.stackTagCompound.getInteger("nourishment"));
+        // itemStack.stackTagCompound.getInteger("food")
     }
 
     private void setDefaultTags(ItemStack itemStack) {
@@ -166,12 +167,8 @@ public class ItemFoodTalisman extends Item {
             itemStack.setTagCompound(new NBTTagCompound());
         }
         if (!itemStack.stackTagCompound.hasKey("nourishment")) {
-            itemStack.stackTagCompound.setFloat("nourishment", 0);
+            itemStack.stackTagCompound.setInteger("nourishment", 0);
         }
-    }
-
-    private float getSaturationFood(ItemStack food, float heal) {
-        return AppleCoreInterop.getSaturation(food) * 2f * heal;
     }
 
     private boolean isEdible(ItemStack food, EntityPlayer player) {
