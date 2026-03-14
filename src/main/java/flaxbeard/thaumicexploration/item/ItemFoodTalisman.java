@@ -46,128 +46,116 @@ public class ItemFoodTalisman extends Item {
     }
 
     @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
-        setDefaultTags(par1ItemStack);
-        par3List.add(
-                "Currently holds " + par1ItemStack.stackTagCompound.getInteger("nourishment")
-                        + " points of nourishment.");
-        // super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
+    public void addInformation(ItemStack talisman, EntityPlayer player, List tooltip, boolean isSelected) {
+        setDefaultTags(talisman);
+        tooltip.add(
+                "Currently holds " + talisman.stackTagCompound.getInteger("nourishment") + " points of nourishment.");
+        // super.addInformation(talisman, player, par3List, isSelected);
     }
 
     @Override
-    public void onUpdate(ItemStack itemStack, World world, Entity entity, int slot, boolean isSelected) {
-
-        if (!(entity instanceof EntityPlayer && entity.ticksExisted % 20 == 0)) return;
+    public void onUpdate(ItemStack talisman, World world, Entity entity, int slot, boolean isSelected) {
+        if (!(entity instanceof EntityPlayer) || entity.ticksExisted % 20 != 0) return;
 
         EntityPlayer player = (EntityPlayer) entity;
 
         if (!world.isRemote) {
-            setDefaultTags(itemStack);
+            setDefaultTags(talisman);
+            tryAbsorbFood(talisman, player, world);
+            tryFeedPlayer(talisman, player);
         }
 
-        if (!world.isRemote && (itemStack.stackTagCompound.getInteger("nourishment") < MAX_NOURISHMENT_SIZE_TALISMAN)) {
-            for (int i = 0; i < 9; i++) {
-                if (player.inventory.getStackInSlot(i) == null) {
-                    continue;
-                }
-                if (!isEdible(player.inventory.getStackInSlot(i), player)) {
-                    continue;
-                }
-                ItemStack food = player.inventory.getStackInSlot(i);
-                float saturation;
-                float heal;
-                int nourishment;
-                if (Loader.isModLoaded("AppleCore")) {
-                    heal = AppleCoreInterop.getHeal(food);
-                    saturation = AppleCoreInterop.getSaturation(food) * 2f * heal;
-                } else {
-                    heal = ((ItemFood) food.getItem()).func_150905_g(food);
-                    saturation = ((ItemFood) food.getItem()).func_150906_h(food) * 2;
-                }
+        talisman.setItemDamage(talisman.getMaxDamage() - talisman.stackTagCompound.getInteger("nourishment"));
+    }
 
-                nourishment = Math.round((saturation + heal) / 2);
-
-                if (itemStack.stackTagCompound.getInteger("nourishment") + nourishment
-                        >= MAX_NOURISHMENT_SIZE_TALISMAN) {
-                    itemStack.stackTagCompound.setInteger("nourishment", MAX_NOURISHMENT_SIZE_TALISMAN);
-                } else {
-                    itemStack.stackTagCompound.setInteger(
-                            "nourishment",
-                            itemStack.stackTagCompound.getInteger("nourishment") + nourishment);
-                }
-
-                if (food.stackSize <= 1) {
-                    player.inventory.setInventorySlotContents(i, null);
-                }
-                player.inventory.decrStackSize(i, 1);
-
-                world.playSoundAtEntity(
-                        player,
-                        "random.eat",
-                        0.5F + 0.5F * (float) player.worldObj.rand.nextInt(2),
-                        (player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.2F + 1.0F);
-
-                // Exit the loop to only eat one item per update
-                break;
-            }
+    private void tryAbsorbFood(ItemStack talisman, EntityPlayer player, World world) {
+        int nourishment = talisman.stackTagCompound.getInteger("nourishment");
+        if (nourishment >= MAX_NOURISHMENT_SIZE_TALISMAN) {
+            return;
         }
-        if ((player.getFoodStats().getFoodLevel() < 20)
-                && (MAX_NOURISHMENT_SIZE_TALISMAN - itemStack.stackTagCompound.getInteger("nourishment")) > 0) {
-            int nourishment = itemStack.stackTagCompound.getInteger("nourishment");
-            float finalNourishment = 0;
-            if (20 - player.getFoodStats().getFoodLevel() < nourishment) {
-                finalNourishment = nourishment - (20 - player.getFoodStats().getFoodLevel());
-                nourishment = 20 - player.getFoodStats().getFoodLevel();
+
+        for (int i = 0; i < 9; i++) {
+            ItemStack food = player.inventory.getStackInSlot(i);
+            if (food == null || !isEdible(food, player)) {
+                continue;
             }
+
+            float saturation;
+            float heal;
             if (Loader.isModLoaded("AppleCore")) {
-                AppleCoreInterop.setHunger(nourishment, player);
-            } else if (!world.isRemote) {
+                heal = AppleCoreInterop.getHeal(food);
+                saturation = AppleCoreInterop.getSaturation(food) * 2f * heal;
+            } else {
+                heal = ((ItemFood) food.getItem()).func_150905_g(food);
+                saturation = ((ItemFood) food.getItem()).func_150906_h(food) * 2;
+            }
+
+            int gainedNourishment = Math.round((saturation + heal) / 2);
+            int newNourishment = Math.min(nourishment + gainedNourishment, MAX_NOURISHMENT_SIZE_TALISMAN);
+            talisman.stackTagCompound.setInteger("nourishment", newNourishment);
+
+            if (food.stackSize <= 1) {
+                player.inventory.setInventorySlotContents(i, null);
+            }
+            player.inventory.decrStackSize(i, 1);
+
+            world.playSoundAtEntity(
+                    player,
+                    "random.eat",
+                    0.5F + 0.5F * world.rand.nextInt(2),
+                    (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F + 1.0F);
+            break; // to only eat one food per update
+        }
+    }
+
+    private void tryFeedPlayer(ItemStack talisman, EntityPlayer player) {
+        FoodStats food = player.getFoodStats();
+        int nourishment = talisman.stackTagCompound.getInteger("nourishment");
+
+        int hungerDeficit = 20 - food.getFoodLevel();
+        if (hungerDeficit > 0 && nourishment > 0) {
+            int toFeed = Math.min(nourishment, hungerDeficit);
+            nourishment -= toFeed;
+
+            if (Loader.isModLoaded("AppleCore")) {
+                AppleCoreInterop.setHunger(toFeed, player);
+            } else {
                 ObfuscationReflectionHelper.setPrivateValue(
                         FoodStats.class,
-                        player.getFoodStats(),
-                        player.getFoodStats().getFoodLevel() + nourishment,
+                        food,
+                        food.getFoodLevel() + toFeed,
                         "field_75127_a",
                         "foodLevel");
             }
-            if (!world.isRemote) {
-                itemStack.stackTagCompound.setInteger("nourishment", Math.round(finalNourishment));
-                itemStack.setItemDamage(itemStack.getItemDamage());
-            }
         }
-        if ((player.getFoodStats().getSaturationLevel() < player.getFoodStats().getFoodLevel())
-                && itemStack.stackTagCompound.getInteger("nourishment") > 0) {
-            float nourishment = itemStack.stackTagCompound.getInteger("nourishment");
-            float finalNourishment = 0;
-            if (player.getFoodStats().getFoodLevel() - player.getFoodStats().getSaturationLevel() < nourishment) {
-                finalNourishment = nourishment
-                        - (player.getFoodStats().getFoodLevel() - player.getFoodStats().getSaturationLevel());
-                nourishment = player.getFoodStats().getFoodLevel() - player.getFoodStats().getSaturationLevel();
-            }
+
+        float saturationDeficit = food.getFoodLevel() - food.getSaturationLevel();
+        if (saturationDeficit > 0 && nourishment > 0) {
+            float toSaturate = Math.min(nourishment, saturationDeficit);
+            nourishment -= Math.round(toSaturate);
+
             if (Loader.isModLoaded("AppleCore")) {
-                AppleCoreInterop.setSaturation(nourishment, player);
-            } else if (!world.isRemote) {
+                AppleCoreInterop.setSaturation(toSaturate, player);
+            } else {
                 ObfuscationReflectionHelper.setPrivateValue(
                         FoodStats.class,
-                        player.getFoodStats(),
-                        (player.getFoodStats().getFoodLevel() + nourishment),
+                        food,
+                        food.getSaturationLevel() + toSaturate,
                         "field_75125_b",
                         "foodSaturationLevel");
             }
-            if (!world.isRemote) {
-                itemStack.stackTagCompound.setInteger("nourishment", Math.round(finalNourishment));
-                itemStack.setItemDamage(itemStack.getItemDamage());
-            }
         }
-        itemStack.setItemDamage(itemStack.getMaxDamage() - itemStack.stackTagCompound.getInteger("nourishment"));
-        // itemStack.stackTagCompound.getInteger("food")
+
+        talisman.stackTagCompound.setInteger("nourishment", Math.max(nourishment, 0));
+        talisman.setItemDamage(talisman.getItemDamage()); // trigger re-render
     }
 
-    private void setDefaultTags(ItemStack itemStack) {
-        if (!itemStack.hasTagCompound()) {
-            itemStack.setTagCompound(new NBTTagCompound());
+    private void setDefaultTags(ItemStack talisman) {
+        if (!talisman.hasTagCompound()) {
+            talisman.setTagCompound(new NBTTagCompound());
         }
-        if (!itemStack.stackTagCompound.hasKey("nourishment")) {
-            itemStack.stackTagCompound.setInteger("nourishment", 0);
+        if (!talisman.stackTagCompound.hasKey("nourishment")) {
+            talisman.stackTagCompound.setInteger("nourishment", 0);
         }
     }
 
