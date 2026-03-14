@@ -179,22 +179,22 @@ public class ClientProxy extends CommonProxy {
         float offsetZ = (float) (Math.sin(Math.toRadians(tick * 3.0F)) * 0.25);
         float offsetX = (float) (Math.cos(Math.toRadians(tick * 3.0F)) * 0.25);
 
-        FXWisp ef = new FXWisp(
+        FXWisp purpleWisp = new FXWisp(
                 worldObj,
                 xCoord + 0.55F + offsetX,
                 yCoord + 1.5F + offsetY,
                 zCoord + 0.55F + offsetZ,
                 (float) Math.random() / 1.125F,
-            178.0F / 255.0F,
+                178.0F / 255.0F,
                 0.0f,
                 1.0f);
-        ef.setGravity(0);
-        ef.shrink = false;
-        ef.noClip = true;
-        ef.blendmode = 770;
+        purpleWisp.setGravity(0);
+        purpleWisp.shrink = false;
+        purpleWisp.noClip = true;
+        purpleWisp.blendmode = 770;
+        ParticleEngine.instance.addEffect(worldObj, purpleWisp);
 
-        ParticleEngine.instance.addEffect(worldObj, ef);
-        ef = new FXWisp(
+        FXWisp blackWisp = new FXWisp(
                 worldObj,
                 xCoord + 0.55F + offsetX,
                 yCoord + 1.5F + offsetY,
@@ -203,12 +203,12 @@ public class ClientProxy extends CommonProxy {
                 0.1f,
                 0.1f,
                 0.1f);
-        ef.setGravity(0);
-        ef.shrink = false;
-        ef.noClip = true;
-        ef.blendmode = 770;
+        blackWisp.setGravity(0);
+        blackWisp.shrink = false;
+        blackWisp.noClip = true;
+        blackWisp.blendmode = 770;
 
-        ParticleEngine.instance.addEffect(worldObj, ef);
+        ParticleEngine.instance.addEffect(worldObj, blackWisp);
     }
 
     @Override
