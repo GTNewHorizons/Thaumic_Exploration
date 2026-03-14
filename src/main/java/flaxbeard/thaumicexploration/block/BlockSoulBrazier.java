@@ -28,9 +28,7 @@ public class BlockSoulBrazier extends BlockContainer {
         super(Material.rock);
         setBlockTextureName("thaumicexploration:soulBrazier");
     }
-
-    // TODO check break particles
-
+    
     @Override
     public TileEntity createNewTileEntity(World worldIn, int metadata) {
         return new TileEntitySoulBrazier();
