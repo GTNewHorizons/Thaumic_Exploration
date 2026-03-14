@@ -41,7 +41,7 @@ public class BlockSoulBrazier extends BlockContainer {
         if (!world.isRemote) {
             TileEntitySoulBrazier entity = ((TileEntitySoulBrazier) world.getTileEntity(x, y, z));
             String ownerUsername = entity.owner.getName();
-            EntityPlayerMP player = TXUtils.getPlayerEntity(ownerUsername);
+            EntityPlayerMP player = TXUtils.getPlayerByUsername(ownerUsername);
             if (player != null) {
                 Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(ownerUsername, entity.storedWarp);
                 player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.returnWarp"));

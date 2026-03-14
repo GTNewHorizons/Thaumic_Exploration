@@ -132,7 +132,7 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
 
                 if (!worldObj.isRemote) {
                     String ownerUsername = this.owner.getName();
-                    EntityPlayerMP player = TXUtils.getPlayerEntity(ownerUsername);
+                    EntityPlayerMP player = TXUtils.getPlayerByUsername(ownerUsername);
                     if (player != null) {
                         Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(ownerUsername, this.storedWarp);
                         player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.returnWarp"));

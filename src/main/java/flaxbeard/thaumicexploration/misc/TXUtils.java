@@ -11,7 +11,7 @@ import net.minecraftforge.common.DimensionManager;
 
 public class TXUtils {
 
-    public static EntityPlayerMP getPlayerEntity(String username) {
+    public static EntityPlayerMP getPlayerByUsername(String username) {
         MinecraftServer server = MinecraftServer.getServer();
         // func_152612_a is getPlayerByUsername
         return server.getConfigurationManager().func_152612_a(username);
