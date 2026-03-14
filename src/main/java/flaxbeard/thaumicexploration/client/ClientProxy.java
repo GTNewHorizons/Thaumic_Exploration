@@ -185,9 +185,9 @@ public class ClientProxy extends CommonProxy {
                 yCoord + 1.5F + offsetY,
                 zCoord + 0.55F + offsetZ,
                 (float) Math.random() / 1.125F,
-                (float) (0.698f),
-                (float) 0.0f,
-                (float) (1.0f));
+            178.0F / 255.0F,
+                0.0f,
+                1.0f);
         ef.setGravity(0);
         ef.shrink = false;
         ef.noClip = true;
@@ -200,9 +200,9 @@ public class ClientProxy extends CommonProxy {
                 yCoord + 1.5F + offsetY,
                 zCoord + 0.55F + offsetZ,
                 (float) Math.random() / 1.5F,
-                (float) 0.1f,
-                (float) 0.1f,
-                (float) 0.1f);
+                0.1f,
+                0.1f,
+                0.1f);
         ef.setGravity(0);
         ef.shrink = false;
         ef.noClip = true;
