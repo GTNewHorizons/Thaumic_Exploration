@@ -151,11 +151,23 @@ public class ItemFoodTalisman extends Item {
     }
 
     private void setDefaultTags(ItemStack talisman) {
-        if (!talisman.hasTagCompound()) {
+        NBTTagCompound tags = talisman.stackTagCompound;
+        if (tags == null) {
             talisman.setTagCompound(new NBTTagCompound());
+            tags = talisman.stackTagCompound;
         }
-        if (!talisman.stackTagCompound.hasKey("nourishment")) {
-            talisman.stackTagCompound.setInteger("nourishment", 0);
+        if (!tags.hasKey("nourishment")) {
+            tags.setInteger("nourishment", 0);
+        }
+        if (tags.hasKey("food") || tags.hasKey("saturation")) {
+            float oldFood = tags.getFloat("food");
+            float oldSaturation = tags.getFloat("saturation");
+            int newNourishment = Math.round((oldFood + oldSaturation) / 2);
+            int nourishment = Math.min(newNourishment, MAX_NOURISHMENT_SIZE_TALISMAN);
+
+            tags.setInteger("nourishment", nourishment);
+            tags.removeTag("food");
+            tags.removeTag("saturation");
         }
     }
 
