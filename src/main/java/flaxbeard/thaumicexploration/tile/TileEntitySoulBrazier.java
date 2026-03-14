@@ -121,7 +121,7 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
         if (active) {
             if (heldChunk == null && ConfigTX.allowSBChunkLoading) addTicket();
 
-            if (this.tick % 5 == 0 && ThaumicExploration.proxy.getIsReadyForWisp()) {
+            if (this.tick % 10 == 0 && ThaumicExploration.proxy.getIsReadyForWisp()) {
                 ThaumicExploration.proxy.spawnActiveBrazierParticle(worldObj, xCoord, yCoord, zCoord, this.tick);
             }
             if (this.tick % 50 == 0) changeTaint();
