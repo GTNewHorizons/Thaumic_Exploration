@@ -22,6 +22,7 @@ import flaxbeard.thaumicexploration.misc.TXUtils;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.IEssentiaTransport;
+import thaumcraft.api.visnet.VisNetHandler;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.blocks.BlockTaintFibres;
 import thaumcraft.common.config.Config;
@@ -150,12 +151,10 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
     }
 
     private void getVis() {
-        int visGained = this.consumeVis(Aspect.FIRE, 1);
-        if (visGained > 0) {
-            this.currentVis += visGained;
-            this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+        int drained = VisNetHandler.drainVis(this.worldObj, this.xCoord, this.yCoord, this.zCoord, Aspect.FIRE, 1);
+        if (drained > 0) {
+            this.currentVis += drained;
         }
-
     }
 
     public void getEssentia() {
