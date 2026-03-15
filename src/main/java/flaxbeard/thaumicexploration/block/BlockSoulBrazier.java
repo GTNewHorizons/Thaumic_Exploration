@@ -28,7 +28,7 @@ public class BlockSoulBrazier extends BlockContainer {
         super(Material.rock);
         setBlockTextureName("thaumicexploration:soulBrazier");
     }
-    
+
     @Override
     public TileEntity createNewTileEntity(World worldIn, int metadata) {
         return new TileEntitySoulBrazier();
@@ -37,17 +37,19 @@ public class BlockSoulBrazier extends BlockContainer {
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
         if (!world.isRemote) {
-            TileEntitySoulBrazier entity = ((TileEntitySoulBrazier) world.getTileEntity(x, y, z));
-            String ownerUsername = entity.owner.getName();
-            EntityPlayerMP player = TXUtils.getPlayerByUsername(ownerUsername);
-            if (player != null) {
-                Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(ownerUsername, entity.storedWarp);
-                player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.returnWarp"));
-            } else {
-                TXUtils.addWarpPermOfflinePlayer(ownerUsername, entity.storedWarp);
+            TileEntitySoulBrazier brazier = ((TileEntitySoulBrazier) world.getTileEntity(x, y, z));
+            if (brazier.active) {
+                String ownerUsername = brazier.owner.getName();
+                EntityPlayerMP player = TXUtils.getPlayerByUsername(ownerUsername);
+                if (player != null) {
+                    Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(ownerUsername, brazier.storedWarp);
+                    player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.returnWarp"));
+                } else {
+                    TXUtils.addWarpPermOfflinePlayer(ownerUsername, brazier.storedWarp);
+                }
+                ForgeChunkManager
+                    .unforceChunk(brazier.heldChunk, new ChunkCoordIntPair(brazier.xCoord >> 4, brazier.zCoord >> 4));
             }
-            ForgeChunkManager
-                    .unforceChunk(entity.heldChunk, new ChunkCoordIntPair(entity.xCoord >> 4, entity.zCoord >> 4));
         }
         super.breakBlock(world, x, y, z, block, meta);
     }
