@@ -172,53 +172,45 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public void spawnActiveBrazierParticle(World worldObj, int xCoord, int yCoord, int zCoord) {
-        if (!worldObj.isRemote) return;
-        // FXEssentiaTrail fx = new FXEssentiaTrail(worldObj, xCoord+0.5F, yCoord+1.1F, zCoord+0.5F, xCoord+0.5F,
-        // yCoord+1.5F, zCoord+0.5F, 5, Aspect.DARKNESS.getColor(), 1.0F);
-        float offsetY = 0;
-        float offsetZ = 0;
-        float offsetX = 0;
-
-        if (worldObj.getTileEntity(xCoord, yCoord, zCoord) != null
-                && worldObj.getTileEntity(xCoord, yCoord, zCoord) instanceof TileEntitySoulBrazier) {
-            TileEntitySoulBrazier brazier = (TileEntitySoulBrazier) worldObj.getTileEntity(xCoord, yCoord, zCoord);
-            offsetY = (float) (Math.sin(Math.toRadians(brazier.count * 1.0F)) / 4.0F);
-            offsetZ = (float) (Math.sin(Math.toRadians(brazier.count * 3.0F)) / 4.0F);
-            offsetX = (float) (Math.cos(Math.toRadians(brazier.count * 3.0F)) / 4.0F);
+    public void spawnActiveBrazierParticle(World worldObj, int xCoord, int yCoord, int zCoord, int tick) {
+        if (!worldObj.isRemote) {
+            return;
         }
-        // ParticleEngine.instance.addEffect(worldObj, fs);
-        FXWisp ef = new FXWisp(
+
+        float offsetY = (float) (Math.sin(Math.toRadians(tick * 1.0F)) * 0.25);
+        float offsetZ = (float) (Math.sin(Math.toRadians(tick * 3.0F)) * 0.25);
+        float offsetX = (float) (Math.cos(Math.toRadians(tick * 3.0F)) * 0.25);
+
+        FXWisp purpleWisp = new FXWisp(
                 worldObj,
                 xCoord + 0.55F + offsetX,
                 yCoord + 1.5F + offsetY,
                 zCoord + 0.55F + offsetZ,
                 (float) Math.random() / 1.125F,
-                (float) (178.0F / 255.0F),
-                (float) 0.0f,
-                (float) (255.0F / 255.0F));
+                178.0F / 255.0F,
+                0.0f,
+                1.0f);
+        purpleWisp.setGravity(0);
+        purpleWisp.shrink = false;
+        purpleWisp.noClip = true;
+        purpleWisp.blendmode = 770;
+        ParticleEngine.instance.addEffect(worldObj, purpleWisp);
 
-        ef.setGravity(0);
-        ef.shrink = false;
-        ef.noClip = true;
-        ef.blendmode = 770;
-
-        ParticleEngine.instance.addEffect(worldObj, ef);
-        ef = new FXWisp(
+        FXWisp blackWisp = new FXWisp(
                 worldObj,
                 xCoord + 0.55F + offsetX,
                 yCoord + 1.5F + offsetY,
                 zCoord + 0.55F + offsetZ,
                 (float) Math.random() / 1.5F,
-                (float) 0.1f,
-                (float) 0.1f,
-                (float) 0.1f);
-        ef.setGravity(0);
-        ef.shrink = false;
-        ef.noClip = true;
-        ef.blendmode = 770;
+                0.1f,
+                0.1f,
+                0.1f);
+        blackWisp.setGravity(0);
+        blackWisp.shrink = false;
+        blackWisp.noClip = true;
+        blackWisp.blendmode = 770;
 
-        ParticleEngine.instance.addEffect(worldObj, ef);
+        ParticleEngine.instance.addEffect(worldObj, blackWisp);
     }
 
     @Override

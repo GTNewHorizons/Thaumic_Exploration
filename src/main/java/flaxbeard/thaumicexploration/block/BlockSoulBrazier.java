@@ -8,15 +8,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeChunkManager;
 
-import com.mojang.authlib.GameProfile;
-
 import flaxbeard.thaumicexploration.ThaumicExploration;
-import flaxbeard.thaumicexploration.misc.brazier.SoulBrazierUtils;
+import flaxbeard.thaumicexploration.misc.TXUtils;
 import flaxbeard.thaumicexploration.tile.TileEntitySoulBrazier;
 import thaumcraft.common.Thaumcraft;
 
@@ -30,58 +29,45 @@ public class BlockSoulBrazier extends BlockContainer {
         setBlockTextureName("thaumicexploration:soulBrazier");
     }
 
-    public boolean isOpaqueCube() {
-        return false;
+    @Override
+    public TileEntity createNewTileEntity(World worldIn, int metadata) {
+        return new TileEntitySoulBrazier();
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_) {
+    public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
         if (!world.isRemote) {
-            TileEntitySoulBrazier entity = ((TileEntitySoulBrazier) world.getTileEntity(x, y, z));
-
-            Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(entity.owner.getName(), entity.storedWarp);
-            if (SoulBrazierUtils.isPlayerOnline(entity.owner.getId())) {
-                EntityPlayer player = SoulBrazierUtils.getPlayerFromUUID(entity.owner.getId());
-                SoulBrazierUtils.syncPermWarp((EntityPlayerMP) player);
+            TileEntitySoulBrazier brazier = ((TileEntitySoulBrazier) world.getTileEntity(x, y, z));
+            if (brazier.active) {
+                String ownerUsername = brazier.owner.getName();
+                EntityPlayerMP player = TXUtils.getPlayerByUsername(ownerUsername);
+                if (player != null) {
+                    Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(ownerUsername, brazier.storedWarp);
+                    player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.returnWarp"));
+                } else {
+                    TXUtils.addWarpPermOfflinePlayer(ownerUsername, brazier.storedWarp);
+                    Thaumcraft.log
+                            .info("Returned {} warp to {} from their Soul Brazier", brazier.storedWarp, brazier.owner);
+                }
+                ForgeChunkManager.unforceChunk(
+                        brazier.heldChunk,
+                        new ChunkCoordIntPair(brazier.xCoord >> 4, brazier.zCoord >> 4));
             }
-            ForgeChunkManager
-                    .unforceChunk(entity.heldChunk, new ChunkCoordIntPair(entity.xCoord >> 4, entity.zCoord >> 4));
         }
-        super.breakBlock(world, x, y, z, block, p_149749_6_);
+        super.breakBlock(world, x, y, z, block, meta);
     }
 
     @Override
-    public boolean onBlockActivated(World p_149727_1_, int p_149727_2_, int p_149727_3_, int p_149727_4_,
-            EntityPlayer p_149727_5_, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
-        super.onBlockActivated(
-                p_149727_1_,
-                p_149727_2_,
-                p_149727_3_,
-                p_149727_4_,
-                p_149727_5_,
-                p_149727_6_,
-                p_149727_7_,
-                p_149727_8_,
-                p_149727_9_);
-        // if(p_149727_5_.getGameProfile().getId().equals(((TileEntitySoulBrazier)p_149727_1_.getTileEntity(p_149727_2_,p_149727_3_,p_149727_4_)).owner.getId()))
-        // {
-        return ((TileEntitySoulBrazier) p_149727_1_.getTileEntity(p_149727_2_, p_149727_3_, p_149727_4_))
-                .setActive(p_149727_5_);
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX,
+            float subY, float subZ) {
+        super.onBlockActivated(worldIn, x, y, z, player, side, subX, subY, subZ);
+        return ((TileEntitySoulBrazier) worldIn.getTileEntity(x, y, z)).setActive(player);
     }
 
     @Override
-    public void onBlockClicked(World p_149699_1_, int p_149699_2_, int p_149699_3_, int p_149699_4_,
-            EntityPlayer p_149699_5_) {
-        super.onBlockClicked(p_149699_1_, p_149699_2_, p_149699_3_, p_149699_4_, p_149699_5_);
-    }
-
-    @Override
-    public void onBlockPlacedBy(World p_149689_1_, int p_149689_2_, int p_149689_3_, int p_149689_4_,
-            EntityLivingBase p_149689_5_, ItemStack p_149689_6_) {
-        super.onBlockPlacedBy(p_149689_1_, p_149689_2_, p_149689_3_, p_149689_4_, p_149689_5_, p_149689_6_);
-
-        GameProfile profile = ((EntityPlayer) p_149689_5_).getGameProfile();
-        ((TileEntitySoulBrazier) p_149689_1_.getTileEntity(p_149689_2_, p_149689_3_, p_149689_4_)).owner = profile;
+    public void onBlockPlacedBy(World worldIn, int x, int y, int z, EntityLivingBase placer, ItemStack itemIn) {
+        super.onBlockPlacedBy(worldIn, x, y, z, placer, itemIn);
+        ((TileEntitySoulBrazier) worldIn.getTileEntity(x, y, z)).owner = ((EntityPlayer) placer).getGameProfile();
     }
 
     /**
@@ -95,9 +81,8 @@ public class BlockSoulBrazier extends BlockContainer {
         return ThaumicExploration.soulBrazierRenderID;
     }
 
-    @Override
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
-        return new TileEntitySoulBrazier();
+    public boolean isOpaqueCube() {
+        return false;
     }
 
     @Override

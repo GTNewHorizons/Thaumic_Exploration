@@ -79,7 +79,6 @@ import flaxbeard.thaumicexploration.item.ItemTXArmorSpecial;
 import flaxbeard.thaumicexploration.item.ItemTaintSeedFood;
 import flaxbeard.thaumicexploration.misc.TXPotion;
 import flaxbeard.thaumicexploration.misc.TXTaintPotion;
-import flaxbeard.thaumicexploration.misc.brazier.SoulBrazierQueue;
 import flaxbeard.thaumicexploration.research.ModRecipes;
 import flaxbeard.thaumicexploration.research.ModResearch;
 import flaxbeard.thaumicexploration.tile.TileEntityAutoSorter;
@@ -241,10 +240,6 @@ public class ThaumicExploration {
         if (Loader.isModLoaded(BOOTS)) {
             isBootsActive = true;
         }
-
-        SoulBrazierQueue aBrazierQueue = new SoulBrazierQueue();
-        MinecraftForge.EVENT_BUS.register(aBrazierQueue);
-        FMLCommonHandler.instance().bus().register(aBrazierQueue);
 
         Potion[] potionTypes = null;
 
