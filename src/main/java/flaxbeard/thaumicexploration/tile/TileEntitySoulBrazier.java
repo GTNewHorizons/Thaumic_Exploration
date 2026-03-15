@@ -103,8 +103,8 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
     public void updateEntity() {
 
         super.updateEntity();
-        // tick is used to render the spherically rotating particle, no need to go past 360
-        if (this.tick == 360) {
+        // 600 is the least common multiple of all tick breakpoints, and greater than 360 for the trig particle stuff
+        if (this.tick == 600) {
             this.tick = 0;
         }
         this.tick += 1;
@@ -124,7 +124,7 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
             if (this.tick % 10 == 0 && ThaumicExploration.proxy.getIsReadyForWisp()) {
                 ThaumicExploration.proxy.spawnActiveBrazierParticle(worldObj, xCoord, yCoord, zCoord, this.tick);
             }
-            if (this.tick % 45 == 0) changeTaint();
+            if (this.tick % 50 == 0) changeTaint();
             if (this.tick % 60 == 0) spendPower();
 
             if (!hasPower()) {
