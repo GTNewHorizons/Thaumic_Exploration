@@ -150,7 +150,12 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
     }
 
     private void getVis() {
-        currentVis += this.consumeVis(Aspect.FIRE, 1);
+        int visGained = this.consumeVis(Aspect.FIRE, 1);
+        if (visGained > 0) {
+            this.currentVis += visGained;
+            this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+        }
+
     }
 
     public void getEssentia() {
