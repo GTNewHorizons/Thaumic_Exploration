@@ -173,7 +173,9 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void spawnActiveBrazierParticle(World worldObj, int xCoord, int yCoord, int zCoord, int tick) {
-        if (!worldObj.isRemote) return;
+        if (!worldObj.isRemote) {
+            return;
+        }
 
         float offsetY = (float) (Math.sin(Math.toRadians(tick * 1.0F)) * 0.25);
         float offsetZ = (float) (Math.sin(Math.toRadians(tick * 3.0F)) * 0.25);

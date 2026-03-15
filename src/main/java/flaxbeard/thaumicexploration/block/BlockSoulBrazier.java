@@ -47,8 +47,9 @@ public class BlockSoulBrazier extends BlockContainer {
                 } else {
                     TXUtils.addWarpPermOfflinePlayer(ownerUsername, brazier.storedWarp);
                 }
-                ForgeChunkManager
-                    .unforceChunk(brazier.heldChunk, new ChunkCoordIntPair(brazier.xCoord >> 4, brazier.zCoord >> 4));
+                ForgeChunkManager.unforceChunk(
+                        brazier.heldChunk,
+                        new ChunkCoordIntPair(brazier.xCoord >> 4, brazier.zCoord >> 4));
             }
         }
         super.breakBlock(world, x, y, z, block, meta);
