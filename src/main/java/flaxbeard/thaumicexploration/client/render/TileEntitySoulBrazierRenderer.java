@@ -51,7 +51,7 @@ public class TileEntitySoulBrazierRenderer extends TileEntitySpecialRenderer {
 
             // Perhaps this could be the lightning (?) legacy comment
             int flash = 37;
-            if (brazier.tick % 60 == 0 || brazier.tick % 60 == 1) {
+            if (brazier.tick % 45 == 0 || brazier.tick % 45 == 1) {
                 flash = 7;
             }
             UtilsFX.renderFacingQuad(

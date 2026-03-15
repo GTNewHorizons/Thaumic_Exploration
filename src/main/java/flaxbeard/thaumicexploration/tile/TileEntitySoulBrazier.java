@@ -70,7 +70,7 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
 
     public boolean setActive(EntityPlayer player) {
         if (worldObj.isRemote) {
-            return true;
+            return false;
         }
         if (!EntityPlayer.func_146094_a(player.getGameProfile()).equals(owner.getId())) {
             player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.invalidplayer"));
@@ -103,7 +103,7 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
     public void updateEntity() {
 
         super.updateEntity();
-        // tick is used to render the spherically rotating particle
+        // tick is used to render the spherically rotating particle, no need to go past 360
         if (this.tick == 360) {
             this.tick = 0;
         }
@@ -124,7 +124,7 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
             if (this.tick % 10 == 0 && ThaumicExploration.proxy.getIsReadyForWisp()) {
                 ThaumicExploration.proxy.spawnActiveBrazierParticle(worldObj, xCoord, yCoord, zCoord, this.tick);
             }
-            if (this.tick % 50 == 0) changeTaint();
+            if (this.tick % 45 == 0) changeTaint();
             if (this.tick % 60 == 0) spendPower();
 
             if (!hasPower()) {
