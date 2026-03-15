@@ -20,6 +20,7 @@ import flaxbeard.thaumicexploration.chunkLoader.ITXChunkLoader;
 import flaxbeard.thaumicexploration.common.ConfigTX;
 import flaxbeard.thaumicexploration.misc.TXUtils;
 import thaumcraft.api.ThaumcraftApiHelper;
+import thaumcraft.api.TileThaumcraft;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.api.visnet.VisNetHandler;
@@ -28,12 +29,11 @@ import thaumcraft.common.blocks.BlockTaintFibres;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.lib.utils.Utils;
 import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
-import thaumcraft.common.tiles.TileVisRelay;
 
 /**
  * Created by nekosune on 03/08/14.
  */
-public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTransport, ITXChunkLoader {
+public class TileEntitySoulBrazier extends TileThaumcraft implements IEssentiaTransport, ITXChunkLoader {
 
     public int storedWarp;
     public int currentEssentia;
@@ -139,6 +139,8 @@ public class TileEntitySoulBrazier extends TileVisRelay implements IEssentiaTran
                         player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.returnWarp"));
                     } else {
                         TXUtils.addWarpPermOfflinePlayer(ownerUsername, this.storedWarp);
+                        Thaumcraft.log
+                                .info("Returned {} warp to {} from their Soul Brazier", this.storedWarp, this.owner);
                     }
                     this.storedWarp = 0;
                     ForgeChunkManager

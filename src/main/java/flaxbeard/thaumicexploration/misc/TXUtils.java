@@ -59,7 +59,5 @@ public class TXUtils {
             e.printStackTrace();
             Thaumcraft.log.fatal("Error deleting {}'s temporary Thaumcraft data at {}", owner, tempPath.toString());
         }
-
-        Thaumcraft.log.info("Returned {} warp to {} from their Soul Brazier", addedWarp, owner);
     }
 }

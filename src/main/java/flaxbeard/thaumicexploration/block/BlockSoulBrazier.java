@@ -46,6 +46,8 @@ public class BlockSoulBrazier extends BlockContainer {
                     player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.returnWarp"));
                 } else {
                     TXUtils.addWarpPermOfflinePlayer(ownerUsername, brazier.storedWarp);
+                    Thaumcraft.log
+                            .info("Returned {} warp to {} from their Soul Brazier", brazier.storedWarp, brazier.owner);
                 }
                 ForgeChunkManager.unforceChunk(
                         brazier.heldChunk,
