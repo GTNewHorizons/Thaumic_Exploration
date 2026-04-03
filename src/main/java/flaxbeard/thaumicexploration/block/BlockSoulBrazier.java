@@ -37,21 +37,25 @@ public class BlockSoulBrazier extends BlockContainer {
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
         if (!world.isRemote) {
-            TileEntitySoulBrazier brazier = ((TileEntitySoulBrazier) world.getTileEntity(x, y, z));
-            if (brazier.active) {
-                String ownerUsername = brazier.owner.getName();
-                EntityPlayerMP player = TXUtils.getPlayerByUsername(ownerUsername);
-                if (player != null) {
-                    Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(ownerUsername, brazier.storedWarp);
-                    player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.returnWarp"));
-                } else {
-                    TXUtils.addWarpPermOfflinePlayer(ownerUsername, brazier.storedWarp);
-                    Thaumcraft.log
-                            .info("Returned {} warp to {} from their Soul Brazier", brazier.storedWarp, brazier.owner);
+            TileEntity te = world.getTileEntity(x, y, z);
+            if (te instanceof TileEntitySoulBrazier brazier) {
+                if (brazier.active && brazier.owner != null) {
+                    String ownerUsername = brazier.owner.getName();
+                    EntityPlayerMP player = TXUtils.getPlayerByUsername(ownerUsername);
+                    if (player != null) {
+                        Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(ownerUsername, brazier.storedWarp);
+                        player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.returnWarp"));
+                    } else {
+                        TXUtils.addWarpPermOfflinePlayer(ownerUsername, brazier.storedWarp);
+                        Thaumcraft.log.info(
+                                "Returned {} warp to {} from their Soul Brazier",
+                                brazier.storedWarp,
+                                brazier.owner);
+                    }
+                    ForgeChunkManager.unforceChunk(
+                            brazier.heldChunk,
+                            new ChunkCoordIntPair(brazier.xCoord >> 4, brazier.zCoord >> 4));
                 }
-                ForgeChunkManager.unforceChunk(
-                        brazier.heldChunk,
-                        new ChunkCoordIntPair(brazier.xCoord >> 4, brazier.zCoord >> 4));
             }
         }
         super.breakBlock(world, x, y, z, block, meta);
