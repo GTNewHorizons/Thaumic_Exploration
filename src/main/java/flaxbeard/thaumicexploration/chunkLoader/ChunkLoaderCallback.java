@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeChunkManager;
 
@@ -34,13 +35,12 @@ public class ChunkLoaderCallback implements ForgeChunkManager.OrderedLoadingCall
             int xPos = ticket.getModData().getInteger("xCoord");
             int yPos = ticket.getModData().getInteger("yCoord");
             int zPos = ticket.getModData().getInteger("zCoord");
-            if (world.getTileEntity(xPos, yPos, zPos) != null) {
-                if (world.getTileEntity(xPos, yPos, zPos) instanceof ITXChunkLoader) {
-                    ((ITXChunkLoader) world.getTileEntity(xPos, yPos, zPos)).forceChunkLoading(ticket);
-                    continue;
-                }
+            TileEntity te = world.getTileEntity(xPos, yPos, zPos);
+            if (te instanceof ITXChunkLoader) {
+                ((ITXChunkLoader) te).forceChunkLoading(ticket);
+            } else {
+                ForgeChunkManager.releaseTicket(ticket);
             }
-            ForgeChunkManager.releaseTicket(ticket);
         }
     }
 }

@@ -143,8 +143,9 @@ public class TileEntitySoulBrazier extends TileThaumcraft implements IEssentiaTr
                                 .info("Returned {} warp to {} from their Soul Brazier", this.storedWarp, this.owner);
                     }
                     this.storedWarp = 0;
-                    ForgeChunkManager
-                            .unforceChunk(this.heldChunk, new ChunkCoordIntPair(this.xCoord >> 4, this.zCoord >> 4));
+                    if (this.heldChunk != null) {
+                        ForgeChunkManager.releaseTicket(this.heldChunk);
+                    }
                 }
                 this.heldChunk = null;
                 worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -292,7 +293,7 @@ public class TileEntitySoulBrazier extends TileThaumcraft implements IEssentiaTr
             this.heldChunk = ticket;
             ForgeChunkManager.forceChunk(this.heldChunk, new ChunkCoordIntPair(this.xCoord >> 4, this.zCoord >> 4));
         } else {
-            ForgeChunkManager.releaseTicket(ticket);
+            this.removeTicket(ticket);
         }
     }
 
@@ -310,9 +311,11 @@ public class TileEntitySoulBrazier extends TileThaumcraft implements IEssentiaTr
 
     @Override
     public void removeTicket(ForgeChunkManager.Ticket ticket) {
-        if (heldChunk != null) {
-            ForgeChunkManager.releaseTicket(this.heldChunk);
-            this.heldChunk = null;
+        if (ticket != null) {
+            ForgeChunkManager.releaseTicket(ticket);
+            if (ticket == this.heldChunk) {
+                this.heldChunk = null;
+            }
         }
     }
 }
