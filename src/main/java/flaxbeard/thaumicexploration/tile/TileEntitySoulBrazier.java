@@ -288,9 +288,11 @@ public class TileEntitySoulBrazier extends TileThaumcraft implements IEssentiaTr
 
     @Override
     public void forceChunkLoading(ForgeChunkManager.Ticket ticket) {
-        if (ConfigTX.allowSBChunkLoading) {
+        if (ConfigTX.allowSBChunkLoading && this.active) {
             this.heldChunk = ticket;
             ForgeChunkManager.forceChunk(this.heldChunk, new ChunkCoordIntPair(this.xCoord >> 4, this.zCoord >> 4));
+        } else {
+            ForgeChunkManager.releaseTicket(ticket);
         }
     }
 
