@@ -5,19 +5,13 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeChunkManager;
 
 import flaxbeard.thaumicexploration.ThaumicExploration;
-import flaxbeard.thaumicexploration.misc.TXUtils;
 import flaxbeard.thaumicexploration.tile.TileEntitySoulBrazier;
-import thaumcraft.common.Thaumcraft;
 
 /**
  * Created by nekosune on 03/08/14.
@@ -40,21 +34,8 @@ public class BlockSoulBrazier extends BlockContainer {
             TileEntity te = world.getTileEntity(x, y, z);
             if (te instanceof TileEntitySoulBrazier brazier) {
                 if (brazier.active && brazier.owner != null) {
-                    String ownerUsername = brazier.owner.getName();
-                    EntityPlayerMP player = TXUtils.getPlayerByUsername(ownerUsername);
-                    if (player != null) {
-                        Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(ownerUsername, brazier.storedWarp);
-                        player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.returnWarp"));
-                    } else {
-                        TXUtils.addWarpPermOfflinePlayer(ownerUsername, brazier.storedWarp);
-                        Thaumcraft.log.info(
-                                "Returned {} warp to {} from their Soul Brazier",
-                                brazier.storedWarp,
-                                brazier.owner);
-                    }
-                    ForgeChunkManager.unforceChunk(
-                            brazier.heldChunk,
-                            new ChunkCoordIntPair(brazier.xCoord >> 4, brazier.zCoord >> 4));
+                    brazier.returnOwnersWarp();
+                    brazier.removeTicket(brazier.heldChunk);
                 }
             }
         }

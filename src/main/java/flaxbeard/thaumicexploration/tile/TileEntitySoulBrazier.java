@@ -132,25 +132,25 @@ public class TileEntitySoulBrazier extends TileThaumcraft implements IEssentiaTr
                 active = false;
 
                 if (!worldObj.isRemote) {
-                    String ownerUsername = this.owner.getName();
-                    EntityPlayerMP player = TXUtils.getPlayerByUsername(ownerUsername);
-                    if (player != null) {
-                        Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(ownerUsername, this.storedWarp);
-                        player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.returnWarp"));
-                    } else {
-                        TXUtils.addWarpPermOfflinePlayer(ownerUsername, this.storedWarp);
-                        Thaumcraft.log
-                                .info("Returned {} warp to {} from their Soul Brazier", this.storedWarp, this.owner);
-                    }
-                    this.storedWarp = 0;
-                    if (this.heldChunk != null) {
-                        ForgeChunkManager.releaseTicket(this.heldChunk);
-                    }
+                    this.returnOwnersWarp();
+                    this.removeTicket(this.heldChunk);
                 }
-                this.heldChunk = null;
                 worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             }
         }
+    }
+
+    public void returnOwnersWarp() {
+        String ownerUsername = this.owner.getName();
+        EntityPlayerMP player = TXUtils.getPlayerByUsername(ownerUsername);
+        if (player != null) {
+            Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(ownerUsername, this.storedWarp);
+            player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.returnWarp"));
+        } else {
+            TXUtils.addWarpPermOfflinePlayer(ownerUsername, this.storedWarp);
+            Thaumcraft.log.info("Returned {} warp to {} from their Soul Brazier", this.storedWarp, this.owner);
+        }
+        this.storedWarp = 0;
     }
 
     private void getVis() {
