@@ -65,9 +65,8 @@ public class ItemFoodTalisman extends Item {
             setDefaultTags(talisman);
             tryAbsorbFood(talisman, player, world);
             tryFeedPlayer(talisman, player);
+            talisman.setItemDamage(talisman.getMaxDamage() - talisman.stackTagCompound.getInteger("nourishment"));
         }
-
-        talisman.setItemDamage(talisman.getMaxDamage() - talisman.stackTagCompound.getInteger("nourishment"));
     }
 
     private void tryAbsorbFood(ItemStack talisman, EntityPlayer player, World world) {
