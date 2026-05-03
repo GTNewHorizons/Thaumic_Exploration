@@ -55,11 +55,9 @@ public class ItemFoodTalisman extends Item {
 
     @Override
     public void onUpdate(ItemStack talisman, World world, Entity entity, int slot, boolean isSelected) {
-        if (!(entity instanceof EntityPlayer) || entity.ticksExisted % 20 != 0) {
+        if (!(entity instanceof EntityPlayer player) || entity.ticksExisted % 20 != 0) {
             return;
         }
-
-        EntityPlayer player = (EntityPlayer) entity;
 
         if (!world.isRemote) {
             setDefaultTags(talisman);
