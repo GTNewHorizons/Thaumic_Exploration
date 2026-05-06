@@ -36,8 +36,8 @@ public class ChunkLoaderCallback implements ForgeChunkManager.OrderedLoadingCall
             int yPos = ticket.getModData().getInteger("yCoord");
             int zPos = ticket.getModData().getInteger("zCoord");
             TileEntity te = world.getTileEntity(xPos, yPos, zPos);
-            if (te instanceof ITXChunkLoader) {
-                ((ITXChunkLoader) te).forceChunkLoading(ticket);
+            if (te instanceof ITXChunkLoader loader) {
+                loader.forceChunkLoading(ticket);
             } else {
                 ForgeChunkManager.releaseTicket(ticket);
             }
