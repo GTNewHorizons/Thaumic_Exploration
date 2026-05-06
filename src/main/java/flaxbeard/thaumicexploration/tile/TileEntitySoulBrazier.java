@@ -27,6 +27,8 @@ import thaumcraft.api.visnet.VisNetHandler;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.blocks.BlockTaintFibres;
 import thaumcraft.common.config.Config;
+import thaumcraft.common.lib.network.PacketHandler;
+import thaumcraft.common.lib.network.playerdata.PacketSyncWarp;
 import thaumcraft.common.lib.utils.Utils;
 import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 
@@ -144,6 +146,7 @@ public class TileEntitySoulBrazier extends TileThaumcraft implements IEssentiaTr
         EntityPlayerMP player = SaveUtils.getPlayerByUsername(ownerUsername);
         if (player != null) {
             Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(ownerUsername, this.storedWarp);
+            PacketHandler.INSTANCE.sendTo(new PacketSyncWarp(player, (byte) 0), player);
             player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.returnWarp"));
         } else {
             SaveUtils.addWarpPermOfflinePlayer(ownerUsername, this.storedWarp);
