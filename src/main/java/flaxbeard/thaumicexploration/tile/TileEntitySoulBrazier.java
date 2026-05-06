@@ -104,8 +104,8 @@ public class TileEntitySoulBrazier extends TileThaumcraft implements IEssentiaTr
     public void updateEntity() {
 
         super.updateEntity();
-        // 600 is the least common multiple of all tick breakpoints, and greater than 360 for the trig particle stuff
-        if (this.tick >= 600) {
+        // 1800 is the least common multiple of all tick breakpoints, including the trig rendering stuff
+        if (this.tick >= 1800) {
             this.tick = 0;
         }
         this.tick += 1;
@@ -133,7 +133,6 @@ public class TileEntitySoulBrazier extends TileThaumcraft implements IEssentiaTr
 
                 if (!worldObj.isRemote) {
                     this.returnOwnersWarp();
-                    this.removeTicket(this.heldChunk);
                 }
                 worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             }
@@ -151,6 +150,7 @@ public class TileEntitySoulBrazier extends TileThaumcraft implements IEssentiaTr
             Thaumcraft.log.info("Returned {} warp to {} from their Soul Brazier", this.storedWarp, this.owner);
         }
         this.storedWarp = 0;
+        this.removeTicket(this.heldChunk);
     }
 
     private void getVis() {

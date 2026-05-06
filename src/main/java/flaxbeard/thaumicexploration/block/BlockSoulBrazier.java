@@ -35,7 +35,6 @@ public class BlockSoulBrazier extends BlockContainer {
             if (te instanceof TileEntitySoulBrazier brazier) {
                 if (brazier.active && brazier.owner != null) {
                     brazier.returnOwnersWarp();
-                    brazier.removeTicket(brazier.heldChunk);
                 }
             }
         }
