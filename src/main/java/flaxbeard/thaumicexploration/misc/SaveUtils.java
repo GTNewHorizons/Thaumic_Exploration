@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
+import java.util.UUID;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.CompressedStreamTools;
@@ -21,6 +23,16 @@ public class SaveUtils {
         MinecraftServer server = MinecraftServer.getServer();
         // func_152612_a is getPlayerByUsername
         return server.getConfigurationManager().func_152612_a(username);
+    }
+
+    public static EntityPlayerMP getPlayerByUUID(UUID uuid) {
+        List<EntityPlayerMP> allPlayers = MinecraftServer.getServer().getConfigurationManager().playerEntityList;
+        for (EntityPlayerMP player : allPlayers) {
+            if (uuid.equals(player.getGameProfile().getId())) {
+                return player;
+            }
+        }
+        return null;
     }
 
     public static boolean addWarpPermOfflinePlayer(String owner, int addedWarp) {

@@ -1,5 +1,6 @@
 package flaxbeard.thaumicexploration.tile;
 
+import java.util.Objects;
 import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -106,6 +107,14 @@ public class TileEntitySoulBrazier extends TileThaumcraft implements IEssentiaTr
     public void updateEntity() {
 
         super.updateEntity();
+
+        if (this.owner != null) {
+            EntityPlayerMP onlinePlayer = SaveUtils.getPlayerByUUID(this.owner.getId());
+            if (onlinePlayer != null && !Objects.equals(this.owner.getName(), onlinePlayer.getDisplayName())) {
+                this.owner = onlinePlayer.getGameProfile();
+            }
+        }
+
         // 1800 is the least common multiple of all tick breakpoints, including the trig rendering stuff
         if (this.tick >= 1800) {
             this.tick = 0;
@@ -154,7 +163,8 @@ public class TileEntitySoulBrazier extends TileThaumcraft implements IEssentiaTr
                 success = SaveUtils.addWarpPermOfflinePlayer(ownerUsername, this.storedWarp);
             }
             if (!success) {
-                Thaumcraft.log.error("Failed to return {} warp to {} from their Soul Brazier", this.storedWarp, this.owner);
+                Thaumcraft.log
+                        .error("Failed to return {} warp to {} from their Soul Brazier", this.storedWarp, this.owner);
                 return;
             }
             Thaumcraft.log.info("Returned {} warp to {} from their Soul Brazier", this.storedWarp, this.owner);
