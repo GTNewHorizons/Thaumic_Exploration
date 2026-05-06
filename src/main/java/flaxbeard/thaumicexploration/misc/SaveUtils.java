@@ -46,6 +46,7 @@ public class SaveUtils {
         Path tempPath = playerDataDir.resolve(owner + "_temp.thaum");
         try (FileOutputStream fos = new FileOutputStream(tempPath.toFile())) {
             CompressedStreamTools.writeCompressed(playerData, fos);
+            fos.close();
             Files.move(tempPath, playerDataPath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException | SecurityException e) {
             Thaumcraft.log.error("Error writing {}'s Thaumcraft data at {}", owner, tempPath.toString(), e);
