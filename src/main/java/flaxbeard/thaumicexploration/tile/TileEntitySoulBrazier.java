@@ -187,7 +187,7 @@ public class TileEntitySoulBrazier extends TileThaumcraft implements IEssentiaTr
         Random rand = this.worldObj.rand;
 
         int x = this.xCoord + rand.nextInt(33) - 16;
-        int y = this.yCoord + rand.nextInt(17) - 8;
+        int y = this.yCoord + rand.nextInt(33) - 16;
         int z = this.zCoord + rand.nextInt(33) - 16;
 
         BiomeGenBase biome = this.worldObj.getBiomeGenForCoords(x, z);
@@ -198,7 +198,7 @@ public class TileEntitySoulBrazier extends TileThaumcraft implements IEssentiaTr
 
         if (Config.hardNode && rand.nextBoolean()) {
             x = this.xCoord + rand.nextInt(33) - 16;
-            y = this.yCoord + rand.nextInt(17) - 8;
+            y = this.yCoord + rand.nextInt(33) - 16;
             z = this.zCoord + rand.nextInt(33) - 16;
             spawnTaintLightning(x, y, z);
             BlockTaintFibres.spreadFibres(this.worldObj, x, y, z);
