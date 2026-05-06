@@ -18,7 +18,7 @@ import com.mojang.authlib.GameProfile;
 import flaxbeard.thaumicexploration.ThaumicExploration;
 import flaxbeard.thaumicexploration.chunkLoader.ITXChunkLoader;
 import flaxbeard.thaumicexploration.common.ConfigTX;
-import flaxbeard.thaumicexploration.misc.TXUtils;
+import flaxbeard.thaumicexploration.misc.SaveUtils;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.TileThaumcraft;
 import thaumcraft.api.aspects.Aspect;
@@ -142,12 +142,12 @@ public class TileEntitySoulBrazier extends TileThaumcraft implements IEssentiaTr
 
     public void returnOwnersWarp() {
         String ownerUsername = this.owner.getName();
-        EntityPlayerMP player = TXUtils.getPlayerByUsername(ownerUsername);
+        EntityPlayerMP player = SaveUtils.getPlayerByUsername(ownerUsername);
         if (player != null) {
             Thaumcraft.proxy.getPlayerKnowledge().addWarpPerm(ownerUsername, this.storedWarp);
             player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.returnWarp"));
         } else {
-            TXUtils.addWarpPermOfflinePlayer(ownerUsername, this.storedWarp);
+            SaveUtils.addWarpPermOfflinePlayer(ownerUsername, this.storedWarp);
             Thaumcraft.log.info("Returned {} warp to {} from their Soul Brazier", this.storedWarp, this.owner);
         }
         this.storedWarp = 0;

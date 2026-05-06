@@ -15,7 +15,7 @@ import net.minecraftforge.common.DimensionManager;
 
 import thaumcraft.common.Thaumcraft;
 
-public class TXUtils {
+public class SaveUtils {
 
     public static EntityPlayerMP getPlayerByUsername(String username) {
         MinecraftServer server = MinecraftServer.getServer();
