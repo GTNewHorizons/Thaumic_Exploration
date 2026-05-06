@@ -36,8 +36,7 @@ public class SaveUtils {
         try (FileInputStream fis = new FileInputStream(playerDataPath.toFile())) {
             playerData = CompressedStreamTools.readCompressed(fis);
         } catch (IOException e) {
-            e.printStackTrace();
-            Thaumcraft.log.fatal("Error reading {}'s Thaumcraft data at {}.", owner, playerDataPath.toString());
+            Thaumcraft.log.error("Error reading {}'s Thaumcraft data at {}.", owner, playerDataPath.toString(), e);
             return;
         }
 
@@ -49,15 +48,13 @@ public class SaveUtils {
             CompressedStreamTools.writeCompressed(playerData, fos);
             Files.move(tempPath, playerDataPath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException | SecurityException e) {
-            e.printStackTrace();
-            Thaumcraft.log.fatal("Error writing {}'s Thaumcraft data at {}", owner, tempPath.toString());
+            Thaumcraft.log.error("Error writing {}'s Thaumcraft data at {}", owner, tempPath.toString(), e);
         }
 
         try {
             Files.deleteIfExists(tempPath);
         } catch (IOException e) {
-            e.printStackTrace();
-            Thaumcraft.log.fatal("Error deleting {}'s temporary Thaumcraft data at {}", owner, tempPath.toString());
+            Thaumcraft.log.error("Error deleting {}'s temporary Thaumcraft data at {}", owner, tempPath.toString(), e);
         }
     }
 }
