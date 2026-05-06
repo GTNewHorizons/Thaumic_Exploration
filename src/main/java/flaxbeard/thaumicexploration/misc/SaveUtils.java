@@ -23,13 +23,14 @@ public class SaveUtils {
         return server.getConfigurationManager().func_152612_a(username);
     }
 
-    public static void addWarpPermOfflinePlayer(String owner, int addedWarp) {
+    public static boolean addWarpPermOfflinePlayer(String owner, int addedWarp) {
 
         Path playerDataDir = DimensionManager.getCurrentSaveRootDirectory().toPath().resolve("playerdata");
         Path playerDataPath = playerDataDir.resolve(owner + ".thaum");
 
         if (!Files.exists(playerDataPath)) {
-            return;
+            Thaumcraft.log.error("Error reading {}'s Thaumcraft data at {}.", owner, playerDataPath.toString());
+            return false;
         }
 
         NBTTagCompound playerData;
@@ -37,7 +38,7 @@ public class SaveUtils {
             playerData = CompressedStreamTools.readCompressed(fis);
         } catch (IOException e) {
             Thaumcraft.log.error("Error reading {}'s Thaumcraft data at {}.", owner, playerDataPath.toString(), e);
-            return;
+            return false;
         }
 
         int currentWarp = playerData.getInteger("Thaumcraft.eldritch");
@@ -50,12 +51,15 @@ public class SaveUtils {
             Files.move(tempPath, playerDataPath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException | SecurityException e) {
             Thaumcraft.log.error("Error writing {}'s Thaumcraft data at {}", owner, tempPath.toString(), e);
+            return false;
         }
 
         try {
             Files.deleteIfExists(tempPath);
         } catch (IOException e) {
             Thaumcraft.log.error("Error deleting {}'s temporary Thaumcraft data at {}", owner, tempPath.toString(), e);
+            return false;
         }
+        return true;
     }
 }

@@ -149,7 +149,14 @@ public class TileEntitySoulBrazier extends TileThaumcraft implements IEssentiaTr
             PacketHandler.INSTANCE.sendTo(new PacketSyncWarp(player, (byte) 0), player);
             player.addChatComponentMessage(new ChatComponentTranslation("soulbrazier.returnWarp"));
         } else {
-            SaveUtils.addWarpPermOfflinePlayer(ownerUsername, this.storedWarp);
+            boolean success = false;
+            for (int attempt = 0; attempt < 2 && !success; attempt++) {
+                success = SaveUtils.addWarpPermOfflinePlayer(ownerUsername, this.storedWarp);
+            }
+            if (!success) {
+                Thaumcraft.log.error("Failed to return {} warp to {} from their Soul Brazier", this.storedWarp, this.owner);
+                return;
+            }
             Thaumcraft.log.info("Returned {} warp to {} from their Soul Brazier", this.storedWarp, this.owner);
         }
         this.storedWarp = 0;
