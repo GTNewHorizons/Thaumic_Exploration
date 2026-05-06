@@ -105,7 +105,7 @@ public class TileEntitySoulBrazier extends TileThaumcraft implements IEssentiaTr
 
         super.updateEntity();
         // 600 is the least common multiple of all tick breakpoints, and greater than 360 for the trig particle stuff
-        if (this.tick == 600) {
+        if (this.tick >= 600) {
             this.tick = 0;
         }
         this.tick += 1;
