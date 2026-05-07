@@ -39,9 +39,10 @@ public class SaveUtils {
 
         Path playerDataDir = DimensionManager.getCurrentSaveRootDirectory().toPath().resolve("playerdata");
         Path playerDataPath = playerDataDir.resolve(owner + ".thaum");
+        Path backupDataPath = playerDataDir.resolve(owner + ".thaumback");
 
         if (!Files.exists(playerDataPath)) {
-            Thaumcraft.log.error("Error reading {}'s Thaumcraft data at {}.", owner, playerDataPath.toString());
+            Thaumcraft.log.error("Error reading {}'s Thaumcraft data at {}.", owner, playerDataPath);
             return false;
         }
 
@@ -49,7 +50,7 @@ public class SaveUtils {
         try (FileInputStream fis = new FileInputStream(playerDataPath.toFile())) {
             playerData = CompressedStreamTools.readCompressed(fis);
         } catch (IOException e) {
-            Thaumcraft.log.error("Error reading {}'s Thaumcraft data at {}.", owner, playerDataPath.toString(), e);
+            Thaumcraft.log.error("Error reading {}'s Thaumcraft data at {}.", owner, playerDataPath, e);
             return false;
         }
 
@@ -59,19 +60,19 @@ public class SaveUtils {
         Path tempPath = playerDataDir.resolve(owner + "_temp.thaum");
         try (FileOutputStream fos = new FileOutputStream(tempPath.toFile())) {
             CompressedStreamTools.writeCompressed(playerData, fos);
-            fos.close();
-            Files.move(tempPath, playerDataPath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException | SecurityException e) {
-            Thaumcraft.log.error("Error writing {}'s Thaumcraft data at {}", owner, tempPath.toString(), e);
+            Thaumcraft.log.error("Error writing {}'s Thaumcraft data at {}.", owner, tempPath, e);
             return false;
         }
 
         try {
-            Files.deleteIfExists(tempPath);
-        } catch (IOException e) {
-            Thaumcraft.log.error("Error deleting {}'s temporary Thaumcraft data at {}", owner, tempPath.toString(), e);
+            Files.copy(tempPath, backupDataPath, StandardCopyOption.REPLACE_EXISTING);
+            Files.move(tempPath, playerDataPath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException | SecurityException e) {
+            Thaumcraft.log.error("Error moving {}'s Thaumcraft data at {}.", owner, tempPath, e);
             return false;
         }
+
         return true;
     }
 }
