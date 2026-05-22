@@ -36,6 +36,9 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.WorldEvent;
 
+import com.emoniph.witchery.entity.EntityFollower;
+import com.emoniph.witchery.entity.EntityReflection;
+
 import baubles.api.BaublesApi;
 import codechicken.lib.packet.PacketCustom;
 import cpw.mods.fml.common.Loader;
@@ -183,7 +186,9 @@ public class TXEventHandler {
             if (heldItem == null) return;
 
             int disarm = EnchantmentHelper.getEnchantmentLevel(ThaumicExploration.enchantmentDisarm.effectId, heldItem);
-            if (disarm > 0 && !(event.entityLiving instanceof EntityPlayer)) {
+            if (disarm > 0 && !(event.entityLiving instanceof EntityPlayer)
+                    && (Loader.isModLoaded("witchery") && !(event.entityLiving instanceof EntityReflection)
+                            && !(event.entityLiving instanceof EntityFollower))) {
                 if (event.entityLiving.getHeldItem() != null && !event.entityLiving.worldObj.isRemote
                         && (disarm >= 5 || event.entityLiving.worldObj.rand.nextInt(10 - (2 * disarm)) == 0)) {
                     ItemStack itemstack = event.entityLiving.getHeldItem();
