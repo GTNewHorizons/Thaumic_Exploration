@@ -36,6 +36,9 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.WorldEvent;
 
+import com.emoniph.witchery.entity.EntityFollower;
+import com.emoniph.witchery.entity.EntityReflection;
+
 import baubles.api.BaublesApi;
 import codechicken.lib.packet.PacketCustom;
 import cpw.mods.fml.common.Loader;
@@ -184,37 +187,41 @@ public class TXEventHandler {
 
             int disarm = EnchantmentHelper.getEnchantmentLevel(ThaumicExploration.enchantmentDisarm.effectId, heldItem);
             if (disarm > 0 && !(event.entityLiving instanceof EntityPlayer)) {
-                if (event.entityLiving.getHeldItem() != null && !event.entityLiving.worldObj.isRemote
-                        && (disarm >= 5 || event.entityLiving.worldObj.rand.nextInt(10 - (2 * disarm)) == 0)) {
-                    ItemStack itemstack = event.entityLiving.getHeldItem();
-                    event.entityLiving.setCurrentItemOrArmor(0, null);
-                    World world = event.entityLiving.worldObj;
-                    double x = event.entityLiving.posX;
-                    double y = event.entityLiving.posY;
-                    double z = event.entityLiving.posZ;
-                    float f = world.rand.nextFloat() * 0.8F + 0.1F;
-                    float f1 = world.rand.nextFloat() * 0.8F + 0.1F;
-                    float f2 = world.rand.nextFloat();
-                    EntityItem entityitem;
-                    int k1 = world.rand.nextInt(21) + 10;
+                if (!Loader.isModLoaded("witchery") || (!(event.entityLiving instanceof EntityReflection)
+                        && !(event.entityLiving instanceof EntityFollower))) {
+                    if (event.entityLiving.getHeldItem() != null && !event.entityLiving.worldObj.isRemote
+                            && (disarm >= 5 || event.entityLiving.worldObj.rand.nextInt(10 - (2 * disarm)) == 0)) {
+                        ItemStack itemstack = event.entityLiving.getHeldItem();
+                        event.entityLiving.setCurrentItemOrArmor(0, null);
+                        World world = event.entityLiving.worldObj;
+                        double x = event.entityLiving.posX;
+                        double y = event.entityLiving.posY;
+                        double z = event.entityLiving.posZ;
+                        float f = world.rand.nextFloat() * 0.8F + 0.1F;
+                        float f1 = world.rand.nextFloat() * 0.8F + 0.1F;
+                        float f2 = world.rand.nextFloat();
+                        EntityItem entityitem;
+                        int k1 = world.rand.nextInt(21) + 10;
 
-                    k1 = itemstack.stackSize;
+                        k1 = itemstack.stackSize;
 
-                    entityitem = new EntityItem(
-                            world,
-                            (double) ((float) x + f),
-                            (double) ((float) y + f1),
-                            (double) ((float) z + f2),
-                            new ItemStack(itemstack.getItem(), k1, itemstack.getItemDamage()));
-                    float f3 = 0.05F;
-                    entityitem.motionX = (double) ((float) world.rand.nextGaussian() * f3);
-                    entityitem.motionY = (double) ((float) world.rand.nextGaussian() * f3 + 0.2F);
-                    entityitem.motionZ = (double) ((float) world.rand.nextGaussian() * f3);
+                        entityitem = new EntityItem(
+                                world,
+                                (double) ((float) x + f),
+                                (double) ((float) y + f1),
+                                (double) ((float) z + f2),
+                                new ItemStack(itemstack.getItem(), k1, itemstack.getItemDamage()));
+                        float f3 = 0.05F;
+                        entityitem.motionX = (double) ((float) world.rand.nextGaussian() * f3);
+                        entityitem.motionY = (double) ((float) world.rand.nextGaussian() * f3 + 0.2F);
+                        entityitem.motionZ = (double) ((float) world.rand.nextGaussian() * f3);
 
-                    if (itemstack.hasTagCompound()) {
-                        entityitem.getEntityItem().setTagCompound((NBTTagCompound) itemstack.getTagCompound().copy());
+                        if (itemstack.hasTagCompound()) {
+                            entityitem.getEntityItem()
+                                    .setTagCompound((NBTTagCompound) itemstack.getTagCompound().copy());
+                        }
+                        world.spawnEntityInWorld(entityitem);
                     }
-                    world.spawnEntityInWorld(entityitem);
                 }
             }
         }
