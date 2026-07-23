@@ -21,7 +21,6 @@ import net.minecraft.world.World;
 import com.mojang.authlib.GameProfile;
 
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import flaxbeard.thaumicexploration.interop.AppleCoreInterop;
 import flaxbeard.thaumicexploration.misc.FakePlayerPotion;
 import thaumcraft.common.config.ConfigItems;
@@ -112,38 +111,20 @@ public class ItemFoodTalisman extends Item {
         int nourishment = talisman.stackTagCompound.getInteger("nourishment");
 
         int hungerDeficit = 20 - food.getFoodLevel();
+        int toFeed = 0;
         if (hungerDeficit > 0 && nourishment > 0) {
-            int toFeed = Math.min(nourishment, hungerDeficit);
+            toFeed = Math.min(nourishment, hungerDeficit);
             nourishment -= toFeed;
-
-            if (Loader.isModLoaded("AppleCore")) {
-                AppleCoreInterop.setHunger(toFeed, player);
-            } else {
-                ObfuscationReflectionHelper.setPrivateValue(
-                        FoodStats.class,
-                        food,
-                        food.getFoodLevel() + toFeed,
-                        "field_75127_a",
-                        "foodLevel");
-            }
         }
 
         float saturationDeficit = food.getFoodLevel() - food.getSaturationLevel();
+        float toSatiate = 0;
         if (saturationDeficit > 0 && nourishment > 0) {
-            float toSaturate = Math.min(nourishment, saturationDeficit);
-            nourishment -= Math.round(toSaturate);
-
-            if (Loader.isModLoaded("AppleCore")) {
-                AppleCoreInterop.setSaturation(toSaturate, player);
-            } else {
-                ObfuscationReflectionHelper.setPrivateValue(
-                        FoodStats.class,
-                        food,
-                        food.getSaturationLevel() + toSaturate,
-                        "field_75125_b",
-                        "foodSaturationLevel");
-            }
+            toSatiate = Math.min(nourishment, saturationDeficit);
+            nourishment -= Math.round(toSatiate);
         }
+
+        food.addStats(toFeed, toSatiate);
 
         talisman.stackTagCompound.setInteger("nourishment", Math.max(nourishment, 0));
     }
