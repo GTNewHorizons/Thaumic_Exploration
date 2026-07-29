@@ -240,6 +240,7 @@ public class TileEntityReplicator extends TileEntity implements ISidedInventory,
     private IAspectSource getValidAspectSource(TileEntity source) {
         if (!(source instanceof IAspectSource as)) return null;
         AspectList sourceAspects = as.getAspects();
+        if (sourceAspects == null) return null;
         for (Aspect aspect : templateEssentia.getAspects()) {
             if (sourceAspects.aspects.containsKey(aspect)) {
                 return as;
