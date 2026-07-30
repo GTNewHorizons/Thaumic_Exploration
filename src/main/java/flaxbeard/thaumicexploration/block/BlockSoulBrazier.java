@@ -33,7 +33,7 @@ public class BlockSoulBrazier extends BlockContainer {
         if (!world.isRemote) {
             TileEntity te = world.getTileEntity(x, y, z);
             if (te instanceof TileEntitySoulBrazier brazier) {
-                if (brazier.active && brazier.owner != null) {
+                if (brazier.active) {
                     brazier.returnOwnersWarp();
                 }
             }

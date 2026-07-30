@@ -151,6 +151,7 @@ public class TileEntitySoulBrazier extends TileThaumcraft implements IEssentiaTr
     }
 
     public void returnOwnersWarp() {
+        if (this.owner == null) return;
         String ownerUsername = this.owner.getName();
         EntityPlayerMP player = SaveUtils.getPlayerByUsername(ownerUsername);
         if (player != null) {
