@@ -166,6 +166,7 @@ public class TileEntitySoulBrazier extends TileThaumcraft implements IEssentiaTr
             if (!success) {
                 Thaumcraft.log
                         .error("Failed to return {} warp to {} from their Soul Brazier", this.storedWarp, this.owner);
+                this.removeTicket(this.heldChunk);
                 return;
             }
             Thaumcraft.log.info("Returned {} warp to {} from their Soul Brazier", this.storedWarp, this.owner);
