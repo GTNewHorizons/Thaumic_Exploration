@@ -23,12 +23,25 @@ public class AppleCoreInterop {
 
     public static void setHunger(int hunger, EntityPlayer player) {
         AppleCoreAPI.mutator.setHunger(player, player.getFoodStats().getFoodLevel() + hunger);
-        MinecraftForge.EVENT_BUS.post(new FoodEvent.FoodStatsAddition(player, new FoodValues(hunger, 0)));
+    }
+
+    /**
+     * Notifies that the food was actually consumed, so mods like Nutrition can grant its nutrients. Both events are
+     * posted in the same order vanilla eating posts them, as listeners may expect them to come in pairs.
+     */
+    public static void postFoodEaten(ItemStack food, EntityPlayer player) {
+        FoodValues values = AppleCoreAPI.accessor.getFoodValues(food);
+        MinecraftForge.EVENT_BUS.post(new FoodEvent.FoodStatsAddition(player, values));
+        MinecraftForge.EVENT_BUS.post(
+                new FoodEvent.FoodEaten(
+                        player,
+                        food,
+                        values,
+                        values.hunger,
+                        values.hunger * values.saturationModifier * 2f));
     }
 
     public static void setSaturation(float saturation, EntityPlayer player) {
         AppleCoreAPI.mutator.setSaturation(player, player.getFoodStats().getSaturationLevel() + saturation);
-        // We only post the FoodStatsAddition event for nutrition, which ignores it if the hunger didn't increase
-        // so there's no need to post it here
     }
 }
