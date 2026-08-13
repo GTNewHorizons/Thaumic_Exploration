@@ -14,6 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.FoodStats;
 import net.minecraft.world.World;
@@ -30,6 +31,7 @@ public class ItemFoodTalisman extends Item {
 
     private static final String[] ALL_FOOD_BLACKLIST_NAMES = { ConfigItems.itemManaBean.getUnlocalizedName(),
             ConfigItems.itemZombieBrain.getUnlocalizedName(), "item.foodstuff.0.name", "ic2.itemterrawart", };
+    private static final String FOOD_QUEUE_TAG = "foodQueue";
     public static List<String> foodBlacklist = new ArrayList<String>();
     public static Map<String, Boolean> foodCache = new HashMap<String, Boolean>();
     private final int MAX_NOURISHMENT_SIZE_TALISMAN = 1000;
@@ -62,7 +64,11 @@ public class ItemFoodTalisman extends Item {
         if (!world.isRemote) {
             setDefaultTags(talisman);
             tryAbsorbFood(talisman, player, world);
+
+            int before = talisman.stackTagCompound.getInteger("nourishment");
             tryFeedPlayer(talisman, player);
+            consumeQueuedFood(talisman, player, before - talisman.stackTagCompound.getInteger("nourishment"));
+
             talisman.setItemDamage(talisman.getMaxDamage() - talisman.stackTagCompound.getInteger("nourishment"));
         }
     }
@@ -90,7 +96,9 @@ public class ItemFoodTalisman extends Item {
             }
 
             int foodNourishment = Math.round((saturation + heal) / 2);
-            nourishment = Math.min(nourishment + foodNourishment, MAX_NOURISHMENT_SIZE_TALISMAN);
+            int newNourishment = Math.min(nourishment + foodNourishment, MAX_NOURISHMENT_SIZE_TALISMAN);
+            queueFood(talisman, food, newNourishment - nourishment);
+            nourishment = newNourishment;
             talisman.stackTagCompound.setInteger("nourishment", nourishment);
 
             if (food.stackSize <= 1) {
@@ -146,6 +154,81 @@ public class ItemFoodTalisman extends Item {
         }
 
         talisman.stackTagCompound.setInteger("nourishment", Math.max(nourishment, 0));
+    }
+
+    /**
+     * Remembers which food produced the stored nourishment, so that nutrient-tracking mods can be notified only when
+     * that nourishment is actually spent on the player.
+     */
+    private void queueFood(ItemStack talisman, ItemStack food, int points) {
+        if (points <= 0 || !Loader.isModLoaded("AppleCore")) {
+            return;
+        }
+
+        ItemStack single = food.copy();
+        single.stackSize = 1;
+
+        NBTTagList queue = talisman.stackTagCompound.getTagList(FOOD_QUEUE_TAG, 10);
+        for (int i = 0; i < queue.tagCount(); i++) {
+            NBTTagCompound entry = queue.getCompoundTagAt(i);
+            ItemStack queued = ItemStack.loadItemStackFromNBT(entry.getCompoundTag("item"));
+            if (entry.getInteger("points") == points && ItemStack.areItemStacksEqual(queued, single)) {
+                entry.setInteger("units", entry.getInteger("units") + 1);
+                talisman.stackTagCompound.setTag(FOOD_QUEUE_TAG, queue);
+                return;
+            }
+        }
+
+        NBTTagCompound item = new NBTTagCompound();
+        single.writeToNBT(item);
+        NBTTagCompound entry = new NBTTagCompound();
+        entry.setTag("item", item);
+        entry.setInteger("points", points);
+        entry.setInteger("units", 1);
+        queue.appendTag(entry);
+        talisman.stackTagCompound.setTag(FOOD_QUEUE_TAG, queue);
+    }
+
+    /**
+     * Posts one FoodEaten event per queued food that the given amount of spent nourishment covers.
+     */
+    private void consumeQueuedFood(ItemStack talisman, EntityPlayer player, int spent) {
+        if (spent <= 0 || !Loader.isModLoaded("AppleCore")) {
+            return;
+        }
+
+        NBTTagList queue = talisman.stackTagCompound.getTagList(FOOD_QUEUE_TAG, 10);
+        while (spent > 0 && queue.tagCount() > 0) {
+            NBTTagCompound entry = queue.getCompoundTagAt(0);
+            int points = entry.getInteger("points");
+            int units = entry.getInteger("units");
+            if (points <= 0 || units <= 0) {
+                queue.removeTag(0);
+                continue;
+            }
+
+            int progress = entry.getInteger("progress") + spent;
+            int eaten = Math.min(progress / points, units);
+            if (eaten > 0) {
+                ItemStack food = ItemStack.loadItemStackFromNBT(entry.getCompoundTag("item"));
+                if (food != null) {
+                    for (int i = 0; i < eaten; i++) {
+                        AppleCoreInterop.postFoodEaten(food, player);
+                    }
+                }
+            }
+
+            int leftover = progress - eaten * points;
+            if (eaten >= units) {
+                queue.removeTag(0);
+                spent = leftover; // carry the remainder over to the next queued food
+            } else {
+                entry.setInteger("units", units - eaten);
+                entry.setInteger("progress", leftover);
+                spent = 0;
+            }
+        }
+        talisman.stackTagCompound.setTag(FOOD_QUEUE_TAG, queue);
     }
 
     private void setDefaultTags(ItemStack talisman) {
