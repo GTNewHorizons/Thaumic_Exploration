@@ -21,12 +21,15 @@ public class SaveUtils {
 
     public static EntityPlayerMP getPlayerByUsername(String username) {
         MinecraftServer server = MinecraftServer.getServer();
+        if (server == null) return null;
         // func_152612_a is getPlayerByUsername
         return server.getConfigurationManager().func_152612_a(username);
     }
 
     public static EntityPlayerMP getPlayerByUUID(UUID uuid) {
-        List<EntityPlayerMP> allPlayers = MinecraftServer.getServer().getConfigurationManager().playerEntityList;
+        MinecraftServer server = MinecraftServer.getServer();
+        if (server == null) return null;
+        List<EntityPlayerMP> allPlayers = server.getConfigurationManager().playerEntityList;
         for (EntityPlayerMP player : allPlayers) {
             if (uuid.equals(player.getGameProfile().getId())) {
                 return player;
