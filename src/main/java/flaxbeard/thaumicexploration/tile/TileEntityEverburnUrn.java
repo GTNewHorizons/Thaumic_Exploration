@@ -43,7 +43,7 @@ public class TileEntityEverburnUrn extends TileEntity implements IFluidTank, IFl
 
     @Override
     public int getCapacity() {
-        return 4 * CONVERSION_FACTOR;
+        return 16 * CONVERSION_FACTOR;
     }
 
     @Override
