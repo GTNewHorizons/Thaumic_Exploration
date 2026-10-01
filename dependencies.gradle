@@ -22,4 +22,13 @@ dependencies {
     }
     implementation("com.github.GTNewHorizons:CodeChickenCore:1.4.12:dev")
     runtimeOnly("com.github.GTNewHorizons:NotEnoughItems:2.8.84-GTNH:dev")
+    runtimeOnlyNonPublishable("com.github.GTNewHorizons:waila:1.19.22:dev") {
+        transitive = false
+    }
+    runtimeOnlyNonPublishable("com.github.slprime:ChromaticTooltips:1.0.36-GTNH:dev") {
+        transitive = false
+    }
+    runtimeOnlyNonPublishable("com.github.slprime:ChromaticTooltipsCompat:1.0.38-GTNH:dev") {
+        transitive = false
+    }
 }
