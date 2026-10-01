@@ -25,6 +25,7 @@ dependencies {
     runtimeOnlyNonPublishable("com.github.GTNewHorizons:waila:1.19.34:dev") {
         transitive = false
     }
+    runtimeOnlyNonPublishable("com.github.GTNewHorizons:WAILAPlugins:0.7.2:dev")
     runtimeOnlyNonPublishable("com.github.slprime:ChromaticTooltips:1.0.36-GTNH:dev") {
         transitive = false
     }
